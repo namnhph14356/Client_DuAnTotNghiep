@@ -50,6 +50,8 @@ import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
 import User from './pages/user/User';
 import Contact from './pages/contact/Contact';
+import ListQuiz from './pages/admin/quiz/ListQuiz';
+import FormQuiz from './pages/admin/quiz/FormQuiz';
 
 
 function App() {
@@ -83,6 +85,12 @@ function App() {
             <Route index element={<ListUser />} />
             <Route path='add' element={<AddUser />} />
             <Route path='edit/:id' element={<Edit />} />
+          </Route>
+
+          <Route path="quiz" >
+            <Route index element={<ListQuiz />} />
+            <Route path='add' element={<FormQuiz />} />
+            <Route path=':id/edit' element={<FormQuiz />} />
           </Route>
 
         </Route>

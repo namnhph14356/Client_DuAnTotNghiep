@@ -22,7 +22,7 @@ interface DataType {
   _id?: string,
   category: string,
   question: string,
-  image: string,
+  image: string | any,
   timeLimit: string
 }
 
@@ -66,7 +66,7 @@ const ListQuiz = (props: Props) => {
         return `${result}${item.title}`
       }, ""),
       question: item.question,
-      image: item.image,
+      image: <img src={item.image} alt="" width="90"/>,
       timeLimit: item.timeLimit,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY")
