@@ -1,0 +1,27 @@
+
+
+
+
+
+.point__quiz{
+    @apply bg-[#D5DBDB] w-[100%] h-[16px] mt-[10px] ml-[20px] rounded-lg
+
+
+}
+
+.return__learning{
+    @apply text-black hover:text-neutral-900 text-2xl		
+}
+
+.btn__radio__quiz{
+    transition: 0.5s;
+}
+.btn__radio__quiz:hover{
+    transform: scale(1.1);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.choose__answer__quiz{
+    @apply pb-6
+}

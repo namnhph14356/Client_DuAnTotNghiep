@@ -1,0 +1,17 @@
+.text-left{
+    text-align: left;
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.btn-file{
+    width: 100%;
+    padding: 6px 0;
+    margin-top: 5px;
+}
+.text-font-weight{
+    font-weight: bold;
+}

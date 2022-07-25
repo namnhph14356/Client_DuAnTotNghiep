@@ -1,0 +1,345 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+.banner{
+    @apply w-10/12 m-auto md:flex text-center md:justify-between md:gap-[50px] 
+}
+.banner .image{
+    @apply w-[210px] mx-auto md:w-[400px]  ;
+}
+.banner .start{
+    @apply my-auto
+}
+.banner .start .start-title{
+    @apply text-[16px] sm:text-[20px] md:text-[22px] text-center lg:text-[32px]
+}
+
+
+
+.banner .start .btn-start-1{
+    @apply   text-[16px] py-3 w-[190px]  block mx-auto mt-[62px]  lg:w-[240px] lg:text-[18px]
+} 
+
+
+.btn__start__learning{
+    width: 240px;
+    height: 52px;
+    border: 3px solid #4A235A;
+    color: #000;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 0 #4A235A;
+    transition: ease-out 0.3s;
+    outline: none;
+}
+.btn__start__learning:hover{
+    box-shadow: inset 240px 0 0 0 #4A235A;
+    cursor: pointer;
+    color: #fff;
+}
+
+.banner .start .btn-start-2{
+    @apply  text-[16px] py-3 w-[190px]  block mx-auto mt-[33px] lg:w-[240px] lg:text-[18px]
+}
+
+.btn__join__learning{
+    width: 240px;
+    height: 52px;
+    border: 3px solid #8E44AD;
+    color: #000;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 0 #8E44AD;
+    transition: ease-out 0.3s;
+    outline: none;
+}
+.btn__join__learning:hover{
+    box-shadow: inset 240px 0 0 0 #8E44AD;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+/* end banner */
+
+.vougue {
+    @apply my-[100px] w-8/12 m-auto
+}
+
+.vougue .title{
+    @apply text-[24px] text-center font-bold md:text-[32px]
+}
+.vougue .title-content{
+    @apply text-[16px] text-center  mt-[21px] w-[8/12] mx-auto    md:text-[20px]  md:mt-[90px]
+}
+.vougue .content{
+    @apply md:grid md:grid-cols-2 md:gap-8 text-center 
+}
+.vougue .content p{
+    @apply m-auto  text-[16px]
+}
+.vougue .content .image{
+    @apply w-[136px] max-w-full md:w-[216px] mx-auto mb-4
+}
+.vougue .content .content2{
+    @apply text-left   text-[16px] mb-[60px] md:m-auto
+}
+
+/* end vougue */
+
+.box__info__home{
+    height: 750px;
+    background-image: url('https://i.pinimg.com/originals/98/26/58/98265888efe0ae9fa4764f7fa7c2e761.gif');
+    background-repeat: no-repeat;
+    background-size: 100% 750px;
+}
+
+.reason {
+    @apply my-[100px] w-10/12 m-auto
+}
+
+.reason .title{
+    @apply text-[24px] pt-[20px] text-center font-bold mb-[95px] md:text-[32px]
+}
+
+.reason .content{
+    @apply lg:grid lg:grid-cols-2 gap-[270px] mb-[60px]
+}
+.reason .content .title-box{
+    @apply text-[24px] font-bold mb-[17px] 
+}
+
+.reason .content .title-box2{
+    @apply mb-[60px] 
+}
+/* end reason */
+
+.studyRoute{
+    @apply my-[150px] w-10/12 m-auto
+}
+.studyRoute .title{
+    @apply text-[24px] text-center font-bold mb-[95px] md:text-[32px]
+}
+.studyRoute .row{
+    @apply sm:grid sm:grid-cols-2 gap-[80px] lg:grid lg:grid-cols-4
+}
+.studyRoute .row .col{
+    @apply  h-fit mt-auto
+}
+.studyRoute .row .col-box{
+    @apply bg-[#2C3E50] rounded p-4 text-white  h-fit mt-auto
+}
+
+.studyRoute .row .col .col-title{
+    @apply font-bold text-center mb-4 
+}
+.studyRoute .row .col .col-content{
+    @apply  text-center
+}
+
+.studyRoute .row .col  .col-number{
+    @apply bg-[#000000] w-12 h-12 text-white text-[30px] font-bold mx-auto text-center  rounded-full mt-[23px] mb-[50px]
+}
+
+/* end study */
+
+
+/* teacher */
+
+.box__teacher{
+    @apply w-10/12 m-auto
+}
+.title__lecturers{
+    @apply text-center text-[32px]	font-bold	text-3xl	
+}
+.list__teacher{
+    @apply grid grid-cols-3 gap-4
+}
+.item__teacher{
+    text-align: center;
+}
+.img__teacher{
+    @apply rounded-full mt-[78px]
+}
+.img__teacher{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+.name__teacher{
+    @apply text-base	font-bold	mt-[22px]
+}
+.item__teacher p{
+    @apply text-base p-[30px]
+}
+
+/* .box__main__course {
+    @apply bg-[#EAF2F8]
+} */
+
+.distance__course{
+    @apply w-10/12 m-auto pt-[50px] pb-[50px] grid grid-cols-4 gap-4 text-center
+}
+
+.title__course__main{
+    @apply text-center text-[32px] mt-[50px]	font-bold	text-3xl	
+}
+.box__course{
+   border: 2px solid red;
+    padding: 70px 20px 20px 20px;
+   border-radius: 5px;
+   position: relative;
+}
+.title__course__sale{
+    @apply 	 text-base	font-bold	text-red-500	
+}
+.title__course{
+    @apply 	 text-base	font-bold	text-[#000]	
+}
+
+.price__course{
+    @apply  text-xl	pb-2 font-semibold border-b-[1px]	border-slate-400	
+
+
+}
+.price__course__old{
+    @apply  text-lg	text-[#808B96] line-through mb-0
+
+}
+
+.nav__info__course i{
+    @apply mr-2 text-base
+}
+.nav__info__course li{
+    @apply py-2 text-slate-900	text-sm 
+
+}
+
+.btn__buy__course{
+    width: 200px;
+    height: 42px;
+    color: #000;
+    border-radius: 4px;
+    background-color: #C0392B;
+    color: #fff;
+      
+}
+
+.btn__buy__course{
+   @apply shadow-md font-sans   text-lg	
+
+    
+}
+
+.price__sale-off__course{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 50px;
+    height: 52px;
+    text-align: center;
+    background-color: #C0392B;
+    color: #fff;
+}
+.price__sale-off__course::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    border-width: 0 25px 20px;
+    border-style: solid;
+    border-color: transparent #C0392B  transparent #C0392B;
+}
+
+.item__sale__year{
+    border-color: #28a745;
+}
+.price__sale__year{
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 50px;
+    height: 52px;
+    text-align: center;
+    background-color: #28a745;
+    color: #fff;
+}
+.price__sale__year::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -20px;
+    border-width: 0 25px 20px;
+    border-style: solid;
+    border-color: transparent #28a745  transparent #28a745;
+}
+
+
+/* form  */
+
+.form__information{
+    @apply w-8/12 m-auto shadow-lg mb-[100px]
+
+
+}
+.form__information{
+  border: 1px solid #ccc;
+  padding: 50px;
+}
+.title__form{
+    @apply  text-center text-2xl	font-sans font-medium	
+
+}
+.box__form{
+    
+}
+
+.list__form{
+    @apply grid grid-cols-2 gap-[50px] mt-[50px]
+}
+
+.item__box__form input{
+    display: flex;
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 5px 20px;
+    margin-top: 10px;
+    outline: none;
+}
+.item__box__form i{
+   color: #3498DB;
+   margin-right: 8px;
+   font-size: 18px;
+}
+.item__box__form label{
+  
+}
+.list__check__box{
+   display: flex;
+   margin-top: 25px;
+}
+.item__Check__box input{
+    display: flex;
+    margin-top: 5px;
+    height: 20px;
+    width: 20px;
+}
+.item__Check__box label{
+   margin-right: 30px;
+}
+
+.box__btn__form{
+    @apply mt-[50px] text-center
+}
+.box__btn__form button{
+    width: 200px;
+    height: 42px;
+    color: #000;
+    border-radius: 4px;
+    background-color: #C0392B;
+    color: #fff; 
+}

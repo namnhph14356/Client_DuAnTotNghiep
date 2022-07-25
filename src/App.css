@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.header{
+    @apply w-10/12 m-auto flex justify-between my-[33px] 
+   
+}
+.header .logo{
+    @apply font-bold text-[20px] text-black md:text-[32px]
+   
+}
+.header .menu{
+    @apply my-auto lg:block
+}
+.header .menu ul {
+    @apply flex space-x-3 text-[18px]
+}
+
+/* end header */
+
+.banner{
+    @apply w-10/12 m-auto md:flex text-center md:justify-between md:gap-[50px] 
+}
+.banner .image{
+    @apply w-[210px] mx-auto md:w-[400px]  ;
+}
+.banner .start{
+    @apply my-auto
+}
+.banner .start .start-title{
+    @apply text-[16px] sm:text-[20px] md:text-[22px] text-center lg:text-[32px]
+}
+
+
+.banner .start .btn-start-1{
+    @apply bg-[#4A235A] text-white text-[16px] py-3 w-[190px]  block mx-auto mt-[62px] rounded-lg lg:w-[240px] lg:text-[18px]
+}   
+
+.banner .start .btn-start-2{
+    @apply bg-[#8E44AD] text-white text-[16px] py-3 w-[190px]  block mx-auto mt-[33px] rounded-lg lg:w-[240px] lg:text-[18px]
+}
+
+/* end banner */
+
+.vougue {
+    @apply my-[100px] w-8/12 m-auto
+}
+
+.vougue .title{
+    @apply text-[24px] text-center font-bold md:text-[32px]
+}
+.vougue .title-content{
+    @apply text-[16px] text-center  mt-[21px] w-[8/12] mx-auto    md:text-[20px]  md:mt-[90px]
+}
+.vougue .content{
+    @apply md:grid md:grid-cols-2 md:gap-8 text-center 
+}
+.vougue .content p{
+    @apply m-auto  text-[16px]
+}
+.vougue .content .image{
+    @apply w-[136px] max-w-full md:w-[216px] mx-auto mb-4
+}
+.vougue .content .content2{
+    @apply text-left   text-[16px] mb-[60px] md:m-auto
+}
+
+/* end vougue */
+
+.reason {
+    @apply my-[100px] w-10/12 m-auto
+}
+
+.reason .title{
+    @apply text-[24px] text-center font-bold mb-[95px] md:text-[32px]
+}
+
+.reason .content{
+    @apply lg:grid lg:grid-cols-2 gap-[270px] mb-[60px]
+}
+.reason .content .title-box{
+    @apply text-[24px] font-bold mb-[17px] 
+}
+
+.reason .content .title-box2{
+    @apply mb-[60px] 
+}
+/* end reason */
+
+.studyRoute{
+    @apply my-[150px] w-10/12 m-auto
+}
+.studyRoute .title{
+    @apply text-[24px] text-center font-bold mb-[95px] md:text-[32px]
+}
+.studyRoute .row{
+    @apply sm:grid sm:grid-cols-2 gap-[80px] lg:grid lg:grid-cols-4
+}
+.studyRoute .row .col{
+    @apply  h-fit mt-auto
+}
+.studyRoute .row .col-box{
+    @apply bg-[#2C3E50] rounded p-4 text-white  h-fit mt-auto
+}
+
+.studyRoute .row .col .col-title{
+    @apply font-bold text-center mb-4 
+}
+.studyRoute .row .col .col-content{
+    @apply  text-center
+}
+
+.studyRoute .row .col  .col-number{
+    @apply bg-[#000000] w-12 h-12 text-white text-[30px] font-bold mx-auto text-center  rounded-full mt-[23px] mb-[50px]
+}
+
+/* end study */
+
+.footer{
+    @apply bg-[#512E5F]
+}
+.footer .container{
+    @apply w-10/12 m-auto text-white py-[50px] 
+}   
+.footer .container .title{
+    @apply  text-center md:text-left 
+}
+.footer .container .title p{
+    @apply text-[24px] font-bold md:text-[32px]
+}
+.footer .container .row {
+    @apply sm:grid sm:grid-cols-2 lg:grid lg:grid-cols-5 gap-8 text-center sm:text-left
+}
+.footer .container .row .col .col-name{
+    @apply font-bold text-[24px] pb-[30px] pt-[90px] 
+}
+
+.footer .container .row .col ul li {
+    @apply block py-2
+}

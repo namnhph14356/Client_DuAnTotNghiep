@@ -1,0 +1,88 @@
+
+        .title{
+            @apply text-[24px] text-center font-bold md:text-[32px]
+       }
+
+        .box-btn{
+          @apply text-center mb-[150px] 
+        }
+       .btn{
+          @apply bg-[#4A235A] text-[16px]  py-[17px] px-[60px] rounded-xl text-white  md:px-[80px] lg:px-[120px] md:text-[24px]
+        }
+
+
+      .section-1{
+        @apply w-10/12 m-auto gap-8 mt-[80px] 
+      }
+     
+      .section-1 .box {
+          @apply my-[100px] 
+      }
+      .section-1 .box .row{
+          @apply grid grid-cols-2  md:grid md:grid-cols-3 gap-[30px] xl:grid xl:grid-cols-5 xl:gap-[30px] mx-auto
+      }
+      .section-1 .box .row .col{
+          @apply bg-[#F4F4F4] px-[24px] py-[36px] rounded-xl
+      }
+      .section-1 .box .row .col img{
+          @apply max-w-full mx-auto w-[100px]
+      }
+      .section-1 .box .row .col p{
+          @apply text-[20px] text-center pt-[50px]
+      }
+
+    
+
+      /* end section-1 */
+
+      .section-2{
+        @apply w-10/12 m-auto gap-8 mt-[80px] 
+      }
+      
+      .section-2 .box{
+          @apply  text-center my-[60px] md:my-[100px]
+      }
+      .section-2 .box ul {
+          @apply   w-8/12  m-auto xl:w-6/12
+      }
+      .section-2 .box ul li{
+          @apply   py-[20px] px-[50px] bg-[#F4F4F4] border
+      }
+     
+
+      /* end section-2 */
+
+      .section-3{
+        @apply w-10/12 m-auto gap-8 mt-[80px] 
+      }
+      .section-3 .box img{
+          @apply mx-auto 
+      }
+
+      /* end section-3 */
+
+      .test .test-name{
+        @apply text-[24px] font-bold md:text-[32px]
+      }
+      .test .test-row{
+        @apply grid grid-cols-2 md:grid md:grid-cols-4 gap-[30px]
+      }
+      .test .test-row-col{
+        @apply border rounded-xl mx-auto text-center shadow-md mt-[40px]
+       }
+       .test .test-row-col img{
+        @apply max-w-full w-[400px]
+       }
+       .test .test-row-col p{
+        @apply py-[30px] text-[20px] font-bold  md:text-[24px] md:py-[40px]
+       }
+       .test-row-col-2{
+        @apply my-[50px] flex justify-between md:my-[100px]
+       }
+       .test-btn{
+        @apply text-center mb-[150px] 
+       }
+       
+        .test-btn .btn{
+          @apply bg-[#4A235A] text-[16px]  py-[17px] px-[30px] rounded-xl text-white  md:px-[80px] lg:px-[120px] md:text-[24px]
+        }

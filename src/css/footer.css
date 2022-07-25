@@ -1,0 +1,27 @@
+
+.footer{
+    @apply bg-[#512E5F]
+}
+.footer .container{
+    @apply w-10/12 m-auto text-white py-[20px] 
+}   
+.footer .container .title{
+    @apply  text-center md:text-left 
+}
+.footer .container .title p{
+    @apply text-[24px] font-bold md:text-[32px] 
+}
+.footer .container .row {
+    @apply sm:grid sm:grid-cols-2 lg:grid lg:grid-cols-5 gap-8 text-center sm:text-left
+}
+.footer .container .row .col .col-name{
+    @apply font-bold text-[18px]  pt-[20px]  
+}
+
+.footer .container .row .col ul li {
+    @apply block py-2  
+}
+
+.footer .container .row .col ul li a{
+    @apply text-white
+}
