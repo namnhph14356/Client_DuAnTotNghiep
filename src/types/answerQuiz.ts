@@ -3,4 +3,6 @@ export type AnswerQuizType = {
     quiz: string,
     answer: string,
     isCorrect: number,
+    createdAt?: string,
+    updatedAt?: string
 }

@@ -1,43 +1,47 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { addAnswerQuiz, detailAnswerQuiz, editAnswerQuiz, listAnswerQuiz, removeAnswerQuiz } from '../../../api/answerQuiz'
-import { AnswerQuizType } from '../../../types/answerQuiz'
+import { addUserQuiz, editUserQuiz, listUserQuiz, removeUserQuiz } from '../../../api/userQuiz'
+import { UserQuizType } from '../../../types/userQuiz'
 
 
-export const getListAnswerQuizSlide = createAsyncThunk(
-    'answerQuiz/getListAnswerQuiz',
+
+export const getListUserQuizSlide = createAsyncThunk(
+    "userQuiz/getListUserQuiz",
     async () => {
-        const { data } = await listAnswerQuiz()
+        const { data } = await listUserQuiz()
         return data
     }
 )
 
-export const addAnswerQuizSlide = createAsyncThunk(
-    'answerQuiz/addAnswerQuiz',
-    async (answerQuiz: AnswerQuizType) => {
-        const { data } = await addAnswerQuiz(answerQuiz)
+export const addUserQuizSlide = createAsyncThunk(
+    "userQuiz/addUserQuiz",
+    async (userQuiz: UserQuizType) => {
+        const { data } = await addUserQuiz(userQuiz)
         return data
     }
 )
 
-export const editAnswerQuizSlide = createAsyncThunk(
-    'answerQuiz/editAnswerQuiz',
-    async (answerQuiz: AnswerQuizType) => {
-        const { data } = await editAnswerQuiz(answerQuiz)
+export const editUserQuizSlide = createAsyncThunk(
+    "userQuiz/editUserQuiz",
+    async (userQuiz: UserQuizType) => {
+        const { data } = await editUserQuiz(userQuiz)
         return data
     }
 )
 
-export const removeAnswerQuizSlide = createAsyncThunk(
-    'answerQuiz/removeAnswerQuiz',
+export const removeUserQuizSlide = createAsyncThunk(
+    "userQuiz/removeUserQuiz",
+    // async (id: string) => {
+    //     const { data } = await removeUserQuiz(id)
+    //     return data
+    // }
+
     async (arr: any) => {
-        // const { data } = await removeAnswerQuiz(id)
-        // return data
         if (Array.isArray(arr)) {
             console.log("arr > 0", arr);
 
-            let dataRemove: AnswerQuizType[] = []
+            let dataRemove: UserQuizType[] = []
             for (let i = 0; i < arr.length; i++) {
-                const { data } = await removeAnswerQuiz(arr[i].id)
+                const { data } = await removeUserQuiz(arr[i].id)
                 dataRemove.push(data)
             }
             console.log("dataRemove", dataRemove);
@@ -45,15 +49,16 @@ export const removeAnswerQuizSlide = createAsyncThunk(
         } else {
             console.log("arr", arr);
 
-            const { data } = await removeAnswerQuiz(arr)
+
+            const { data } = await removeUserQuiz(arr)
             return data
+
         }
     }
 )
 
-
-const answerQuizSlide = createSlice({
-    name: "answerQuizs",
+const userQuizSlide = createSlice({
+    name: "userQuizs",
     initialState: {
         value: [],
         breadcrumb: ""
@@ -64,16 +69,18 @@ const answerQuizSlide = createSlice({
         }
     },
     extraReducers(builder) {
-        builder.addCase(getListAnswerQuizSlide.fulfilled, (state, action) => {
+        builder.addCase(getListUserQuizSlide.fulfilled, (state, action) => {
             state.value = action.payload
         })
-        builder.addCase(addAnswerQuizSlide.fulfilled, (state: any, action) => {
+        builder.addCase(addUserQuizSlide.fulfilled, (state: any, action) => {
             state.value = [...state.value, action.payload]
+
         })
-        builder.addCase(editAnswerQuizSlide.fulfilled, (state: any, action) => {
+        builder.addCase(editUserQuizSlide.fulfilled, (state: any, action) => {
             state.value = state.value.map(item => item._id === action.payload._id ? action.payload : item)
         })
-        builder.addCase(removeAnswerQuizSlide.fulfilled, (state: any, action) => {
+        builder.addCase(removeUserQuizSlide.fulfilled, (state: any, action) => {
+            console.log("action.payload._id", action.payload);
             if (Array.isArray(action.payload)) {
                 const payload = {
                     excludeIds: action.payload.map(item => {
@@ -88,9 +95,8 @@ const answerQuizSlide = createSlice({
             }
         })
     },
-
 })
 
-export const { changeBreadcrumb } = answerQuizSlide.actions
+export const { changeBreadcrumb } = userQuizSlide.actions
 
-export default answerQuizSlide.reducer
+export default userQuizSlide.reducer
