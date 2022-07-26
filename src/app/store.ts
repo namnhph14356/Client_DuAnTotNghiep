@@ -5,6 +5,8 @@ import CategorySlide from '../features/Slide/category/CategorySlide';
 import CountSlide from '../features/Slide/count/CountSlide';
 import ProductSlide from '../features/Slide/product/ProductSlide';
 import QuizSlide from '../features/Slide/quiz/QuizSlide';
+import History from '../features/Slide/history/History';
+import UserQuiz from '../features/Slide/userQuiz/UserQuiz';
 
 // import categorySlide from '../features/category/CategorySlide';
 // import countSlide from '../features/count/CountSlide'
@@ -15,7 +17,8 @@ export const store = configureStore({
     product: ProductSlide,
     category: CategorySlide,
     quiz: QuizSlide,
-
+    userQuiz: UserQuiz,
+    history: History,
 
     answerQuiz: AnswerQuizSlide,
     user: authSlide

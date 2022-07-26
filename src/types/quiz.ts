@@ -4,6 +4,7 @@ export type QuizType = {
     question: string,
     image: string,
     timeLimit: string,
+    type: number,
     createdAt?: string,
     updatedAt?: string
 }
