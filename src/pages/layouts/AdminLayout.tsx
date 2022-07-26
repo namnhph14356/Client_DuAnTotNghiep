@@ -103,6 +103,14 @@ const AdminLayout = () => {
                         <Menu.Item key="/admin/quiz"><NavLink to='/admin/quiz'>List Quiz</NavLink></Menu.Item>
                         <Menu.Item key="/admin/quiz/add"><NavLink to='/admin/quiz/add'>Add Quiz</NavLink></Menu.Item>
                     </SubMenu>
+                    <SubMenu key="sub3" icon={<ReadOutlined />} title="AnswerQuiz">
+                        <Menu.Item key="/admin/answerQuiz"><NavLink to='/admin/answerQuiz'>List Answer Quiz</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/answerQuiz/add"><NavLink to='/admin/answerQuiz/add'>Add Answer Quiz</NavLink></Menu.Item>
+                    </SubMenu>
+                    <SubMenu key="sub4" icon={<ReadOutlined />} title="UserQuiz">
+                        <Menu.Item key="/admin/userQuiz"><NavLink to='/admin/userQuiz'>List User Quiz</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
+                    </SubMenu>
 
                 </Menu>
             </Sider>
