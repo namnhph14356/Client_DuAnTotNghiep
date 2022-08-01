@@ -11,6 +11,7 @@ import  './css/signup.css';
 import './css/quiz.css';
 import './css/speaking.css';
 import './css/listen.css';
+import './css/teacherPage.css';
 import "toastr/build/toastr.min.css";
 
 // import './App.css';
@@ -57,6 +58,7 @@ import ListAnswerQuiz from './pages/admin/answerQuiz/ListAnswerQuiz';
 import FormAnswerQuiz from './pages/admin/answerQuiz/FormAnswerQuiz';
 import ListUserQuiz from './pages/admin/userQuiz/ListUserQuiz';
 import FormUserQuiz from './pages/admin/userQuiz/FormUserQuiz';
+import TeacherPage from './pages/TeacherPage';
 
 
 function App() {
@@ -75,6 +77,7 @@ function App() {
           <Route path="fileuser" element={<FileUser />}/>
           <Route path="user" element={<User />}/>
           <Route path='store' element={<Store />} />
+          <Route path='teacher' element={<TeacherPage />} />
         </Route>
 
 
