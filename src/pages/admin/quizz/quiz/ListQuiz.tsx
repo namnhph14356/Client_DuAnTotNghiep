@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag } from 'antd';
+import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../Component/AdminPageHeader';
+import AdminPageHeader from '../../../../Component/AdminPageHeader';
 import { Link } from 'react-router-dom';
-import { QuizType } from '../../../types/quiz';
-import { getListQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../types/category';
-import { SearchOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { QuizType } from '../../../../types/quiz';
+import { changeBreadcrumb, getListQuizSlide, removeQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
+import { CategoryType } from '../../../../types/category';
+
+import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { AnswerQuizType } from '../../../types/answerQuiz';
-
+import { getListAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { AnswerQuizType } from '../../../../types/answerQuiz';
 
 interface DataType {
   key: React.Key;
@@ -25,26 +25,17 @@ interface DataType {
   image: string,
   timeLimit: string,
   type: number
-  // children?: any
-}
-
-interface ExpandedDataType {
-  key: React.Key;
-  _id?: string,
-  quiz: string;
-  answer: string;
-  isCorrect: number;
 }
 
 
-type DataIndex = keyof ExpandedDataType;
+type DataIndex = keyof DataType;
 
 
 type Props = {}
 
-const ListAnswerQuiz = (props: Props) => {
+const ListQuiz = (props: Props) => {
 
-  const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
+  const breadcrumb = useAppSelector(item => item.quiz.breadcrumb)
   const quizs = useAppSelector(item => item.quiz.value)
   const answerQuizs = useAppSelector(item => item.answerQuiz.value)
   const categories = useAppSelector(item => item.category.value)
@@ -54,14 +45,12 @@ const ListAnswerQuiz = (props: Props) => {
   console.log('categories', categories);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selected, setSelected] = useState<{ key: string, id: string | undefined }[]>([]);
+  const [selected, setSelected] = useState<{ key: number, id: string | undefined }[]>([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
-
   //------------------STATE--------------------
-
 
 
   const dataTable = quizs.map((item: QuizType, index) => {
@@ -76,29 +65,9 @@ const ListAnswerQuiz = (props: Props) => {
       timeLimit: item.timeLimit,
       type: item.type,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
-      updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
-      // children: answerQuizs.filter((item2: AnswerQuizType, index2) => item2.quiz === item._id ? {
-      //   key: item2._id,
-      //   _id: item2._id,
-      //   quiz: item2.quiz,
-      //   isCorrect: item2.isCorrect
-      // } : null)
+      updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY")
     }
   })
-  console.log('dataTable', dataTable);
-
-  const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
-    return {
-      key: item._id,
-      _id: item._id,
-      quiz: item.quiz,
-      answer: item.answer,
-      isCorrect: item.isCorrect
-
-
-    }
-  })
-
 
   //------------------TABLE-DATA-------------------
 
@@ -172,9 +141,9 @@ const ListAnswerQuiz = (props: Props) => {
 
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    let rowSelected: { key: string, id: string | undefined }[] = []
+    let rowSelected: { key: number, id: string | undefined }[] = []
     newSelectedRowKeys.map((item) => {
-      childrenTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
+      dataTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
     })
     console.log('rowSelected', rowSelected);
     console.log('newSelectedRowKeys', newSelectedRowKeys);
@@ -183,7 +152,7 @@ const ListAnswerQuiz = (props: Props) => {
     // console.log('selectedRowKeys changed: ', selectedRowKeys);
   };
 
-  const rowSelection: TableRowSelection<ExpandedDataType> = {
+  const rowSelection: TableRowSelection<DataType> = {
     selectedRowKeys,
     onChange: onSelectChange,
     selections: [
@@ -230,9 +199,9 @@ const ListAnswerQuiz = (props: Props) => {
 
     setTimeout(() => {
       if (Array.isArray(id)) {
-        dispatch(removeAnswerQuizSlide(id))
+        dispatch(removeQuizSlide(id))
       } else {
-        dispatch(removeAnswerQuizSlide(id))
+        dispatch(removeQuizSlide(id))
       }
       setConfirmLoading(false);
       message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
@@ -263,7 +232,6 @@ const ListAnswerQuiz = (props: Props) => {
       sorter: (a: any, b: any) => a._id - b._id,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ['descend'],
-
     },
     {
       title: 'Category',
@@ -291,7 +259,7 @@ const ListAnswerQuiz = (props: Props) => {
       title: 'TimeLimit',
       dataIndex: 'timeLimit',
       key: "timeLimit",
-      // ...getColumnSearchProps('timeLimit'),
+      ...getColumnSearchProps('timeLimit'),
     },
     {
       title: 'Type',
@@ -323,87 +291,35 @@ const ListAnswerQuiz = (props: Props) => {
       key: "updatedAt",
 
     },
+    {
+      title: "Hành Động", key: "action", render: (text, record) => (
+        <Space align="center" size="middle">
+          <Button style={{ background: "#198754" }} >
+            <Link to={`/admin/quiz/${record._id}/edit`} >
+              <span className="text-white">Sửa</span>
+            </Link>
 
+          </Button>
+
+          <Popconfirm
+            placement="topRight"
+            title="Bạn Có Muốn Xóa?"
+            okText="Có"
+            cancelText="Không"
+            onConfirm={() => { handleOk(record._id) }}
+            okButtonProps={{ loading: confirmLoading }}
+            onCancel={handleCancel}
+          >
+            <Button type="primary" danger >
+              Xóa
+            </Button>
+          </Popconfirm>
+
+        </Space>
+      ),
+    }
   ];
 
-  const expandedRowRender = (row: any) => {
-
-    console.log("expandedRow", row);
-
-    const columns2: ColumnsType<ExpandedDataType> = [
-      { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
-      { title: 'STT', dataIndex: 'stt', key: 'stt' },
-      { title: 'ID', dataIndex: '_id', key: '_id' },
-
-      { title: 'Answer', dataIndex: 'answer', key: 'answer' },
-      {
-        title: 'IsCorrect',
-
-        key: 'isCorrect',
-        render: (record) => (
-          <span>
-            {record.isCorrect === 1
-              ? <Badge status="success" text={<CheckCircleOutlined />} />
-              : <Badge status="error" text={<CloseCircleOutlined />} />
-            }
-          </span>
-        ),
-      },
-      {
-        title: "Hành Động", key: "action", render: (text, record) => (
-          <Space align="center" size="middle">
-            <Button style={{ background: "#198754" }} >
-              <Link to={`/admin/answerQuiz/${record._id}/edit`} >
-                <span className="text-white">Sửa</span>
-              </Link>
-
-            </Button>
-
-            <Popconfirm
-              placement="topRight"
-              title="Bạn Có Muốn Xóa?"
-              okText="Có"
-              cancelText="Không"
-              onConfirm={() => { handleOk(record._id) }}
-              okButtonProps={{ loading: confirmLoading }}
-              onCancel={handleCancel}
-            >
-              <Button type="primary" danger >
-                Xóa
-              </Button>
-            </Popconfirm>
-
-          </Space>
-        ),
-      }
-    ];
-
-
-    // let data: any = answerQuizs.map((item: AnswerQuizType, index) => item.quiz === row._id ? {
-    //   key: index + 1,
-    //   _id: item._id,
-    //   answer: item.answer,
-    //   quiz: item.quiz,
-    //   isCorrect: item.isCorrect
-    // } : null)
-
-    let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
-      return {
-        key: item2._id,
-        stt: index + 1,
-        _id: item2._id,
-        answer: item2.answer,
-        quiz: item2.quiz,
-        isCorrect: item2.isCorrect
-      }
-    })
-
-
-
-    // console.log("data Children", data);
-
-    return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
-  }
   //------------------TABLE-COLUMM-------------------
 
 
@@ -412,7 +328,7 @@ const ListAnswerQuiz = (props: Props) => {
 
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Quản Lý AnswerQuiz"))
+    dispatch(changeBreadcrumb("Quản Lý Quiz"))
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
@@ -423,7 +339,7 @@ const ListAnswerQuiz = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Button type="primary" className="my-6" >
-        <Link to={`/admin/answerQuiz/add`}>Thêm AnswerQuiz</Link>
+        <Link to={`/admin/quiz/add`}>Thêm Quiz</Link>
 
       </Button>
 
@@ -449,18 +365,24 @@ const ListAnswerQuiz = (props: Props) => {
 
 
       <Table
+        rowClassName={"break-words"}
         bordered
-
         footer={() => `Hiển thị 10 trên tổng ${quizs.length}`}
-        expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
+        // expandable={{
+        //   expandedRowRender: record => <div>
+        //     {answerQuizs.map((item: AnswerQuizType, index) => item.quiz === record._id
+        //       ? <p key={index + 1} style={{ margin: 0 }}>{item.answer}</p>
+        //       : "")}
 
+           
+        //   </div>,
+          
+        // }}
+        rowSelection={rowSelection}
         columns={columns}
-        dataSource={dataTable}
-
-      />
-
+        dataSource={dataTable} />
     </div>
   )
 }
 
-export default ListAnswerQuiz
+export default ListQuiz
