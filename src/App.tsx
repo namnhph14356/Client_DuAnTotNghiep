@@ -63,16 +63,12 @@ import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWri
 import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
 
 
-import ListAnswerQuiz from './pages/admin/answerQuiz/ListAnswerQuiz';
-import FormAnswerQuiz from './pages/admin/answerQuiz/FormAnswerQuiz';
-import ListUserQuiz from './pages/admin/userQuiz/ListUserQuiz';
-import FormUserQuiz from './pages/admin/userQuiz/FormUserQuiz';
+
 import TeacherPage from './pages/teacher/TeacherPage';
 import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryTeacher from './pages/teacher/category/category';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
-import TeacherPage from './pages/TeacherPage';
 
 
 

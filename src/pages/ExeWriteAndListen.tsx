@@ -24,7 +24,7 @@ const ExeWriteAndListen = () => {
             <div className="audio__listen">
                 <audio
                     controls
-                    src="[AudiConvert] KrewellaMusicVEVO Krewella - Alive (Video).mp3">
+                    src="http://res.cloudinary.com/chanh-thon/video/upload/v1659464441/upload_preset/q0jdgn5b59x7sqql90cv.mp3">
                     Your browser does not support the
                     <code>audio</code> element.
                 </audio>
