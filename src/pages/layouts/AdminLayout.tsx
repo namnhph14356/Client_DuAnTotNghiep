@@ -112,6 +112,11 @@ const AdminLayout = () => {
                         <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
                     </SubMenu>
 
+                    <SubMenu key="sub5" icon={<ReadOutlined />} title="ListenWrite">
+                        <Menu.Item key="/admin/listenWrite"><NavLink to='/admin/listenWrite'>List Listen Write</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/listenWrite/add"><NavLink to='/admin/listenWrite/add'>Add Listen Write</NavLink></Menu.Item>
+                    </SubMenu>
+
                 </Menu>
             </Sider>
 

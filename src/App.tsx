@@ -52,8 +52,16 @@ import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
 import User from './pages/user/User';
 import Contact from './pages/contact/Contact';
-import ListQuiz from './pages/admin/quiz/ListQuiz';
-import FormQuiz from './pages/admin/quiz/FormQuiz';
+import ListQuiz from './pages/admin/quizz/quiz/ListQuiz';
+import FormQuiz from './pages/admin/quizz/quiz/FormQuiz';
+
+import ListAnswerQuiz from './pages/admin/quizz/answerQuiz/ListAnswerQuiz';
+import FormAnswerQuiz from './pages/admin/quizz/answerQuiz/FormAnswerQuiz';
+import ListUserQuiz from './pages/admin/quizz/userQuiz/ListUserQuiz';
+import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
+import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
+import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
+
 
 import ListAnswerQuiz from './pages/admin/answerQuiz/ListAnswerQuiz';
 import FormAnswerQuiz from './pages/admin/answerQuiz/FormAnswerQuiz';
@@ -64,6 +72,9 @@ import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryTeacher from './pages/teacher/category/category';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+import TeacherPage from './pages/TeacherPage';
+
+
 
 
 function App() {
@@ -95,6 +106,7 @@ function App() {
 
 
         <Route path='admin' element={<AdminLayout />}>
+
           <Route index element={<Navigate to="category" />} />
           <Route path="category" >
             <Route index element={<List />} />
@@ -108,6 +120,7 @@ function App() {
             <Route path='edit/:id' element={<Edit />} />
           </Route>
 
+          {/* quizz */}
           <Route path="quiz" >
             <Route index element={<ListQuiz />} />
             <Route path='add' element={<FormQuiz />} />
@@ -124,6 +137,14 @@ function App() {
             <Route index element={<ListUserQuiz />} />
             <Route path='add' element={<FormUserQuiz />} />
             <Route path=':id/edit' element={<FormUserQuiz />} />
+          </Route>
+
+
+          {/* listenWrite */}
+          <Route path="listenWrite" >
+            <Route index element={<ListListenWrite />} />
+            <Route path='add' element={<FormListenWrite />} />
+            <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
         </Route>
