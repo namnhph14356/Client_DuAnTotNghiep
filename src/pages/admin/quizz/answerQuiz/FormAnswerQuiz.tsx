@@ -3,13 +3,13 @@ import { useForm, Controller } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
-import AdminPageHeader from '../../../Component/AdminPageHeader';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getListQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
-import { QuizType } from '../../../types/quiz';
-import { AnswerQuizType } from '../../../types/answerQuiz';
-import { changeBreadcrumb,addAnswerQuizSlide, editAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { detailAnswerQuiz } from '../../../api/answerQuiz';
+import AdminPageHeader from '../../../../Component/AdminPageHeader';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { QuizType } from '../../../../types/quiz';
+import { AnswerQuizType } from '../../../../types/answerQuiz';
+import { changeBreadcrumb,addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { detailAnswerQuiz } from '../../../../api/answerQuiz';
 
 
 
