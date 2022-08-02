@@ -10,22 +10,25 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../../types/category';
-import { detailQuiz } from '../../../../api/quiz';
-import { QuizType } from '../../../../types/quiz';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-
-// import img from '../../../../public/image//image 22.png'
+import ReactAudioPlayer from 'react-audio-player';
+import { uploadVideo } from '../../../../utils/upload';
+import { addListen, editListen } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { ListenWriteType } from '../../../../types/listenWrite';
+import { detailListenWrite } from '../../../../api/listenWrite';
 
 type Props = {}
 
 const areas = [
-  { label: 'Beijing', value: 'Beijing' },
-  { label: 'Shanghai', value: 'Shanghai' },
+  { label: 'Hai nhân vật', value: 'twoPeople' },
+  { label: 'Ba nhân vật', value: 'threePeople' },
+  { label: 'Nhiều nhân vật', value: 'manyPeople' },
 ];
 
 const sights = {
-  Beijing: ['Tiananmen', 'Great Wall'],
-  Shanghai: ['Oriental Pearl', 'The Bund'],
+  twoPeople: ['Cap', 'Tony'],
+  threePeople: ['Kevin', 'Stuart', 'Bob'],
+  manyPeople: ['Cap', 'Tony', 'Kevin', 'Stuart', 'Bob', 'Natasha', 'Bruce', 'Peter'],
 };
 
 type SightsKeys = keyof typeof sights;
@@ -36,18 +39,13 @@ const FormListenWrite = (props: Props) => {
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
   const breadcrumb = useAppSelector(data => data.quiz.breadcrumb)
   const categories = useAppSelector(data => data.category.value)
-  const [quiz, setQuiz] = useState<QuizType>()
+  const [listenWrite, setListenWrite] = useState<ListenWriteType>()
+  const [audio, setAudio] = useState<any>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
 
-  const typeQuiz = [
-    { id: 1, name: "Nghe rồi chọn Đáp Án" },
-    { id: 2, name: "Chọn Đáp Án" },
-    { id: 3, name: "Nghe rồi Viết Đáp Án" }
-  ]
-
-
+  console.log(categories);
 
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
@@ -56,48 +54,45 @@ const FormListenWrite = (props: Props) => {
   const { id } = useParams();
   console.log(id);
 
-  const onFinish = async (value) => {
-    console.log(value);
 
+  const onFinish = async (value: any) => {
 
-    if (fileList) {
-      const CLOUDINARY_PRESET = "ypn4yccr";
-      const CLOUDINARY_API_URL =
-        "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
-      const formData = new FormData();
-      formData.append("file", fileList);
-      formData.append("upload_preset", CLOUDINARY_PRESET);
-
-      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
-        headers: {
-          "Content-Type": "application/form-data"
-        }
-      });
-      value.image = data.url;
-      setfileList(null);
-    }
-
-    console.log("value", value);
-    if (!value.image) {
-      return message.error('Không để trống Ảnh!');
-    }
-
+    const imgPost = document.querySelector("#upload_image");
 
     const key = 'updatable';
-
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      if (id) {
-        dispatch(editQuizSlide(value));
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/admin/quiz");
-      } else {
-        dispatch(addQuizSlide(value));
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/admin/quiz");
-      }
 
-    }, 2000);
+    let imgLink = await uploadVideo(imgPost);
+    console.log(imgLink);
+    console.log("value", value);
+
+
+    if (id) {
+      console.log(imgLink);
+      console.log(audio);
+
+      dispatch(editListen({
+        _id: value._id,
+        area: value.area,
+        category: value.category,
+        content: value.content,
+        audio: imgLink || audio
+      }));
+      message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+      navigate("/admin/listenWrite");
+
+    } else {
+      dispatch(addListen({
+        area: value.area,
+        category: value.category,
+        content: value.content,
+        audio: imgLink
+      }));
+      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+      navigate("/admin/listenWrite");
+    }
+
+
 
   };
 
@@ -113,7 +108,22 @@ const FormListenWrite = (props: Props) => {
 
 
   useEffect(() => {
+    if (id) {
+      const getListenAndWrite = async () => {
+        const { data } = await detailListenWrite(id)
+        // console.log("data edit", data);
+        setListenWrite(data);
+        console.log(data);
+        setAudio(data.audio)
+        form.setFieldsValue(data);
+        dispatch(changeBreadcrumb("SỬA BÀI TẬP NGHE VÀ VIẾT"))
+      }
+      getListenAndWrite()
+    } else {
+      dispatch(changeBreadcrumb("THÊM BÀI TẬP NGHE VÀ VIẾT"))
+    }
 
+    dispatch(getCategoryList())
 
   }, [])
 
@@ -123,19 +133,26 @@ const FormListenWrite = (props: Props) => {
     <div className="container">
       <AdminPageHeader breadcrumb={breadcrumb} />
       <div className="pb-6 mx-6">
-        <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
-          <Form.Item name="area" label="Area" rules={[{ required: true, message: 'Missing area' }]}>
+        <Form form={form} layout="vertical" name="dynamic_form_nest_item" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+          {id ? <Form.Item label="_id" name="_id" hidden={true}>
+            <Input />
+          </Form.Item> : ""}
+
+          <Form.Item name="area" label="Chọn vai" rules={[{ required: true, message: 'Missing area' }]}>
             <Select options={areas} onChange={handleChange} />
           </Form.Item>
-          <Form.List name="sights">
+
+          <Form.List name="content" >
             {(fields, { add, remove }) => (
               <>
-                {fields.map(field => (
-                  <Space key={field.key} align="baseline">
+                {fields.map((field, index) => (
+                  <Space key={index + 1} align="baseline" >
                     <Form.Item
                       noStyle
                       shouldUpdate={(prevValues, curValues) =>
+
                         prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
+
                       }
                     >
                       {() => (
@@ -155,33 +172,104 @@ const FormListenWrite = (props: Props) => {
                         </Form.Item>
                       )}
                     </Form.Item>
+
                     <Form.Item
                       {...field}
                       label="Câu thoại"
                       name={[field.name, 'text']}
                       rules={[{ required: true, message: 'Không được để trống' }]}
+                      style={{ minWidth: "500px" }}
+
                     >
                       <Input />
                     </Form.Item>
 
+                    <Form.Item
+                      {...field}
+                      label="Đáp án"
+                      name={[field.name, 'answer']}
+
+                    >
+                      <Input />
+                    </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
                   </Space>
                 ))}
 
                 <Form.Item>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add sights
+                    Thêm câu thoại
                   </Button>
                 </Form.Item>
               </>
             )}
           </Form.List>
+
+          <Form.Item
+            label="Audio"
+
+            tooltip="Audio"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input type={'file'} id={'upload_image'} />
+            <ReactAudioPlayer style={{ margin: "20px 0" }}
+              src={audio}
+              controls
+            />
+          </Form.Item>
+
+
+
+
+
+
+
+          <Form.Item
+            label="Danh mục"
+            name="category"
+            tooltip="Danh Mục Category"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            {id
+              ? <Select >
+                {categories?.map((item: CategoryType, index) => (
+                  <Option key={index + 1} value={item._id}>
+                    {item.title}
+                  </Option>
+                ))}
+              </Select>
+
+              : <Select
+                defaultValue={categories?.map((item: CategoryType, index) => {
+                  if (item._id === listenWrite?.category) {
+                    return <Option key={index + 1} value={item._id}>
+                      {item.title}
+                    </Option>
+                  }
+                })}
+              >
+
+                {categories?.map((item: CategoryType, index) => (
+                  <Option key={index + 1} value={item._id}>
+                    {item.title}
+                  </Option>
+                ))}
+              </Select>}
+
+
+          </Form.Item>
+
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
           </Form.Item>
         </Form>
+
+        {/* <ReactAudioPlayer
+          src="http://res.cloudinary.com/chanh-thon/video/upload/v1659450744/upload_preset/a6ulgrn8zn5qjp8ak2wr.mp3"
+          controls 
+          /> */}
       </div>
 
 

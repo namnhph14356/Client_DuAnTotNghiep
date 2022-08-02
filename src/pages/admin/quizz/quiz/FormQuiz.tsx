@@ -184,6 +184,8 @@ const FormQuiz = (props: Props) => {
         const { data } = await detailQuiz(id)
         // console.log("data edit", data);
         setQuiz(data)
+        console.log(data);
+        
         form.setFieldsValue(data.quiz);
         dispatch(changeBreadcrumb("Sửa Quiz"))
       }
@@ -204,6 +206,7 @@ const FormQuiz = (props: Props) => {
       <AdminPageHeader breadcrumb={breadcrumb} />
       <div className="pb-6 mx-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+          
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
           </Form.Item> : ""}

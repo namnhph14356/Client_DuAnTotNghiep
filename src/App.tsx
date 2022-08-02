@@ -58,6 +58,7 @@ import FormAnswerQuiz from './pages/admin/quizz/answerQuiz/FormAnswerQuiz';
 import ListUserQuiz from './pages/admin/quizz/userQuiz/ListUserQuiz';
 import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
 import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
+import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
 
 
 function App() {
@@ -116,9 +117,9 @@ function App() {
 
           {/* listenWrite */}
           <Route path="listenWrite" >
-            <Route index element={<FormListenWrite />} />
+            <Route index element={<ListListenWrite />} />
             <Route path='add' element={<FormListenWrite />} />
-            <Route path=':id/edit' element={<FormQuiz />} />
+            <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
         </Route>
