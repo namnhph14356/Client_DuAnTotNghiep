@@ -1,144 +1,200 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
+import './../css/writeAndListen.css'
 
 const ExeWriteAndListen = () => {
     return (
-        <div>
-            <div>
-                <section className="w-10/12 mx-auto ">
-                    <div className="mt-[10px]">
-                        <div>
-                            <a className='return__learning'>
-                                <i className="fa-solid fa-xmark"></i>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <section className="w-10/12 mx-auto py-[30px]">
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4 md:mb-[50px]">
-                        <div className="flex">
-                            <div className="md:w-[200px] w-[200px]">
-                                <img src="../image/image 29.png" />
-                            </div>
-                            <div className="md:w-[80px] w-[70px] btn__radio__quiz">
-                                <button>
-                                    <img src="../image/Group 103.png" />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="md:col-span-2 md:mt-[90px] ">
-                            <div className="box__inp__listen md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>What Your <input className='border-b-2 border-black focus:outline-none focus:border-[#130ff8] text-lg md:text-xl' type="text" name="value" /> ?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4">
-                        <div className="md:col-span-2 mt-[100px]">
-                            <div className="md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>My Name <input className='border-b-2 border-black focus:outline-none focus:border-[#130ff8] text-lg md:text-xl' type="text" name="value" /> ?</p>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <div className="md:w-[80px] btn__radio__quiz">
-                                <button>
-                                    <img src="../image/Group 103.png" />
-                                </button>
-                            </div>
-                            <div className="w-[200px]">
-                                <img src="../image/women.png" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="py-[70px]">
-                        <button className=" border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700">Kiểm tra</button>
-                    </div>
-                </section>
-                <section className="w-10/12 mx-auto py-[30px]">
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4 md:mb-[50px]">
-                        <div className="flex">
-                            <div className="md:w-[250px] w-[200px]">
-                                <img src="../image/image 29.png" />
-                            </div>
-                            <div className="md:w-[80px] w-[70px]">
-                                <img src="../image/Group 103.png" />
-                            </div>
-                        </div>
-                        <div className="md:col-span-2 md:mt-[90px] ">
-                            <div className="md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>What Your <span className="text-[#2E86C1]">Name</span> ?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4">
-                        <div className="md:col-span-2 mt-[100px]">
-                            <div className="md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>My Name <span className="text-[#2E86C1]">Laura</span> ?</p>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <div className="md:w-[80px]">
-                                <img src="../image/Group 103.png" />
-                            </div>
-                            <div className="w-[250px]">
-                                <img src="../image/women.png" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="py-[70px] flex justify-between ">
-                        <div>
-                            <button className=" bg-[#D6EAF8] text-[#2E86C1] border-2 border-[#2E86C1] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700 ">Tiếp Tục</button>
+        <div className='main__write__listen'>
+            <div className="header__write__listen">
+                <div className="title__header__write__listen">
+                    <h2>
+                        Family
+                    </h2>
+                </div>
+                <div className="close__header">
+                    <button>
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
 
-                        </div>
-                        <div>
-                            <button className=" bg-[#D6EAF8] text-[#2E86C1] border-2 border-[#2E86C1] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700 ">Kiểm tra</button>
-
-                        </div>
-                    </div>
-                </section>
-                <section className="w-10/12 mx-auto py-[30px]">
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4 md:mb-[50px]">
-                        <div className="flex">
-                            <div className="md:w-[250px] w-[200px]">
-                                <img src="../image/image 29.png" />
-                            </div>
-                            <div className="md:w-[80px] w-[70px]">
-                                <img src="../image/Group 103.png" />
-                            </div>
-                        </div>
-                        <div className="md:col-span-2 md:mt-[90px] ">
-                            <div className="md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>What Your <span className="text-[#C0392B]">My</span> ?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="grid md:grid-cols-3 md:gap-12 gap-4">
-                        <div className="md:col-span-2 mt-[100px]">
-                            <div className="md:w-6/10 w-10/12 border-2 text-center py-[10px] font-bold text-2xl rounded shadow-xl">
-                                <p className='mb-0'>My Name <span className="text-[#2E86C1]">Laura</span> </p>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <div className="md:w-[80px]">
-                                <img src="../image/Group 103.png" />
-                            </div>
-                            <div className="w-[250px]">
-                                <img src="../image/women.png" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="py-[70px] flex justify-between">
-                        <div>
-                        <button className="bg-[#F9EBEA] text-[#C0392B] border-2 border-[#C0392B] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700">Tiếp Tục</button>
-
-                        </div>
-                        <div>
-                        <button className="bg-[#F9EBEA] text-[#C0392B] border-2 border-[#C0392B] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700">Kiểm tra</button>
-
-                        </div>
-                    </div>
-                </section>
+            </div>
+            <div className='info__write__listen'>
+                <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
+            </div>
+            <div className="audio__listen">
+                <audio
+                    controls
+                    src="[AudiConvert] KrewellaMusicVEVO Krewella - Alive (Video).mp3">
+                    Your browser does not support the
+                    <code>audio</code> element.
+                </audio>
             </div>
 
+            <div className="conversation__box">
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='inp__text' type="text" name="" id="" />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Peter:</strong>
+                    <span>
+                        Today we are <input className='inp__text' type="text" name="" id="" />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='inp__text' type="text" name="" id="" />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='inp__text' type="text" name="" id="" />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='inp__text' type="text" name="" id="" />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+            </div>
+            <div className="btn__Check__answer">
+                <button>
+                    Kiểm tra
+                </button>
+            </div>
+
+
+            {/* check result */}
+
+
+            <div className="conversation__box">
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='text__result__wrong' type="text" name="" id="" value={"go to"} />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Peter:</strong>
+                    <span>
+                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"oh my good"} />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='text__result__wrong' type="text" name="" id="" value={"what "} />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"realy"} />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+                <p>
+                    <strong>Linda:</strong>
+                    <span>
+                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"fuck"} />
+                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
+                    </span>
+                </p>
+            </div>
+            <div className="answer__result">
+                <p>
+                    <i className="fa-solid fa-medal"></i>
+                    Bạn đã trả lời đúng : 2/10
+                </p>
+                <button className='btn__detail__result'>
+                    xem chi tiết
+                </button>
+            </div>
+
+
+            {/* listed result */}
+
+
+            <div className="conversation__box">
+                <table className='table__list__result'>
+                    <thead>
+                        <tr>
+                            <th>
+                                .......
+                            </th>
+                            <th>
+                                câu trả lời của bạn
+                            </th>
+                            <th>
+                                Câu trả lời chính xác
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody className='body__table__result'>
+                        <tr>
+                            <td>
+                                01
+                            </td>
+                            <td className='correct__text__writer'>
+                                Go to
+                            </td>
+                            <td>
+                                Go to
+                            </td>
+                            <td>
+                                <i className="fa-solid fa-thumbs-up result__correct__icon"></i>                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                01
+                            </td>
+                            <td className='woring__text__writer'>
+                                Go to
+                            </td>
+                            <td>
+                                Go to
+                            </td>
+                            <td>
+                                <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>                          </td>
+                        </tr>
+                    </tbody>
+                    <tr className='result__medium'>
+                        <td>
+                            13:22 20/12/2022
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            1/12
+                        </td>
+                        <td>
+                            Chưa đạt yêu cầu
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div className="back__wep__close">
+                <button>
+                    Trở lại
+                </button>
+            </div>
         </div>
     )
 }

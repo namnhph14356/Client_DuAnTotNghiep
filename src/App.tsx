@@ -12,6 +12,7 @@ import './css/quiz.css';
 import './css/speaking.css';
 import './css/listen.css';
 import './css/teacherPage.css';
+import './css/menageTeacher.css';
 import "toastr/build/toastr.min.css";
 
 // import './App.css';
@@ -61,7 +62,18 @@ import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
 import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
 import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
 
+
+import ListAnswerQuiz from './pages/admin/answerQuiz/ListAnswerQuiz';
+import FormAnswerQuiz from './pages/admin/answerQuiz/FormAnswerQuiz';
+import ListUserQuiz from './pages/admin/userQuiz/ListUserQuiz';
+import FormUserQuiz from './pages/admin/userQuiz/FormUserQuiz';
+import TeacherPage from './pages/teacher/TeacherPage';
+import ManageTeacher from './pages/teacher/ManagementTeacher';
+import CategoryTeacher from './pages/teacher/category/category';
+import CategoryList from './pages/teacher/category/category';
+import AddCategory from './pages/teacher/category/createCategory';
 import TeacherPage from './pages/TeacherPage';
+
 
 
 
@@ -82,6 +94,14 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
+          <Route path='menageteacher'  element={<ManageTeacher />}>
+          
+            <Route path="category" >
+              <Route index element={<CategoryList />} />
+              <Route path='add' element={<AddCategory />} />
+              <Route path='edit/:id' element={<Edit />} />
+            </Route>
+          </Route>
         </Route>
 
 
