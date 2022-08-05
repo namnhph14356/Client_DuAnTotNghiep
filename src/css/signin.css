@@ -5,14 +5,26 @@
     /* background-image: url('https://i.pinimg.com/originals/43/a0/10/43a010b5290bbe92304d6baf5b3c0d54.gif'); */
     /* background-image: url('https://i.pinimg.com/originals/fd/1c/4a/fd1c4a448977df7d033f60f3d2cf9ce7.gif'); */
     /* background-image: url('https://i.pinimg.com/originals/73/a2/0e/73a20e46766497cce6c45dce5c31a1bd.gif'); */
-    background-image: url('https://i.pinimg.com/originals/f0/07/66/f007669223b43a7c17dae49cf45871ce.gif');
+    /* background-image: url('https://i.pinimg.com/originals/f0/07/66/f007669223b43a7c17dae49cf45871ce.gif'); */
+    background-image: url("https://media.istockphoto.com/vectors/abstract-blurred-colorful-background-vector-id1185382671?k=20&m=1185382671&s=612x612&w=0&h=QvHSiV0uDYhl69m1rpIt0aYbk4vmpl9kjVcfkMkgyfw=");
 
     background-repeat: no-repeat;
     background-size: 100% 752px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .signin__form {
     @apply col-span-12 w-10/12 m-auto py-12 flex justify-center
+}
+.signin__form {
+   background-color: #fff; 
+   width: 1058px;
+   height: 619px;
+   margin-top: 50px !important;
+   border-radius: 5px;
 }
 
 
