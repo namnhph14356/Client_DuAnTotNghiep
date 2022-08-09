@@ -11,6 +11,7 @@ import { getCategoryList } from '../../../features/Slide/category/CategorySlide'
 import { CategoryType } from '../../../types/category';
 import { detailQuiz } from '../../../api/quiz';
 import { QuizType } from '../../../types/quiz';
+import useQuiz from '../../../features/Slide/quiz/use_quiz';
 
 
 // import img from '../../../../public/image//image 22.png'
@@ -18,6 +19,10 @@ import { QuizType } from '../../../types/quiz';
 type Props = {}
 
 const FormQuiz = (props: Props) => {
+
+  const { data, error, mutate, add, edit, remove } = useQuiz()
+  const quizs = useAppSelector(item => item.quiz.value)
+
   const { Option } = Select;
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
@@ -71,13 +76,21 @@ const FormQuiz = (props: Props) => {
     message.loading({ content: 'Loading...', key });
     setTimeout(() => {
       if (id) {
-        dispatch(editQuizSlide(value));
+        // dispatch(editQuizSlide(value));
+        mutate(edit(value))
+        console.log("data swr",data);
+        console.log("data redux",quizs);
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/admin/quiz");
+        // navigate("/admin/quiz");
       } else {
-        dispatch(addQuizSlide(value));
+        // dispatch(addQuizSlide(value));
+        mutate(add(value))
+        console.log("data swr",data);
+        console.log("data redux",quizs);
+        
+        
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/admin/quiz");
+        // navigate("/admin/quiz");
       }
 
     }, 2000);
