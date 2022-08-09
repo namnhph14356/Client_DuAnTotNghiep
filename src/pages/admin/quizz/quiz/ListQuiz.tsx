@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../Component/AdminPageHeader';
+import AdminPageHeader from '../../../../Component/AdminPageHeader';
 import { Link } from 'react-router-dom';
-import { QuizType } from '../../../types/quiz';
-import { changeBreadcrumb, getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../types/category';
+import { QuizType } from '../../../../types/quiz';
+import { changeBreadcrumb, getListQuizSlide, removeQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
+import { CategoryType } from '../../../../types/category';
 
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
