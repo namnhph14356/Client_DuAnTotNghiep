@@ -11,7 +11,8 @@ import { getCategoryList } from '../../../../features/Slide/category/CategorySli
 import { CategoryType } from '../../../../types/category';
 import { detailQuiz } from '../../../../api/quiz';
 import { QuizType } from '../../../../types/quiz';
-import useQuiz from '../../../features/Slide/quiz/use_quiz';
+import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+
 
 
 // import img from '../../../../public/image//image 22.png'

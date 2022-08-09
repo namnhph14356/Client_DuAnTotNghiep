@@ -14,9 +14,9 @@ import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import { getListAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { AnswerQuizType } from '../../../types/answerQuiz';
-import useQuiz from '../../../features/Slide/quiz/use_quiz';
+import { getListAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { AnswerQuizType } from '../../../../types/answerQuiz';
+import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 
 interface DataType {
   key: React.Key;
