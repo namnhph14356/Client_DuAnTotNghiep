@@ -1,8 +1,8 @@
-import useSWR from "swr";
+
 import { addQuiz, editQuiz, removeQuiz } from "../../../api/quiz";
 import { useAppDispatch } from "../../../app/hooks";
 import { addQuizSlide, editQuizSlide } from "./QuizSlide";
-
+import useSWR from "swr";
 const useQuiz = () => {
 
     const dispatch = useAppDispatch();
