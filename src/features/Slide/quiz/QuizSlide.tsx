@@ -3,6 +3,7 @@ import { addQuiz, detailQuiz, editQuiz, listQuiz, removeQuiz } from "../../../ap
 import { QuizType } from "../../../types/quiz";
 
 
+
 export const getListQuizSlide = createAsyncThunk(
      'quizs/getListQuiz',
      async () => {
@@ -54,7 +55,10 @@ export const removeQuizSlide = createAsyncThunk(
      }
 )
 
+
+
 const quizSlice = createSlice({
+     
      name: "quizs",
      initialState: {
           value: [],
@@ -66,17 +70,18 @@ const quizSlice = createSlice({
           }
      },
      extraReducers(builder) {
+          
           builder.addCase(getListQuizSlide.fulfilled, (state, action) => {
                state.value = action.payload
 
           })
           builder.addCase(addQuizSlide.fulfilled, (state: any, action) => {
                state.value = [...state.value, action.payload]
-
+               
           })
           builder.addCase(editQuizSlide.fulfilled, (state: any, action) => {
                state.value = state.value.map(item => item._id === action.payload._id ? action.payload : item)
-
+               
           })
           builder.addCase(removeQuizSlide.fulfilled, (state: any, action: any) => {
                // state.value = state.value.filter(item => item._id !== action.payload._id)

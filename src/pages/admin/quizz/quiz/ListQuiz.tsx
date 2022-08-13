@@ -16,6 +16,7 @@ import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
 import { getListAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { AnswerQuizType } from '../../../../types/answerQuiz';
+import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 
 interface DataType {
   key: React.Key;
@@ -50,8 +51,11 @@ const ListQuiz = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
-  //------------------STATE--------------------
+  const { data, error, mutate, add, edit, remove } = useQuiz()
 
+  //------------------STATE--------------------
+  console.log("data SWR",data);
+  
 
   const dataTable = quizs.map((item: QuizType, index) => {
     return {
@@ -332,9 +336,14 @@ const ListQuiz = (props: Props) => {
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
+    console.log("data swr",data);
+    console.log("data redux",quizs);
 
-  }, [])
+  }, [data])
 
+
+  if (!data) return <div>Loading...</div>
+  if (error) return <div>Fail to Load</div>
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
@@ -374,9 +383,9 @@ const ListQuiz = (props: Props) => {
         //       ? <p key={index + 1} style={{ margin: 0 }}>{item.answer}</p>
         //       : "")}
 
-           
+
         //   </div>,
-          
+
         // }}
         rowSelection={rowSelection}
         columns={columns}
