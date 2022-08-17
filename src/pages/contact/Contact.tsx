@@ -83,25 +83,12 @@ const Contact = (props: Props) => {
                   <Input placeholder="Nhập số điện thoại" />
                 </div>
               </Col>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12} className="mb-3">
+              <Col xs={24} sm={12} md={12} lg={12} xl={24} className="mb-3">
                 <div className="pr-3">
                   <h5  className="uppercase m-0 text-[14px] mb-[15px]">
                     MESSAGE (*)
                   </h5>
                   <TextArea placeholder="Nhập số điện thoại" />
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={12} lg={12} xl={12} className="mb-3">
-                <div className="pr-3">
-                  <button className="uppercase bg-[#512E5F] text-[#fff] py-[2px] px-4 btn-file">
-                    FILE ĐÍNH KÈM
-                  </button>
-                  <div className="pt-3">
-                    <Typography.Text className="text-[12px] text-font-weight">
-                      Bạn có thể đính kèm tệp lên đến 4096KB ở bất kỳ định dạng
-                      nào sau đây: doc, xsl, txt, pdf, jpg, jpeg, gif, png
-                    </Typography.Text>
-                  </div>
                 </div>
               </Col>
             </Row>

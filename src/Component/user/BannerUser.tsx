@@ -1,9 +1,15 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import './style.css'
 type Props = {};
 
 const BannerUser = (props: Props) => {
+  const isAuthenticate = () => {
+    if (!localStorage.getItem('user')) return;
+    return JSON.parse(localStorage.getItem('user') as string);
+  }
+  const data = isAuthenticate()
   return (
     <div>
       <div className="mt-[65px] pb-2">
@@ -11,10 +17,10 @@ const BannerUser = (props: Props) => {
           <Row className="items-center">
             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
               <Row className="items-center">
-                <Col  className="info-image">
+                <Col className="info-image">
                   <img
                     className="rounded-full w-[154px] h-[154px]"
-                    src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg"
+                    src={data.image}
                     alt=""
                   />
                 </Col>
@@ -26,7 +32,7 @@ const BannerUser = (props: Props) => {
                   xl={16}
                   className="info-detail ps-2"
                 >
-                  <Typography.Title level={3} className="font-bold text-[32px]">Bùi Hồng Hạnh</Typography.Title>
+                  <Typography.Title level={3} className="font-bold text-[32px]">{data.user.username}</Typography.Title>
                   <span>67349hy</span>
                   <div className="flex py-4 items-center">
                     <div className="">
@@ -48,7 +54,7 @@ const BannerUser = (props: Props) => {
                   src="https://scontent.xx.fbcdn.net/v/t1.15752-9/287291026_3128117690785848_6081349556072284930_n.png?stp=cp0_dst-png&_nc_cat=106&ccb=1-7&_nc_sid=aee45a&_nc_ohc=EL-petMT1QgAX8oDtW9&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVIckk641yBQKZ1FfhgRP0AWMV460Fp47C2Jdx2X8UTArQ&oe=62E0F077"
                   alt=""
                 />
-                <p className="m-0 text-[18px] font-bold px-3">Sửa hồ sơ</p>
+                <NavLink to={`/user/edit/${data.user._id}`} className="m-0 text-[18px] font-bold px-3">Sửa hồ sơ</NavLink>
               </button>
             </Col>
           </Row>
