@@ -7,19 +7,13 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import { SWRConfig } from 'swr';
-import instance from './api/instance';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <SWRConfig value={{
-        fetcher: async (url) => instance.get(url)
-      }}>
-        <App />
-      </SWRConfig>
+      <App />
     </Provider>
   </BrowserRouter>
 );

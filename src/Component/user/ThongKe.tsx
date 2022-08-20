@@ -1,197 +1,72 @@
 import { Col, Row } from "antd";
-import Item from "antd/lib/list/Item";
 import React from "react";
-import { useSelector } from "react-redux";
 import "./style.css";
 type Props = {};
 
 const ThongKe = (props: Props) => {
-    // const user = useSelector((item) => item.user.value)
-    return (
-        <div className="container border-t-gray-300">
-            <div className="py-[90px]">
-
-                <div className="big-box">
-
-                    <div className="box_statistical">
-                        <h2 className="font-bold text-[20px]">Thống kê</h2>
-                        <div className="item__statistical">
-                            <div className="item__result__teacher">
-                                <div className="icon__item__teacher">
-                                    <i className="fa-solid fa-bolt-lightning"></i>
-                                </div>
-                                <div className="point__teacher">
-                                    <span>
-                                        0
-                                    </span>
-                                    <p>Điểm kinh nghiệm</p>
-                                </div>
-                            </div>
-                            <div className="item__result__teacher">
-                                <div className="icon__item__teacher">
-                                    <i className="fa-solid fa-crown"></i>
-                                </div>
-                                <div className="point__teacher">
-                                    <span>
-                                        0
-                                    </span>
-                                    <p>Tổng vương niệm</p>
-                                </div>
-                            </div>
-                            <div className="item__result__teacher">
-                                <div className="icon__item__teacher">
-                                    <i className="fa-solid fa-trophy"></i>
-                                </div>
-                                <div className="point__teacher">
-                                    <span>
-                                        0
-                                    </span>
-                                    <p>Thứ hạng</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="history__user">
-                        <div className="title__history">
-                            <h5>
-                                Lịch sử hoạt động
-                            </h5>
-                            <button>
-                                xóa tất cả lịch sử
-                            </button>
-                        </div>
-
-                        <div className="list__history__user">
-                            <p>
-                                5 Tháng 8, 2022
-                            </p>
-                            <div className="item__history__user">
-
-                                <div className="info__user__history">
-                                    <div className="img__user__history">
-                                        <img src="https://i.pinimg.com/564x/e6/d5/7d/e6d57d498cdcf7c6b921bb368c54ccfa.jpg" alt="" />
-                                    </div>
-                                    <div className="name__history__user">
-                                        <h5>
-                                            Bùi Hồng Hạnh  <span>
-                                                đã tham gia phần bài học
-                                            </span>
-                                        </h5>
-
-                                    </div>
-                                </div>
-
-                                <div className="time__history">
-                                    <div className="time__action">
-                                        <p>
-                                            10:22
-                                        </p>
-                                    </div>
-                                    <div className="btn__deltete__history">
-                                        <button>
-                                            <i className="fa-solid fa-delete-left"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="item__history__user">
-
-                                <div className="info__user__history">
-                                    <div className="img__user__history">
-                                        <img src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg" alt="" />
-                                    </div>
-                                    <div className="name__history__user">
-                                        <h5>
-                                            Bùi Hồng Hạnh  <span>
-                                                đã tham gia phần bài học
-                                            </span>
-                                        </h5>
-
-                                    </div>
-                                </div>
-
-                                <div className="time__history">
-                                    <div className="time__action">
-                                        <p>
-                                            10:22
-                                        </p>
-                                    </div>
-                                    <div className="btn__deltete__history">
-                                        <button>
-                                            <i className="fa-solid fa-delete-left"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="item__history__user">
-
-                                <div className="info__user__history">
-                                    <div className="img__user__history">
-                                        <img src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg" alt="" />
-                                    </div>
-                                    <div className="name__history__user">
-                                        <h5>
-                                            Bùi Hồng Hạnh  <span>
-                                                đã tham gia phần bài học
-                                            </span>
-                                        </h5>
-
-                                    </div>
-                                </div>
-
-                                <div className="time__history">
-                                    <div className="time__action">
-                                        <p>
-                                            10:22
-                                        </p>
-                                    </div>
-                                    <div className="btn__deltete__history">
-                                        <button>
-                                            <i className="fa-solid fa-delete-left"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="item__history__user">
-
-                                <div className="info__user__history">
-                                    <div className="img__user__history">
-                                        <img src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg" alt="" />
-                                    </div>
-                                    <div className="name__history__user">
-                                        <h5>
-                                            Bùi Hồng Hạnh  <span>
-                                                đã tham gia phần bài học
-                                            </span>
-                                        </h5>
-
-                                    </div>
-                                </div>
-
-                                <div className="time__history">
-                                    <div className="time__action">
-                                        <p>
-                                            10:22
-                                        </p>
-                                    </div>
-                                    <div className="btn__deltete__history">
-                                        <button>
-                                            <i className="fa-solid fa-delete-left"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+  return (
+    <div className="container">
+      <div className="py-[90px]">
+        <h1 className="font-bold text-[32px] px-4">Thống kê</h1>
+        <div className="big-box">
+          <Row>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} className="p-4">
+              <div className="small-box px-3 py-5 border rounded-md hover:shadow-lg transition-all ease-linear duration-300">
+                <div className="level flex items-center">
+                  <div className="icon px-3">
+                    <img src="../../image/image 39.png" />
+                  </div>
+                  <div className="info px-7">
+                    <p className="m-0 text-[18px]">0</p>
+                    <span className="text-[20px]">Level</span>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} className="p-4">
+              <div className="small-box px-3 py-5 border rounded-md hover:shadow-lg transition-all ease-linear duration-300">
+                <div className="level flex items-center">
+                  <div className="icon px-3">
+                    <img src="../../image/image 39 (1).png" />
+                  </div>
+                  <div className="info px-7">
+                    <p className="m-0 text-[18px]">0</p>
+                    <span className="text-[20px]">Tổng vương miệng</span>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} className="p-4">
+              <div className="small-box px-3 py-5 border rounded-md hover:shadow-lg transition-all ease-linear duration-300">
+                <div className="level flex items-center">
+                  <div className="icon px-3">
+                    <img src="../../image/image 39 (2).png" />
+                  </div>
+                  <div className="info px-7">
+                    <p className="m-0 text-[18px]">0</p>
+                    <span className="text-[20px]">Điểm kinh nghiệm</span>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={12} className="p-4">
+              <div className="small-box px-3 py-5 border rounded-md hover:shadow-lg">
+                <div className="level flex items-center">
+                  <div className="icon px-3">
+                    <img src="../../image/image 39 (3).png" />
+                  </div>
+                  <div className="info px-7">
+                    <p className="m-0 text-[18px]">0</p>
+                    <span className="text-[20px]">Thứ hạng</span>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default ThongKe;

@@ -24,8 +24,3 @@ export const getCategoryById = (id:any) => {
     const url = `/categories/${id}`;
     return instance.get(url);
 }
-
-export const uploadAudio = (audi:any) => {
-    const url = `/categories`;
-    return instance.post(url, audi);
-}

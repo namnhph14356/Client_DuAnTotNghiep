@@ -4,15 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import AdminPageHeader from '../../../../Component/AdminPageHeader';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
-import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
-import { detailQuiz } from '../../../../api/quiz';
-import { QuizType } from '../../../../types/quiz';
-import useQuiz from '../../../../features/Slide/quiz/use_quiz';
-
+import AdminPageHeader from '../../../Component/AdminPageHeader';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
+import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
+import { CategoryType } from '../../../types/category';
+import { detailQuiz } from '../../../api/quiz';
+import { QuizType } from '../../../types/quiz';
 
 
 // import img from '../../../../public/image//image 22.png'
@@ -20,10 +18,6 @@ import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 type Props = {}
 
 const FormQuiz = (props: Props) => {
-
-  const { data, error, mutate, add, edit, remove } = useQuiz()
-  const quizs = useAppSelector(item => item.quiz.value)
-
   const { Option } = Select;
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
@@ -77,21 +71,13 @@ const FormQuiz = (props: Props) => {
     message.loading({ content: 'Loading...', key });
     setTimeout(() => {
       if (id) {
-        // dispatch(editQuizSlide(value));
-        mutate(edit(value))
-        console.log("data swr",data);
-        console.log("data redux",quizs);
+        dispatch(editQuizSlide(value));
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       } else {
-        // dispatch(addQuizSlide(value));
-        mutate(add(value))
-        console.log("data swr",data);
-        console.log("data redux",quizs);
-        
-        
+        dispatch(addQuizSlide(value));
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       }
 
     }, 2000);
@@ -198,8 +184,6 @@ const FormQuiz = (props: Props) => {
         const { data } = await detailQuiz(id)
         // console.log("data edit", data);
         setQuiz(data)
-        console.log(data);
-        
         form.setFieldsValue(data.quiz);
         dispatch(changeBreadcrumb("Sửa Quiz"))
       }
@@ -220,7 +204,6 @@ const FormQuiz = (props: Props) => {
       <AdminPageHeader breadcrumb={breadcrumb} />
       <div className="pb-6 mx-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-          
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
           </Form.Item> : ""}

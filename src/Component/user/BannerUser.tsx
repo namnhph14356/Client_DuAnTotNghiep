@@ -6,15 +6,15 @@ type Props = {};
 const BannerUser = (props: Props) => {
   return (
     <div>
-      <div className="mt-[65px] pb-2">
-        <div className="box__banner__user">
+      <div className="pt-3">
+        <div className="border-b-2">
           <Row className="items-center">
             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
               <Row className="items-center">
-                <Col  className="info-image">
+                <Col xs={24} sm={8} md={8} lg={8} xl={8} className="info-image">
                   <img
-                    className="rounded-full w-[154px] h-[154px]"
-                    src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg"
+                    className="object-cover m-0 p-5"
+                    src="https://scontent.fhan3-2.fna.fbcdn.net/v/t1.15752-9/289426260_1007515679910649_6816727799621106895_n.png?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=up6sOk_MwWEAX8JmNUj&_nc_ht=scontent.fhan3-2.fna&oh=03_AVKYw46aGd4iGKWGH7xK1Kg8kjsIHUqvJCRAh2ow6CiqjA&oe=62E27F33"
                     alt=""
                   />
                 </Col>
