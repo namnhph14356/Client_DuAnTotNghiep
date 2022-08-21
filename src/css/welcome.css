@@ -19,7 +19,7 @@
           @apply my-[100px] 
       }
       .section-1 .box .row{
-          @apply grid grid-cols-2  md:grid md:grid-cols-3 gap-[30px] xl:grid xl:grid-cols-5 xl:gap-[30px] mx-auto
+          @apply grid grid-cols-2  md:grid md:grid-cols-3 gap-[30px] xl:grid xl:grid-cols-4 xl:gap-[30px] mx-auto
       }
       .section-1 .box .row .col{
           @apply bg-[#F4F4F4] px-[24px] py-[36px] rounded-xl
@@ -86,3 +86,20 @@
         .test-btn .btn{
           @apply bg-[#4A235A] text-[16px]  py-[17px] px-[30px] rounded-xl text-white  md:px-[80px] lg:px-[120px] md:text-[24px]
         }
+      
+.text__modal{
+  @apply text-[24px] font-bold text-purple-900
+}
+
+.buton__modal{
+  @apply border-none rounded w-[150px] h-[40px]  mx-auto text-center shadow-md mt-[40px] text-white font-bold ml-4
+}
+.yes__modal{
+  @apply bg-green-500 hover:bg-green-600
+}
+.no__modal{
+  @apply bg-red-500 hover:bg-red-600
+}
+.close__modal{
+  @apply border rounded bg-red-600 font-bold px-[5px] px-[5px]
+}
