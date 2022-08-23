@@ -1,9 +1,12 @@
 import { Col, Row } from "antd";
+import Item from "antd/lib/list/Item";
 import React from "react";
+import { useSelector } from "react-redux";
 import "./style.css";
 type Props = {};
 
 const ThongKe = (props: Props) => {
+    // const user = useSelector((item) => item.user.value)
     return (
         <div className="container border-t-gray-300">
             <div className="py-[90px]">
@@ -67,7 +70,7 @@ const ThongKe = (props: Props) => {
 
                                 <div className="info__user__history">
                                     <div className="img__user__history">
-                                        <img src="https://i.pinimg.com/564x/04/8c/7e/048c7e0904fe27ffd0b91784a93eacc4.jpg" alt="" />
+                                        <img src="https://i.pinimg.com/564x/e6/d5/7d/e6d57d498cdcf7c6b921bb368c54ccfa.jpg" alt="" />
                                     </div>
                                     <div className="name__history__user">
                                         <h5>

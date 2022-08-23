@@ -69,6 +69,7 @@ import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryTeacher from './pages/teacher/category/category';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+import EditUser from './pages/user/EditUser';
 
 
 
@@ -84,13 +85,15 @@ function App() {
           <Route path='detailLearning' element={<DetailLearning />} />
           <Route path='detailLearning/quiz' element={<ExeQuiz />} />
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} />
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
           <Route path="contact" element={<Contact />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
+          <Route path='user/edit/:id' element={<EditUser/>} />
           <Route path='menageteacher'  element={<ManageTeacher />}>
+
           
             <Route path="category" >
               <Route index element={<CategoryList />} />

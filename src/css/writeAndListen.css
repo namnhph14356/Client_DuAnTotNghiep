@@ -26,15 +26,18 @@
 .conversation__box{
     @apply mt-[73px] bg-[#fff] py-[20px] px-[30px] rounded
 }
+
 .inp__text{
+   
     border-bottom: 1px solid #000;
     outline: none;
-    padding-left: 30px;
-    
+    /* padding-left: 30px; */
+    text-align: center;
 }
 .inp__text:focus{
     border-color: #3498DB;
 }
+
 .conversation__box p{
     @apply mb-[10px] leading-loose
 
@@ -58,17 +61,15 @@
 
  .text__result__wrong{
     outline: none;
-    border-bottom: 1px solid #000;
-    padding-left: 30px;
     color: #A93226;
+    text-align: center;
     font-weight: 600;
     text-decoration: line-through;
  }
  .text__result__correct{
     outline: none;
-    border-bottom: 1px solid #000;
-    padding-left: 30px;
     color: #2E86C1;
+    text-align: center;
     font-weight: 600;
  }
  .answer__result{
@@ -124,7 +125,7 @@
 
  }
  .correct__text__writer{
-    color: #2E86C1;
+    color: #01b004;
  }
  .woring__text__writer{
     color: #A93226;
