@@ -10,6 +10,8 @@ const BannerUser = (props: Props) => {
     return JSON.parse(localStorage.getItem('user') as string);
   }
   const data = isAuthenticate()
+  console.log(data);
+  
   return (
     <div>
       <div className="mt-[65px] pb-2">
