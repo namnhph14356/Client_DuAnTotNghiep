@@ -175,6 +175,9 @@
 #dark h3{
     color: white;
 }
+#dark h1{
+    color: white;
+}
 #dark .item__list__learning:hover h3{
     color: black;
 }
