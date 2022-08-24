@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import  './css/home.css'; 
 import  './css/footer.css'; 
 import  './css/header.css'; 
@@ -13,7 +13,7 @@ import './css/speaking.css';
 import './css/listen.css';
 import "toastr/build/toastr.min.css";
 import "./css/paypal.css"
-// import './App.css';
+import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
@@ -61,15 +61,29 @@ import CheckoutPaypal from './pages/CheckoutPaypal';
 import Success from './pages/paymentConfirm/success';
 import Error from './pages/paymentConfirm/error';
 import ChangeColorBG from './Component/ChangeColorBG';
+import ListWellcome from './pages/admin/wellCome/listWellcome';
+import ReactSwitch from 'react-switch';
 
+export const ThemeContext:any = createContext(null)
 function App() {
   const [changeColor, setChangeColor] = useState(null);
+  const [theme, setTheme] = useState("dark");
   const getColor = (color:any) => {
     setChangeColor(color);
   }
+
+  const toggleTheme = () => {
+    setTheme((curr) => (curr === "light" ? "dark" : "light"))
+  }
+  console.log(theme);
+  
   return (
-    <div style={{background: `${changeColor}`}}>
-      <ChangeColorBG getColor={getColor} />
+    <ThemeContext.Provider value={{theme, toggleTheme}} >
+    <div style={{background: `${changeColor}`}} id={theme}>
+      <div className='swich__custom'>
+    <label className='label__swich'> {theme === "light" ? "Light Mode" : "Dark Mode"}</label>
+      <ReactSwitch className="" onColor='#8E44AD' onChange={toggleTheme} checked={theme === "dark"}/>
+      </div>
       <Routes>
         
         <Route path='/' element={<WebsiteLayout />}>
@@ -118,6 +132,9 @@ function App() {
             <Route path=':id/edit' element={<FormUserQuiz />} />
           </Route>
 
+          <Route path='wellcome'>
+            <Route index element={<ListWellcome />}/>
+          </Route>
         </Route>
             <Route path='/payment' element={<CheckoutPaypal />} />
             <Route path='/success' element={<Success />} />
@@ -133,6 +150,7 @@ function App() {
 
 
     </div>
+    </ThemeContext.Provider>
   );
 }
 
