@@ -67,25 +67,11 @@ import { isTheme } from './utils/localStoreR';
 
 export const ThemeContext:any = createContext(null)
 function App() {
-  const [changeColor, setChangeColor] = useState(null);
-  const [theme, setTheme] = useState("dark");
-  const getColor = (color:any) => {
-    setChangeColor(color);
-  }
-
-  const toggleTheme = () => {
-    setTheme((curr) => (curr === "light" ? "dark" : "light"));
-    localStorage.setItem("theme", JSON.stringify(theme));
-  }
-  console.log(theme);
+  
  const themeStore = isTheme();
   return (
-    <ThemeContext.Provider value={{theme, toggleTheme}} >
-    <div style={{background: `${changeColor}`}} id={themeStore}>
-      <div className='swich__custom'>
-    <label className='label__swich'> {themeStore === "light" ? "Light Mode" : "Dark Mode"}</label>
-      <ReactSwitch className="" onColor='#8E44AD' onChange={toggleTheme} checked={themeStore === "dark"}/>
-      </div>
+  
+    <div  id={themeStore}>
       <Routes>
         
         <Route path='/' element={<WebsiteLayout />}>
@@ -152,7 +138,6 @@ function App() {
 
 
     </div>
-    </ThemeContext.Provider>
   );
 }
 

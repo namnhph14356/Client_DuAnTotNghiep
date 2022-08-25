@@ -196,6 +196,9 @@
 #dark .reason .title{
     color: black;
 }
+#dark span {
+    color: white;
+}
 /* Light */
 #light .label__swich{
     color: #8E44AD;
@@ -218,5 +221,11 @@
     color: black;
 }
 #light .col .col-box p{
+    color: white;
+}
+#light .-title-content {
+    color: white;
+}
+#light .-item-icon{
     color: white;
 }
