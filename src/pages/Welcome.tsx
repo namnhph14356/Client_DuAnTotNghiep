@@ -61,7 +61,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox"
                     className="_checkbox"
-                    value="1"
+                    value="Google"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox">
@@ -77,7 +77,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox2"
                     className="_checkbox"
-                    value="2"
+                    value="Youtube"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox2">
@@ -91,7 +91,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox3"
                     className="_checkbox"
-                    value="3"
+                    value="TV"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox3">
@@ -105,7 +105,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox4"
                     className="_checkbox"
-                    value="4"
+                    value="Tik Tok"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox4">
@@ -119,7 +119,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox5"
                     className="_checkbox"
-                    value="5"
+                    value="Facebook"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox5">
@@ -133,13 +133,13 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox6"
                     className="_checkbox"
-                    value="6"
+                    value="Người thân"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox6">
                     <div id="tick_mark"></div>
                   </label>
-                  <p>Bạn bè &amp; Gia đình</p>
+                  <p>Bạnbè  &amp; Gia đình</p>
                 </div>
                 <div className="col social__custom">
                   <img src="../image/image 14.png" width={140} />
@@ -147,7 +147,7 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox7"
                     className="_checkbox"
-                    value="7"
+                    value="Báo chí"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox7">
@@ -161,12 +161,13 @@ const Welcome = () => {
                     type="checkbox"
                     id="_checkbox8"
                     className="_checkbox"
-                    value="8"
+                    value="Khác"
                     {...register("social")}
                   />
                   <label htmlFor="_checkbox8">
                     <div id="tick_mark"></div>
                   </label>
+                  <p>Khác</p>
                 </div>
               </div>
             </div>
@@ -187,7 +188,7 @@ const Welcome = () => {
                   <input
                     type="checkbox"
                     id="_reason"
-                    value="1"
+                    value="Tìm kiếm Google"
                     className="_checkbox"
                     {...register("reason")}
                   />
@@ -201,7 +202,7 @@ const Welcome = () => {
                   <input
                     type="checkbox"
                     id="_reason2"
-                    value="2"
+                    value="Giao tiếp"
                     {...register("reason")}
                     className="_checkbox"
                   />
@@ -215,7 +216,7 @@ const Welcome = () => {
                   <input
                     type="checkbox"
                     id="_reason3"
-                    value="3"
+                    value="Xem phim"
                     {...register("reason")}
                     className="_checkbox"
                   />
@@ -229,7 +230,7 @@ const Welcome = () => {
                   <input
                     type="checkbox"
                     id="_reason4"
-                    value="4"
+                    value="Thi cử"
                     {...register("reason")}
                     className="_checkbox"
                   />
@@ -243,7 +244,7 @@ const Welcome = () => {
                   <input
                     type="checkbox"
                     id="_reason5"
-                    value="5"
+                    value="Khác"
                     {...register("reason")}
                     className="_checkbox"
                   />
