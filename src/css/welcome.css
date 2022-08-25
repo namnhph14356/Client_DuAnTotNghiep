@@ -12,7 +12,7 @@
 
 
       .section-1{
-        @apply w-10/12 m-auto gap-8 mt-[80px] 
+        @apply w-10/12 m-auto gap-8 pt-[80px] 
       }
      
       .section-1 .box {

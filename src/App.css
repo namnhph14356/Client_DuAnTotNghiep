@@ -178,13 +178,24 @@
 #dark h1{
     color: white;
 }
+#dark h2{
+    color: white;
+}
 #dark .item__list__learning:hover h3{
     color: black;
 }
 #dark .title_learning{
     color: white;
 }
-
+#dark .box ul li a{
+    color: black;
+}
+#dark .box__form label{
+    color: white;
+}
+#dark .reason .title{
+    color: black;
+}
 /* Light */
 #light .label__swich{
     color: #8E44AD;
@@ -205,4 +216,7 @@
 }
 #light .box p{
     color: black;
+}
+#light .col .col-box p{
+    color: white;
 }

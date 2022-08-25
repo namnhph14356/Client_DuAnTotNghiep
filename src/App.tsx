@@ -63,6 +63,7 @@ import Error from './pages/paymentConfirm/error';
 import ChangeColorBG from './Component/ChangeColorBG';
 import ListWellcome from './pages/admin/wellCome/listWellcome';
 import ReactSwitch from 'react-switch';
+import { isTheme } from './utils/localStoreR';
 
 export const ThemeContext:any = createContext(null)
 function App() {
@@ -73,16 +74,17 @@ function App() {
   }
 
   const toggleTheme = () => {
-    setTheme((curr) => (curr === "light" ? "dark" : "light"))
+    setTheme((curr) => (curr === "light" ? "dark" : "light"));
+    localStorage.setItem("theme", JSON.stringify(theme));
   }
   console.log(theme);
-  
+ const themeStore = isTheme();
   return (
     <ThemeContext.Provider value={{theme, toggleTheme}} >
-    <div style={{background: `${changeColor}`}} id={theme}>
+    <div style={{background: `${changeColor}`}} id={themeStore}>
       <div className='swich__custom'>
-    <label className='label__swich'> {theme === "light" ? "Light Mode" : "Dark Mode"}</label>
-      <ReactSwitch className="" onColor='#8E44AD' onChange={toggleTheme} checked={theme === "dark"}/>
+    <label className='label__swich'> {themeStore === "light" ? "Light Mode" : "Dark Mode"}</label>
+      <ReactSwitch className="" onColor='#8E44AD' onChange={toggleTheme} checked={themeStore === "dark"}/>
       </div>
       <Routes>
         
