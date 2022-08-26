@@ -87,11 +87,11 @@ const Add = () => {
         <Input.TextArea />
       </Form.Item>
 
-      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
+        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
     </Form>
   )
 }
