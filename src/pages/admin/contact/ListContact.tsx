@@ -16,7 +16,6 @@ const ListContact = () => {
             onOk: () => {
                 dispath(removeContacts(id))
             }
-
         })
 
     }

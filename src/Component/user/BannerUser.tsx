@@ -74,7 +74,6 @@ console.log(info);
       if (imgPost.files.length) {
         const response = await uploadImage(imgPost);
         console.log(response);
-
         data.img = response;
       }
       await editUser(data);
