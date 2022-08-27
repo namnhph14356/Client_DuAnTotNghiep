@@ -264,12 +264,7 @@ const ListListenWrite = (props: Props) => {
             }
         },
 
-        {
-            title: 'TimeLimit',
-            dataIndex: 'timeLimit',
-            key: "timeLimit",
-            ...getColumnSearchProps('timeLimit'),
-        },
+   
         {
             title: 'Ngày Tạo',
             dataIndex: 'createdAt',

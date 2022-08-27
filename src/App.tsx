@@ -86,7 +86,7 @@ function App() {
           <Route path='detailLearning' element={<DetailLearning />} />
           <Route path='detailLearning/quiz' element={<ExeQuiz />} />
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} />
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
           <Route path="contact" element={<Contact />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />

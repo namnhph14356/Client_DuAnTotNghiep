@@ -86,6 +86,8 @@ console.log(info);
   }
 
 
+  console.log(data);
+  
   return (
     <div>
       <div className="mt-[65px] pb-2">

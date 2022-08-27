@@ -58,7 +58,21 @@ const FormListenWrite = (props: Props) => {
   const onFinish = async (value: any) => {
 
     const imgPost = document.querySelector("#upload_image");
+    // console.log(value.content);
+    let convertAnswer:any = []
+    for (let key in value.content) {
+      console.log(value.content[key].answer);
+      
+     if (value.content[key].answer) {
+      value.content[key].answer = value.content[key].answer.replaceAll(" ", "").split(",");
+      // convertAnswer.push(answer)
+     }
+     
+    
+  }
 
+  console.log(value.content);
+  
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
 
@@ -75,7 +89,11 @@ const FormListenWrite = (props: Props) => {
         _id: value._id,
         area: value.area,
         category: value.category,
-        content: value.content,
+        content: [{
+            name: value.content.name,
+            text: value.content.text,
+            answer: value.content.a,
+        }],
         audio: imgLink || audio
       }));
       message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
@@ -91,7 +109,6 @@ const FormListenWrite = (props: Props) => {
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
       navigate("/admin/listenWrite");
     }
-
 
 
   };
@@ -111,7 +128,7 @@ const FormListenWrite = (props: Props) => {
     if (id) {
       const getListenAndWrite = async () => {
         const { data } = await detailListenWrite(id)
-        // console.log("data edit", data);
+        console.log("data edit", data);
         setListenWrite(data);
         console.log(data);
         setAudio(data.audio)
@@ -272,8 +289,16 @@ const FormListenWrite = (props: Props) => {
           /> */}
       </div>
 
-
-
+        
+      
+        <div>
+          <h3>* Ghi chú:</h3>
+          <ul style={{listStyle:"inside", marginLeft:"20px", color:"#0a76cf"}}>
+            <li>Câu thoại: Dùng "___" (Ba dấu gạch chân) để tạo khoảng chống để điền đáp án</li>
+            <li>Abccc</li>
+          </ul>
+        </div>
+      
 
     </div>
   )
