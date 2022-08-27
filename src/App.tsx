@@ -69,7 +69,8 @@ import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryTeacher from './pages/teacher/category/category';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
-import EditUser from './pages/user/EditUser';
+import ListContact from './pages/admin/contact/ListContact';
+import EditContact from './pages/admin/contact/EditContact';
 
 
 
@@ -91,7 +92,6 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
-          <Route path='user/edit/:id' element={<EditUser/>} />
           <Route path='menageteacher'  element={<ManageTeacher />}>
 
           
@@ -112,6 +112,11 @@ function App() {
             <Route path='add' element={<Add />} />
             <Route path='edit/:id' element={<Edit />} />
           </Route>
+
+          <Route path="contact" >
+            <Route index element={<ListContact />} />
+            <Route path='edit/:id' element={<EditContact />} />
+          </Route>          
 
           <Route path="user" >
             <Route index element={<ListUser />} />
