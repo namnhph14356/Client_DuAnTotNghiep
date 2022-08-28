@@ -49,7 +49,7 @@ const List = () => {
 
     // data
     const dataSourd = category?.map((item: any, index: any) => {
-        // console.log(item);
+        console.log(item);
         return {
             key: index + 1,
             stt: index + 1,

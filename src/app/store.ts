@@ -7,6 +7,7 @@ import ProductSlide from '../features/Slide/product/ProductSlide';
 import QuizSlide from '../features/Slide/quiz/QuizSlide';
 import History from '../features/Slide/history/History';
 import UserQuiz from '../features/Slide/userQuiz/UserQuiz';
+import WellcomeSlide from '../features/Slide/welcome/WellcomeSlide';
 
 // import categorySlide from '../features/category/CategorySlide';
 // import countSlide from '../features/count/CountSlide'
@@ -21,7 +22,8 @@ export const store = configureStore({
     history: History,
 
     answerQuiz: AnswerQuizSlide,
-    user: authSlide
+    user: authSlide,
+    wellcome: WellcomeSlide
     // product
     // cart
     // user

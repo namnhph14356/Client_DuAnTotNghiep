@@ -6,5 +6,5 @@ export const addWellcome = (pro:any) => {
 }
 export const listWellcome = () => {
     const url = "/listWellcome";
-    return instance.post(url)
+    return instance.get(url)
 }

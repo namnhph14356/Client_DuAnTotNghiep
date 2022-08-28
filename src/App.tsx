@@ -71,7 +71,7 @@ function App() {
  const themeStore = isTheme();
   return (
   
-    <div  id={themeStore}>
+    <div >
       <Routes>
         
         <Route path='/' element={<WebsiteLayout />}>
