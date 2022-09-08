@@ -2,14 +2,14 @@ import React from "react";
 import { Col, DatePicker, Input, Row, Typography } from "antd";
 import "./contact.css";
 import Footer from "../../Component/Footer";
-import Header from "../../Component/Header";
+import HeaderComponent from "../../Component/HeaderHome";
 type Props = {};
 const { TextArea } = Input;
 
 const Contact = (props: Props) => {
   return (
     <>
-      <Header />
+      <HeaderComponent />
       <div className="container">
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">

@@ -1,5 +1,8 @@
 .main__write__listen{
-    @apply w-8/12 m-auto bg-[#D6EAF8]  p-[30px] 
+    @apply w-6/12 m-auto bg-[#D6EAF8]  p-[30px] 
+}
+.main__write__listen{
+  
 }
 .header__write__listen{
     @apply flex justify-between bg-[#512E5F] rounded-lg px-[20px] text-[#fff] 
@@ -84,7 +87,7 @@
     @apply bg-white rounded-md py-[5px] px-[50px] text-[16px] font-bold
  }
  .table__list__result{
-    @apply w-[870px] m-auto
+    @apply w-[645px] m-auto
  }
  .table__list__result thead{
     border-bottom: 1px solid #ccc;

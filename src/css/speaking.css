@@ -1,5 +1,61 @@
+.box__result__speak {
+  @apply w-[100%] mt-[50px];
+}
 
+.main__vocabulary {
+  @apply w-6/12 m-auto mt-[69px];
+}
 
-.box__result__speak{
-    @apply w-[100%] mt-[50px]
+.main__vocabulary {
+  border: 1px solid #ccc;
+}
+
+.box__header__topic {
+  background-color: #F2F4F4;
+  height: 64px;
+  padding: 20px;
+  display: flex;
+  
+}
+.vocabulary__speaking{
+    margin-left: 20px;
+}
+.btn__volume__vocabulary i{
+    font-size: 20px;
+}
+.info__vocabulry{
+    padding: 20px;
+}
+/* .btn__next__question{
+  @apply border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right shadow-xl  transition duration-500
+} */
+.btn__next__question{
+  border: 1px solid #ccc;
+  padding: 5px 30px;
+  transition: 0.5s;
+  border-radius: 4px;
+
+}
+.btn__next__question:hover{
+  background-color: #512E5F ;
+  color: #fff;
+
+}
+.box__btn__question{
+  
+  padding: 20px;
+}
+.desc__title__cocabulary{
+  background-color: #512E5F;
+  padding: 5px 20px;
+  border: 1px solid #ccc
+}
+.desc__title__cocabulary h2 {
+  color: #fff;
+}
+.desc__title__cocabulary i {
+  margin: 0px 5px;
+}
+.count__question__vocabulary h4{
+  color: #fff;
 }

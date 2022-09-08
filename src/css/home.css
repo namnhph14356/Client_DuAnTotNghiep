@@ -3,7 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
+p{
+    font-weight: 400;
+}
 
 
 .banner{

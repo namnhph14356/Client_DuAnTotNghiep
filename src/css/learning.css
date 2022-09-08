@@ -57,7 +57,7 @@
     @apply mt-[66px] mb-[50px] w-8/12 m-auto ;
   }
   .title_learning {
-    @apply text-2xl	text-center	font-bold mb-[65px];
+    @apply text-2xl	text-center	font-bold mt-4
   }
 
   .box__list__learning {
@@ -68,7 +68,11 @@
     @apply shadow-md   z-10;
   }
 
-  .item__list__learning{
+  .img__learning__item{
+     height: 275px;
+     width: 360px;
+  }
+  /* .item__list__learning{
     border: 1px solid #E5E7E9;
     transition: 0.5s;
   }
@@ -77,7 +81,7 @@
     z-index: 2;
     background-color: #F8F9F9;
     cursor: pointer;
-  }
+  } */
   .item__list__learning img {
     @apply max-w-full z-0	 ;
   }

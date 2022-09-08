@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
+import HeaderComponent from '../Component/HeaderHome'
 import './../css/writeAndListen.css'
 
 const ExeWriteAndListen = () => {
     return (
-        <div className='main__write__listen'>
+        <div>
+          
+            <div className='main__write__listen'>
             <div className="header__write__listen">
                 <div className="title__header__write__listen">
                     <h2>
@@ -195,6 +198,7 @@ const ExeWriteAndListen = () => {
                     Trở lại
                 </button>
             </div>
+        </div>
         </div>
     )
 }
