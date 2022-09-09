@@ -16,8 +16,11 @@ const FormVocabulary = (props: Props) => {
   const [vocabulary, setVocabulary] = useState();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
 
-  const { id } = useParams();
-
+  const {id} = useParams();
+  console.log('demo');
+  console.log(id);
+  
+  
   const onFinish = async (value:any) => {
 
 
@@ -96,7 +99,7 @@ const FormVocabulary = (props: Props) => {
       const getDetail = async () => {
           const {data} = await detailVocabulary(id);
           setVocabulary(data);
-          form.setFieldsValue(data.vocabulary)
+          form.setFieldsValue(data)
       } 
       getDetail()
     }  

@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { listVocabulary } from '../../../api/vocabulary';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
+import Highlighter from 'react-highlight-words';
+import type { InputRef } from 'antd';
+import type { FilterConfirmProps } from 'antd/es/table/interface';
+import { SearchOutlined } from '@ant-design/icons';
 type Props = {}
 
 interface DataType {
@@ -17,6 +21,11 @@ type DataIndex = keyof DataType;
 const ListVocabulary = (props: Props) => {
   const [vocabulary, setVocabulary] = useState([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [searchText, setSearchText] = useState('');
+const [searchedColumn, setSearchedColumn] = useState('');
+const searchInput = useRef<InputRef>(null);
+
+// Call api
   useEffect(()=> {
     const getData = async () => {
       const {data} =  await listVocabulary()
@@ -30,6 +39,7 @@ const ListVocabulary = (props: Props) => {
     return {
         key: index + 1,
         stt: index + 1,
+        _id: items._id,
         words: items.words,
         meaning: items.meaning,
         wordForm: items.wordForm,
@@ -53,6 +63,86 @@ const handleOk = (id) => {
 const handleCancel = () => {
   message.error('Hủy Hành Động!');
 };
+
+const handleSearch = (
+  selectedKeys: string[],
+  confirm: (param?: FilterConfirmProps) => void,
+  dataIndex: DataIndex,
+) => {
+  confirm();
+  setSearchText(selectedKeys[0]);
+  setSearchedColumn(dataIndex);
+};
+
+const handleReset = (clearFilters: () => void) => {
+  clearFilters();
+  setSearchText('');
+};
+
+const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
+  filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+    <div style={{ padding: 8 }}>
+      <Input
+        ref={searchInput}
+        placeholder={`Search ${dataIndex}`}
+        value={selectedKeys[0]}
+        onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+        onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+        style={{ marginBottom: 8, display: 'block' }}
+      />
+      <Space>
+        <Button
+          type="primary"
+          onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          icon={<SearchOutlined />}
+          size="small"
+          style={{ width: 90 }}
+        >
+          Search
+        </Button>
+        <Button
+          onClick={() => clearFilters && handleReset(clearFilters)}
+          size="small"
+          style={{ width: 90 }}
+        >
+          Reset
+        </Button>
+        <Button
+          type="link"
+          size="small"
+          onClick={() => {
+            confirm({ closeDropdown: false });
+            setSearchText((selectedKeys as string[])[0]);
+            setSearchedColumn(dataIndex);
+          }}
+        >
+          Filter
+        </Button>
+      </Space>
+    </div>
+  ),
+  filterIcon: (filtered: boolean) => (
+    <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+  ),
+  onFilter: (value, record:any) =>
+    record[dataIndex]
+      .toString()
+      .toLowerCase()
+      .includes((value as string).toLowerCase()),
+
+  render: text =>
+    searchedColumn === dataIndex ? (
+      <Highlighter
+        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        searchWords={[searchText]}
+        autoEscape
+        textToHighlight={text ? text.toString() : ''}
+      />
+    ) : (
+      text
+    ),
+});
+
 const columns: ColumnsType<DataType> = [
   {
     title: 'STT',
@@ -67,16 +157,19 @@ const columns: ColumnsType<DataType> = [
     title: 'Words',
     dataIndex: 'words',
     key: "words",
+    ...getColumnSearchProps('words')
 
   }, {
     title: 'WordForm',
     dataIndex: 'wordForm',
     key: "wordForm",
+    ...getColumnSearchProps('wordForm')
 
   }, {
     title: 'Meaning',
     dataIndex: 'meaning', 
     key: "meaning",
+    ...getColumnSearchProps('meaning')
   },
   {
     title: 'Image',
@@ -105,6 +198,7 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: "Hành Động", key: "action", render: (text, record) => (
+      console.log(record),
       <Space align="center" size="middle">
         <Button style={{ background: "#198754" }} >
           <Link to={`/admin/vocabulary/${record._id}/edit`} >
