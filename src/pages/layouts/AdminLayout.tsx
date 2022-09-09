@@ -114,6 +114,10 @@ const AdminLayout = () => {
                     <SubMenu key="sub5" icon={<ReadOutlined />} title="User infomation">
                         <Menu.Item key="/admin/wellcome"><NavLink to='/admin/wellcome'>List User Infomation</NavLink></Menu.Item>
                     </SubMenu>
+                    <SubMenu key="sub6" icon={<ReadOutlined />} title="Vocabulary">
+                        <Menu.Item key="/admin/vocabulary"><NavLink to='/admin/vocabulary'>List Vocabulary</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/vocabulary/add"><NavLink to='/admin/vocabulary/add'>Add Vocabulary</NavLink></Menu.Item>
+                    </SubMenu>
 
 
                 </Menu>

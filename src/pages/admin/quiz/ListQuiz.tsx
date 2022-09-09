@@ -368,16 +368,6 @@ const ListQuiz = (props: Props) => {
         rowClassName={"break-words"}
         bordered
         footer={() => `Hiển thị 10 trên tổng ${quizs.length}`}
-        // expandable={{
-        //   expandedRowRender: record => <div>
-        //     {answerQuizs.map((item: AnswerQuizType, index) => item.quiz === record._id
-        //       ? <p key={index + 1} style={{ margin: 0 }}>{item.answer}</p>
-        //       : "")}
-
-           
-        //   </div>,
-          
-        // }}
         rowSelection={rowSelection}
         columns={columns}
         dataSource={dataTable} />
