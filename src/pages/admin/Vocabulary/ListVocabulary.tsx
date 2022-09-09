@@ -7,6 +7,7 @@ import Highlighter from 'react-highlight-words';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { SearchOutlined } from '@ant-design/icons';
+import moment from 'moment';
 type Props = {}
 
 interface DataType {
@@ -16,6 +17,8 @@ interface DataType {
   wordForm: string,
   image: string,
   meaning: string,
+  createdAt:any,
+  updatedAt:any
 }
 type DataIndex = keyof DataType;
 const ListVocabulary = (props: Props) => {
@@ -44,8 +47,8 @@ const searchInput = useRef<InputRef>(null);
         meaning: items.meaning,
         wordForm: items.wordForm,
         image: items.image,
-        createdAt: items.createdAt,
-        updatedAt: items.updatedAt,
+        createdAt: moment(items.createdAt).format("h:mm:ss a, MMM Do YYYY"),
+        updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     }
 })
 const handleOk = (id) => {
@@ -159,11 +162,22 @@ const columns: ColumnsType<DataType> = [
     key: "words",
     ...getColumnSearchProps('words')
 
-  }, {
+  }, 
+  {
     title: 'WordForm',
-    dataIndex: 'wordForm',
     key: "wordForm",
-    ...getColumnSearchProps('wordForm')
+    // dataIndex: "wordForm"
+    render: (record) =>(
+      <div className="">
+       {record.wordForm === 1 ?  <Tag  color="green">Nouns</Tag> :
+        record.wordForm === 2 ?  <Tag  color="blue">Adj</Tag> :
+        record.wordForm === 3 ?  <Tag  color="purple">Adv</Tag>:
+        record.wordForm === 4 ?  <Tag  color="purple">Verbs</Tag>:
+        <Tag  color="red">ERROR</Tag>
+        }
+    </div>
+    )
+    // ...getColumnSearchProps('wordForm'),
 
   }, {
     title: 'Meaning',
@@ -185,20 +199,22 @@ const columns: ColumnsType<DataType> = [
     )
   },
   {
-    title: 'Ngày Tạo',
+    title: 'Created At',
     dataIndex: 'createdAt',
     key: "createdAt",
-
+    sorter: (a, b) => a.createdAt - b.createdAt,
+    sortDirections: ['descend', 'ascend'],
   },
   {
-    title: 'Ngày Update',
+    title: 'Updated At',
     dataIndex: 'updatedAt',
     key: "updatedAt",
+    sorter: (a, b) => a.updatedAt- b.updatedAt,
+      sortDirections: ['descend', 'ascend'],
 
   },
   {
-    title: "Hành Động", key: "action", render: (text, record) => (
-      console.log(record),
+    title: "Actions", key: "action", render: (text, record) => (
       <Space align="center" size="middle">
         <Button style={{ background: "#198754" }} >
           <Link to={`/admin/vocabulary/${record._id}/edit`} >

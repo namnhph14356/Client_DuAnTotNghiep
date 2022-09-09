@@ -137,7 +137,15 @@ const FormVocabulary = (props: Props) => {
             tooltip="dạng từ"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            <Input />
+            <Select
+          placeholder="Select a option and change input text above"
+          allowClear
+        >
+          <Option value="1">nouns</Option> 
+          <Option value="2">adj</Option>
+          <Option value="3">verbs</Option>
+          <Option value="4">adv</Option>
+          </Select>
           </Form.Item>
 
           <Form.Item
