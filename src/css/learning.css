@@ -57,7 +57,7 @@
     @apply mt-[66px] mb-[50px] w-8/12 m-auto ;
   }
   .title_learning {
-    @apply text-2xl	text-center	font-bold mt-4
+    @apply text-2xl	text-center	font-bold mt-[4rem]
   }
 
   .box__list__learning {

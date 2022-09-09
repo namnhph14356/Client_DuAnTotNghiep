@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import Footer from '../Component/Footer'
 import HeaderComponent from '../Component/HeaderHome'
 
@@ -11,10 +12,10 @@ const SpeakingPage = () => {
             <section className='main__vocabulary'>
                 <div className="desc__title__cocabulary">
                     <h2>
-                        vocabulary <span>  
-                            
+                        vocabulary <span>
 
-                        /   tên Chủ đề 1
+
+                            /   tên Chủ đề 1
                         </span>
                     </h2>
 
@@ -45,8 +46,26 @@ const SpeakingPage = () => {
                     </button>
                 </div>
 
+                <div className="box__list__detail">
+                    <ul>
+                        <li>
+                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
+                                <i className="fa-solid fa-angle-right"></i></NavLink>
+                        </li>
+                        <li>
+
+                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
+                                <i className="fa-solid fa-angle-right"></i></NavLink>
+                        </li>
+                        <li>
+
+                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
+                                <i className="fa-solid fa-angle-right"></i></NavLink>
+                        </li>
+                    </ul>
+                </div>
             </section>
-           
+
         </div>
     )
 }

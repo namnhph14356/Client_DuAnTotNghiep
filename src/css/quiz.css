@@ -4,7 +4,7 @@
 .main__quiz__topic {
   border: 1px solid #ccc;
   margin-bottom: 50px;
-  height: 500px;  
+  border-radius: 6px;
 }
 
 .point__quiz {
@@ -27,35 +27,64 @@
 .choose__answer__quiz {
   @apply pb-6;
 }
-.items-center{
+.items-center {
   margin-top: 20px;
   padding: 20px;
 }
-.box__check__quiz{
+.box__check__quiz {
   display: flex;
   justify-content: space-between;
 }
-.box__result__check__quiz{
+/* .box__result__check__quiz{
   background-color: #D6EAF8;
   width:  490px;
   max-width: 490px;
-}
-.box__result__check__quiz{
+} */
+.box__result__check__quiz {
+  background-color: #d6eaf8;
+
+  width: 555px;
+  max-width: 555px;
   margin-left: 20px;
-  border: 1px solid #5DADE2;
+  border: 1px solid #5dade2;
   padding: 10px;
   text-align: center;
   border-radius: 4px;
   margin-bottom: 10px;
 }
-.box__result__check__quiz p{
-  color: #2E86C1;
+.box__result__check__quiz p {
+  color: #2e86c1;
   font-weight: 500;
 }
-.box__result__check__quiz button{
-  background-color: #5DADE2;
+.box__result__check__quiz button {
+  background-color: #5dade2;
   color: #fff;
   width: 100%;
   padding: 5px 0px;
   border-radius: 5px;
+}
+.box__question__quiz__item {
+  @apply grid grid-cols-4 gap-[20px] mb-[3rem];
+}
+.list__question__item {
+  @apply border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right shadow-xl  transition duration-500;
+}
+.title__result__question__item h3 {
+  @apply font-bold text-lg text-center;
+}
+.img__result__question__item img {
+  @apply max-w-[100px] max-h-[100px];
+}
+.box__item__chosse__question{
+  margin: 30px 0px;
+}
+.shelf__result__question__item {
+ border-bottom:  2px solid #e5e5e5 ;
+ width: 100%;
+}
+.btn__choose__result{
+  @apply flex mt-3 justify-center 
+}
+.item__btn__choose{
+  @apply border-2 border-[#ccc] py-2 px-9 rounded-lg mx-[15px]
 }

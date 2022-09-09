@@ -202,7 +202,7 @@
 }
 
 .box__list__detail{
-  background-color: #4a235a;
+  background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
   padding:  10px;
 }
 .box__list__detail ul{

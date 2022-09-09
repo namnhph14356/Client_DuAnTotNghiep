@@ -15,7 +15,7 @@
 }
 
 .signin__form .signin__main__left input{
-    background-color: #4A235A;
+    background-color: #6078EA;
     border-radius: 2px;
     margin-top: 24px;
     width: 478px;
@@ -31,7 +31,7 @@ input::placeholder{
 
 
 .signin__form .button{
-    background-color: #4A235A;
+    background-color: #6078EA;
     border-radius: 2px;
     color: #fff;
     padding: 10px 30px;

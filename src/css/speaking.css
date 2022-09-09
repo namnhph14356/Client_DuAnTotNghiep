@@ -37,7 +37,7 @@
 
 }
 .btn__next__question:hover{
-  background-color: #512E5F ;
+  background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
   color: #fff;
 
 }
@@ -46,11 +46,12 @@
   padding: 20px;
 }
 .desc__title__cocabulary{
-  background-color: #512E5F;
+  background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
   padding: 5px 20px;
   border: 1px solid #ccc
 }
 .desc__title__cocabulary h2 {
+  margin-top: 10px;
   color: #fff;
 }
 .desc__title__cocabulary i {
