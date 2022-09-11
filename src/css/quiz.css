@@ -1,6 +1,7 @@
 .main__quiz__topic {
-  @apply w-6/12 m-auto mt-[69px];
+  @apply  m-auto 
 }
+
 .main__quiz__topic {
   border: 1px solid #ccc;
   margin-bottom: 50px;
@@ -43,9 +44,9 @@
 .box__result__check__quiz {
   background-color: #d6eaf8;
 
-  width: 555px;
-  max-width: 555px;
-  margin-left: 20px;
+  width: 500px;
+  max-width: 500px;
+  margin-right: 20px;
   border: 1px solid #5dade2;
   padding: 10px;
   text-align: center;

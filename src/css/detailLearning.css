@@ -1,10 +1,15 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 .header__learning {
   @apply h-[62px] shadow-md;
+}
+.box__main__topic{
+  padding: 20px
+}
+.box__deatil__learning__main{
+  @apply grid grid-cols-12
 }
 
 .header__learning_box {
@@ -67,12 +72,10 @@
 /* and header */
 
 .main__topic {
-  @apply w-6/12 m-auto mt-[69px];
+  @apply  m-auto mt-[69px] w-[90%]
 }
 .main__topic {
   border: 1px solid #ccc;
-  padding: 20px;
-  margin-bottom: 50px;
 }
 
 .title__deatial__learning {
@@ -89,28 +92,24 @@
   width: 100%;
   padding: 10px;
   height: 52px;
-
 }
 .btn__start__topic a {
   color: #fff;
   float: left;
   margin-right: 10px;
   font-weight: 400;
- 
 }
 .btn__start__topic span {
   color: #fff;
   float: left;
   font-weight: 400;
-
 }
 .btn__start__topic i {
   color: #fff;
   margin-right: 10px;
-  
 }
 .btn__start__topic a:hover {
-  color: #fff
+  color: #fff;
 }
 
 .box__video__topic {
@@ -198,22 +197,98 @@
 }
 
 .item__detail__learning h4 {
-  @apply mt-[30px] mb-[30px] lg:mt-[50px] text-xl font-bold text-center
+  @apply mt-[30px] mb-[30px] lg:mt-[50px] text-xl font-bold text-center;
 }
 
-.box__list__detail{
-  background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
-  padding:  10px;
+.box__list__detail {
+  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+  padding: 10px;
 }
-.box__list__detail ul{
+.box__list__detail ul {
   display: flex;
   margin-bottom: 0 !important;
 }
-.box__list__detail li{
+.box__list__detail li {
   margin: 0px 10px;
   color: #fff;
 }
-.box__list__detail i{
+.box__list__detail i {
   margin: 0px 10px;
 }
+.nav__deatail__learning{
+  @apply mt-[70px]
+}
+.nav__deatail__learning li {
+  margin: 20px 0px;
+  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+  width: 200px;
+  height: 60px;
+  /* border: 4px solid #17ead9; */
+  box-shadow: inset 0 0 0 0 #1A5276;
+  transition: ease-out 0.3s;
+  color: #fff;
+  border-radius: 0px 50px 50px 0px;
+  font-weight: 600;
+  padding: 20px 10px;
+}
+.nav__deatail__learning li:hover {
+  box-shadow: inset 200px 0 0 0 #1A5276;
+  cursor: pointer;
+}
 
+.btn__nav__deatil__learning {
+  /* font-weight: 500;
+  padding: 
+  color: #fff;
+}
+.btn__nav__deatil__learning :hover {
+}
+.nav__item__deatail__learning:hover {
+  /* margin-left: 20px;
+  transition: 1s;
+  background-color: #4a235a; */
+}
+.advertisement__source__learning{
+  
+  margin-top: 40px;
+  width: 100%;
+  background-color: #2471A3;
+  padding: 20px;
+  color: #fff;
+  max-height: 600px;
+}
+.title__adver__source{
+  @apply text-center text-base	font-sans text-[#fff]
+
+}
+.price__surce__learing{
+  @apply text-center 
+}
+.price__surce__learing{
+  border-bottom: 2px solid #fff;
+  padding-bottom: 20px;
+}
+.price__surce__learing p{
+  @apply font-medium text-[12px]
+
+}
+.btn__cart__adver {
+  background-color: #A93226;
+  padding: 5px 20px;
+  border-radius: 3px;
+  
+}
+.btn__cart__adver i{
+  margin-right: 5px;
+} 
+.title__info__adver{
+  @apply text-[15px] font-sans font-semibold mt-[10px]
+}
+.item__menu__info__adver{
+  @apply mt-[10px]
+}
+.item__menu__info__adver h3{
+
+  @apply font-bold
+
+} 
