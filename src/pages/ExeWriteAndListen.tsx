@@ -10,7 +10,8 @@ import { useParams } from 'react-router-dom';
 import { getListenWriteById, getListenWriteByIdCategory } from '../features/Slide/listenWrite/ListenWriteSlice';
 import { addUserListenAndWrite } from '../features/Slide/userListenWrite/UserListenWriteSlice';
 import './../css/writeAndListen.css'
-
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { speakInput } from '../midlerware/LearningListenWrite';
 const ExeWriteAndListen = () => {
     const listenWrite = useSelector((item: any) => item.listenWrite.value);
     const userListenWrite = useSelector((item: any) => item.userListenWrite.value);
@@ -26,7 +27,7 @@ const ExeWriteAndListen = () => {
     const [numTrueAnswer, setNumTrueAnswer] = useState(0)
     const [convertValues, setConvertValues] = useState<any>([])
     // console.log(check);
-
+    const { speak } = useSpeechSynthesis();
     useEffect(() => {
         if (id) {
             const btListenWrite = async () => {
@@ -82,33 +83,20 @@ const ExeWriteAndListen = () => {
         await listenWrite.content.forEach((element, index) => {
 
             for (let j = 0; j < convertValues2.length; j++) {
-
-                if (element.answer != [] && convertValues2[j].idQuestion == element._id) {
-
+                if (element.answer && convertValues2[j].idQuestion == element._id) {
                     for (let key in element.answer) {
-                        console.log(key);
-
                         if (String(element.answer[key]).toLowerCase() == convertValues2[j].answerUser.toLowerCase()) {
-                            console.log(convertValues2[j].idQuestion, "Chính xác");
-
                             convertValues2[j].isCorrect = true;
                             convertValues2[j].answerCorrect = convertValues2[j].answerUser
-
                             numAnswer += 1
                         } else {
-                            console.log(convertValues2[j].answer, "sai rồi", "ddungs la: ", element.answer[key]);
                             convertValues2[j].answerCorrect = element.answer[j] || element.answer[key]
 
                         }
                     }
 
                 }
-
-
             }
-
-
-
         });
 
 
@@ -121,7 +109,6 @@ const ExeWriteAndListen = () => {
 
     const checkAnswerIscorrect = (id: any, key: any) => {
         let className = "";
-        console.log(key);
 
         convertValues.forEach(e => {
 
@@ -142,7 +129,6 @@ const ExeWriteAndListen = () => {
 
         setCheckDetailAnswer(true)
     }
-    console.log(convertValues);
 
     return (
         <div className='main__write__listen'>
@@ -182,14 +168,9 @@ const ExeWriteAndListen = () => {
 
                             const quesToArr = item.text.split("___")
                             // tách chuỗi thành 1 mảng
-                            // console.log(quesToArr);
-                            // console.log(convertValues);
 
                             var tempQues: any = [];
-                            // console.log(quesToArr.length -1);
-
                             quesToArr.forEach((item2: any, index2: number) => {
-
                                 if (index2 < quesToArr.length - 1) {
                                     tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
                                         <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item._id, index2 + 1)}`} {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} disabled placeholder="Đáp án..." />
@@ -198,18 +179,17 @@ const ExeWriteAndListen = () => {
                                     tempQues.push(<span key={index2 + 1}>{item2}</span>)
                                 }
                                 // lọc mảng thêm phần tử vào mảng mới (tempQues)
-
                             })
 
                             // console.log(quesToArr.length);
-                            console.log(tempQues);
+                            console.log(item);
+                            
                             return (
-                                <p key={index + 1}>
+                                <p key={index + 1} className="hover:cursor-pointer" onClick={() => speak({ text: speakInput(item) })}>
 
                                     <strong>{item.name}:</strong>
                                     <span>{quesToArr.length == 1 ? item.text : tempQues}</span>
-                                    {/* {item.text && <div className="text-sm text-danger" style={{ color: "red" }}>{errors[`inputAnswer-${item._id}-${index2 + 1}`]?.message}</div>} */}
-
+     
                                 </p>
                             )
 
@@ -280,7 +260,7 @@ const ExeWriteAndListen = () => {
                                 })
 
                                 }
-                               
+
                             </tbody>
                             <tr className='result__medium'>
                                 <td>Kết quả:</td>

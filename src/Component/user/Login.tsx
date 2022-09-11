@@ -74,7 +74,7 @@ const Login = (props: Props) => {
     const prodider = new FacebookAuthProvider();
     signInWithPopup(auth, prodider).then((result) => {
       console.log(result);
-
+        
       const id = result.user.uid;
       const name = result.user.displayName;
       const email = result.user.email;
