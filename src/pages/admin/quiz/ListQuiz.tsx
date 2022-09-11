@@ -265,8 +265,6 @@ const ListQuiz = (props: Props) => {
       title: 'Type',
       key: "type",
       render: (record) => (
-        console.log(record.type),
-        
         <div className="">
           {record.type === 1
             ? <Tag color="red">Nghe</Tag>

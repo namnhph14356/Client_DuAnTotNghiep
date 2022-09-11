@@ -38,7 +38,8 @@ const searchInput = useRef<InputRef>(null);
     getData()
   },[])
   const dataSources = vocabulary?.map((items: any, index: any) => {
-  
+    console.log(items.wordForm);
+    
     return {
         key: index + 1,
         stt: index + 1,
@@ -168,7 +169,7 @@ const columns: ColumnsType<DataType> = [
     key: "wordForm",
     // dataIndex: "wordForm"
     render: (record) =>(
-      <div className="">
+     <div className="">
        {record.wordForm === 1 ?  <Tag  color="green">Nouns</Tag> :
         record.wordForm === 2 ?  <Tag  color="blue">Adj</Tag> :
         record.wordForm === 3 ?  <Tag  color="purple">Adv</Tag>:
