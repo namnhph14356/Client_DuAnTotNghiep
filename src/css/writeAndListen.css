@@ -31,6 +31,7 @@
 .conversation__box {
   @apply mt-[73px] bg-[#fff] py-[20px] px-[30px] rounded;
 }
+
 .inp__text {
   border-bottom: 1px solid #000;
   outline: none;
@@ -39,11 +40,13 @@
 .inp__text:focus {
   border-color: #3498db;
 }
+
 .conversation__box p {
   @apply mb-[10px] leading-loose;
 }
 .conversation__box span {
   @apply ml-2;
+
 }
 
 .btn__Check__answer {
@@ -107,6 +110,7 @@ background: linear-gradient(to right,#17ead9 0,#6078ea 100%);
 .table__list__result tbody {
   border-bottom: 1px solid #ccc;
 }
+
 
 .back__wep__close {
   @apply text-center mt-[50px];

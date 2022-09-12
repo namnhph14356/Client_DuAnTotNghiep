@@ -126,7 +126,8 @@ const ExeQuiz = () => {
 
                     </div>
                     <div>
-                        <button className={`${check === true ? select === quizs[0].correctAnswer ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] " : "bg-[#C0392B] text-white" : "hover:bg-gray-100 "}  border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`} onClick={() => {
+                        <button className={`${check === true ? select === quizs[0].correctAnswer ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] " : "bg-[#C0392B] text-white" : "hover:bg-gray-100 "}  border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`} 
+                        onClick={() => {
                             setCheck(true)
                             select === quizs[0].correctAnswer ? audioCorrect.play() : audioWrong.play()
                         }}>

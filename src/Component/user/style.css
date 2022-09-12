@@ -57,3 +57,21 @@
 .time__action{
     @apply mr-[15px]
 }
+.edit_user input{
+    background-color: #4A235A;
+    border-radius: 2px;
+    margin-top: 24px;
+    width: 478px;
+    height: 40px;
+    padding-left: 20px;
+    color: #fff;
+    outline: none;
+}
+.edit_user input[type=file] {
+    background-color: #fff;
+}
+.edit_user label {
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}

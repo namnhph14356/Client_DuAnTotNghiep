@@ -10,7 +10,10 @@ export const detailListenWrite = (id: string) => {
     const url = `/listenWrite/${id}`
     return instance.get(url)
 }
-
+export const detailListenWriteByIdCategory = (id: string) => {
+    const url = `/listenWrite/${id}/writeAndListen`
+    return instance.get(url)
+}
 export const addListenWrite = (data: ListenWriteType) => {
     const url = `/listenWrite`
     return instance.post(url,data)

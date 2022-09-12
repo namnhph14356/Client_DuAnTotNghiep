@@ -16,5 +16,7 @@ export type UserType = {
     address?:string,
     img?:string,
     role?: string,
-    sex?:number
+    sex?:number,
+    updatedAt?: string,
+    createdAt?: string
 }
