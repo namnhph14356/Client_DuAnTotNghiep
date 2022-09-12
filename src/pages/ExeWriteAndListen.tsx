@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { getListenWriteById, getListenWriteByIdCategory } from '../features/Slide/listenWrite/ListenWriteSlice';
 import { addUserListenAndWrite } from '../features/Slide/userListenWrite/UserListenWriteSlice';
-
 import './../css/writeAndListen.css'
 
 const ExeWriteAndListen = () => {
@@ -513,9 +512,7 @@ const ExeWriteAndListen = () => {
 
                     : ""}
 
->>>>>>> origin/dev
             </div>
-
         </div>
     )
 }
