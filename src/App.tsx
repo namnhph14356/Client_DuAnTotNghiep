@@ -13,7 +13,9 @@ import './css/speaking.css';
 import './css/listen.css';
 import './css/teacherPage.css';
 import './css/menageTeacher.css';
+
 import "toastr/build/toastr.min.css";
+
 import './css/course.css'
 
 // import './App.css';
@@ -99,11 +101,11 @@ function App() {
           <Route path='detailLearning/quiz' element={<QuizPage />} />
           {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
           <Route path='detailLearning/speak' element={<SpeakingPage />} />
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} />
+          {/* <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
 
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} />
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} /> */}
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
 
           <Route path="contact" element={<Contact />} />
           <Route path="course" element={<CoursePage />} />
@@ -118,7 +120,6 @@ function App() {
           </Route>
           <Route path='menageteacher'  element={<ManageTeacher />}>
 
-          
             <Route path="category" >
               <Route index element={<CategoryList />} />
               <Route path='add' element={<AddCategory />} />

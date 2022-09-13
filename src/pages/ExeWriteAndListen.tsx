@@ -7,7 +7,6 @@ import AdverDeatil from '../Component/AdverDeatil'
 import HeaderComponent from '../Component/HeaderHome'
 import NavDeatil from '../Component/NavDeatil'
 
-
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +14,8 @@ import { useParams } from 'react-router-dom';
 import { getListenWriteById, getListenWriteByIdCategory } from '../features/Slide/listenWrite/ListenWriteSlice';
 import { addUserListenAndWrite } from '../features/Slide/userListenWrite/UserListenWriteSlice';
 import './../css/writeAndListen.css'
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { speakInput } from '../midlerware/LearningListenWrite';
 
 const ExeWriteAndListen = () => {
     const listenWrite = useSelector((item: any) => item.listenWrite.value);
@@ -30,6 +31,7 @@ const ExeWriteAndListen = () => {
     const [checkDetailAnswer, setCheckDetailAnswer] = useState(false)
     const [numTrueAnswer, setNumTrueAnswer] = useState(0)
     const [convertValues, setConvertValues] = useState<any>([])
+    const { speak } = useSpeechSynthesis();
     // console.log(check);
 
     useEffect(() => {
@@ -88,26 +90,26 @@ const ExeWriteAndListen = () => {
 
             for (let j = 0; j < convertValues2.length; j++) {
 
-                // if (element.answer != [] && convertValues2[j].idQuestion == element._id) {
+                if (element.answer && convertValues2[j].idQuestion == element._id) {
 
-                //     for (let key in element.answer) {
-                //         console.log(key);
+                    for (let key in element.answer) {
+                        console.log(key);
 
-                //         if (String(element.answer[key]).toLowerCase() == convertValues2[j].answerUser.toLowerCase()) {
-                //             console.log(convertValues2[j].idQuestion, "Chính xác");
+                        if (String(element.answer[key]).toLowerCase() == convertValues2[j].answerUser.toLowerCase()) {
+                            console.log(convertValues2[j].idQuestion, "Chính xác");
 
-                //             convertValues2[j].isCorrect = true;
-                //             convertValues2[j].answerCorrect = convertValues2[j].answerUser
+                            convertValues2[j].isCorrect = true;
+                            convertValues2[j].answerCorrect = convertValues2[j].answerUser
 
-                //             numAnswer += 1
-                //         } else {
-                //             console.log(convertValues2[j].answer, "sai rồi", "ddungs la: ", element.answer[key]);
-                //             convertValues2[j].answerCorrect = element.answer[j] || element.answer[key]
+                            numAnswer += 1
+                        } else {
+                            console.log(convertValues2[j].answer, "sai rồi", "ddungs la: ", element.answer[key]);
+                            convertValues2[j].answerCorrect = element.answer[j] || element.answer[key]
 
-                //         }
-                //     }
+                        }
+                    }
 
-                // }
+                }
 
 
             }
@@ -157,362 +159,158 @@ const ExeWriteAndListen = () => {
                 <NavDeatil />
                 <div className='main__topic col-span-7'>
 
+                    <div className='main__write__listen'>
+                        <div className="header__write__listen">
+                            <div className="title__header__write__listen">
+                                <h2>
 
-                    <div className="br__main__write__listen">
-                        <div className="desc__title__cocabulary">
-                            <h2>
-                                vocabulary <span>
-
-
-                                    /   tên Chủ đề 1
-                                </span>
-                            </h2>
-
+                                    {listenWrite?.category?.title}
+                                </h2>
+                            </div>
+                            <div className="close__header">
+                                <button>
+                                    <i className="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
 
                         </div>
+                        <div className='info__write__listen px-8'>
+                            <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
+                        </div>
 
-                        <div className="pd__box__write__listen">
-                            <div className='info__write__listen'>
-                                <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
-                            </div>
-                            <div className="audio__listen">
-                                <audio
-                                    controls
-                                    src="http://res.cloudinary.com/chanh-thon/video/upload/v1659464441/upload_preset/q0jdgn5b59x7sqql90cv.mp3">
-                                    Your browser does not support the
-                                    <code>audio</code> element.
-                                </audio>
-                            </div>
+                        <div className="audio__listen px-8">
+                            <audio
+                                controls
+                                src={listenWrite?.audio}>
+                                Your browser does not support the
+                                <code>audio</code> element.
+                            </audio>
+                        </div>
 
+                        <form onSubmit={handleSubmit(onSubmit2)}  >
                             <div className="conversation__box">
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='inp__text' type="text" name="" id="" />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Peter:</strong>
-                                    <span>
-                                        Today we are <input className='inp__text' type="text" name="" id="" />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='inp__text' type="text" name="" id="" />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='inp__text' type="text" name="" id="" />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='inp__text' type="text" name="" id="" />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
+                                {
+                                    listenWrite?.content?.map((item: any, index: number) => {
+
+                                        const quesToArr = item.text.split("___")
+                                        // tách chuỗi thành 1 mảng
+                                        // console.log(quesToArr);
+                                        // console.log(convertValues);
+
+                                        var tempQues: any = [];
+                                        // console.log(quesToArr.length -1);
+                                        quesToArr.forEach((item2: any, index2: number) => {
+
+                                            if (index2 < quesToArr.length - 1) {
+                                                tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
+                                                    <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item._id, index2 + 1)}`} {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} disabled placeholder="Đáp án..." />
+                                                    : <input key={index2 + 1} className="inp__text" {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} placeholder="Đáp án..." />)
+                                            } else {
+                                                tempQues.push(<span key={index2 + 1}>{item2}</span>)
+                                            }
+                                            // lọc mảng thêm phần tử vào mảng mới (tempQues)
+
+                                        })
+
+                                        return (
+                                            <p key={index + 1} className="hover:cursor-pointer" onClick={() => speak({ text: speakInput(item) })}>
+                                                <strong>{item.name}:</strong>
+                                                <span>{quesToArr.length == 1 ? item.text : tempQues}</span>
+                                                {item.text && <div className="text-sm text-danger" style={{ color: "red" }}>{errors[`inputAnswer-${item._id}-${index + 1}`]?.message}</div>}
+                                            </p>
+                                        )
+                                    })
+                                }
+
                             </div>
-                            <div className="btn__Check__answer">
-                                <button>
+
+                            <div className="btn__Check__answer" >
+                                <button >
                                     Kiểm tra
                                 </button>
                             </div>
 
+                        </form>
+                        {/* check result */}
 
-                            {/* check result */}
+                        {
+                            check == true ?
+                                <div className="answer__result">
+                                    <p>
+                                        <i className="fa-solid fa-medal"></i>
+                                        Bạn đã trả lời đúng : {numTrueAnswer}/{convertValues.length}
+                                    </p>
+                                    <button className='btn__detail__result' onClick={() => listDetailAnswer()}>
+                                        Xem chi tiết
+                                    </button>
+                                </div>
+                                : ""
+                        }
+                        {/* listed result */}
 
+                        {checkDetailAnswer == true ?
+                            <div>
+                                <div className="conversation__box">
+                                    <table className='table__list__result'>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    .......
+                                                </th>
+                                                <th>
+                                                    Câu trả lời của bạn
+                                                </th>
+                                                <th>
+                                                    Câu trả lời chính xác
+                                                </th>
+                                                <th>
 
-                            <div className="conversation__box">
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='text__result__wrong' type="text" name="" id="" value={"go to"} />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Peter:</strong>
-                                    <span>
-                                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"oh my good"} />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='text__result__wrong' type="text" name="" id="" value={"what "} />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"realy"} />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                                <p>
-                                    <strong>Linda:</strong>
-                                    <span>
-                                        Today we are <input className='text__result__correct' type="text" name="" id="" value={"fuck"} />
-                                        the argument that school uniforms are a good idea. First we will hear from the supporting side, and then the opposition will
-                                    </span>
-                                </p>
-                            </div>
-                            <div className="answer__result">
-                                <p>
-                                    <i className="fa-solid fa-medal"></i>
-                                    Bạn đã trả lời đúng : 2/10
-                                </p>
-                                <button className='btn__detail__result'>
-                                    xem chi tiết
-                                </button>
-                            </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className='body__table__result'>
 
+                                            {convertValues?.map((item, index) => {
+                                                return (
+                                                    <tr key={index + 1}>
+                                                        <td>{index + 1}</td>
+                                                        <td className={checkAnswerIscorrect(item.idQuestion, item.keyQuestion)}>{item.answerUser}</td>
+                                                        <td className='correct__text__writer'>{item.answerCorrect} </td>
+                                                        <td>{item.isCorrect == true
+                                                            ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
+                                                            : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}</td>
+                                                    </tr>
+                                                )
+                                            })
 
-                            {/* listed result */}
+                                            }
 
-
-                            <div className="conversation__box">
-                                <table className='table__list__result'>
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                .......
-                                            </th>
-                                            <th>
-                                                câu trả lời của bạn
-                                            </th>
-                                            <th>
-                                                Câu trả lời chính xác
-                                            </th>
-                                            <th>
-
-                                            </th>
+                                        </tbody>
+                                        <tr className='result__medium'>
+                                            <td>Kết quả:</td>
+                                            <td> </td>
+                                            <td><span className='font-bold'>{numTrueAnswer}/{convertValues.length}</span></td>
+                                            <td>Chưa đạt yêu cầu</td>
                                         </tr>
-                                    </thead>
-                                    <tbody className='body__table__result'>
-                                        <tr>
-                                            <td>
-                                                01
-                                            </td>
-                                            <td className='correct__text__writer'>
-                                                Go to
-                                            </td>
-                                            <td>
-                                                Go to
-                                            </td>
-                                            <td>
-                                                <i className="fa-solid fa-thumbs-up result__correct__icon"></i>                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                01
-                                            </td>
-                                            <td className='woring__text__writer'>
-                                                Go to
-                                            </td>
-                                            <td>
-                                                Go to
-                                            </td>
-                                            <td>
-                                                <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>                          </td>
-                                        </tr>
-                                    </tbody>
-                                    <tr className='result__medium'>
-                                        <td>
-                                            13:22 20/12/2022
-                                        </td>
-                                        <td>
+                                    </table>
+                                </div>
+                                <div className="back__wep__close">
+                                    <button>
+                                        Trở lại
+                                    </button>
+                                </div>
+                            </div>
 
-                                        </td>
-                                        <td>
-                                            1/12
-                                        </td>
-                                        <td>
-                                            Chưa đạt yêu cầu
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div className="back__wep__close">
-                                <button>
-                                    Trở lại
-                                </button>
-                            </div>
-                        </div>
+                            : ""}
+
                     </div>
 
                 </div>
 
                 <AdverDeatil />
-
             </div>
 
-            <div className='main__write__listen'>
-                <div className="header__write__listen">
-                    <div className="title__header__write__listen">
-                        <h2>
 
-                            {listenWrite?.category?.title}
-                        </h2>
-                    </div>
-                    <div className="close__header">
-                        <button>
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-
-                </div>
-                <div className='info__write__listen'>
-                    <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
-                </div>
-
-                <div className="audio__listen">
-                    <audio
-                        controls
-                        src={listenWrite?.audio}>
-                        Your browser does not support the
-                        <code>audio</code> element.
-                    </audio>
-                </div>
-
-
-                <form onSubmit={handleSubmit(onSubmit2)}  >
-                    <div className="conversation__box">
-                        {
-
-                            listenWrite?.content?.map((item: any, index: number) => {
-
-                                const quesToArr = item.text.split("___")
-                                // tách chuỗi thành 1 mảng
-                                // console.log(quesToArr);
-                                // console.log(convertValues);
-
-                                var tempQues: any = [];
-                                // console.log(quesToArr.length -1);
-
-                                quesToArr.forEach((item2: any, index2: number) => {
-
-                                    if (index2 < quesToArr.length - 1) {
-                                        tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
-                                            <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item._id, index2 + 1)}`} {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} disabled placeholder="Đáp án..." />
-                                            : <input key={index2 + 1} className="inp__text" {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} placeholder="Đáp án..." />)
-                                    } else {
-                                        tempQues.push(<span key={index2 + 1}>{item2}</span>)
-                                    }
-                                    // lọc mảng thêm phần tử vào mảng mới (tempQues)
-
-                                })
-
-                                // console.log(quesToArr.length);
-                                console.log(tempQues);
-                                return (
-                                    <p key={index + 1}>
-
-                                        <strong>{item.name}:</strong>
-                                        <span>{quesToArr.length == 1 ? item.text : tempQues}</span>
-                                        {/* {item.text && <div className="text-sm text-danger" style={{ color: "red" }}>{errors[`inputAnswer-${item._id}-${index2 + 1}`]?.message}</div>} */}
-
-                                    </p>
-                                )
-
-                            })
-                        }
-
-                    </div>
-
-                    <div className="btn__Check__answer" >
-                        <button >
-                            Kiểm tra
-                        </button>
-                    </div>
-
-                </form>
-                {/* check result */}
-
-                {
-                    check == true ?
-                        <div className="answer__result">
-                            <p>
-                                <i className="fa-solid fa-medal"></i>
-                                Bạn đã trả lời đúng : {numTrueAnswer}/{convertValues.length}
-                            </p>
-                            <button className='btn__detail__result' onClick={() => listDetailAnswer()}>
-                                Xem chi tiết
-                            </button>
-                        </div>
-                        : ""
-                }
-
-
-                {/* listed result */}
-
-                {checkDetailAnswer == true ?
-                    <div>
-                        <div className="conversation__box">
-                            <table className='table__list__result'>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            .......
-                                        </th>
-                                        <th>
-                                            Câu trả lời của bạn
-                                        </th>
-                                        <th>
-                                            Câu trả lời chính xác
-                                        </th>
-                                        <th>
-
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className='body__table__result'>
-
-                                    {convertValues?.map((item, index) => {
-                                        return (
-                                            <tr key={index + 1}>
-                                                <td>{index + 1}</td>
-                                                <td className={checkAnswerIscorrect(item.idQuestion, item.keyQuestion)}>{item.answerUser}</td>
-                                                <td className='correct__text__writer'>{item.answerCorrect} </td>
-                                                <td>{item.isCorrect == true
-                                                    ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
-                                                    : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}</td>
-                                            </tr>
-                                        )
-                                    })
-
-                                    }
-
-                                </tbody>
-                                <tr className='result__medium'>
-                                    <td>Kết quả:</td>
-                                    <td> </td>
-                                    <td><span className='font-bold'>{numTrueAnswer}/{convertValues.length}</span></td>
-                                    <td>Chưa đạt yêu cầu</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div className="back__wep__close">
-                            <button>
-                                Trở lại
-                            </button>
-                        </div>
-                    </div>
-
-                    : ""}
-
-            </div>
         </div>
     )
 }
