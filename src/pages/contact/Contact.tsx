@@ -2,11 +2,14 @@ import React from "react";
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import "./contact.css";
 import Footer from "../../Component/Footer";
-import Header from "../../Component/Header";
+
+import HeaderComponent from "../../Component/HeaderHome";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addContactSlide } from "../../features/Slide/contact/ContactSlide";
 import toas from 'toastr';
 import { useNavigate } from "react-router-dom";
+
 
 type Props = {};
 const { TextArea } = Input;
@@ -46,7 +49,7 @@ const Contact = () => {
   };
   return (
     <>
-      <Header />
+      <HeaderComponent />
       <div className="container">
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">

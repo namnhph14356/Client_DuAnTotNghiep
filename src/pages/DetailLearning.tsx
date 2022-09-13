@@ -1,63 +1,61 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+import AdverDeatil from '../Component/AdverDeatil';
 import Footer from '../Component/Footer';
-import Header from '../Component/Header';
+import HeaderComponent from '../Component/HeaderHome';
+import NavDeatil from '../Component/NavDeatil';
 
 const DetailLearning = () => {
-  
-   
+
+
     return (
         <div>
-            <Header/>
-           
-            <section className="main__topic">
-                <div className="box__topic">
-                    <div className="img__topic">
-                        <img src="./../image/family.PNG" />
+            <HeaderComponent />
+
+
+            <div className='box__deatil__learning__main'>
+
+                <NavDeatil />
+
+                <div className="main__topic col-span-7">
+                    <div className='box__main__topic'>
+                        <h2 className="title__deatial__learning">
+                            Giới thiệu
+                        </h2>
+                        <p className='info__topic'>
+                            Các em hãy làm theo yêu cầu của chương trình dù có phải làm bài tập lại, thi lại bao nhiêu lần đi nữa. Chương trình được thiết kế để các em nhớ bài nhiều nhất có thể trước khi học sang bài mới. Các em có thể học một bài trong nhiều ngày, không cần phải học nhanh. Nếu làm bài chưa đạt, hãy làm lại cho đến khi đạt được yêu cầu về thời gian và điểm số.                </p>
+                        <p className='info__topic'>
+                            Khi học 3 câu thông dụng và các câu hỏi trong ngày, hãy tận dụng thời gian rảnh rỗi để đọc to mỗi câu ít nhất 200 lần trước khi học sang các câu mới. Chắc chắn chương trình này sẽ giúp các em giỏi tiếng Anh!                </p>
+
+
+
+                        {/* <button className='btn__start__topic'>
+                       <NavLink to={'/detailLearning/speak'}><a href=""> Bắt đầu học </a> </NavLink><span> <i className="fa-solid fa-angle-right"></i>chủ đề 1</span>
+                    </button> */}
+                        <div className="box__list__detail">
+                            <ul>
+                                <li>
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                                <li>
+
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                                <li>
+
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div className="desc__topic">
-                        <h2 className="title__topic">Gia đình</h2>
-                        <p>
-                            Trong bài học này, bạn sẽ học các kỹ thuật khác nhau để thành thạo
-                            các từ ngữ về gia đình.
-                        </p>
-                        <button>12%</button>
-                    </div>
-                </div>
-            </section>
-            <section className='box__video__topic'>
-                <h2 className='title__video__topic'>
-                Phần 1.1
-                </h2>
-                <p >
-                    video
-                </p>
-                <div className="video__leaning">
-                <iframe width="100%" height="720" src="https://www.youtube.com/embed/NBS7OlWbgS4" title="Luyện nghe tiếng Anh thụ động-IELTS|I'm Mary"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
                 </div>
 
-                <div className="box__btn__video">
-                    <button className='btn__previous'><i className="fa-solid fa-angle-left"></i>Previous</button>
-                    <button className='btn__next'>Next <i className="fa-solid fa-angle-right"></i></button>
-                </div>
-            </section>
-            <section className="box__review">
-                <h2 className="title__review">Chọn cách luyện tập</h2>
-                <div className="list__detail__learning">
-                    <div className="item__detail__learning">
-                        <img src="./../image/phat am.PNG" />
-                        <h4>Phát âm</h4>
-                    </div>
-                    <div className="item__detail__learning">
-                        <img src="./../image/nghe viet.PNG" />
-                        <h4>Phát âm</h4>
-                    </div>
-                    <div className="item__detail__learning">
-                        <img src="./../image/quiz.PNG" />
-                        <h4>Phát âm</h4>
-                    </div>
-                </div>
-            </section>
+                <AdverDeatil />
 
+            </div>
             <Footer />
         </div>
     )

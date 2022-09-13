@@ -66,6 +66,7 @@ const ExeQuiz = () => {
     return (
         <div>
             <div>
+                
                 <section className="w-10/12 mx-auto">
                     <div className="md:mt-[10px] mt-[10px] flex">
                         <div>

@@ -14,6 +14,7 @@ import './css/listen.css';
 import './css/teacherPage.css';
 import './css/menageTeacher.css';
 import "toastr/build/toastr.min.css";
+import './css/course.css'
 
 // import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -66,11 +67,16 @@ import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWri
 
 import TeacherPage from './pages/teacher/TeacherPage';
 import ManageTeacher from './pages/teacher/ManagementTeacher';
-import CategoryTeacher from './pages/teacher/category/category';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+
+import CoursePage from './pages/CoursePage';
+import SpeakingPage from './pages/speaking';
+import QuizPage from './pages/QuizPage';
+
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
+
 
 
 
@@ -84,10 +90,19 @@ function App() {
           <Route index element={<Home />} />
           <Route path='learning' element={<Learning />} />
           <Route path='detailLearning' element={<DetailLearning />} />
-          <Route path='detailLearning/quiz' element={<ExeQuiz />} />
+
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
+          <Route path='detailLearning/quiz' element={<QuizPage />} />
+          {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
+          <Route path='detailLearning/speak' element={<SpeakingPage />} />
+          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} />
+
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} />
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} /> */}
+
           <Route path="contact" element={<Contact />} />
+          <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
