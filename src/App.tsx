@@ -69,6 +69,10 @@ import TeacherPage from './pages/teacher/TeacherPage';
 import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+import AdminTeacher from './pages/adminTeacher/AdminTeacher';
+import AdminLearn from './pages/adminTeacher/AdminLearn';
+import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
+import FileTeacher from './pages/fileTeacher/FileTeacher';
 
 import CoursePage from './pages/CoursePage';
 import SpeakingPage from './pages/speaking';
@@ -107,6 +111,11 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
+          <Route path="file-teacher" element={<FileTeacher />} />
+          <Route path="admin-teacher" element={<AdminTeacher />}>
+            <Route path="learn" element={<AdminLearn />} />
+            <Route path="learn-add" element={<AdminLearnAdd />} />
+          </Route>
           <Route path='menageteacher'  element={<ManageTeacher />}>
 
           
