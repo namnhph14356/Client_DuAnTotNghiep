@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
-import { signUp } from "../../features/Slide/auth/authSlide";
+import { signUp } from "../features/Slide/auth/authSlide";
 import { Modal } from "antd";
 
 // import yup from 'yup'

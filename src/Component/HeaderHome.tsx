@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../features/Slide/auth/authSlide';
 import { message, Modal } from "antd";
+
 const HeaderComponent = () => {
 
     const onLogout = () => {
@@ -16,12 +17,11 @@ const HeaderComponent = () => {
     }
     return (
         <div>
-         
-
 
             {/* START: header */}
             <header role="banner" className="probootstrap-header probootstrap-header-no-intro">
                 <div className="container-fluid">
+
                     {/* <div class="row"> */}
                     <a href="index.html" className="probootstrap-logo">Sublime<span>.</span></a>
                     <a href="#" className="probootstrap-burger-menu visible-xs"><i>Menu</i></a>

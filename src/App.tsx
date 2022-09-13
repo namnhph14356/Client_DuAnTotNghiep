@@ -13,38 +13,26 @@ import './css/speaking.css';
 import './css/listen.css';
 import './css/teacherPage.css';
 import './css/menageTeacher.css';
+
 import "toastr/build/toastr.min.css";
+
 import './css/course.css'
 
-// import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
 import AdminLayout from './pages/layouts/AdminLayout';
-// import List from './Admin/categories/List';
 import Welcome from './pages/Welcome';
 import Learning from './pages/Learning';
 import DetailLearning from './pages/DetailLearning';
-// import Contact from './pages/Contact';
 import FileUser from './pages/FileUser';
-// import User from './pages/User';
 
-
-// import Login from './Component/user/Login';
-import SignUp from './Component/user/SignUp';
-import ThongKe from './Component/user/ThongKe';
-import ExeQuiz from './pages/ExeQuiz';
+import SignUp from './pages/SignUp';
 import ExeSpeak from './pages/ExeSpeak';
 import ExeWriteAndListen from './pages/ExeWriteAndListen';
-import Login from './Component/user/Login';
-// import Add from './Admin/categories/Add';
-import toastr from "toastr";
-// import Add from './features/Admin/categories/Add';
-// import Edit from './features/Admin/categories/Edit';
-// import List from './features/Admin/categories/List';
+import Login from './pages/Login';
 import ListUser from './features/Admin/Auth/listUser';
 import AddUser from './features/Admin/Auth/AddUser';
-// import Edit from './Admin/categories/Edit';
 import Store from './pages/Store';
 import ForgotPassword from './Component/user/ForgotPassword';
 import NewPassword from './Component/user/NewPassword';
@@ -99,11 +87,11 @@ function App() {
           <Route path='detailLearning/quiz' element={<QuizPage />} />
           {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
           <Route path='detailLearning/speak' element={<SpeakingPage />} />
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} />
+          {/* <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
 
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} />
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} /> */}
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
 
           <Route path="contact" element={<Contact />} />
           <Route path="course" element={<CoursePage />} />
@@ -118,7 +106,6 @@ function App() {
           </Route>
           <Route path='menageteacher'  element={<ManageTeacher />}>
 
-          
             <Route path="category" >
               <Route index element={<CategoryList />} />
               <Route path='add' element={<AddCategory />} />

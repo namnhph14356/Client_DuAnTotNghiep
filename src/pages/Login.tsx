@@ -5,11 +5,11 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from "react-redux";
-import { forgotPassword, signIn, signUp } from "../../features/Slide/auth/authSlide";
+import { forgotPassword, signIn, signUp } from "../features/Slide/auth/authSlide";
 import { message, Modal } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
-import { auth } from '../../firebase/config'
+import { auth } from '../firebase/config'
 type Props = {};
 
 const fromSchema = yup.object().shape({
