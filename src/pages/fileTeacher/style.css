@@ -1,0 +1,12 @@
+.container{
+    max-width: 1200px;
+    margin: auto;
+}
+
+.mx-2{
+    margin: 0px 20px;
+}
+
+.px-2{
+    padding: 0px 20px;
+}
