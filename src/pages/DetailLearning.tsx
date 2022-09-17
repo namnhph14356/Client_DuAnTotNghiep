@@ -1,5 +1,7 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
+
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
+import { detailCategory } from '../api/category';
 import AdverDeatil from '../Component/AdverDeatil';
 import Footer from '../Component/Footer';
 import HeaderComponent from '../Component/HeaderHome';
@@ -7,6 +9,20 @@ import NavDeatil from '../Component/NavDeatil';
 
 const DetailLearning = () => {
 
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { id }: any = useParams()
+    const [speak, setSpeak] = useState()
+    const [quiz, setQuiz] = useState()
+    const [listenWrite, setListenWrite] = useState()
+
+    useEffect(() => {
+        const getQuiz = async () => {
+            const { data } = await detailCategory(id)
+            console.log(data);
+        }
+        getQuiz()
+    }, [id])
 
     return (
         <div>
@@ -35,18 +51,32 @@ const DetailLearning = () => {
                         <div className="box__list__detail">
                             <ul>
                                 <li>
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    {/* <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink> */}
+                                    <NavLink style={{ color: '#fff' }} to={`/detailLearning/${id}/speak`}> Khởi động
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                                 <li>
 
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    {/* <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink> */}
+
+                                    <NavLink style={{ color: '#fff' }} to={`/detailLearning/${id}/quiz`}> Hỏi và đáp
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                                 <li>
 
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    {/* <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink> */}
+
+                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/writeAndListen`}>  Nghe và trả lời
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>
@@ -54,6 +84,7 @@ const DetailLearning = () => {
                 </div>
 
                 <AdverDeatil />
+
 
             </div>
             <Footer />
