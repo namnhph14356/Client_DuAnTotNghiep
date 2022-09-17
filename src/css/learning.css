@@ -64,8 +64,12 @@
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-[96px] gap-x-[28px] 
   }
 
+  .image__item__learning{
+
+  }
+
   .item__list__learning {
-    @apply shadow-md   z-10;
+    @apply shadow-md   grid grid-rows-2 justify-center   z-10;
   }
 
   .item__list__learning{
@@ -83,7 +87,7 @@
   }
 
   .title__tiem__learning {
-    @apply text-center	my-[32px] text-lg	font-bold	font-sans;
+    @apply text-center	my-[32px] text-lg	font-bold	font-sans ;
   }
 
   .btn__display_item button {

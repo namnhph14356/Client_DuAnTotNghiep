@@ -5,6 +5,11 @@ export type CategoryType = {
     image: string,
     
 }
+// export type DetailCategoryType = {
+//     category: CategoryType,
+//     listenWrite: Lis
+    
+// }
 
 export type UserType = {
     confirmPassword(confirmPassword: any)
