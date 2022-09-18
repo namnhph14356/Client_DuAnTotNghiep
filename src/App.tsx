@@ -15,9 +15,7 @@ import './css/teacherPage.css';
 import './css/menageTeacher.css';
 
 import "toastr/build/toastr.min.css";
-
 import './css/course.css'
-
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
@@ -104,7 +102,7 @@ function App() {
             <Route path="learn" element={<AdminLearn />} />
             <Route path="learn-add" element={<AdminLearnAdd />} />
           </Route>
-          <Route path='menageteacher'  element={<ManageTeacher />}>
+          <Route path='menageteacher' element={<ManageTeacher />}>
 
             <Route path="category" >
               <Route index element={<CategoryList />} />
@@ -127,7 +125,7 @@ function App() {
           <Route path="contact" >
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
-          </Route>          
+          </Route>
 
           <Route path="user" >
             <Route index element={<ListUser />} />

@@ -20,7 +20,6 @@ const fromSchema = yup.object().shape({
   })
   const validation = { resolver: yupResolver(fromSchema) }
   
-  
   type FormInputs = {
     password: string | number,
     confirmPassword?: string | number,
