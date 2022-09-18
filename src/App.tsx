@@ -72,6 +72,7 @@ import EditContact from './pages/admin/contact/EditContact';
 
 
 import TestPage from './pages/Test';
+import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 
 
@@ -101,9 +102,11 @@ function App() {
               {/* <Route path=":id/quiz" element={<ExeQuiz />} />
               <Route path=":id/speak" element={<ExeSpeak />} />
               <Route path=":id/writeAndListen" element={<ExeWriteAndListen />} /> */}
-              <Route path='quiz' element={<QuizPage />} />
+              <Route path=":id/quiz2" element={<ExeQuiz />} />
+              <Route path=':id/speak' element={<SpeakingPage />} />
+              <Route path=':id/quiz' element={<QuizPage />} />
 
-              <Route path='speak' element={<SpeakingPage />} />
+             
               
             </Route>
           </Route>
@@ -185,6 +188,7 @@ function App() {
 
         </Route>
         <Route path='/test' element={<TestPage />}> </Route>
+        <Route path='/test2' element={<TestPage2 />}> </Route>
 
         <Route path='/login' element={<Login />}> </Route>
         <Route path='/register' element={<SignUp />}></Route>
