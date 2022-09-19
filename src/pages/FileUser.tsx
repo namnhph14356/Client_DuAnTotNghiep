@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from '../Component/Footer'
+import Footer from '../components/Footer'
 type Props = {}
 
 const FileUser = (props: Props) => {

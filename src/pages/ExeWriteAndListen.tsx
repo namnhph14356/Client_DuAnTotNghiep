@@ -3,8 +3,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 
-import AdverDeatil from '../Component/AdverDeatil'
-import NavDeatil from '../Component/NavDeatil'
+import AdverDeatil from '../components/AdverDeatil'
+import NavDeatil from '../components/NavDeatil'
 
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -22,52 +22,18 @@ const ExeWriteAndListen = () => {
     const { register, handleSubmit, formState } = useForm();
     const [question, setQuestion] = useState([]);
     const dispatch = useDispatch();
-    // console.log(listenWrite.content);
     const { id } = useParams();
-    // console.log(id);
     const { errors }: any = formState;
     const [check, setCheck] = useState(false)
     const [checkDetailAnswer, setCheckDetailAnswer] = useState(false)
     const [numTrueAnswer, setNumTrueAnswer] = useState(0)
     const [convertValues, setConvertValues] = useState<any>([])
-    const { speak } = useSpeechSynthesis();
-    // console.log(check);
-
-    useEffect(() => {
-        if (id) {
-            const btListenWrite = async () => {
-                const { payload } = await dispatch(getListenWriteByIdCategory(id))
-                // console.log(payload.content);
-
-                // convertValues.map( async(item) => {
-                await dispatch(addUserListenAndWrite({
-                    listAnswer: [
-                        ...convertValues
-
-                    ],
-                    numTrueAnswer: numTrueAnswer,
-                    idListenWrite: id,
-                }))
-                // })
-            }
-            btListenWrite();
-
-        }
-
-
-
-    }, [convertValues, numTrueAnswer])
+    const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
 
 
 
     const onSubmit2 = async (item: any, index: any) => {
-        console.log("dap an: ", item);
-        // console.log("true answer", listenWrite.content);
-        console.log(index);
-
-
         let convertValues2: any = [];
-
         for (let key in item) {
             const idQuestion = key.split("-")[1];
             const keyQuestion = key.split("-")[2];
@@ -78,64 +44,42 @@ const ExeWriteAndListen = () => {
                 answerUser: item[key],
                 answerCorrect: "",
                 isCorrect: false
-
             },]
             //   push vào mảng convertValues với id và answer
         }
 
-        console.log(convertValues2);
         let numAnswer = 0;
         await listenWrite.content.forEach((element, index) => {
-
+            
             for (let j = 0; j < convertValues2.length; j++) {
-
                 if (element.answer && convertValues2[j].idQuestion == element._id) {
-
                     for (let key in element.answer) {
-                        console.log(key);
-
                         if (String(element.answer[key]).toLowerCase() == convertValues2[j].answerUser.toLowerCase()) {
-                            console.log(convertValues2[j].idQuestion, "Chính xác");
-
                             convertValues2[j].isCorrect = true;
-                            convertValues2[j].answerCorrect = convertValues2[j].answerUser
-
+                            convertValues2[j].answerCorrect = convertValues2[j].answerUser 
                             numAnswer += 1
+                            console.log(convertValues2[j].answerCorrect);
+                            
                         } else {
-                            console.log(convertValues2[j].answer, "sai rồi", "ddungs la: ", element.answer[key]);
-                            convertValues2[j].answerCorrect = element.answer[j] || element.answer[key]
-
+                            convertValues2[j].answerCorrect = element.answer[key] || element.answer[j]
+                            console.log(convertValues2[j].answerCorrect);
+                            
                         }
                     }
-
                 }
-
-
             }
-
-
-
         });
-
 
         setNumTrueAnswer(numAnswer)
         setConvertValues(convertValues2)
-
-
         setCheck(true)
     }
 
     const checkAnswerIscorrect = (id: any, key: any) => {
         let className = "";
-        console.log(key);
-
         convertValues.forEach(e => {
-
             if (e.idQuestion == id && key == e.keyQuestion) {
-
                 if (e.isCorrect == true) {
-                    console.log("ddax ddungs key", key, id);
-                    // console.log(id);
                     className = "text__result__correct"
                 } else {
                     className = "red text__result__wrong"
@@ -145,37 +89,45 @@ const ExeWriteAndListen = () => {
         return className
     }
     const listDetailAnswer = () => {
-
         setCheckDetailAnswer(true)
     }
-    console.log(convertValues);
 
+    useEffect(() => {
+        if (id) {
+            const btListenWrite = async () => {
+                const { payload } = await dispatch(getListenWriteByIdCategory(id))
+                await dispatch(addUserListenAndWrite({
+                    listAnswer: [
+                        ...convertValues
+                    ],
+                    numTrueAnswer: numTrueAnswer,
+                    idListenWrite: id,
+                }))
+            }
+            btListenWrite();
+        }
+    }, [convertValues, numTrueAnswer])
     return (
-
         <div>
             <div className='box__deatil__learning__main'>
                 <NavDeatil />
-                <div className='main__topic col-span-7'>
-
-                    <div className='main__write__listen'>
-                        <div className="header__write__listen">
+                <div className=' col-span-7 pb-8 rounded-xl'>
+                    <div className='main__topic main__write__listen'>
+                        <div className="header__write__listen ">
                             <div className="title__header__write__listen">
-                                <h2>
-
+                                <p className='font-semibold text-black text-xl uppercase'>
                                     {listenWrite?.category?.title}
-                                </h2>
+                                </p>
                             </div>
                             <div className="close__header">
                                 <button>
-                                    <i className="fa-solid fa-xmark"></i>
+                                    <i className="fa-solid fa-xmark text-black"></i>
                                 </button>
                             </div>
-
                         </div>
                         <div className='info__write__listen px-8'>
                             <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
                         </div>
-
                         <div className="audio__listen px-8">
                             <audio
                                 controls
@@ -184,21 +136,14 @@ const ExeWriteAndListen = () => {
                                 <code>audio</code> element.
                             </audio>
                         </div>
-
                         <form onSubmit={handleSubmit(onSubmit2)}  >
                             <div className="conversation__box">
                                 {
                                     listenWrite?.content?.map((item: any, index: number) => {
-
                                         const quesToArr = item.text.split("___")
                                         // tách chuỗi thành 1 mảng
-                                        // console.log(quesToArr);
-                                        // console.log(convertValues);
-
                                         var tempQues: any = [];
-                                        // console.log(quesToArr.length -1);
                                         quesToArr.forEach((item2: any, index2: number) => {
-
                                             if (index2 < quesToArr.length - 1) {
                                                 tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
                                                     <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item._id, index2 + 1)}`} {...register(`inputAnswer-${item._id}-${index2 + 1}`, { required: "Không được bỏ trống !" })} disabled placeholder="Đáp án..." />
@@ -207,12 +152,15 @@ const ExeWriteAndListen = () => {
                                                 tempQues.push(<span key={index2 + 1}>{item2}</span>)
                                             }
                                             // lọc mảng thêm phần tử vào mảng mới (tempQues)
-
                                         })
 
                                         return (
-                                            <p key={index + 1} className="hover:cursor-pointer" onClick={() => speak({ text: speakInput(item) })}>
+
+                                            <p key={index + 1} className="hover:cursor-pointer"  >
                                                 <strong>{item.name}:</strong>
+                                                {/* <button type="button" onClick={cancel}> Pause</button> */}
+                                                <span onClick={() => speak({ text: speakInput(item), rate: 0.3, pitch: 0.5, voices: 'en-US' })}><i className="fa-solid fa-volume-low"></i></span>
+                                                <span onClick={() => speak({ text: speakInput(item), rate: 1, pitch: 0.5, voices: 'en-US' })}><i className="fa-solid fa-volume-high"></i></span>
                                                 <span>{quesToArr.length == 1 ? item.text : tempQues}</span>
                                                 {item.text && <div className="text-sm text-danger" style={{ color: "red" }}>{errors[`inputAnswer-${item._id}-${index + 1}`]?.message}</div>}
                                             </p>
@@ -229,8 +177,11 @@ const ExeWriteAndListen = () => {
                             </div>
 
                         </form>
-                        {/* check result */}
 
+
+                    </div>
+                    <div>
+                        {/* check result */}
                         {
                             check == true ?
                                 <div className="answer__result">
@@ -247,7 +198,7 @@ const ExeWriteAndListen = () => {
                         {/* listed result */}
 
                         {checkDetailAnswer == true ?
-                            <div>
+                            <div className='border rounded-xl my-8 pb-8'>
                                 <div className="conversation__box">
                                     <table className='table__list__result'>
                                         <thead>
@@ -280,7 +231,6 @@ const ExeWriteAndListen = () => {
                                                     </tr>
                                                 )
                                             })
-
                                             }
 
                                         </tbody>
@@ -300,16 +250,14 @@ const ExeWriteAndListen = () => {
                             </div>
 
                             : ""}
-
                     </div>
-
                 </div>
 
                 <AdverDeatil />
             </div>
 
 
-        </div>
+        </div >
     )
 }
 

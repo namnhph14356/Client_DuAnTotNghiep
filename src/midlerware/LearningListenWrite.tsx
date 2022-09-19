@@ -11,20 +11,20 @@ export const changeInput = (input: any) => {
 
 
 export const speakInput = (speech: any) => {
-    console.log(speech.text);
+    console.log(speech.answer);
     
    if (speech.answer.length > 0) {
-    const arrayAnswer = speech.answer[0].split(",");
-
+    // const arrayAnswer = speech.answer[0].split(",");
     const quesToArr = speech.text.split("___")
     var tempQues: any = [];
-
+    console.log(quesToArr);
+    
     quesToArr.forEach((item2: any, index2: number) => {
-        console.log(arrayAnswer[index2]);
+        console.log(speech.answer[index2]);
 
         if (index2 < quesToArr.length - 1) {
             tempQues.push(<span key={index2 + 1}>{item2}</span>,
-                <span>{arrayAnswer[index2]}</span>)
+                <span>{speech.answer[index2]}</span>)
 
         } else {
             tempQues.push(<span key={index2 + 1}>{item2}</span>)

@@ -1,10 +1,14 @@
 import React from 'react'
 
+import Footer from '../components/Footer'
+
 type Props = {}
 
 const Store = (props: Props) => {
   return (
     <div>
+
+
       <section className='w-10/12 mx-auto py-[30px]'>
         <div>
           <h1 className='text-xl border-b-2 py-[20px]'>Tăng sức mạnh</h1>

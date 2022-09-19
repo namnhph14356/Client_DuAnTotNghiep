@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { removeUser } from '../../../api/user';
-import { getUserList, removeUserSlide } from '../../Slide/auth/authSlide';
+import { getUserList, removeUserSlide } from '../../../features/Slide/auth/authSlide';
 
 const ListUser = () => {
 
@@ -25,7 +25,6 @@ const ListUser = () => {
     })
     
 }
-
    // title 
    const headings = [
     {title: 'STT', dataIndex: 'stt', key:'stt'},

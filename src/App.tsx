@@ -1,7 +1,6 @@
 
 import React from 'react';
-import './css/teacherPage.css';
-import './css/menageTeacher.css';
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
@@ -10,16 +9,14 @@ import Welcome from './pages/Welcome';
 import Learning from './pages/Learning';
 import DetailLearning from './pages/DetailLearning';
 import FileUser from './pages/FileUser';
-
 import SignUp from './pages/SignUp';
-import ExeSpeak from './pages/ExeSpeak';
 import ExeWriteAndListen from './pages/ExeWriteAndListen';
 import Login from './pages/Login';
-import ListUser from './features/Admin/Auth/listUser';
-import AddUser from './features/Admin/Auth/AddUser';
+import ListUser from './pages/admin/Auth/listUser';
+import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
-import ForgotPassword from './Component/user/ForgotPassword';
-import NewPassword from './Component/user/NewPassword';
+import ForgotPassword from './components/user/ForgotPassword';
+import NewPassword from './components/user/NewPassword';
 import List from './pages/admin/categories/List';
 import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
@@ -27,33 +24,24 @@ import User from './pages/user/User';
 import Contact from './pages/contact/Contact';
 import ListQuiz from './pages/admin/quizz/quiz/ListQuiz';
 import FormQuiz from './pages/admin/quizz/quiz/FormQuiz';
-
 import ListAnswerQuiz from './pages/admin/quizz/answerQuiz/ListAnswerQuiz';
 import FormAnswerQuiz from './pages/admin/quizz/answerQuiz/FormAnswerQuiz';
 import ListUserQuiz from './pages/admin/quizz/userQuiz/ListUserQuiz';
 import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
 import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
 import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
-
-
-
-import TeacherPage from './pages/teacher/TeacherPage';
-import ManageTeacher from './pages/teacher/ManagementTeacher';
-import CategoryList from './pages/teacher/category/category';
-import AddCategory from './pages/teacher/category/createCategory';
-import AdminTeacher from './pages/adminTeacher/AdminTeacher';
-import AdminLearn from './pages/adminTeacher/AdminLearn';
+import TeacherPage from './pages/TeacherPage';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
-import FileTeacher from './pages/fileTeacher/FileTeacher';
-
 import CoursePage from './pages/CoursePage';
 import SpeakingPage from './pages/speaking';
 import QuizPage from './pages/QuizPage';
-
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
-
-
+import TestPage from './pages/Test';
+import TestPage2 from './pages/Test2';
+import ExeQuiz from './pages/ExeQuiz';
+import TeacherLayout from './pages/layouts/TeacherLayout';
+import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 
 
 
@@ -64,18 +52,16 @@ function App() {
 
         <Route path='/' element={<WebsiteLayout />}>
           <Route index element={<Home />} />
-          <Route path='learning' element={<Learning />} />
-          <Route path='detailLearning' element={<DetailLearning />} />
-
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
-          <Route path='detailLearning/quiz' element={<QuizPage />} />
-          {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
-          <Route path='detailLearning/speak' element={<SpeakingPage />} />
-          {/* <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
-
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
-          <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
+          <Route path="learning">
+            <Route index element={<Learning />} />
+            <Route path="detailLearning">
+              <Route path=":id" element={<DetailLearning />} />
+              <Route path=":id/quiz2" element={<ExeQuiz />} />
+              <Route path=':id/speak' element={<SpeakingPage />} />
+              <Route path=':id/quiz' element={<QuizPage />} />
+              <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
+            </Route>
+          </Route>
 
           <Route path="contact" element={<Contact />} />
           <Route path="course" element={<CoursePage />} />
@@ -83,21 +69,15 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
-          <Route path="file-teacher" element={<FileTeacher />} />
-          <Route path="admin-teacher" element={<AdminTeacher />}>
-            <Route path="learn" element={<AdminLearn />} />
-            <Route path="learn-add" element={<AdminLearnAdd />} />
-          </Route>
-          <Route path='menageteacher'  element={<ManageTeacher />}>
-
-            <Route path="category" >
-              <Route index element={<CategoryList />} />
-              <Route path='add' element={<AddCategory />} />
-              <Route path='edit/:id' element={<Edit />} />
-            </Route>
-          </Route>
         </Route>
-
+        <Route path='menageteacher' element={<TeacherLayout />}>
+          <Route index element={<LessonListTeacher />} />
+          <Route path='add' element={<AdminLearnAdd />} />
+          {/* <Route path="list" >
+            <Route index element={<LessonListTeacher />} />
+            <Route path='add' element={<AdminLearnAdd />} />
+          </Route> */}
+        </Route>
 
         <Route path='admin' element={<AdminLayout />}>
 
@@ -111,7 +91,7 @@ function App() {
           <Route path="contact" >
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
-          </Route>          
+          </Route>
 
           <Route path="user" >
             <Route index element={<ListUser />} />
@@ -147,17 +127,15 @@ function App() {
           </Route>
 
         </Route>
+        <Route path='/test' element={<TestPage />}> </Route>
+        <Route path='/test2' element={<TestPage2 />}> </Route>
 
         <Route path='/login' element={<Login />}> </Route>
         <Route path='/register' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>
-
       </Routes>
-
-
-
     </div>
   );
 }

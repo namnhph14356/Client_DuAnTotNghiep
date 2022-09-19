@@ -1,8 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import AdverDeatil from '../Component/AdverDeatil'
-import NavDeatil from '../Component/NavDeatil'
-import './../css/speaking.css';
+
+import AdverDeatil from '../components/AdverDeatil'
+import Footer from '../components/Footer'
+import NavDeatil from '../components/NavDeatil'
 
 const SpeakingPage = () => {
 
