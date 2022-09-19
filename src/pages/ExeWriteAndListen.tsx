@@ -4,7 +4,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 
 import AdverDeatil from '../components/AdverDeatil'
-import HeaderComponent from '../components/HeaderHome'
 import NavDeatil from '../components/NavDeatil'
 
 import React, { useEffect, useState } from 'react'
@@ -110,7 +109,6 @@ const ExeWriteAndListen = () => {
     }, [convertValues, numTrueAnswer])
     return (
         <div>
-            {/* <HeaderComponent /> */}
             <div className='box__deatil__learning__main'>
                 <NavDeatil />
                 <div className=' col-span-7 pb-8 rounded-xl'>

@@ -82,12 +82,12 @@ function App() {
 
         <Route path='/' element={<WebsiteLayout />}>
           <Route index element={<Home />} />
-          <Route path='learning' element={<Learning />} />
+          {/* <Route path='learning' element={<Learning />} />
           <Route path='detailLearning' element={<DetailLearning />} />
           <Route path='detailLearning/quiz' element={<QuizPage />} />
           <Route path='detailLearning/speak' element={<SpeakingPage />} />
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} /> */}
 
           <Route path="learning">
             <Route index element={<Learning />} />
@@ -96,6 +96,7 @@ function App() {
               <Route path=":id/quiz2" element={<ExeQuiz />} />
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
+              <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
             </Route>
           </Route>
 

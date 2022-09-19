@@ -1,13 +1,11 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import HeaderComponent from '../components/HeaderHome'
 
 type Props = {}
 
 const FileUser = (props: Props) => {
   return (
     <div>
-        <HeaderComponent/>
         <div className='px-[123px]'>
         <div className="title flex justify-between">
             <h1 className='font-bold text-[32px]'>Ho so</h1>

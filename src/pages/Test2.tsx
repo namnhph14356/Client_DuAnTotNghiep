@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import AdverDeatil from '../components/AdverDeatil';
 import Footer from '../components/Footer';
-import HeaderComponent from '../components/HeaderHome';
 import NavDeatil from '../components/NavDeatil';
 
 
@@ -71,7 +70,6 @@ const ExeQuiz = () => {
     return (
 
         <div>
-            <HeaderComponent />
             <div className='box__deatil__learning__main'>
                 <NavDeatil />
 

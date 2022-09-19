@@ -1,13 +1,11 @@
 import React from 'react'
 import Footer from '../components/Footer'
-import HeaderComponent from '../components/HeaderHome'
 
 type Props = {}
 
 const Store = (props: Props) => {
   return (
     <div>
-      <HeaderComponent />
 
       <section className='w-10/12 mx-auto py-[30px]'>
         <div>

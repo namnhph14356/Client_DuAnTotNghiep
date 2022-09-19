@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import Footer from '../components/Footer'
-import HeaderComponent from '../components/HeaderHome'
 import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 // import Footer from '../Component/Footer'
