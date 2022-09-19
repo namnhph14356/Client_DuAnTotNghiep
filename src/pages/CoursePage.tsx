@@ -1,5 +1,4 @@
 import React from 'react'
-import HeaderComponent from '../Component/HeaderHome'
 
 type Props = {}
 
@@ -7,7 +6,6 @@ const CoursePage = (props: Props) => {
     return (
         <div>
 
-            <HeaderComponent />
 
             <div>
                 <img width={'100%'} src="https://www.mshoagiaotiep.com/uploads/images/userfiles/2020/03/09/Banner_Hoc_truc_tuyen_-_mang_lop_ve_nha_ban-01.jpg" alt="" />

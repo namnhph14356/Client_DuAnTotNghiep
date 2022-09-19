@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeImage, uploadImage } from '../../../utils/upload';
-import { addUserSlide } from '../../Slide/auth/authSlide';
+import { addUserSlide } from '../../../features/Slide/auth/authSlide';
 import toastr from 'toastr';
 import { Button, Form, Input } from 'antd';
 

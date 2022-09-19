@@ -2,10 +2,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import AdverDeatil from '../Component/AdverDeatil';
-import Footer from '../Component/Footer';
-import HeaderComponent from '../Component/HeaderHome';
-import NavDeatil from '../Component/NavDeatil';
+import AdverDeatil from '../components/AdverDeatil';
+import Footer from '../components/Footer';
+import NavDeatil from '../components/NavDeatil';
 
 
 const ExeQuiz = () => {
@@ -71,7 +70,6 @@ const ExeQuiz = () => {
     return (
 
         <div>
-            <HeaderComponent />
             <div className='box__deatil__learning__main'>
                 <NavDeatil />
 

@@ -1,13 +1,11 @@
 import React from 'react'
-import Footer from '../../Component/Footer'
-import HeaderComponent from '../../Component/HeaderHome'
+import Footer from '../../components/Footer'
 
 type Props = {}
 
 const TeacherPage = (props: Props) => {
     return (
         <div className=''>
-            <HeaderComponent />
             <div className="main__teacher__page">
                 <section className="box__teacher__page">
                     <div className="information__teacher__Page">

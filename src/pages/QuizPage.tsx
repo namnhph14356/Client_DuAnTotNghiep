@@ -12,7 +12,6 @@ import { getListAnswerQuizSlide } from '../features/Slide/answerQuiz/AnswerQuizS
 import { detailCategory } from '../api/category';
 import { useParams, NavLink } from 'react-router-dom';
 import { detailQuiz } from '../api/quiz';
-// import audio1  from '../../public/assets/audio/Quiz-correct-sound-with-applause.mp3'
 import reactStringReplace from 'react-string-replace'
 import { motion, AnimatePresence } from "framer-motion"
 import { DebounceInput } from 'react-debounce-input';
@@ -21,9 +20,9 @@ import { addUserQuiz } from '../api/userQuiz';
 import { detailHistory } from '../api/history';
 import { HistoryType } from '../types/history';
 
-import AdverDeatil from '../Component/AdverDeatil';
-import NavDeatil from '../Component/NavDeatil';
-import TimeLimitCountdown from '../Component/TimeLimitCountdown';
+import AdverDeatil from '../components/AdverDeatil';
+import NavDeatil from '../components/NavDeatil';
+import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
 
 let flag1: string = ""
@@ -95,8 +94,6 @@ const CountdownWrapper = ({ time, pause }) => {
             // console.log("total2", total2);
             // console.log("timeLimit", timeLimit);
             // console.log("point", point);
-
-
 
 
 
@@ -507,7 +504,6 @@ const QuizPage = () => {
                             />
                             {/* <Countdown
                                 date={Date.now() + 120000}
-
                                 renderer={renderer}
                             /> */}
                             <MemoCountdown time={quizList? quizList[quizIndex].quiz.timeLimit : 60000} pause={onPause} />
@@ -530,7 +526,6 @@ const QuizPage = () => {
                                     // setOnPause(!pause) 
                                     checkPause = false
                                 }}
-
                             >
                                 Pause false
                             </button> */}
@@ -634,9 +629,6 @@ const QuizPage = () => {
                                                     </div>
                                                 </div>
                                             })}
-
-
-
                                         </div>
 
                                         : quizList[quizIndex]?.quiz?.type === 3
@@ -667,23 +659,17 @@ const QuizPage = () => {
                                                                 console.log("check2", check2);
                                                             }}
                                                         >
-
                                                             <button>
                                                                 {item.answer}
                                                             </button>
                                                         </div>
-
-
                                                     })}
-
-
                                                 </div>
 
                                             </div>
                                             : ""
                                 : ""
                             }
-
 
                             <div className='flex flex-row gap-4'>
                                 <div className='md:basis-3/4  '>
@@ -868,5 +854,3 @@ const QuizPage = () => {
 }
 
 export default QuizPage
-
-

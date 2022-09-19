@@ -2,10 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
 import { detailCategory } from '../api/category';
-import AdverDeatil from '../Component/AdverDeatil';
-import Footer from '../Component/Footer';
-import HeaderComponent from '../Component/HeaderHome';
-import NavDeatil from '../Component/NavDeatil';
+import AdverDeatil from '../components/AdverDeatil';
+import Footer from '../components/Footer';
+import NavDeatil from '../components/NavDeatil';
 
 const DetailLearning = () => {
 
@@ -26,9 +25,6 @@ const DetailLearning = () => {
 
     return (
         <div>
-            
-
-
             <div className='box__deatil__learning__main'>
 
                 <NavDeatil />
@@ -59,7 +55,7 @@ const DetailLearning = () => {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink style={{ color: '#fff' }} to={`/learning/learning/detailLearning/${id}/writeAndListen`}>
+                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/writeAndListen`}>
                                         Nghe và trả lời
                                         <i className="fa-solid fa-angle-right"></i>
                                     </NavLink>

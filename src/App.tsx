@@ -15,9 +15,7 @@ import './css/teacherPage.css';
 import './css/menageTeacher.css';
 
 import "toastr/build/toastr.min.css";
-
 import './css/course.css'
-
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
@@ -31,11 +29,11 @@ import SignUp from './pages/SignUp';
 import ExeSpeak from './pages/ExeSpeak';
 import ExeWriteAndListen from './pages/ExeWriteAndListen';
 import Login from './pages/Login';
-import ListUser from './features/Admin/Auth/listUser';
-import AddUser from './features/Admin/Auth/AddUser';
+import ListUser from './pages/admin/Auth/listUser';
+import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
-import ForgotPassword from './Component/user/ForgotPassword';
-import NewPassword from './Component/user/NewPassword';
+import ForgotPassword from './components/user/ForgotPassword';
+import NewPassword from './components/user/NewPassword';
 import List from './pages/admin/categories/List';
 import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
@@ -84,36 +82,23 @@ function App() {
 
         <Route path='/' element={<WebsiteLayout />}>
           <Route index element={<Home />} />
-
           {/* <Route path='learning' element={<Learning />} />
           <Route path='detailLearning' element={<DetailLearning />} />
-
           <Route path='detailLearning/quiz' element={<QuizPage />} />
-
           <Route path='detailLearning/speak' element={<SpeakingPage />} />
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
           <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} /> */}
 
-          {/* <Route path='learning' element={<Learning />} /> */}
           <Route path="learning">
             <Route index element={<Learning />} />
             <Route path="detailLearning">
               <Route path=":id" element={<DetailLearning />} />
-              {/* <Route path=":id/quiz" element={<ExeQuiz />} />
-              <Route path=":id/speak" element={<ExeSpeak />} />
-              <Route path=":id/writeAndListen" element={<ExeWriteAndListen />} /> */}
               <Route path=":id/quiz2" element={<ExeQuiz />} />
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
-
-             
-              
+              <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
             </Route>
           </Route>
-          {/* <Route path='detailLearning' element={<DetailLearning />} />
-          <Route path='detailLearning/quiz' element={<ExeQuiz />} />
-          <Route path='detailLearning/speak' element={<ExeSpeak />} />
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
 
           <Route path="contact" element={<Contact />} />
           <Route path="course" element={<CoursePage />} />
@@ -137,7 +122,6 @@ function App() {
             </Route>
           </Route>
         </Route>
-
 
         <Route path='admin' element={<AdminLayout />}>
 
@@ -195,12 +179,8 @@ function App() {
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>
-
-      </Routes >
-
-
-
-    </div >
+      </Routes>
+    </div>
   );
 }
 
