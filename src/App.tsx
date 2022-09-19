@@ -55,6 +55,7 @@ import TeacherPage from './pages/teacher/TeacherPage';
 import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+
 import AdminTeacher from './pages/adminTeacher/AdminTeacher';
 import AdminLearn from './pages/adminTeacher/AdminLearn';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
@@ -68,6 +69,9 @@ import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
 
 
+import TestPage from './pages/Test';
+import TestPage2 from './pages/Test2';
+import ExeQuiz from './pages/ExeQuiz';
 
 
 
@@ -85,18 +89,30 @@ function App() {
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
           <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
 
+          <Route path="learning">
+            <Route index element={<Learning />} />
+            <Route path="detailLearning">
+              <Route path=":id" element={<DetailLearning />} />
+              <Route path=":id/quiz2" element={<ExeQuiz />} />
+              <Route path=':id/speak' element={<SpeakingPage />} />
+              <Route path=':id/quiz' element={<QuizPage />} />
+            </Route>
+          </Route>
+
           <Route path="contact" element={<Contact />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
+
           <Route path="file-teacher" element={<FileTeacher />} />
           <Route path="admin-teacher" element={<AdminTeacher />}>
             <Route path="learn" element={<AdminLearn />} />
             <Route path="learn-add" element={<AdminLearnAdd />} />
           </Route>
           <Route path='menageteacher' element={<ManageTeacher />}>
+
 
             <Route path="category" >
               <Route index element={<CategoryList />} />
@@ -105,7 +121,6 @@ function App() {
             </Route>
           </Route>
         </Route>
-
 
         <Route path='admin' element={<AdminLayout />}>
 
@@ -155,6 +170,8 @@ function App() {
           </Route>
 
         </Route>
+        <Route path='/test' element={<TestPage />}> </Route>
+        <Route path='/test2' element={<TestPage2 />}> </Route>
 
         <Route path='/login' element={<Login />}> </Route>
         <Route path='/register' element={<SignUp />}></Route>

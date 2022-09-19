@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
+import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../../types/category';
 
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
@@ -54,8 +54,8 @@ const ListQuiz = (props: Props) => {
   const { data, error, mutate, add, edit, remove } = useQuiz()
 
   //------------------STATE--------------------
-  console.log("data SWR",data);
-  
+  console.log("data SWR", data);
+
 
   const dataTable = quizs.map((item: QuizType, index) => {
     return {
@@ -227,15 +227,25 @@ const ListQuiz = (props: Props) => {
       sorter: (a: any, b: any) => a.key - b.key,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ['descend'],
+      width: 60,
     },
     {
       title: 'ID',
       dataIndex: '_id',
       key: "_id",
+
       ...getColumnSearchProps('_id'),
       sorter: (a: any, b: any) => a._id - b._id,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: item => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
     },
     {
       title: 'Category',
@@ -252,22 +262,55 @@ const ListQuiz = (props: Props) => {
       render: (record) => (
         <div className="">
           <Image
-            width={100}
-            height={100}
+            width={80}
+            height={80}
             src={record.image}
           />
         </div>
       )
     },
     {
+      title: 'Question',
+      dataIndex: 'question',
+      key: "question",
+      ...getColumnSearchProps('question'),
+      ellipsis: {
+        showTitle: false,
+      },
+      render: item => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
+    },
+    {
       title: 'TimeLimit',
       dataIndex: 'timeLimit',
       key: "timeLimit",
+
       ...getColumnSearchProps('timeLimit'),
     },
     {
       title: 'Type',
       key: "type",
+      width: 60,
+      filters: [
+        {
+          text: 'Nghe',
+          value: 1,
+        },
+        {
+          text: 'Chọn',
+          value: 2,
+        },
+        {
+          text: 'Viết',
+          value: 3,
+        }
+      ],
+      onFilter: (value, record) => {
+        return record.type == value
+      },
       render: (record) => (
         <div className="">
           {record.type === 1
@@ -287,20 +330,34 @@ const ListQuiz = (props: Props) => {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
-
+      ellipsis: {
+        showTitle: false,
+      },
+      render: item => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
     },
     {
       title: 'Ngày Update',
       dataIndex: 'updatedAt',
       key: "updatedAt",
-
+      ellipsis: {
+        showTitle: false,
+      },
+      render: item => (
+        <Tooltip placement="topLeft" title={item}>
+          {item}
+        </Tooltip>
+      ),
     },
     {
       title: "Hành Động", key: "action", render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }} >
             <Link to={`/admin/quiz/${record._id}/edit`} >
-              <span className="text-white">Sửa</span>
+              <span className="text-white"><SettingOutlined /></span>
             </Link>
 
           </Button>
@@ -315,7 +372,7 @@ const ListQuiz = (props: Props) => {
             onCancel={handleCancel}
           >
             <Button type="primary" danger >
-              Xóa
+              <DeleteOutlined />
             </Button>
           </Popconfirm>
 
@@ -336,8 +393,8 @@ const ListQuiz = (props: Props) => {
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
-    console.log("data swr",data);
-    console.log("data redux",quizs);
+    console.log("data swr", data);
+    console.log("data redux", quizs);
 
   }, [data])
 
@@ -387,6 +444,7 @@ const ListQuiz = (props: Props) => {
         //   </div>,
 
         // }}
+        size="small"
         rowSelection={rowSelection}
         columns={columns}
         dataSource={dataTable} />

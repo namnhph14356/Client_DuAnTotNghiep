@@ -6,7 +6,7 @@ export const listHistory = async () => {
     return instance.get(url)
 }
 
-export const detailHistoty = async (id: string) => {
+export const detailHistory = async (id: string | undefined) => {
     const url = `/history/${id}`
     return instance.get(url)
 }

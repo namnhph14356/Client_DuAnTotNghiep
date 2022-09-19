@@ -10,6 +10,7 @@ import UserQuiz from '../features/Slide/userQuiz/UserQuiz';
 import ListenWrite from '../features/Slide/listenWrite/ListenWriteSlice';
 import ContactSlide from '../features/Slide/contact/ContactSlide';
 import UserListenWriteSlice from '../features/Slide/userListenWrite/UserListenWriteSlice';
+import TimeLimitCountdownSlice from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
 
 // import categorySlide from '../features/category/CategorySlide';
 // import countSlide from '../features/count/CountSlide'
@@ -27,7 +28,8 @@ export const store = configureStore({
 
     userListenWrite: UserListenWriteSlice,
     answerQuiz: AnswerQuizSlide,
-    user: authSlide
+    user: authSlide,
+    time: TimeLimitCountdownSlice
     // product
     // cart
     // user

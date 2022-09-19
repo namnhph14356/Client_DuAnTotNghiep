@@ -82,7 +82,7 @@ const FormQuiz = (props: Props) => {
         console.log("data swr",data);
         console.log("data redux",quizs);
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       } else {
         // dispatch(addQuizSlide(value));
         mutate(add(value))
@@ -91,7 +91,7 @@ const FormQuiz = (props: Props) => {
         
         
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       }
 
     }, 2000);

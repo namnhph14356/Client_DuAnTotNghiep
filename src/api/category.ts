@@ -7,6 +7,11 @@ export const listCategory = () => {
     return instance.get(url);
 }
 
+export const detailCategory = (id: string) => {
+    const url = `/categories/${id}`;
+    return instance.get(url);
+}
+
 export const addCategory = (category:CategoryType) => {
     const url = `/categories`;
     return instance.post(url, category);

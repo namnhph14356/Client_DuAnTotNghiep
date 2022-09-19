@@ -38,6 +38,7 @@ interface ExpandedDataType {
 
 
 type DataIndex = keyof ExpandedDataType;
+type DataIndex2 = keyof DataType;
 
 
 type Props = {}
@@ -117,7 +118,7 @@ const ListAnswerQuiz = (props: Props) => {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
+  const getColumnSearchProps = (dataIndex: any): ColumnType<DataType> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -167,6 +168,58 @@ const ListAnswerQuiz = (props: Props) => {
     }
 
   });
+
+  const getColumnSearchProps2 = (dataIndex: DataIndex): ColumnType<ExpandedDataType> => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Tìm Kiếm ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Tìm
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Xóa
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Lọc
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    onFilter: (value, record: any) => {
+      return record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase())
+    }
+
+  });
+
 
   //------------------SEARCH--------------------
 
@@ -288,14 +341,37 @@ const ListAnswerQuiz = (props: Props) => {
       )
     },
     {
+      title: 'Question',
+      dataIndex: 'question',
+      key: "question",
+      ...getColumnSearchProps('question'),
+    },
+    {
       title: 'TimeLimit',
       dataIndex: 'timeLimit',
       key: "timeLimit",
-      // ...getColumnSearchProps('timeLimit'),
+      ...getColumnSearchProps('timeLimit'),
     },
     {
       title: 'Type',
       key: "type",
+      filters: [
+        {
+          text: 'Nghe',
+          value: 1,
+        },
+        {
+          text: 'Chọn',
+          value: 2,
+        },
+        {
+          text: 'Viết',
+          value: 3,
+        }
+      ],
+      onFilter: (value, record) => {
+        return record.type == value
+      },
       render: (record) => (
         <div className="">
           {record.type === 1
