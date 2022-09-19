@@ -2,15 +2,13 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import AdverDeatil from '../Component/AdverDeatil';
 import Footer from '../Component/Footer';
-import HeaderComponent from '../Component/HeaderHome';
 import NavDeatil from '../Component/NavDeatil';
-
+import './../css/detailLearning.css';
 const DetailLearning = () => {
 
 
     return (
         <div>
-            <HeaderComponent />
 
 
             <div className='box__deatil__learning__main'>
@@ -56,7 +54,6 @@ const DetailLearning = () => {
                 <AdverDeatil />
 
             </div>
-            <Footer />
         </div>
     )
 }

@@ -1,14 +1,10 @@
 import React from 'react'
-import Footer from '../Component/Footer'
-import HeaderComponent from '../Component/HeaderHome'
 
 type Props = {}
 
 const Store = (props: Props) => {
   return (
     <div>
-      <HeaderComponent />
-
       <section className='w-10/12 mx-auto py-[30px]'>
         <div>
           <h1 className='text-xl border-b-2 py-[20px]'>Tăng sức mạnh</h1>
@@ -64,7 +60,6 @@ const Store = (props: Props) => {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

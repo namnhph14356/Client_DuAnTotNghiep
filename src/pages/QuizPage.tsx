@@ -3,10 +3,8 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import AdverDeatil from '../Component/AdverDeatil';
-import Footer from '../Component/Footer';
-import HeaderComponent from '../Component/HeaderHome';
 import NavDeatil from '../Component/NavDeatil';
-
+import './../css/quiz.css';
 
 const ExeQuiz = () => {
 
@@ -71,7 +69,6 @@ const ExeQuiz = () => {
     return (
 
         <div>
-            <HeaderComponent />
             <div className='box__deatil__learning__main'>
                 <NavDeatil />
 
@@ -476,10 +473,6 @@ const ExeQuiz = () => {
 
                 <AdverDeatil />
             </div>
-
-
-
-
         </div>
     )
 }

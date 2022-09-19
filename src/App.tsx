@@ -1,23 +1,7 @@
 
 import React from 'react';
-import './css/home.css';
-import './css/footer.css';
-import './css/header.css';
-import './css/welcome.css';
-import './css/learning.css';
-import './css/detailLearning.css';
-import './css/signin.css';
-import './css/signup.css';
-import './css/quiz.css';
-import './css/speaking.css';
-import './css/listen.css';
 import './css/teacherPage.css';
 import './css/menageTeacher.css';
-
-import "toastr/build/toastr.min.css";
-
-import './css/course.css'
-
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';

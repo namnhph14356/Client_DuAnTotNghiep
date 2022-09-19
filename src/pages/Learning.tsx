@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import Footer from '../Component/Footer'
-import HeaderComponent from '../Component/HeaderHome'
+import './../css/learning.css';
 const Learning = () => {
 
     return (
         <div>
 
             <div>
-                <HeaderComponent />
-
                 <h2 className="title_learning">Chủ đề cho bạn</h2>
 
                 {/* START: section */}
