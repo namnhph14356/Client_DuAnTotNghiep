@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import AdminPageHeader from '../../../../Component/AdminPageHeader';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';

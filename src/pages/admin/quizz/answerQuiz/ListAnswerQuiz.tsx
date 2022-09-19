@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../../Component/AdminPageHeader';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
 import { QuizType } from '../../../../types/quiz';
 import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';

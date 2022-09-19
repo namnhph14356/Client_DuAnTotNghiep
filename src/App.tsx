@@ -29,11 +29,11 @@ import SignUp from './pages/SignUp';
 import ExeSpeak from './pages/ExeSpeak';
 import ExeWriteAndListen from './pages/ExeWriteAndListen';
 import Login from './pages/Login';
-import ListUser from './features/Admin/Auth/listUser';
-import AddUser from './features/Admin/Auth/AddUser';
+import ListUser from './pages/admin/Auth/listUser';
+import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
-import ForgotPassword from './Component/user/ForgotPassword';
-import NewPassword from './Component/user/NewPassword';
+import ForgotPassword from './components/user/ForgotPassword';
+import NewPassword from './components/user/NewPassword';
 import List from './pages/admin/categories/List';
 import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
@@ -80,14 +80,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path='learning' element={<Learning />} />
           <Route path='detailLearning' element={<DetailLearning />} />
-
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
           <Route path='detailLearning/quiz' element={<QuizPage />} />
-          {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
           <Route path='detailLearning/speak' element={<SpeakingPage />} />
-          {/* <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
-
-          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
           <Route path='detailLearning/speak' element={<ExeSpeak />} />
           <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
 
@@ -167,11 +161,7 @@ function App() {
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>
-
       </Routes>
-
-
-
     </div>
   );
 }

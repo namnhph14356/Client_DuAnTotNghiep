@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "../../Component/Footer";
-import HeaderComponent from "../../Component/HeaderHome";
-import BannerUser from "../../Component/user/BannerUser";
-import ThongKe from "../../Component/user/ThongKe";
+import Footer from "../../components/Footer";
+import HeaderComponent from "../../components/HeaderHome";
+import BannerUser from "../../components/user/BannerUser";
+import ThongKe from "../../components/user/ThongKe";
 import Education from "./Education";
 type Props = {};
 

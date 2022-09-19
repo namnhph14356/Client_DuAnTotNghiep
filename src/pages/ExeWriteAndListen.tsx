@@ -3,9 +3,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
 
-import AdverDeatil from '../Component/AdverDeatil'
-import HeaderComponent from '../Component/HeaderHome'
-import NavDeatil from '../Component/NavDeatil'
+import AdverDeatil from '../components/AdverDeatil'
+import HeaderComponent from '../components/HeaderHome'
+import NavDeatil from '../components/NavDeatil'
 
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -66,19 +66,13 @@ const ExeWriteAndListen = () => {
                             console.log(convertValues2[j].answerCorrect);
                             
                         }
-                        // console.log(convertValues2[j]);
                     }
-                
-                    
                 }
-
             }
         });
 
-
         setNumTrueAnswer(numAnswer)
         setConvertValues(convertValues2)
-
         setCheck(true)
     }
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from '../../Component/Footer'
-import HeaderComponent from '../../Component/HeaderHome'
+import Footer from '../../components/Footer'
+import HeaderComponent from '../../components/HeaderHome'
 
 type Props = {}
 

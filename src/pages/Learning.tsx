@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import Footer from '../Component/Footer'
-import HeaderComponent from '../Component/HeaderHome'
+import Footer from '../components/Footer'
+import HeaderComponent from '../components/HeaderHome'
 const Learning = () => {
 
     return (
@@ -64,8 +64,6 @@ const Learning = () => {
                                 </div>
 
                             </div>
-
-
                         </div>
 
                     </div>
