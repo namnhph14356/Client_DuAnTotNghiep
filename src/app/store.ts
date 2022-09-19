@@ -7,7 +7,9 @@ import ProductSlide from '../features/Slide/product/ProductSlide';
 import QuizSlide from '../features/Slide/quiz/QuizSlide';
 import History from '../features/Slide/history/History';
 import UserQuiz from '../features/Slide/userQuiz/UserQuiz';
-import WellcomeSlide from '../features/Slide/welcome/WellcomeSlide';
+import ListenWrite from '../features/Slide/listenWrite/ListenWriteSlice';
+import ContactSlide from '../features/Slide/contact/ContactSlide';
+import UserListenWriteSlice from '../features/Slide/userListenWrite/UserListenWriteSlice';
 
 // import categorySlide from '../features/category/CategorySlide';
 // import countSlide from '../features/count/CountSlide'
@@ -20,10 +22,12 @@ export const store = configureStore({
     quiz: QuizSlide,
     userQuiz: UserQuiz,
     history: History,
+    listenWrite: ListenWrite,
+    contact: ContactSlide,
 
+    userListenWrite: UserListenWriteSlice,
     answerQuiz: AnswerQuizSlide,
-    user: authSlide,
-    wellcome: WellcomeSlide
+    user: authSlide
     // product
     // cart
     // user

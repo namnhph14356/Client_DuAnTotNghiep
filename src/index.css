@@ -1,6 +1,3 @@
-/* *{
-  cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png"), auto;
-} */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,16 +10,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-.colorChange{
-  width: 250px;
-  height: 30px;
-  border-radius: 8px;
-  border: 2px solid purple;
-  padding: 10px;
-  margin-left: 10px;
-  position: absolute;
-}
-.colorChange__label{
-  font-weight: bold;
 }

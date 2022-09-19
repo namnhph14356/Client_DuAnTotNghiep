@@ -91,6 +91,9 @@ const Edit = () => {
         <div>
                 <></>
             <Form {...layout} name="nest-messages"  form={form} onFinish={onFinish} validateMessages={validateMessages}>
+            {/* <Form.Item name={'_id'}  label="_id" rules={[{ required: true }]}>
+                    <Input />
+                </Form.Item>  */}
                 <Form.Item name={'title'}  label="Title" rules={[{ required: true }]}>
                     <Input />
                 </Form.Item> 

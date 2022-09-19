@@ -1,0 +1,13 @@
+.btn__buy__coures{
+    border-radius: 4px;
+    font-size: 18px;
+    padding: 10px 30px;
+    border: 1px solid #6078EA;
+    background: #6078EA;
+    color: #fff;
+}
+.btn__buy__coures:hover{
+    background: #17EAD9;
+    color: #fff;
+    border: 1px solid #17EAD9;
+}

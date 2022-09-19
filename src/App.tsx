@@ -1,109 +1,141 @@
 
-import React, { createContext, useState } from 'react';
-import  './css/home.css'; 
-import  './css/footer.css'; 
-import  './css/header.css'; 
-import  './css/welcome.css'; 
-import  './css/learning.css'; 
-import  './css/detailLearning.css'; 
-import  './css/signin.css'; 
-import  './css/signup.css'; 
+import React from 'react';
+import './css/home.css';
+import './css/footer.css';
+import './css/header.css';
+import './css/welcome.css';
+import './css/learning.css';
+import './css/detailLearning.css';
+import './css/signin.css';
+import './css/signup.css';
 import './css/quiz.css';
 import './css/speaking.css';
 import './css/listen.css';
+import './css/teacherPage.css';
+import './css/menageTeacher.css';
+
 import "toastr/build/toastr.min.css";
-import "./css/paypal.css"
-import './App.css';
+
+import './css/course.css'
+
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WebsiteLayout from './pages/layouts/WebsiteLayout';
 import Home from './pages/Home';
 import AdminLayout from './pages/layouts/AdminLayout';
-// import List from './Admin/categories/List';
 import Welcome from './pages/Welcome';
 import Learning from './pages/Learning';
 import DetailLearning from './pages/DetailLearning';
-// import Contact from './pages/Contact';
 import FileUser from './pages/FileUser';
-// import User from './pages/User';
 
-
-// import Login from './Component/user/Login';
-import SignUp from './Component/user/SignUp';
-import ThongKe from './Component/user/ThongKe';
-import ExeQuiz from './pages/ExeQuiz';
+import SignUp from './pages/SignUp';
 import ExeSpeak from './pages/ExeSpeak';
 import ExeWriteAndListen from './pages/ExeWriteAndListen';
-import Login from './Component/user/Login';
-// import Add from './Admin/categories/Add';
-import toastr from "toastr";
-// import Add from './features/Admin/categories/Add';
-// import Edit from './features/Admin/categories/Edit';
-// import List from './features/Admin/categories/List';
+import Login from './pages/Login';
 import ListUser from './features/Admin/Auth/listUser';
 import AddUser from './features/Admin/Auth/AddUser';
-// import Edit from './Admin/categories/Edit';
 import Store from './pages/Store';
 import ForgotPassword from './Component/user/ForgotPassword';
-import NewPassword from './Component/user/NewPassword'; 
+import NewPassword from './Component/user/NewPassword';
 import List from './pages/admin/categories/List';
 import Add from './pages/admin/categories/Add';
 import Edit from './pages/admin/categories/Edit';
 import User from './pages/user/User';
 import Contact from './pages/contact/Contact';
-import ListQuiz from './pages/admin/quiz/ListQuiz';
-import FormQuiz from './pages/admin/quiz/FormQuiz';
+import ListQuiz from './pages/admin/quizz/quiz/ListQuiz';
+import FormQuiz from './pages/admin/quizz/quiz/FormQuiz';
 
-import ListAnswerQuiz from './pages/admin/answerQuiz/ListAnswerQuiz';
-import FormAnswerQuiz from './pages/admin/answerQuiz/FormAnswerQuiz';
-import ListUserQuiz from './pages/admin/userQuiz/ListUserQuiz';
-import FormUserQuiz from './pages/admin/userQuiz/FormUserQuiz';
-import CheckoutPaypal from './pages/CheckoutPaypal';
-import Success from './pages/paymentConfirm/success';
-import Error from './pages/paymentConfirm/error';
-import ChangeColorBG from './Component/ChangeColorBG';
-import ListWellcome from './pages/admin/wellCome/listWellcome';
-import ReactSwitch from 'react-switch';
-import { isTheme } from './utils/localStoreR';
-import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
-import FormVocabulary from './pages/admin/Vocabulary/Form';
+import ListAnswerQuiz from './pages/admin/quizz/answerQuiz/ListAnswerQuiz';
+import FormAnswerQuiz from './pages/admin/quizz/answerQuiz/FormAnswerQuiz';
+import ListUserQuiz from './pages/admin/quizz/userQuiz/ListUserQuiz';
+import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
+import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
+import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
 
-export const ThemeContext:any = createContext(null)
+
+
+import TeacherPage from './pages/teacher/TeacherPage';
+import ManageTeacher from './pages/teacher/ManagementTeacher';
+import CategoryList from './pages/teacher/category/category';
+import AddCategory from './pages/teacher/category/createCategory';
+import AdminTeacher from './pages/adminTeacher/AdminTeacher';
+import AdminLearn from './pages/adminTeacher/AdminLearn';
+import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
+import FileTeacher from './pages/fileTeacher/FileTeacher';
+
+import CoursePage from './pages/CoursePage';
+import SpeakingPage from './pages/speaking';
+import QuizPage from './pages/QuizPage';
+
+import ListContact from './pages/admin/contact/ListContact';
+import EditContact from './pages/admin/contact/EditContact';
+
+
+
+
+
 function App() {
-  
- const themeStore = isTheme();
   return (
-  
     <div >
       <Routes>
-        
+
         <Route path='/' element={<WebsiteLayout />}>
           <Route index element={<Home />} />
-          <Route path='learning' element={<Learning/>} />
-          <Route path='detailLearning' element={<DetailLearning/>} />
-          <Route path='detailLearning/quiz' element={<ExeQuiz/>}/>
-          <Route path='detailLearning/speak' element={<ExeSpeak/>}/>
-          <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen/>}/>
-          <Route path="contact" element={<Contact />}/>
-          <Route path="fileuser" element={<FileUser />}/>
-          <Route path="user" element={<User />}/>
+          <Route path='learning' element={<Learning />} />
+          <Route path='detailLearning' element={<DetailLearning />} />
+
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
+          <Route path='detailLearning/quiz' element={<QuizPage />} />
+          {/* <Route path='detailLearning/speak' element={<ExeSpeak />} /> */}
+          <Route path='detailLearning/speak' element={<SpeakingPage />} />
+          {/* <Route path='detailLearning/writeAndListen' element={<ExeWriteAndListen />} /> */}
+
+          {/* <Route path='detailLearning/quiz' element={<ExeQuiz />} /> */}
+          <Route path='detailLearning/speak' element={<ExeSpeak />} />
+          <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
+
+          <Route path="contact" element={<Contact />} />
+          <Route path="course" element={<CoursePage />} />
+          <Route path="fileuser" element={<FileUser />} />
+          <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
+          <Route path='teacher' element={<TeacherPage />} />
+          <Route path="file-teacher" element={<FileTeacher />} />
+          <Route path="admin-teacher" element={<AdminTeacher />}>
+            <Route path="learn" element={<AdminLearn />} />
+            <Route path="learn-add" element={<AdminLearnAdd />} />
+          </Route>
+          <Route path='menageteacher'  element={<ManageTeacher />}>
+
+            <Route path="category" >
+              <Route index element={<CategoryList />} />
+              <Route path='add' element={<AddCategory />} />
+              <Route path='edit/:id' element={<Edit />} />
+            </Route>
+          </Route>
         </Route>
 
 
         <Route path='admin' element={<AdminLayout />}>
+
           <Route index element={<Navigate to="category" />} />
           <Route path="category" >
             <Route index element={<List />} />
             <Route path='add' element={<Add />} />
             <Route path='edit/:id' element={<Edit />} />
           </Route>
-          
+
+          <Route path="contact" >
+            <Route index element={<ListContact />} />
+            <Route path='edit/:id' element={<EditContact />} />
+          </Route>          
+
           <Route path="user" >
             <Route index element={<ListUser />} />
             <Route path='add' element={<AddUser />} />
             <Route path='edit/:id' element={<Edit />} />
           </Route>
 
+          {/* quizz */}
           <Route path="quiz" >
             <Route index element={<ListQuiz />} />
             <Route path='add' element={<FormQuiz />} />
@@ -122,25 +154,22 @@ function App() {
             <Route path=':id/edit' element={<FormUserQuiz />} />
           </Route>
 
-          <Route path='wellcome'>
-            <Route index element={<ListWellcome />}/>
+
+          {/* listenWrite */}
+          <Route path="listenWrite" >
+            <Route index element={<ListListenWrite />} />
+            <Route path='add' element={<FormListenWrite />} />
+            <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
-          <Route path='vocabulary'>
-            <Route index element={<ListVocabulary />} />
-            <Route path='add' element={<FormVocabulary />} />
-            <Route path=':id/edit' element={<FormVocabulary />} />
-          </Route>
         </Route>
-            <Route path='/payment' element={<CheckoutPaypal />} />
-            <Route path='/success' element={<Success />} />
-            <Route path='/cancle' element={<Error />} />
+
         <Route path='/login' element={<Login />}> </Route>
         <Route path='/register' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>
-        
+
       </Routes>
 
 

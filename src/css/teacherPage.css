@@ -1,0 +1,120 @@
+.main__teacher__page {
+  @apply w-10/12 m-auto;
+}
+
+.box__teacher__page {
+  @apply mt-[64px] grid grid-cols-2 gap-[30px];
+}
+.box__teacher__page {
+  border-bottom: 1px solid #ccc;
+}
+
+.information__teacher__Page {
+  @apply grid grid-cols-2 gap-[30px];
+}
+.img__teacher__page img {
+  @apply rounded-full w-[200px] ml-auto mr-auto;
+}
+.desc__teacher__page {
+  @apply mt-[10px];
+}
+.desc__teacher__page h2 {
+  @apply text-[20px] font-bold;
+}
+.list__info__teacher li {
+  @apply py-[5px];
+}
+.list__info__teacher i {
+  @apply mr-[10px];
+}
+
+.btn__edit__teacher {
+}
+.btn__edit__teacher button {
+  @apply float-right;
+}
+.btn__edit__teacher button {
+  border: 1px solid #ccc;
+  padding: 6px 25px;
+  border-radius: 2px;
+}
+.btn__edit__teacher button:hover {
+  background-color: #e5e8e8;
+  transition: 1s;
+}
+.btn__edit__teacher i {
+  @apply mr-[10px];
+}
+
+/* education */
+
+.education__teacher {
+  @apply mt-[56px];
+}
+.education__teacher {
+  border-bottom: 1px solid #ccc;
+}
+.education__teacher h2 {
+  @apply text-[16px] font-bold	 font-sans mb-[40px];
+}
+.list__education {
+  @apply w-[828px] grid grid-cols-2 gap-[30px] mb-[40px];
+}
+
+/* statistical */
+.statistical__teacher {
+  @apply mt-[60px];
+}
+
+.header__statistical {
+  @apply flex justify-between;
+}
+.title__statistical h2 {
+  @apply text-[20px] font-bold font-sans;
+}
+
+.btn__statistical__teacher button {
+  border: 1px solid #ccc;
+  padding: 6px 25px;
+  border-radius: 2px;
+}
+.btn__statistical__teacher button:hover {
+  background-color: #e5e8e8;
+  transition: 1s;
+}
+.btn__statistical__teacher i {
+  @apply mr-[10px];
+}
+
+.result__list__teacher {
+  @apply mt-[40px];
+}
+
+.icon__item__teacher {
+  @apply mt-[15px] text-[20px];
+}
+.icon__item__teacher i {
+  color: #d68910;
+}
+.item__result__teacher {
+  margin-bottom: 30px;
+  border-radius: 5px;
+  padding: 2px 30px;
+  display: flex;
+  width: 582px;
+  border: 1px solid #ccc;
+}
+.item__result__teacher:hover {
+  background-color: #f4f6f6;
+  transition: 1s;
+}
+.point__teacher {
+  margin-left: 30px;
+  padding-top: 10px;
+}
+.point__teacher span {
+  @apply text-[20px];
+}
+.point__teacher p {
+  @apply text-[15px];
+}
