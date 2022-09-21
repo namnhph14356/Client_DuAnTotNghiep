@@ -41,32 +41,15 @@ const Login = (props: Props) => {
     console.log(userForm);
     try {
       const { payload } = await dispatch(signIn(userForm))
-      // console.log(payload.message);
       if (payload.message) {
         message.error(payload.message);
-        // Modal.error({
-        //   title: "Account is exist !",
-        //   onOk: () => {
-        //     // navigate("/login")
-        //   }
-        // })
-
       } else {
         console.log(payload);
         localStorage.setItem("user", JSON.stringify(payload))
         message.success('Login successfully !');
-        // Modal.success({
-        //   title: "Register successfully",
-        //   onOk: () => {
-        //     // navigate("/login")
-        //   }
-        // })
         navigate("/")
 
       }
-
-
-
     } catch (error) {
       alert("Error !!!")
     }
@@ -76,7 +59,7 @@ const Login = (props: Props) => {
     const prodider = new FacebookAuthProvider();
     signInWithPopup(auth, prodider).then((result) => {
       console.log(result);
-        
+
       const id = result.user.uid;
       const name = result.user.displayName;
       const email = result.user.email;
@@ -153,7 +136,7 @@ const Login = (props: Props) => {
               </div>
 
               <p className="my-6 text-center">
-              <Link to={'/forgotPassword'}>Quên mật khẩu ?</Link>
+                <Link to={'/forgotPassword'}>Quên mật khẩu ?</Link>
               </p>
 
               <div className="text-center">
@@ -166,7 +149,7 @@ const Login = (props: Props) => {
         <div className="signin__main__right w-full my-24">
           <h3 className="text-2xl font-bold text-center">Xin chào bạn !</h3>
           <p className="signin__main__right__text text-center my-8">
-          Nhập thông tin cá nhân của bạn để bắt đầu hành trình với chúng tôi
+            Nhập thông tin cá nhân của bạn để bắt đầu hành trình với chúng tôi
           </p>
           <div className="text-center">
             <NavLink to={"/register"} className="button p-2 border-1 rounded">Đăng kí</NavLink>
