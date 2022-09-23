@@ -1,4 +1,5 @@
 import React from "react";
+
 import Footer from "../../components/Footer";
 import BannerUser from "../../components/user/BannerUser";
 import ThongKe from "../../components/user/ThongKe";
@@ -16,7 +17,6 @@ const FileTeacher = (props: Props) => {
         <hr />
         <ThongKe />
       </div>
-      <Footer />
     </>
   );
 };

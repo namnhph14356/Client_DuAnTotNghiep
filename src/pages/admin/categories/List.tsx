@@ -62,7 +62,7 @@ const List = () => {
 
 
     return (
-        <div>
+        <div className=''>
 
             <h1>Category Manager</h1>
             <button className='btnAdmin border px-4 py-1 bg-green-600 my-4 '><NavLink to="/admin/category/add" className="text-white">Add Category</NavLink></button>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import "./contact.css";
+
 import Footer from "../../components/Footer";
 
 
@@ -187,7 +188,6 @@ const Contact = () => {
           </Form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { logout } from '../features/Slide/auth/authSlide';
 import { message, Modal } from "antd";
-
+import '../css/header.css';
 const HeaderComponent = () => {
 
     const onLogout = () => {
@@ -23,7 +23,7 @@ const HeaderComponent = () => {
                 <div className="container-fluid">
 
                     {/* <div class="row"> */}
-                    <a href="index.html" className="probootstrap-logo">Sublime<span>.</span></a>
+                    <a href="index.html" className="probootstrap-logo">VianEnglish<span>.</span></a>
                     <a href="#" className="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
                     <div className="mobile-menu-overlay" />
                     <nav role="navigation" className="probootstrap-nav hidden-xs">

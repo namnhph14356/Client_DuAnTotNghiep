@@ -5,10 +5,6 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 // import Footer from '../Component/Footer'
 // import Header from '../Component/Header'
 import { getCategoryList } from '../features/Slide/category/CategorySlide'
-
-
-
-
 const Learning = () => {
     const categories = useAppSelector(item => item.category.value)
     const dispatch = useAppDispatch()
