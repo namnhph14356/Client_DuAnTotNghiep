@@ -3,7 +3,7 @@ import SubMenu from 'antd/lib/menu/SubMenu'
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { UserOutlined, CommentOutlined, DollarOutlined, LaptopOutlined, FolderFilled, BellOutlined, ReadOutlined } from '@ant-design/icons';
-
+import '../../css/admin.css'
 
 const AdminLayout = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -81,15 +81,12 @@ const AdminLayout = () => {
 
 
     return (
-        <Layout style={{ width: "100%", minHeight: '100vh' }}>
-            <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-                <div className="logo flex justify-center py-2" >
-                    <NavLink aria-current="page" className="logo active" to="/"> Logo </NavLink>
+        <Layout className='h-screen' style={{ width: "100%" }}>
+            <Sider className='sider__bar__admin h-screen ' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+                <div className="logo flex justify-center py-2 bg-[#001529]" >
+                    <NavLink aria-current="page" className="logo active text-[#fff]" to="/"> VianEnglish </NavLink>
                 </div>
-
-
-
-                <Menu
+                <Menu className='menu__bar__admin h-full'
                     theme="dark"
                     mode="inline"
                     onClick={handleClick}
@@ -126,7 +123,7 @@ const AdminLayout = () => {
 
 
             <Layout className="site-layout" >
-                <Header className="site-layout-background" style={{ padding: 0 }} >
+                <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >
 
                     <div className="flex justify-end">
                         <div className="px-4">
@@ -147,14 +144,14 @@ const AdminLayout = () => {
                 </Header>
 
                 <Content
-                    className="site-layout-background"
+                    className=" main__content__admin"
                     style={{
-                        margin: '16px',
-                        minHeight: 280,
-                        background: "#fff"
+                        margin: '24px 16px',
+                        padding: 24,
+                        height: '80vh',
                     }}
                 >
-                    <aside style={{ padding: 24 }} ><Outlet /></aside>
+                    <Outlet />
                 </Content>
             </Layout>
 

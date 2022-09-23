@@ -1,6 +1,5 @@
 import React from 'react'
 import Footer from '../components/Footer'
-
 type Props = {}
 
 const FileUser = (props: Props) => {
@@ -27,7 +26,6 @@ const FileUser = (props: Props) => {
             </div>
         </div>
         </div>
-    <Footer/>
     </div>
   )
 }

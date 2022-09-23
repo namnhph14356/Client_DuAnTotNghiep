@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Footer from '../components/Footer'
 
 type Props = {}
@@ -6,6 +7,7 @@ type Props = {}
 const Store = (props: Props) => {
   return (
     <div>
+
 
       <section className='w-10/12 mx-auto py-[30px]'>
         <div>
@@ -62,7 +64,6 @@ const Store = (props: Props) => {
         </div>
       </section>
 
-      <Footer />
     </div>
   )
 }

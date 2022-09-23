@@ -10,6 +10,8 @@ import { message, Modal } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FacebookAuthProvider, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth'
 import { auth } from '../firebase/config'
+import './../css/signin.css';
+import './../css/signup.css';
 type Props = {};
 
 const fromSchema = yup.object().shape({

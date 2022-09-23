@@ -1,5 +1,9 @@
 import React from 'react'
-import Footer from '../../components/Footer'
+
+import Footer from '../components/Footer'
+// import '../../css/teacherPage.css'
+import '../css//teacherPage.css'
+
 
 type Props = {}
 
@@ -129,7 +133,6 @@ const TeacherPage = (props: Props) => {
                     </div>
                 </section>
             </div>
-            <Footer/>
         </div>
     )
 }

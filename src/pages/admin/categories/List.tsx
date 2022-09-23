@@ -194,7 +194,6 @@ const List = () => {
             title: 'Mô tả',
             dataIndex: 'detail',
             key: "detail",
-
             ...getColumnSearchProps('detail'),
         },
         {

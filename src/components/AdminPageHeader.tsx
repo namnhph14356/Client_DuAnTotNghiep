@@ -8,7 +8,7 @@ type AdminPageHeaderProps = {
 }
 
 const AdminPageHeader = ({breadcrumb}: AdminPageHeaderProps ) => {
-    // const breadcrumb = useSelector(data => data.products.breadcrumb)
+
     return (
       <div className="">
           <div className="pt-4">
