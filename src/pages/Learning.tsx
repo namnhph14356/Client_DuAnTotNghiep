@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import Footer from '../components/Footer'
 import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-// import Footer from '../Component/Footer'
-// import Header from '../Component/Header'
 import { getCategoryList } from '../features/Slide/category/CategorySlide'
 const Learning = () => {
     const categories = useAppSelector(item => item.category.value)
