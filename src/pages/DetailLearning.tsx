@@ -6,6 +6,7 @@ import { detailCategory } from '../api/category';
 import AdverDeatil from '../components/AdverDeatil';
 import Footer from '../components/Footer';
 import NavDeatil from '../components/NavDeatil';
+import '../css/detailLearning.css'
 const DetailLearning = () => {
 
     const { pathname } = useLocation();

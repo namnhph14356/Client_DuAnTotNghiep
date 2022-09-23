@@ -3,6 +3,7 @@ import Footer from '../components/Footer'
 import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { getCategoryList } from '../features/Slide/category/CategorySlide'
+import '../css/learning.css'
 const Learning = () => {
     const categories = useAppSelector(item => item.category.value)
     const dispatch = useAppDispatch()
