@@ -123,6 +123,9 @@ const CountdownWrapper = ({ time, pause }) => {
             // console.log("total2", total2);
             // console.log("timeLimit", timeLimit);
             // console.log("point", point);
+
+
+
             return <div className="">
                 <Progress
                     strokeColor={{
@@ -140,7 +143,6 @@ const CountdownWrapper = ({ time, pause }) => {
     };
 
 
-
     // const handlePauseClick = (): void => {
     //     // countdownApi && countdownApi.pause();
     //     console.log("pause",pause);
@@ -149,7 +151,6 @@ const CountdownWrapper = ({ time, pause }) => {
     //         console.log("pause true",pause);
     //     }
     // };
-
 
     // const handleStart = () => {
     //     ref.current?.start();
@@ -166,9 +167,6 @@ const CountdownWrapper = ({ time, pause }) => {
     //     handleStart();
     //     console.log("handleStart",pause);
     // }
-
-
-
 
 
     return <Countdown
@@ -545,44 +543,40 @@ const QuizPage = () => {
 
 
     return (
-        <div>
-            <>
 
-                <div className='box__deatil__learning__main'>
-                    <NavDeatil />
+        <>
 
-
-
-                    <div className='col-span-7 main__topic'>
+            <div className='box__deatil__learning__main'>
+                <NavDeatil />
 
 
+                <div className='col-span-7 main__topic'>
 
-                        <div className='item__quiz__topic'>
-                            <div className="desc__title__cocabulary">
+                    <div className='item__quiz__topic'>
+                        <div className="desc__title__cocabulary">
 
-                                <Progress
-                                    strokeColor={{
-                                        from: '#108ee9',
-                                        to: '#87d068',
-                                    }}
-                                    percent={percent}
-                                    status="active"
-                                    className="!mt-[3px] !h-4 !text-white "
-                                    showInfo={false}
-                                />
-                                {/* <Countdown
+                            <Progress
+                                strokeColor={{
+                                    from: '#108ee9',
+                                    to: '#87d068',
+                                }}
+                                percent={percent}
+                                status="active"
+                                className="!mt-[3px] !h-4 !text-white "
+                                showInfo={false}
+                            />
+                            {/* <Countdown
                                 date={Date.now() + 120000}
                                 renderer={renderer}
                             /> */}
 
+                            <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} pause={onPause} />
+                            {/* <TimeCountDown time={quizList? quizList[quizIndex].quiz.timeLimit : 60000} /> */}
 
-                                <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} pause={onPause} />
-                                {/* <TimeCountDown time={quizList? quizList[quizIndex].quiz.timeLimit : 60000} /> */}
+                            {/* {quizList? childComponentMemo: ""} */}
+                            {/* <TimeLimitCountdown time={120000} onSetTime={setTimeLimitCountdown} /> */}
 
-                                {/* {quizList? childComponentMemo: ""} */}
-                                {/* <TimeLimitCountdown time={120000} onSetTime={setTimeLimitCountdown} /> */}
-
-                                {/* <button
+                            {/* <button
                                 type="button"
                                 onClick={() => { 
                                     setOnPause(!pause) 
@@ -593,9 +587,7 @@ const QuizPage = () => {
                                 Pause
                             </button> */}
 
-
-
-                                {/* <button
+                            {/* <button
                                 type="button"
                                 onClick={() => { 
                                     // setOnPause(!pause) 
@@ -604,21 +596,37 @@ const QuizPage = () => {
                             >
                                 Pause false
                             </button> */}
-                                <h2>
-                                    Câu hỏi thông dụng <span>
+                            <h2>
+                                Câu hỏi thông dụng <span>
 
 
-                                        /   {quiz2?.category?.title}
-                                    </span>
-                                </h2>
+                                    /   {quiz2?.category?.title}
+                                </span>
+                            </h2>
 
-                                <div className='count__question__vocabulary'>
-                                    <h4 >
-                                        Câu số <span>{quizIndex + 1}</span> / <span>{quizList?.length}</span>
-                                    </h4>
-                                </div>
+                            <div className='count__question__vocabulary'>
+                                <h4 >
+                                    Câu số <span>{quizIndex + 1}</span> / <span>{quizList?.length}</span>
+                                </h4>
                             </div>
+                        </div>
 
+
+
+                        <div className="box__question__quiz">
+                            <div className="box__header__topic">
+                                <button
+                                    className='btn__volume__vocabulary'
+                                    onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[1] })}
+                                >
+                                    <i className="fa-solid fa-volume-high"></i>
+                                </button>
+
+                                <h3 className="vocabulary__speaking">
+                                    {quizList ? quizList[quizIndex]?.quiz?.question : ""} ?
+                                </h3>
+
+                            </div>
 
                         </div>
 
@@ -745,371 +753,175 @@ const QuizPage = () => {
                                             </div>
                                         </section>
                                         : ""}
-                                    ature
 
 
-                                    <div className="box__question__quiz">
-                                        <div className="box__header__topic">
-                                            <button
-                                                className='btn__volume__vocabulary'
-                                                onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[1] })}
-                                            >
-                                                <i className="fa-solid fa-volume-high"></i>
-                                            </button>
 
-                                            <h3 className="vocabulary__speaking">
-                                                {quizList ? quizList[quizIndex]?.quiz?.question : ""} ?
-                                            </h3>
-
-                                        </div>
-
-
-                                        <div className='mt-8 md:basis-1/4'>
-                                            {/* <button className='btn__next__question'>
-
-                            </div>
-
-                            <div className="items-center">
-                                {quizList ?
-                                    quizList[quizIndex]?.quiz?.type === 1
-                                        ? quizList[quizIndex]?.answerQuiz?.map((item2: any, index) => {
-                                            return <div key={index + 1} className="choose__answer__quiz" onClick={() => {
-                                                if (check !== true) {
-                                                    setSelect({ id: item2._id, isCorrect: item2.isCorrect })
-                                                    // setCheck2(select?.isCorrect === 1 ? true : false)
-                                                    setCheck(false)
-                                                }
-                                                console.log("select", select);
-                                                console.log("check2", check2);
-                                            }}>
-                                                <div className={`py-[10px] border-2 ${item2._id == select?.id
-                                                    ? " bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2]"
-                                                    : "border-[#CCCCCC]"} 
-                                                ${check === true
-                                                        ? item2._id == select?.id
-                                                            ? select?.isCorrect === 1
-                                                                ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                                : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                            : ""
-                                                        : ""} text-center rounded-md shadow-xl relative cursor-pointer `
-                                                }>
-
-                                                    <p className="my-auto text-xl font-bold">{item2.answer}</p>
-                                                    <div className="px-[10px] py-[2px] border-2 border-[#CCCCCC] text-center rounded-2xl absolute bottom-[5px] left-[15px]">
-                                                        <span className="text-xl font-bold">{index + 1}</span>
-                                                    </div>
+                                    {check === true && select?.isCorrect === 0 || check === true && check2 === false && select === null
+                                        ? <section className='w-full mx-auto md:py-[30px]'>
+                                            <div className="">
+                                                <div className="bg-[#F9EBEA]  px-[15px] rounded-md">
+                                                    <p className=" py-[10px] text-[#C0392B] font-bold">Đó chưa phải đáp án đúng</p>
+                                                    <button onClick={onContinute} className="text-white w-full py-[10px] rounded-md bg-[#C0392B] mb-[20px] font-bold">
+                                                        Tiếp tục
+                                                    </button>
                                                 </div>
                                             </div>
-                                        })
+                                        </section>
+                                        : ""}
 
-                                        : quizList[quizIndex]?.quiz?.type === 2
-                                            ? <div className="box__question__quiz__item">
-                                                {quizList[quizIndex].answerQuiz.map((item, index) => {
-                                                    return <div key={index + 1}
-                                                        className={`border-2 list__question__item ${item._id == select?.id
-                                                            ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-                                                            : "border-[#CCCCCC]"} 
-                                                    ${check === true
-                                                                ? item._id == select?.id
-                                                                    ? select?.isCorrect === 1
-                                                                        ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                                        : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                                    : ""
-                                                                : ""} shadow-lg  mx-auto py-[20px] cursor-pointer rounded-xl `
-                                                        }
-                                                        onClick={() => {
-                                                            if (check !== true) {
-                                                                setSelect({ id: item._id, isCorrect: item.isCorrect })
-                                                                // setCheck2(select?.isCorrect === 1 ? true : false)
-                                                                setCheck(false)
-                                                            }
-                                                            console.log("select", select);
-                                                            console.log("check2", check2);
-                                                        }}
-                                                    >
-                                                        <div className="img__result__question__item">
-                                                            <img src={`../../../../assets/image/water.png`} />
-                                                        </div>
-                                                        <div className="title__result__question__item">
-                                                            <span className="text-xl font-bold">{index + 1}. {item.answer}</span>
-                                                        </div>
-                                                    </div>
-                                                })}
+                                    {done === true
+                                        ? <section className='w-full mx-auto md:py-[30px]'>
+                                            <div className="">
+                                                <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
+                                                    <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc Mừng Bạn đã hoàn thành !</p>
+                                                    <button onClick={onFinish} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
+                                                        Xem Kết Quả
+                                                    </button>
+                                                </div>
                                             </div>
-
-                                            : quizList[quizIndex]?.quiz?.type === 3
-                                                ? <div className="box__item__chosse__question">
-                                                    <div className="shelf__result__question__item">
-                                                    </div>
-                                                    <div className="btn__choose__result">
-                                                        {quizList[quizIndex].answerQuiz.map((item, index) => {
-                                                            return <div key={index + 1}
-                                                                className={`border-2 ${item._id == select?.id
-                                                                    ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-                                                                    : "border-[#CCCCCC]"} 
-                                                                ${check === true
-                                                                        ? item._id == select?.id
-                                                                            ? select?.isCorrect === 1
-                                                                                ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                                                : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                                            : ""
-                                                                        : ""} item__btn__choose `
-                                                                }
-                                                                onClick={() => {
-                                                                    if (check !== true) {
-                                                                        setSelect({ id: item._id, isCorrect: item.isCorrect })
-                                                                        // setCheck2(select?.isCorrect === 1 ? true : false)
-                                                                        setCheck(false)
-                                                                    }
-                                                                    console.log("select", select);
-                                                                    console.log("check2", check2);
-                                                                }}
-                                                            >
-                                                                <button>
-                                                                    {item.answer}
-                                                                </button>
-                                                            </div>
-                                                        })}
-                                                    </div>
-
-                                                </div>
-                                                : ""
-                                    : ""
-                                }
-
-                                <div className='flex flex-row gap-4'>
-                                    <div className='md:basis-3/4  '>
-
-                                        {check === true && select?.isCorrect === 1 || check === true && check2 === true && select === null
-                                            ? <section className='w-full mx-auto md:py-[30px]'>
-                                                <div className="">
-                                                    <div className="bg-[#D6EAF8] border-[#5DADE2]  px-[15px] py-[10px] rounded-md">
-                                                        <p className="text-[#2E86C1] font-bold ">Câu trả lời chính xác</p>
-                                                        <button onClick={onContinute} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
-                                                            Tiếp tục
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                            : ""}
+                                        </section>
+                                        : ""}
 
 
-
-                                        {check === true && select?.isCorrect === 0 || check === true && check2 === false && select === null
-                                            ? <section className='w-full mx-auto md:py-[30px]'>
-                                                <div className="">
-                                                    <div className="bg-[#F9EBEA]  px-[15px] rounded-md">
-                                                        <p className=" py-[10px] text-[#C0392B] font-bold">Đó chưa phải đáp án đúng</p>
-                                                        <button onClick={onContinute} className="text-white w-full py-[10px] rounded-md bg-[#C0392B] mb-[20px] font-bold">
-                                                            Tiếp tục
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                            : ""}
-
-                                        {done === true
-                                            ? <section className='w-full mx-auto md:py-[30px]'>
-                                                <div className="">
-                                                    <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
-                                                        <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc Mừng Bạn đã hoàn thành !</p>
-                                                        <button onClick={onFinish} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
-                                                            Xem Kết Quả
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                            : ""}
-
-
-                                    </div>
-
-                                    <div className='md:basis-1/4 mt-8'>
-                                        {/* <button className='btn__next__question'>
-
-                                        Tiếp tục
-                                    </button> */}
-                                            <button
-                                                // disabled={select === null && input2.length === 0 ? true : false}
-                                                className={`${check === true
-                                                    ? select?.isCorrect === 1 || check2 === true
-                                                        ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] "
-                                                        : "bg-[#C0392B] text-white"
-                                                    : "hover:bg-gray-100 "}  
-                                            border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`} onClick={() => {
-                                                    setCheck(true)
-                                                    increase()
-
-
-
-                                                    // console.log("finishTime", finishTime);
-                                                    // console.log("finishPoint", finishPoint);
-                                                    // console.log("timeCurrent", timeCurrent);
-                                                    // console.log("point", point);
-                                                    // console.log("select 2", select);
-                                                    // console.log("input2", input2);
-
-                                                    // console.log("result 2", result);
-
-
-                                                    console.log("quizList[quizIndex]", quizList[quizIndex]);
-
-
-                                                    if (select !== null) {
-                                                        setResult([...result, {
-                                                            quiz: quizList[quizIndex].quiz._id,
-                                                            answerQuiz: select.id,
-                                                            time: flag1,
-                                                            point: Math.round(flag2),
-                                                            isCorrect: select.isCorrect
-                                                        }])
-                                                    } else {
-                                                        setResult([...result, {
-                                                            quiz: quizList[quizIndex].quiz._id,
-                                                            answerQuiz: "62d413d7d0d91b0f41800bde",
-                                                            time: flag1,
-                                                            point: Math.round(flag2),
-                                                            isCorrect: 0
-                                                        }])
-                                                    }
-                                                    console.log("result", result);
-
-
-
-                                                    if (checkInputLength?.length === 0) {
-                                                        setCheck2(false)
-                                                        // check2 = false
-                                                        // console.log("setCheck2(false)", check2);
-
-                                                    }
-
-
-                                                    // console.log("setCheck2(false) check2", check2);
-                                                    // console.log("setCheck2(false) check", check);
-                                                    // select.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
-                                                    // audioCorrect.play()
-                                                    check2 === true ? audioCorrect.play() : audioWrong.play()
-                                                }}>
-                                                Kiểm tra
-                                            </button>
-                                        </div>
-                                    </div >
-                                </div >
-
-                                <div className="box__list__detail">
-                                    <ul>
-                                        <li>
-                                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                                <i className="fa-solid fa-angle-right"></i></NavLink>
-                                        </li>
-                                        <li>
-
-                                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                                <i className="fa-solid fa-angle-right"></i></NavLink>
-                                        </li>
-                                        <li>
-
-                                            <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                                <i className="fa-solid fa-angle-right"></i></NavLink>
-                                        </li>
-                                    </ul>
                                 </div>
 
-                            </div >
+                                <div className='mt-8 md:basis-1/4'>
+                                    {/* <button className='btn__next__question'>
+                                        Tiếp tục
+                                    </button> */}
+                                    <button
+                                        // disabled={select === null && input2.length === 0 ? true : false}
+                                        className={`${check === true
+                                            ? select?.isCorrect === 1 || check2 === true
+                                                ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] "
+                                                : "bg-[#C0392B] text-white"
+                                            : "hover:bg-gray-100 "}  
+                                            border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`} onClick={() => {
+                                            setCheck(true)
+                                            increase()
 
 
+                                            // console.log("finishTime", finishTime);
+                                            // console.log("finishPoint", finishPoint);
+                                            // console.log("timeCurrent", timeCurrent);
+                                            // console.log("point", point);
+                                            // console.log("select 2", select);
+                                            // console.log("input2", input2);
 
-                            <Button type="primary" onClick={showModal}>
-                                Open Modal
-                            </Button>
+                                            // console.log("result 2", result);
 
-                            <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                                <Collapse defaultActiveKey={['1']} onChange={onChange}>
+                                            console.log("quizList[quizIndex]", quizList[quizIndex]);
 
-                                    {history?.map((item: any, index: number) => {
-                                        return <Panel
-                                            showArrow={false}
-                                            header={
-                                                <div key={index + 1} className="flex flex-row gap-4">
-                                                    <div className="">{moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
-                                                    <div className="">{item.category?.title}</div>
-                                                    <div className="">00</div>
-                                                    <div className="">Pass</div>
-                                                </div>
+                                            if (select !== null) {
+                                                setResult([...result, {
+                                                    quiz: quizList[quizIndex].quiz._id,
+                                                    answerQuiz: select.id,
+                                                    time: flag1,
+                                                    point: Math.round(flag2),
+                                                    isCorrect: select.isCorrect
+                                                }])
+                                            } else {
+                                                setResult([...result, {
+                                                    quiz: quizList[quizIndex].quiz._id,
+                                                    answerQuiz: "62d413d7d0d91b0f41800bde",
+                                                    time: flag1,
+                                                    point: Math.round(flag2),
+                                                    isCorrect: 0
+                                                }])
                                             }
-                                            key={index + 1}
-                                        >
-                                            {item.userQuiz.map((item2: any, index: number) => {
-                                                return <div key={index + 1} className="flex flex-row gap-4">
-                                                    <div className="">test</div>
-                                                    <div className="">{item2.answerQuiz.answer}</div>
-                                                    <div className="">{item2.time}</div>
-                                                    <div className="">{Math.round(item2.point)}</div>
-                                                </div>
-                                            })}
-                                        </Panel>
+                                            console.log("result", result);
+
+
+                                            if (checkInputLength?.length === 0) {
+                                                setCheck2(false)
+                                                // check2 = false
+                                                // console.log("setCheck2(false)", check2);
+
+                                            }
+
+
+                                            // console.log("setCheck2(false) check2", check2);
+                                            // console.log("setCheck2(false) check", check);
+                                            // select.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
+                                            // audioCorrect.play()
+                                            check2 === true ? audioCorrect.play() : audioWrong.play()
+                                        }}>
+                                        Kiểm tra
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="box__list__detail">
+                            <ul>
+                                <li>
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                                <li>
+
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                                <li>
+
+                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
+                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+
+                    <Button type="primary" onClick={showModal}>
+                        Open Modal
+                    </Button>
+
+                    <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        <Collapse defaultActiveKey={history?.length - 1} onChange={onChange}>
+
+                            {history?.map((item: any, index: number) => {
+                                console.log("item history", item);
+
+                                return <Panel
+                                    showArrow={false}
+                                    header={
+                                        <div key={index + 1} className="flex flex-row gap-4">
+                                            <div className="">{moment(item.history.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
+                                            <div className="">{item.category?.title}</div>
+                                            <div className="">{item.history?.totalCorrect}/{quizList.length}</div>
+                                            <div className="">{item.history.result === 0 ? "Fail" : "Pass"}</div>
+                                        </div>
+                                    }
+                                    key={index + 1}
+                                >
+                                    {item.userQuiz.map((item2: any, index: number) => {
+                                        return <div key={index + 1} className="flex flex-row gap-4">
+                                            <div className="">test</div>
+                                            <div className="">{item2.answerQuiz.answer}</div>
+                                            <div className="">{item2.time}</div>
+                                            <div className="">{Math.round(item2.point)}</div>
+                                        </div>
                                     })}
+                                </Panel>
+                            })}
 
-                                </Collapse>
-                            </Modal>
-
-
-
-                        </div >
+                        </Collapse>
+                    </Modal>
 
 
 
+                </div>
 
-                        <Button type="primary" onClick={showModal}>
-                            Open Modal
-                        </Button>
-
-                        <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                            <Collapse defaultActiveKey={history?.length - 1} onChange={onChange}>
-
-                                {history?.map((item: any, index: number) => {
-                                    console.log("item history", item);
-
-                                    return <Panel
-                                        showArrow={false}
-                                        header={
-                                            <div key={index + 1} className="flex flex-row gap-4">
-                                                <div className="">{moment(item.history.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
-                                                <div className="">{item.category?.title}</div>
-                                                <div className="">{item.history?.totalCorrect}/{quizList.length}</div>
-                                                <div className="">{item.history.result === 0 ? "Fail" : "Pass"}</div>
-                                            </div>
-                                        }
-                                        key={index + 1}
-                                    >
-                                        {item.userQuiz.map((item2: any, index: number) => {
-                                            return <div key={index + 1} className="flex flex-row gap-4">
-                                                <div className="">test</div>
-                                                <div className="">{item2.answerQuiz.answer}</div>
-                                                <div className="">{item2.time}</div>
-                                                <div className="">{Math.round(item2.point)}</div>
-                                            </div>
-                                        })}
-                                    </Panel>
-                                })}
-
-                            </Collapse>
-                        </Modal>
+                <AdverDeatil />
+            </div>
 
 
 
 
-                        <AdverDeatil />
-
-                    </div >
-
-
-
-
-
-                </div >
-            </>
-        </div >
+        </>
     )
 }
 
