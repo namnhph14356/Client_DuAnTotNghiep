@@ -50,8 +50,6 @@ export const newPassword = (user:any) => {
 } 
 
 export const changeOTP = (user:any) => {
-    console.log(user);
-    
     const url = `/changeOTP`;
     return instance.post(url, user);
 } 

@@ -98,19 +98,14 @@ const authSlide = createSlice({
         isAuthticated: false
     },
     reducers:{
-
         logout(){
-            // state.value =[];
             localStorage.removeItem("user");
         },
 
-    
     },
     extraReducers: (builer) => {
         builer.addCase(getUserList.fulfilled, (state, action) => {
             state.value = action.payload;
-            // console.log(state.value);
-            
         })
 
         builer.addCase(addUserSlide.fulfilled, (state:any, action) => {
@@ -118,9 +113,7 @@ const authSlide = createSlice({
         })
 
         builer.addCase(editUserSlide.fulfilled, (state:any, action) => {
-            console.log(state.value);
             state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
-            console.log("edit state:"+ state.value);
             
         })
         builer.addCase(removeUserSlide.fulfilled,  (state:any, action:any) => {
@@ -135,16 +128,10 @@ const authSlide = createSlice({
             state.isAuthticated = true;
         })
         builer.addCase(forgotPassword.fulfilled,  (state:any, action:any) => {
-           console.log(action.payload);
-           
         })
         builer.addCase(newPass.fulfilled,  (state:any, action:any) => {
-            // state.value = action.payload 
-            
         })
         builer.addCase(changeOtp.fulfilled,  (state:any, action:any) => {
-            // state.otp = action.payload 
-            
          })
        
         

@@ -27,7 +27,6 @@ const QuizListen = (props: Props) => {
                         return <div key={index + 1} className="choose__answer__quiz" onClick={() => {
                             // setSelect(item.id)
                             // setCheck(false)
-                            // console.log(select);
                         }}>
 
                             <div className={`py-[10px] border-2 ${item.id == select ? " bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2]" : "border-[#CCCCCC]"} ${check === true ? item.id == select ? select === quizs[0].correctAnswer ? "bg-[#D6EAF8] border-[#5DADE2] " : "bg-[#F9EBEA] border-[#C0392B] text-[#C0392B]" : "" : ""} text-center rounded-md shadow-xl relative cursor-pointer `}>

@@ -18,8 +18,7 @@ import Store from './pages/Store';
 import ForgotPassword from './components/user/ForgotPassword';
 import NewPassword from './components/user/NewPassword';
 import List from './pages/admin/categories/List';
-import Add from './pages/admin/categories/Add';
-import Edit from './pages/admin/categories/Edit';
+import Add from './pages/admin/categories/FormCategory';
 import User from './pages/user/User';
 import Contact from './pages/contact/Contact';
 import ListQuiz from './pages/admin/quizz/quiz/ListQuiz';
@@ -30,6 +29,15 @@ import ListUserQuiz from './pages/admin/quizz/userQuiz/ListUserQuiz';
 import FormUserQuiz from './pages/admin/quizz/userQuiz/FormUserQuiz';
 import FormListenWrite from './pages/admin/ListenWrite/listenWrite/FormListenWrite';
 import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWrite';
+
+// import TeacherPage from './pages/teacher/TeacherPage';
+// import ManageTeacher from './pages/teacher/ManagementTeacher';
+import CategoryList from './pages/teacher/category/category';
+import AddCategory from './pages/teacher/category/createCategory';
+
+// import AdminTeacher from './pages/adminTeacher/AdminTeacher';
+// import AdminLearn from './pages/adminTeacher/AdminLearn';
+
 import TeacherPage from './pages/TeacherPage';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
 import CoursePage from './pages/CoursePage';
@@ -42,8 +50,6 @@ import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
-
-
 
 function App() {
   return (
@@ -69,6 +75,7 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path='store' element={<Store />} />
           <Route path='teacher' element={<TeacherPage />} />
+
         </Route>
         <Route path='menageteacher' element={<TeacherLayout />}>
           <Route index element={<LessonListTeacher />} />
@@ -77,6 +84,10 @@ function App() {
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
           </Route> */}
+          <Route path="category" >
+              <Route index element={<CategoryList />} />
+              <Route path='add' element={<AddCategory />} />
+            </Route>
         </Route>
 
         <Route path='admin' element={<AdminLayout />}>
@@ -85,7 +96,7 @@ function App() {
           <Route path="category" >
             <Route index element={<List />} />
             <Route path='add' element={<Add />} />
-            <Route path='edit/:id' element={<Edit />} />
+            <Route path='edit/:id' element={<Add />} />
           </Route>
 
           <Route path="contact" >
@@ -96,7 +107,6 @@ function App() {
           <Route path="user" >
             <Route index element={<ListUser />} />
             <Route path='add' element={<AddUser />} />
-            <Route path='edit/:id' element={<Edit />} />
           </Route>
 
           {/* quizz */}

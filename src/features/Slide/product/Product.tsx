@@ -5,8 +5,6 @@ import { addProduct, getProductList } from './ProductSlide';
 const Product = () => {
     const products = useSelector<any,any>(data => data.product.value);
     const dispath = useDispatch();
-    console.log(products);
-    
     useEffect(() => {
         dispath(getProductList())
     },[]);
