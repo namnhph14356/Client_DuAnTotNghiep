@@ -5,7 +5,9 @@ export type HistoryType = {
     user: string | UserType,
     category: string,
     totalPoint: number,
-    type: number,
+    totalCorrect: number,
+    result: number,
+    type: number,   
     createdAt?: string,
     updatedAt?: string
 }

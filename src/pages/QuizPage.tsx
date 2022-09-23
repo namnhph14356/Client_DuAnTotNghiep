@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { Progress, Button, Modal, Collapse } from 'antd';
 import Countdown, { CountdownApi } from 'react-countdown';
@@ -15,33 +15,41 @@ import { detailQuiz } from '../api/quiz';
 import reactStringReplace from 'react-string-replace'
 import { motion, AnimatePresence } from "framer-motion"
 import { DebounceInput } from 'react-debounce-input';
+
 import moment from 'moment';
+
 import { addUserQuiz } from '../api/userQuiz';
-import { detailHistory } from '../api/history';
+import { addHistory, detailHistory } from '../api/history';
 import { HistoryType } from '../types/history';
 
 import AdverDeatil from '../components/AdverDeatil';
 import NavDeatil from '../components/NavDeatil';
 import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
+import TimeCountDown from '../components/TimeCountDown';
+
 
 let flag1: string = ""
 let flag2: number = 0
 let checkPause: boolean = false
 
 const CountdownWrapper = ({ time, pause }) => {
-    console.log("time wrapper",time);
-    const ref= useRef<any>();
+    console.log("time wrapper", time);
+    const ref = useRef<any>();
     const Completionist = () => <span>You are good to go!</span>;
     let timeLimit = 100
     let point = 1000
     let countdownApi: CountdownApi | null = null;
-    const [state, setState] = useState<any>(Date.now() + time)
+    const [state, setState] = useState<any>()
     const setRef = (countdown: Countdown | null): void => {
         if (countdown) {
             countdownApi = countdown.getApi();
         }
     };
+
+    useEffect(() => {
+        setState(Date.now() + time)
+    }, [time])
 
     let timeCurrent: string = ""
     const renderer = ({ total, hours, minutes, seconds, milliseconds, completed, api }) => {
@@ -53,10 +61,32 @@ const CountdownWrapper = ({ time, pause }) => {
             let tempTime = moment.duration(time);
             // console.log("minutes", tempTime.minutes());
             // console.log("seconds", tempTime.seconds());
-            const total = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 100
-            const total2 = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 1000
-            timeLimit = timeLimit - total
-            point = point - total2
+            // console.log("tempTime",tempTime);
+
+            if (tempTime.minutes() === 0) {
+                const total = (1 / tempTime.seconds()) * 100
+                const total2 = (1 / tempTime.seconds()) * 1000
+                point = point - total2
+                flag2 = point
+                timeLimit = timeLimit - total
+                // console.log("total2 true", total2);
+            } else {
+                const total = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 100
+                const total2 = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 1000
+                point = point - total2
+                flag2 = point
+                timeLimit = timeLimit - total
+                // console.log("total2 false", total2);
+            }
+            if (flag2 < 0) {
+                flag2 = 0
+            }
+
+
+            flag1 = timeCurrent
+            // console.log("flag1", flag1);
+            // console.log("flag2", flag2);
+
             // console.log("timeLimit", timeLimit);
             if (timeLimit === 0) {
                 timeLimit = 100;
@@ -80,12 +110,11 @@ const CountdownWrapper = ({ time, pause }) => {
             //     api.start()
             //     console.log("checkPause api false",checkPause);
             // }
-            
-            
+
+
             // setValueTime(timeCurrent,point)
             // console.log("timeCurrent", timeCurrent);
-            flag1 = timeCurrent
-            flag2 = point
+
             // if(timeSlice > 0){
             //     dispatch(changeTime(timeSlice - 10))
             // }
@@ -114,46 +143,48 @@ const CountdownWrapper = ({ time, pause }) => {
     };
 
 
-    const handlePauseClick = (): void => {
-        // countdownApi && countdownApi.pause();
-        console.log("pause",pause);
-        if (pause === true) {
-            countdownApi && countdownApi.pause();
-            console.log("pause true",pause);
-        }
-    };
+    // const handlePauseClick = (): void => {
+    //     // countdownApi && countdownApi.pause();
+    //     console.log("pause",pause);
+    //     if (pause === true) {
+    //         countdownApi && countdownApi.pause();
+    //         console.log("pause true",pause);
+    //     }
+    // };
 
-    const handleStart = () => {
-        ref.current?.start();
-    }
+    // const handleStart = () => {
+    //     ref.current?.start();
+    // }
 
-    const handlePause = () => {
-        ref.current?.pause();
-    }
+    // const handlePause = () => {
+    //     ref.current?.pause();
+    // }
 
-    if (pause === true) {
-        handlePause()
-        console.log("handlePause",pause);
-    }else{
-        handleStart();
-        console.log("handleStart",pause);
-    }
- 
+    // if (pause === true) {
+    //     handlePause()
+    //     console.log("handlePause",pause);
+    // }else{
+    //     handleStart();
+    //     console.log("handleStart",pause);
+    // }
+
 
     return <Countdown
         date={state}
         // ref={setRef}
-        ref={ref}
+        key={time}
+        // ref={ref}
         renderer={renderer}
-        onPause={handlePauseClick}
+        // onPause={handlePauseClick}
+        autoStart={true}
     />
 };
 
 const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizPage = () => {
-    console.log("flag1", flag1);
-    console.log("flag2", flag2);
+
+
 
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
@@ -240,14 +271,45 @@ const QuizPage = () => {
     //---Finish---
     // Kết thúc làm bài và đẩy đáp án đã chọn lên server
     const onFinish = async () => {
+        let totalPoint = 0
+        let totalCorrect = 0
+        const quizListHalf = quizList.length / 2
+        let pass = 0
+        result.forEach((item: any, index: number) => {
+            totalPoint = totalPoint + item.point
+            if (item.isCorrect === 1) {
+                totalCorrect = totalCorrect + 1
+            }
+            if (totalCorrect > quizListHalf) {
+                pass = 1
+            }
+        })
+
+        const { data: data2 } = await addHistory({
+            user: "62c853c16948a16fbde3b43e",
+            category: quiz2.category._id,
+            totalPoint: totalPoint,
+            totalCorrect: totalCorrect,
+            result: pass,
+            type: 2
+        })
         for (let index = 0; index < result.length; index++) {
-            const flag = { ...result[index], history: "63247e3ec75322f79a6dc1d3" }
+            const flag = { ...result[index], history: data2._id }
             console.log("flag", flag);
-
             const { data } = await addUserQuiz(flag)
-
-
         }
+
+        const { data } = await detailCategory(id)
+        console.log(data);
+        setQuiz2(data)
+
+        const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
+            const { data } = await detailHistory(item._id)
+            // console.log("data", data);
+            return data
+        }))
+        setHistory(test2)
+
         setIsModalOpen(true);
 
 
@@ -445,7 +507,8 @@ const QuizPage = () => {
     console.log("quizList", quizList);
     console.log("timeSlice", timeSlice);
 
-
+    const childComponentMemo = useMemo(() => <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 60000} pause={onPause} />, [onPause]);
+    //  const memoizedCallback = useCallback(theFoo , []);    
 
     useEffect(() => {
         dispatch(getListQuizSlide())
@@ -487,7 +550,7 @@ const QuizPage = () => {
                 <NavDeatil />
 
 
-                <div className='main__topic col-span-7'>
+                <div className='col-span-7 main__topic'>
 
                     <div className='item__quiz__topic'>
                         <div className="desc__title__cocabulary">
@@ -506,10 +569,14 @@ const QuizPage = () => {
                                 date={Date.now() + 120000}
                                 renderer={renderer}
                             /> */}
-                            <MemoCountdown time={quizList? quizList[quizIndex].quiz.timeLimit : 60000} pause={onPause} />
-                            <TimeLimitCountdown time={120000} onSetTime={setTimeLimitCountdown} />
 
-                            <button
+                            <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} pause={onPause} />
+                            {/* <TimeCountDown time={quizList? quizList[quizIndex].quiz.timeLimit : 60000} /> */}
+
+                            {/* {quizList? childComponentMemo: ""} */}
+                            {/* <TimeLimitCountdown time={120000} onSetTime={setTimeLimitCountdown} /> */}
+
+                            {/* <button
                                 type="button"
                                 onClick={() => { 
                                     setOnPause(!pause) 
@@ -518,7 +585,7 @@ const QuizPage = () => {
 
                             >
                                 Pause
-                            </button>
+                            </button> */}
 
                             {/* <button
                                 type="button"
@@ -672,7 +739,7 @@ const QuizPage = () => {
                             }
 
                             <div className='flex flex-row gap-4'>
-                                <div className='md:basis-3/4  '>
+                                <div className='md:basis-3/4 '>
 
                                     {check === true && select?.isCorrect === 1 || check === true && check2 === true && select === null
                                         ? <section className='w-full mx-auto md:py-[30px]'>
@@ -718,7 +785,7 @@ const QuizPage = () => {
 
                                 </div>
 
-                                <div className='md:basis-1/4 mt-8'>
+                                <div className='mt-8 md:basis-1/4'>
                                     {/* <button className='btn__next__question'>
                                         Tiếp tục
                                     </button> */}
@@ -736,12 +803,12 @@ const QuizPage = () => {
 
                                             // console.log("finishTime", finishTime);
                                             // console.log("finishPoint", finishPoint);
-                                            console.log("timeCurrent", timeCurrent);
-                                            console.log("point", point);
-                                            console.log("select 2", select);
-                                            console.log("input2", input2);
+                                            // console.log("timeCurrent", timeCurrent);
+                                            // console.log("point", point);
+                                            // console.log("select 2", select);
+                                            // console.log("input2", input2);
 
-                                            console.log("result 2", result);
+                                            // console.log("result 2", result);
 
                                             console.log("quizList[quizIndex]", quizList[quizIndex]);
 
@@ -749,17 +816,20 @@ const QuizPage = () => {
                                                 setResult([...result, {
                                                     quiz: quizList[quizIndex].quiz._id,
                                                     answerQuiz: select.id,
-                                                    time: timeCurrent,
-                                                    point: Math.round(point)
+                                                    time: flag1,
+                                                    point: Math.round(flag2),
+                                                    isCorrect: select.isCorrect
                                                 }])
                                             } else {
                                                 setResult([...result, {
                                                     quiz: quizList[quizIndex].quiz._id,
                                                     answerQuiz: "62d413d7d0d91b0f41800bde",
-                                                    time: timeCurrent,
-                                                    point: Math.round(point)
+                                                    time: flag1,
+                                                    point: Math.round(flag2),
+                                                    isCorrect: 0
                                                 }])
                                             }
+                                            console.log("result", result);
 
 
                                             if (checkInputLength?.length === 0) {
@@ -810,17 +880,19 @@ const QuizPage = () => {
                     </Button>
 
                     <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                        <Collapse defaultActiveKey={['1']} onChange={onChange}>
+                        <Collapse defaultActiveKey={history?.length - 1} onChange={onChange}>
 
                             {history?.map((item: any, index: number) => {
+                                console.log("item history", item);
+
                                 return <Panel
                                     showArrow={false}
                                     header={
                                         <div key={index + 1} className="flex flex-row gap-4">
-                                            <div className="">{moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
+                                            <div className="">{moment(item.history.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
                                             <div className="">{item.category?.title}</div>
-                                            <div className="">00</div>
-                                            <div className="">Pass</div>
+                                            <div className="">{item.history?.totalCorrect}/{quizList.length}</div>
+                                            <div className="">{item.history.result === 0 ? "Fail" : "Pass"}</div>
                                         </div>
                                     }
                                     key={index + 1}
