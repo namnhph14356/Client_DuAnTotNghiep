@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { listVocabulary } from "../api/vocabulary";
-import AdverDeatil from "../Component/AdverDeatil";
 import Footer from "../Component/Footer";
 import HeaderComponent from "../Component/HeaderHome";
-import NavDeatil from "../Component/NavDeatil";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { VocabulatyType } from "../types/vocabularyType";
 import { getDetailTopic } from "../api/topicVocabulary";
 import { TopicVocabulary } from "../types/topicVocabulary";
-import Sound from "../Component/sound";
+import NavDeatil from "../components/NavDeatil";
+import Sound from "../components/sound";
+import AdverDeatil from "../components/AdverDeatil";
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { speakInput } from '../midlerware/LearningListenWrite';
+import "../css/speaking.css";
 
 const SpeakingPage = () => {
   const [value, setValue] = useState<VocabulatyType[]>([]);
@@ -23,7 +26,7 @@ const SpeakingPage = () => {
     image: "1.jpg",
     status: 1,
   };
-
+  const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
   console.log(_category);
   console.log(value);
   const id = "6329714e7cf1a7383fd1e0b9";
@@ -62,10 +65,9 @@ const SpeakingPage = () => {
               return (
                 <>
                   <div className="box__header__topic">
-                    <button className="btn__volume__vocabulary">
+                    <button className="btn__volume__vocabulary" onClick={() => speak({ text: item.words, rate: 0.3, pitch: 0.5, voices: 'en-US' })}>
                       <i className="fa-solid fa-volume-high"></i>
                     </button>
-                    <Sound />
                   </div>
 
                   <div className="info__vocabulry">
@@ -88,7 +90,7 @@ const SpeakingPage = () => {
                       </p>
                   </div>
                 <div className="flex justify-center">
-                  <div className="w-6/12 ml-4">
+                  <div className="w-4/12 ml-4">
                     <img
                       className="image__vocabula w-[100px] h-[150px] rounded-lg"
                       src={item.image}

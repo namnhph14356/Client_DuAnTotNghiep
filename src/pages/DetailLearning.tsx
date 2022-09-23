@@ -1,18 +1,31 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom';
-import AdverDeatil from '../Component/AdverDeatil';
-import Footer from '../Component/Footer';
-import HeaderComponent from '../Component/HeaderHome';
-import NavDeatil from '../Component/NavDeatil';
 
+
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
+import { detailCategory } from '../api/category';
+import AdverDeatil from '../components/AdverDeatil';
+import Footer from '../components/Footer';
+import NavDeatil from '../components/NavDeatil';
+import '../css/detailLearning.css'
 const DetailLearning = () => {
 
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { id }: any = useParams()
+    const [speak, setSpeak] = useState()
+    const [quiz, setQuiz] = useState()
+    const [listenWrite, setListenWrite] = useState()
+
+    useEffect(() => {
+        const getQuiz = async () => {
+            const { data } = await detailCategory(id)
+            console.log(data);
+        }
+        getQuiz()
+    }, [id])
 
     return (
         <div>
-            <HeaderComponent />
-
-
             <div className='box__deatil__learning__main'>
 
                 <NavDeatil />
@@ -28,25 +41,25 @@ const DetailLearning = () => {
                             Khi học 3 câu thông dụng và các câu hỏi trong ngày, hãy tận dụng thời gian rảnh rỗi để đọc to mỗi câu ít nhất 200 lần trước khi học sang các câu mới. Chắc chắn chương trình này sẽ giúp các em giỏi tiếng Anh!                </p>
 
 
-
-                        {/* <button className='btn__start__topic'>
-                       <NavLink to={'/detailLearning/speak'}><a href=""> Bắt đầu học </a> </NavLink><span> <i className="fa-solid fa-angle-right"></i>chủ đề 1</span>
-                    </button> */}
                         <div className="box__list__detail">
                             <ul>
                                 <li>
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/speak`}> 
+                                        Khởi động
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                                 <li>
-
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/quiz`}> 
+                                        Hỏi và đáp
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                                 <li>
-
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
+                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/writeAndListen`}>
+                                        Nghe và trả lời
+                                        <i className="fa-solid fa-angle-right"></i>
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>
@@ -55,8 +68,8 @@ const DetailLearning = () => {
 
                 <AdverDeatil />
 
+
             </div>
-            <Footer />
         </div>
     )
 }

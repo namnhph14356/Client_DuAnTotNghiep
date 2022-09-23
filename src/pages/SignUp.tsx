@@ -3,7 +3,8 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import './../css/signin.css';
+import './../css/signup.css';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";

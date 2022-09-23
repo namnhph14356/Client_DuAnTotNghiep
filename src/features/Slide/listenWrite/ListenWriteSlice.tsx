@@ -55,17 +55,14 @@ export const removeListenSlide = createAsyncThunk(
 
      async (arr: any) => {
           if (Array.isArray(arr)) {
-               console.log("arr > 0", arr);
 
                let dataRemove: ListenWriteType[] = []
                for (let i = 0; i < arr.length; i++) {
                     const { data } = await removeListenWrite(arr[i].id)
                     dataRemove.push(data)
                }
-               console.log("dataRemove", dataRemove);
                return dataRemove
           } else {
-               console.log("arr", arr);
 
                const { data } = await removeListenWrite(arr)
                return data
@@ -104,17 +101,13 @@ const listenWriteSlice = createSlice({
 
           })
           builder.addCase(removeListenSlide.fulfilled, (state: any, action: any) => {
-               // state.value = state.value.filter(item => item._id !== action.payload._id)
-               console.log("action.payload._id", action.payload);
                if (Array.isArray(action.payload)) {
                     const payload = {
                          excludeIds: action.payload.map(item => {
                               return item._id
                          })
                     }
-                    console.log("payload", payload);
                     state.value = state.value.filter(item => !payload.excludeIds.includes(item._id))
-                    console.log("state.value", state.value);
                } else {
                     state.value = state.value.filter(item => item._id !== action.payload._id)
                }

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import AdminPageHeader from '../../../../Component/AdminPageHeader';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
@@ -82,7 +82,7 @@ const FormQuiz = (props: Props) => {
         console.log("data swr",data);
         console.log("data redux",quizs);
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       } else {
         // dispatch(addQuizSlide(value));
         mutate(add(value))
@@ -91,7 +91,7 @@ const FormQuiz = (props: Props) => {
         
         
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        // navigate("/admin/quiz");
+        navigate("/admin/quiz");
       }
 
     }, 2000);

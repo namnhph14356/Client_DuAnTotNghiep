@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import "./contact.css";
-import Footer from "../../Component/Footer";
 
-import HeaderComponent from "../../Component/HeaderHome";
+import Footer from "../../components/Footer";
+
 
 import { useDispatch, useSelector } from "react-redux";
 import { addContactSlide } from "../../features/Slide/contact/ContactSlide";
@@ -49,7 +49,6 @@ const Contact = () => {
   };
   return (
     <>
-      <HeaderComponent />
       <div className="container">
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">
@@ -189,7 +188,6 @@ const Contact = () => {
           </Form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
