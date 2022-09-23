@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
 /* eslint-disable jsx-a11y/alt-text */
 import { Button, Form, Input, InputNumber, message, Select, Space, Upload } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { UploadOutlined } from '@ant-design/icons';
-// import { changeImage, uploadImage } from '../../utils/upload';
-import { useDispatch, useSelector } from 'react-redux';
-// import { addCategorySlide } from '../../features/category/CategorySlide';
 import { useNavigate, useParams } from 'react-router-dom';
 import toas from 'toastr';
 import { changeImage, uploadImage } from '../../../utils/upload';
@@ -20,24 +15,6 @@ import { changeBreadcrumb } from '../../../features/Slide/quiz/QuizSlide';
 import useCategory from '../../../features/Slide/category/use_category';
 import { detailCategory } from '../../../api/category';
 
-const layout = {
-  labelCol: { span: 2 },
-  wrapperCol: { span: 16 },
-};
-
-/* eslint-disable no-template-curly-in-string */
-const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
-};
-
-
 const Add = () => {
   const { data, error, mutate, add, edit, remove } = useCategory()
   const categories = useAppSelector(data => data.category.value)
@@ -49,10 +26,9 @@ const Add = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
-
   const { id } = useParams();
-  const onFinish = async (value) => {
 
+  const onFinish = async (value) => {
     if (fileList) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
@@ -127,8 +103,6 @@ const Add = () => {
 
   }, [id])
 
-
-
   return (
     <div className="container">
       <AdminPageHeader breadcrumb={breadcrumb} />
@@ -169,7 +143,6 @@ const Add = () => {
             <Input />
           </Form.Item>
 
-
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               {id ? "Sửa" : "Thêm"}
@@ -178,14 +151,8 @@ const Add = () => {
               Reset
             </Button>
           </Form.Item>
-
-
         </Form>
       </div>
-
-
-
-
     </div>
   )
 }
