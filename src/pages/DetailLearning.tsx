@@ -1,11 +1,12 @@
 
+
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
 import { detailCategory } from '../api/category';
 import AdverDeatil from '../components/AdverDeatil';
 import Footer from '../components/Footer';
 import NavDeatil from '../components/NavDeatil';
-
+import '../css/detailLearning.css'
 const DetailLearning = () => {
 
     const { pathname } = useLocation();
@@ -69,7 +70,6 @@ const DetailLearning = () => {
 
 
             </div>
-            
         </div>
     )
 }

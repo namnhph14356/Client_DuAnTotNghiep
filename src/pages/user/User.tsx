@@ -8,12 +8,10 @@ type Props = {};
 const User = (props: Props) => {
   return (
     <>
-      
       <div className="container">
         <BannerUser />
         <ThongKe />
       </div>
-      <Footer />
     </>
   );
 };

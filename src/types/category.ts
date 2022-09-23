@@ -3,7 +3,8 @@ export type CategoryType = {
     title: string, 
     detail: string,
     image: string,
-    
+    updatedAt?: Date,
+    createdAt?: Date
 }
 // export type DetailCategoryType = {
 //     category: CategoryType,

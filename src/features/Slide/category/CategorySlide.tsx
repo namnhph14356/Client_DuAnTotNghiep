@@ -18,7 +18,6 @@ export const addCategorySlide:any = createAsyncThunk(
     "category/addCategory",
     async (category:CategoryType) => {
         const {data} = await addCategory(category);
-        
         return data;
     }
 )
@@ -26,10 +25,7 @@ export const addCategorySlide:any = createAsyncThunk(
 export const editdCategorySlide:any = createAsyncThunk(
     "category/editCategory",
     async (category:CategoryType) => {
-        
         const {data} = await editCategory(category);
-        console.log(data);
-        
         return data;
     }
 )
@@ -37,10 +33,7 @@ export const editdCategorySlide:any = createAsyncThunk(
 export const removeCate:any = createAsyncThunk(
     "category/deleteCategory",
     async (id:any) => {
-        // console.log(id);       
         const {data} = await removeCategory(id);
-        // console.log(data);
-        
         return data;
     }
 )
@@ -48,9 +41,6 @@ export const getCateById:any = createAsyncThunk(
     "category/getCateById",
     async (id:any) => {
         const {data} = await getCategoryById(id);
-
-        // console.log(data);
-        
         return data;
     }
 )
@@ -58,25 +48,23 @@ export const getCateById:any = createAsyncThunk(
 const categorySlide = createSlice({
     name:"category",
     initialState:{
-        value:[]
+        value:[],
+        breadcrumb: ""
     },
     reducers:{
-
+        changeBreadcrumb(state, action) {
+            state.breadcrumb = action.payload
+       }
     },
     extraReducers:  (builer) => {
         builer.addCase(getCategoryList.fulfilled, (state, action) => {
             state.value = action.payload;
-            console.log(state.value);
-            
         })
         builer.addCase(addCategorySlide.fulfilled, (state:any, action:any) => {
-            state.value.push(action.payload)
+            state.value = [...state.value, action.payload]
         })
         builer.addCase(editdCategorySlide.fulfilled, (state:any, action) => {
-            console.log(state.value);
             state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
-            console.log("edit state:"+ state.value);
-            
         })
         
         builer.addCase(removeCate.fulfilled,  (state:any, action:any) => {
@@ -84,14 +72,13 @@ const categorySlide = createSlice({
         })
 
         builer.addCase(getCateById.fulfilled, (state:any, action:any) => {
-           
             state.value = action.payload;   
-            // console.log(action.payload);
-            
         })
 
     },
     
 
 })
+
+export const { changeBreadcrumb } = categorySlide.actions
 export default categorySlide.reducer;

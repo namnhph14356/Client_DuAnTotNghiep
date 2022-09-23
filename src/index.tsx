@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
+// import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import { SWRConfig } from 'swr';

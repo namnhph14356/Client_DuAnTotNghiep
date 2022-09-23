@@ -15,17 +15,12 @@ const TimeLimitCountdown = ({time,onSetTime}: TimeLimitCountdownProps) => {
     let point = 1000
     let timeCurrent = ""
 
-
-
     const renderer = ({ total, hours, minutes, seconds, milliseconds, completed }) => {
         if (completed) {
             // Render a completed state
             return <Completionist />;
         } else {
-
             let tempTime = moment.duration(120000);
-            // console.log("minutes", tempTime.minutes());
-            // console.log("seconds", tempTime.seconds());
             const total = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 100
             const total2 = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 1000
             timeLimit = timeLimit - total
@@ -35,9 +30,7 @@ const TimeLimitCountdown = ({time,onSetTime}: TimeLimitCountdownProps) => {
             }
 
             timeCurrent = `${minutes}:${seconds}`
-
             onSetTime(timeCurrent,point)
-
             return <div className="">
                 <Progress
                     strokeColor={{
@@ -58,7 +51,6 @@ const TimeLimitCountdown = ({time,onSetTime}: TimeLimitCountdownProps) => {
         <div>
             <Countdown
                 date={Date.now() + timeLimit2}
-
                 renderer={renderer}
             />
         </div>

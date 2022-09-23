@@ -7,7 +7,7 @@ const useQuiz = () => {
 
     const dispatch = useAppDispatch();
     let { data, error, mutate } = useSWR("/quizs" )
-
+    
    
 
     const add = async (item: any )=>{

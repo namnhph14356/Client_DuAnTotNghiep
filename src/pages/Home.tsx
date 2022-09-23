@@ -5,7 +5,7 @@ import BannerPage from '../components/BannerPage'
 import Footer from '../components/Footer'
 // import Count from '../features/count/Count'
 // import Product from '../features/product/Product'
-
+import './../css/home.css';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -345,8 +345,6 @@ const Home = () => {
                     </div>
                 </form>
             </section>
-
-            <Footer />
         </div>
     )
 }
