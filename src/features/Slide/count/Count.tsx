@@ -4,8 +4,6 @@ import { decrement, increase, increment } from './CountSlide';
 const Count = () => {
     const count = useSelector<any,any>(data => data.count.value);
     const dispath = useDispatch();
-    console.log(count);
-    
   return (
     <div>Count: {count}
     
