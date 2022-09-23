@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Footer from '../components/Footer'
-
 type Props = {}
 
 const Store = (props: Props) => {

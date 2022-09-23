@@ -39,24 +39,25 @@ import AdminLearn from './pages/adminTeacher/AdminLearn';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
 import FileTeacher from './pages/fileTeacher/FileTeacher';
 
-import CoursePage from './pages/CoursePage';
-import SpeakingPage from './pages/speaking';
-import QuizPage from './pages/QuizPage';
-
-import ListContact from './pages/admin/contact/ListContact';
-import EditContact from './pages/admin/contact/EditContact';
-
-
 // import AdminTeacher from './pages/adminTeacher/AdminTeacher';
 // import AdminLearn from './pages/adminTeacher/AdminLearn';
 
 import TeacherPage from './pages/TeacherPage';
-
+import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
+import CoursePage from './pages/CoursePage';
+import SpeakingPage from './pages/speaking';
+import QuizPage from './pages/QuizPage';
+import ListContact from './pages/admin/contact/ListContact';
+import EditContact from './pages/admin/contact/EditContact';
 import TestPage from './pages/Test';
 import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
+
+// import AdminTeacher from './pages/adminTeacher/AdminTeacher';
+// import AdminLearn from './pages/adminTeacher/AdminLearn';
+
 
 function App() {
   return (
@@ -104,6 +105,11 @@ function App() {
             <Route index element={<List />} />
             <Route path='add' element={<Add />} />
             <Route path='edit/:id' element={<Add />} />
+          </Route>
+
+          <Route path="contact" >
+            <Route index element={<ListContact />} />
+            <Route path='edit/:id' element={<EditContact />} />
           </Route>
 
           <Route path="contact" >

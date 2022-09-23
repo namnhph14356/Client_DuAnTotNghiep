@@ -34,7 +34,10 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
     "react-slick": "^0.29.0",
+=======
+>>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
     "react-speech": "^1.0.2",
     "react-speech-kit": "^3.0.1",
     "react-speech-recognition": "^3.9.1",
