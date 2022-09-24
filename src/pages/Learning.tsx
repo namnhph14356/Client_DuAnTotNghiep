@@ -26,7 +26,7 @@ const Learning = () => {
                                     <div key={index + 1} className="group col-md-3 col-sm-6 col-xs-12 probootstrap-animate">
                                         <div className="probootstrap-block-image item__list__learning">
                                             <img className='img__learning__item' src={item.image} alt="" />
-                                            <div className="text">
+                                            <div className="py-6">
                                                 <h3 className='title__tiem__learning'>
                                                     <NavLink className={'group-hover:text-red-500'} to={`detailLearning/${item._id}`}>
                                                         {item.title}
@@ -34,11 +34,9 @@ const Learning = () => {
                                                 </h3>
                                             </div>
                                         </div>
-
                                     </div>
                                 </NavLink>
                             })}
-
 
 
                             {/* <div className="col-md-3 col-sm-6 col-xs-12 probootstrap-animate">
