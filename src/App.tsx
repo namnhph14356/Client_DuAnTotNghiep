@@ -53,6 +53,7 @@ import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
+import Grammar from './pages/Grammar';
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
+              <Route path='grammar' element={<Grammar />}/>
             </Route>
           </Route>
 
