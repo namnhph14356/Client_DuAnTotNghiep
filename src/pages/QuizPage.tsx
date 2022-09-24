@@ -926,4 +926,8 @@ const QuizPage = () => {
     )
 }
 
+<<<<<<< HEAD
 export default QuizPage
+=======
+export default QuizPage
+>>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142

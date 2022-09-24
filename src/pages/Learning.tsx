@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import Footer from '../components/Footer'
 import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { getCategoryList } from '../features/Slide/category/CategorySlide'

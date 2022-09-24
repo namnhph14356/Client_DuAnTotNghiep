@@ -337,6 +337,7 @@ const ExeQuiz = () => {
                                 <i className="fa-solid fa-xmark"></i>
                             </a>
                         </div>
+<<<<<<< HEAD
 
                         <Progress
                             strokeColor={{
@@ -352,6 +353,23 @@ const ExeQuiz = () => {
 
 
 
+=======
+
+                        <Progress
+                            strokeColor={{
+                                from: '#108ee9',
+                                to: '#87d068',
+                            }}
+                            percent={percent}
+                            status="active"
+                            className="!mt-[3px] !h-4 !text-white "
+                            showInfo={false}
+                        />
+
+
+
+
+>>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
                     </div>
                     <Countdown
                         date={Date.now() + 120000}
