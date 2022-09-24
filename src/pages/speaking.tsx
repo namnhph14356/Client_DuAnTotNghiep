@@ -5,13 +5,12 @@ import AdverDeatil from '../components/AdverDeatil'
 import Footer from '../components/Footer'
 import Menu from '../components/Menu'
 import NavDeatil from '../components/NavDeatil'
-
+import '../css/speaking.css'
 const SpeakingPage = () => {
 
     return (
         <div>
             <div className='box__deatil__learning__main'>
-
                 <NavDeatil />
                 <div className='main__topic col-span-7'>
                     <div className="desc__title__cocabulary">
