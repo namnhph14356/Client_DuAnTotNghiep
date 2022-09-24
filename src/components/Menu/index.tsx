@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 
 const Menu = () => {
     const { id } = useParams()
+    
     return (
         <div className="box__list__detail">
             <ul>
