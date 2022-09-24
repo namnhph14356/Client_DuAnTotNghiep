@@ -348,11 +348,8 @@ const ExeQuiz = () => {
                             className="!mt-[3px] !h-4 !text-white "
                             showInfo={false}
                         />
-
-
-
-
                     </div>
+                    
                     <Countdown
                         date={Date.now() + 120000}
 
