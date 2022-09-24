@@ -69,7 +69,7 @@
   }
 
   .item__list__learning {
-    @apply shadow-md   grid grid-rows-2 justify-center   z-10;
+    @apply shadow-md    justify-center   z-10;
   }
 
   .img__learning__item{
@@ -91,7 +91,7 @@
   }
 
   .title__tiem__learning {
-    @apply text-center	my-[32px] text-lg	font-bold	font-sans ;
+    @apply text-center	 text-lg	font-bold	font-sans ;
   }
 
   .btn__display_item button {

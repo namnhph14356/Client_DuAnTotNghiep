@@ -28,6 +28,7 @@ import NavDeatil from '../components/NavDeatil';
 import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
 import TimeCountDown from '../components/TimeCountDown';
+import Menu from '../components/Menu';
 
 
 let flag1: string = ""
@@ -853,28 +854,9 @@ const QuizPage = () => {
                             </div>
                         </div>
 
-                        <div className="box__list__detail">
-                            <ul>
-                                <li>
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
-                                </li>
-                                <li>
-
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
-                                </li>
-                                <li>
-
-                                    <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                        <i className="fa-solid fa-angle-right"></i></NavLink>
-                                </li>
-                            </ul>
-                        </div>
+                        <Menu />
 
                     </div>
-
-
 
                     <Button type="primary" onClick={showModal}>
                         Open Modal
