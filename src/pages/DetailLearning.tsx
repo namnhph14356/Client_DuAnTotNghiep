@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
 import { detailCategory } from '../api/category';
 import AdverDeatil from '../components/AdverDeatil';
-import Footer from '../components/Footer';
+import Menu from '../components/Menu';
 import NavDeatil from '../components/NavDeatil';
 import '../css/detailLearning.css'
 const DetailLearning = () => {
@@ -40,29 +40,7 @@ const DetailLearning = () => {
                         <p className='info__topic'>
                             Khi học 3 câu thông dụng và các câu hỏi trong ngày, hãy tận dụng thời gian rảnh rỗi để đọc to mỗi câu ít nhất 200 lần trước khi học sang các câu mới. Chắc chắn chương trình này sẽ giúp các em giỏi tiếng Anh!                </p>
 
-
-                        <div className="box__list__detail">
-                            <ul>
-                                <li>
-                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/speak`}> 
-                                        Khởi động
-                                        <i className="fa-solid fa-angle-right"></i>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/quiz`}> 
-                                        Hỏi và đáp
-                                        <i className="fa-solid fa-angle-right"></i>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/writeAndListen`}>
-                                        Nghe và trả lời
-                                        <i className="fa-solid fa-angle-right"></i>
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </div>
+                      <Menu/>
                     </div>
                 </div>
 

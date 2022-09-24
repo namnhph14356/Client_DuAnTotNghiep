@@ -34,7 +34,7 @@ const ExeWriteAndListen = () => {
 
     const onSubmit2 = async (item: any, index: any) => {
         let convertValues2: any = [];
-        for (let key in item) {
+        for (let key in item) {            
             const idQuestion = key.split("-")[1];
             const keyQuestion = key.split("-")[2];
             //   tách chuỗi key (inputAnswer-62ff6998b77f3ffb3d4ec7c3-1) rồi lấy phần tử thứ 2 (62ff6998b77f3ffb3d4ec7c3), và phần tử thứ 3 (index)
@@ -50,9 +50,19 @@ const ExeWriteAndListen = () => {
 
         let numAnswer = 0;
         await listenWrite.content.forEach((element, index) => {
-            
+            console.log(element.answer);
+            console.log(convertValues2);
+            console.log(listenWrite);
             for (let j = 0; j < convertValues2.length; j++) {
                 if (element.answer && convertValues2[j].idQuestion == element._id) {
+                    console.log(convertValues2);
+                  
+                    // console.log(convertValues2[j].answerCorrect);
+                    // console.log(convertValues2[j].answerUser );
+                    // const abc =  (element.answer).filter((item:any) => item.answer.toLowerCase() == convertValues2[j].answerUser.toLowerCase() ? convertValues2[j].answerUser : item.answer.toLowerCase())
+                    // console.log(abc);
+                    // console.log(element.answer);
+                    
                     for (let key in element.answer) {
                         if (String(element.answer[key]).toLowerCase() == convertValues2[j].answerUser.toLowerCase()) {
                             convertValues2[j].isCorrect = true;
@@ -61,15 +71,16 @@ const ExeWriteAndListen = () => {
                             console.log(convertValues2[j].answerCorrect);
                             
                         } else {
-                            convertValues2[j].answerCorrect = element.answer[key] || element.answer[j]
-                            console.log(convertValues2[j].answerCorrect);
+                            convertValues2[j].answerCorrect = element.answer[key] ? element.answer[key] : element.answer[j]
+                            console.log("index+ "+ j +" " + key+" " ,convertValues2[j].answerCorrect);
                             
                         }
                     }
                 }
             }
         });
-
+        console.log(convertValues2);
+        
         setNumTrueAnswer(numAnswer)
         setConvertValues(convertValues2)
         setCheck(true)

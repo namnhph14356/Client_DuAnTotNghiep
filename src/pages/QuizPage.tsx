@@ -24,6 +24,10 @@ import AdverDeatil from '../components/AdverDeatil';
 import NavDeatil from '../components/NavDeatil';
 import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
+import Menu from '../components/Menu';
+
+import '../css/quiz.css'
+
 
 let flag1: string = ""
 let flag2: number = 0
@@ -779,24 +783,7 @@ const QuizPage = () => {
                                 </div>
                             </div>
 
-                            <div className="box__list__detail">
-                                <ul>
-                                    <li>
-                                        <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                            <i className="fa-solid fa-angle-right"></i></NavLink>
-                                    </li>
-                                    <li>
-
-                                        <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                            <i className="fa-solid fa-angle-right"></i></NavLink>
-                                    </li>
-                                    <li>
-
-                                        <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                            <i className="fa-solid fa-angle-right"></i></NavLink>
-                                    </li>
-                                </ul>
-                            </div>
+                            <Menu />
 
                         </div>
 

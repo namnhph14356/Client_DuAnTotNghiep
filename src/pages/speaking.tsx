@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom'
 
 import AdverDeatil from '../components/AdverDeatil'
 import Footer from '../components/Footer'
+import Menu from '../components/Menu'
 import NavDeatil from '../components/NavDeatil'
+import '../css/speaking.css'
+
 
 const SpeakingPage = () => {
 
@@ -48,25 +51,7 @@ const SpeakingPage = () => {
                             Tiếp tục
                         </button>
                     </div>
-
-                    <div className="box__list__detail">
-                        <ul>
-                            <li>
-                                <NavLink style={{ color: '#fff' }} to={'/detailLearning/speak'}> Khởi động
-                                    <i className="fa-solid fa-angle-right"></i></NavLink>
-                            </li>
-                            <li>
-
-                                <NavLink style={{ color: '#fff' }} to={'/detailLearning/quiz'}> Hỏi và đáp
-                                    <i className="fa-solid fa-angle-right"></i></NavLink>
-                            </li>
-                            <li>
-
-                                <NavLink style={{ color: '#fff' }} to={'/detailLearning/writeAndListen'}>  Nghe và trả lời
-                                    <i className="fa-solid fa-angle-right"></i></NavLink>
-                            </li>
-                        </ul>
-                    </div>
+                   <Menu/>
                 </div>
 
                 <AdverDeatil />
