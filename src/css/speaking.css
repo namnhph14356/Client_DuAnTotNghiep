@@ -19,7 +19,6 @@
 }
 .vocabulary__speaking{
     margin-left: 20px;
-<<<<<<< HEAD
     line-height: 15px;
     color: #FF9533;
 }
@@ -28,8 +27,7 @@
   font-size: larger !important;
   font-weight: bold;
   line-height: 50px;
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
+
 }
 .btn__volume__vocabulary i{
     font-size: 20px;
@@ -70,7 +68,6 @@
 }
 .count__question__vocabulary h4{
   color: #fff;
-<<<<<<< HEAD
 }
 .audioVocabulary{
   height: initial;
@@ -84,6 +81,5 @@
 }
 .control-arrow::before{
   margin: 7px 0px !important;
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
+
 }

@@ -36,7 +36,6 @@ import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
 import AdminTeacher from './pages/adminTeacher/AdminTeacher';
 import AdminLearn from './pages/adminTeacher/AdminLearn';
-import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
 import FileTeacher from './pages/fileTeacher/FileTeacher';
 
 // import AdminTeacher from './pages/adminTeacher/AdminTeacher';
@@ -54,9 +53,6 @@ import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
-
-// import AdminTeacher from './pages/adminTeacher/AdminTeacher';
-// import AdminLearn from './pages/adminTeacher/AdminLearn';
 
 
 function App() {

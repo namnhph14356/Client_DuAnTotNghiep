@@ -46,7 +46,6 @@ const SpeakingPage = () => {
   // Lối phần tử last slide vào mảng slide cũ
   return (
     <div>
-      <HeaderComponent />
       <div className="box__deatil__learning__main">
         <NavDeatil />
         <div className="main__topic col-span-7">
