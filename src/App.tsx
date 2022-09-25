@@ -34,6 +34,9 @@ import ListListenWrite from './pages/admin/ListenWrite/listenWrite/ListListenWri
 // import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryList from './pages/teacher/category/category';
 import AddCategory from './pages/teacher/category/createCategory';
+import AdminTeacher from './pages/adminTeacher/AdminTeacher';
+import AdminLearn from './pages/adminTeacher/AdminLearn';
+import FileTeacher from './pages/fileTeacher/FileTeacher';
 
 // import AdminTeacher from './pages/adminTeacher/AdminTeacher';
 // import AdminLearn from './pages/adminTeacher/AdminLearn';
@@ -50,6 +53,8 @@ import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
+import Grammar from './pages/Grammar';
+
 
 function App() {
   return (
@@ -66,6 +71,7 @@ function App() {
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
+              <Route path='grammar' element={<Grammar />}/>
             </Route>
           </Route>
 
@@ -103,6 +109,16 @@ function App() {
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
           </Route>
+
+          <Route path="contact" >
+            <Route index element={<ListContact />} />
+            <Route path='edit/:id' element={<EditContact />} />
+          </Route>
+
+          <Route path="contact" >
+            <Route index element={<ListContact />} />
+            <Route path='edit/:id' element={<EditContact />} />
+          </Route>          
 
           <Route path="user" >
             <Route index element={<ListUser />} />

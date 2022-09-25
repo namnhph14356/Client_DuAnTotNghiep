@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Space, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
-import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
@@ -16,6 +15,7 @@ import { uploadVideo } from '../../../../utils/upload';
 import { addListen, editListen } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
 import { ListenWriteType } from '../../../../types/listenWrite';
 import { detailListenWrite } from '../../../../api/listenWrite';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
 
 type Props = {}
 

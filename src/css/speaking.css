@@ -19,6 +19,15 @@
 }
 .vocabulary__speaking{
     margin-left: 20px;
+    line-height: 15px;
+    color: #FF9533;
+}
+.carousel-status{
+  color: #c33528 !important;
+  font-size: larger !important;
+  font-weight: bold;
+  line-height: 50px;
+
 }
 .btn__volume__vocabulary i{
     font-size: 20px;
@@ -59,4 +68,18 @@
 }
 .count__question__vocabulary h4{
   color: #fff;
+}
+.audioVocabulary{
+  height: initial;
+}
+.control-arrow{
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #FF9533 !important;
+  border-radius: 50% !important;
+  top: 70% !important;
+}
+.control-arrow::before{
+  margin: 7px 0px !important;
+
 }
