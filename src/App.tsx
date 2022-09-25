@@ -68,6 +68,7 @@ import QuizPage from './pages/QuizPage';
 
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
+import CommentBox from './pages/comment/Comment';
 
 
 
@@ -94,6 +95,7 @@ function App() {
           <Route path='detailLearning/:id/writeAndListen' element={<ExeWriteAndListen />} />
 
           <Route path="contact" element={<Contact />} />
+          <Route path="comment" element={<CommentBox />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />
