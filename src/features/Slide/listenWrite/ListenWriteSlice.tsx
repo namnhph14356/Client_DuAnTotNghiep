@@ -47,12 +47,7 @@ export const editListen = createAsyncThunk(
 )
 
 export const removeListenSlide = createAsyncThunk(
-     'quizs/removeListenWrite',
-     // async (id: any) => {
-     //      const { data } = await removeQuiz(id)
-     //      return data
-     // }
-
+     'listenWrite/removeListenWrite',
      async (arr: any) => {
           if (Array.isArray(arr)) {
 
@@ -115,5 +110,5 @@ const listenWriteSlice = createSlice({
           })
      }
 })
-
+export const { changeBreadcrumb } = listenWriteSlice.actions
 export default listenWriteSlice.reducer
