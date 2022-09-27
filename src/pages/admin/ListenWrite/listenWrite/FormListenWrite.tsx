@@ -1,16 +1,15 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Space, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { UploadOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../../types/category';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ReactAudioPlayer from 'react-audio-player';
 import { changeVideo, uploadVideo } from '../../../../utils/upload';
-import { addListen, editListen } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { addListen, changeBreadcrumb, editListen, getListListenWrite } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
 import { ListenWriteType } from '../../../../types/listenWrite';
 import { detailListenWrite } from '../../../../api/listenWrite';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
@@ -18,6 +17,7 @@ import { addQuestionListenSlide, editQuestionListenWriteSlide } from '../../../.
 import { addAnswerListenWriteSlide, editAnswerListenWriteSlide } from '../../../../features/Slide/answerListenWrite/answerListenWrite';
 import { getListQuestionListenWriteById } from '../../../../api/questionListenWrite';
 import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
+import { async } from '@firebase/util';
 
 type Props = {}
 
@@ -41,6 +41,7 @@ const FormListenWrite = (props: Props) => {
   const breadcrumb = useAppSelector(data => data.quiz.breadcrumb)
   const categories = useAppSelector(data => data.category.value)
   const listWrite = useAppSelector(data => data.listenWrite.value)
+  const [categoryExist, setCategoryExist] = useState<string[]>([])
   const [listenWrite, setListenWrite] = useState<ListenWriteType>()
   const [audio, setAudio] = useState<string>("");
   const dispatch = useAppDispatch();
@@ -51,6 +52,14 @@ const FormListenWrite = (props: Props) => {
   };
 
   const { id } = useParams();
+
+  const listCate = async () => {
+    let arr: string[] = []
+    listWrite.map((item: ListenWriteType) => {
+      arr.push(item.category);
+    })
+    setCategoryExist(arr)
+  }
 
   const onFinish = async (value: ListenWriteType) => {
     const imgPost = document.querySelector("#upload_image");
@@ -140,10 +149,11 @@ const FormListenWrite = (props: Props) => {
             arr.push({ ...question[i], answer: answer ? answer.answer : null })
           }
         }
+        const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
         form.setFieldsValue({
           _id: id,
           area: data.area,
-          category: data.category,
+          category: category[0].title,
           audio: data.imgLink,
           content: arr
         });
@@ -154,14 +164,14 @@ const FormListenWrite = (props: Props) => {
       dispatch(changeBreadcrumb("THÊM BÀI TẬP NGHE VÀ VIẾT"))
     }
     dispatch(getCategoryList())
+    dispatch(getListListenWrite())
+    listCate();
 
     const imgPreview = document.getElementById("img-preview");
     const imgPost = document.getElementById("upload_image");
     changeVideo(imgPost, imgPreview);
   }, [id])
 
-  console.log(categories);
-  console.log(listWrite);
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
@@ -255,35 +265,18 @@ const FormListenWrite = (props: Props) => {
             tooltip="Danh Mục Category"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            {id
-              ? <Select >
-                {categories?.map((item: CategoryType, index) => (
-                  <Option key={index + 1} value={item._id}>
-                    {item.title}
-                  </Option>
-                ))}
-              </Select>
-
-              : <Select
-                defaultValue={categories?.map((item: CategoryType, index) => {
-                  if (item._id === listenWrite?.category) {
-                    return <Option key={index + 1} value={item._id}>
+            <Select>
+              {categories.map((item: CategoryType) => {
+                const index = categoryExist.findIndex((e) => e == item._id);
+                if (index == -1) {
+                  return <>
+                    <Option key={item._id} value={item._id}>
                       {item.title}
                     </Option>
-                  }
-                })}
-              >
-
-                {/* {categories?.map((item: CategoryType, index) => {
-                  if (listWrite) {
-                    const listenWriteDetail = listWrite.filter((e: any) => e.category != item._id ? "" : item)
-                    return <Option key={index + 1} value={listenWriteDetail?._id}>
-                      {listenWriteDetail?.title}
-                    </Option>
-                  }
-
-                })} */}
-              </Select>}
+                  </>
+                }
+              })}
+            </Select>
 
           </Form.Item>
 
