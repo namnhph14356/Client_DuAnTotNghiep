@@ -5,7 +5,6 @@
 
 import AdverDeatil from '../components/AdverDeatil'
 import NavDeatil from '../components/NavDeatil'
-
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,30 +16,23 @@ import { useSpeechSynthesis } from 'react-speech-kit';
 import { speakInput } from '../midlerware/LearningListenWrite';
 import { getListQuestionListenWriteById } from '../api/questionListenWrite';
 import { listAnswerListenWriteById } from '../api/answerListenWrite';
-import { async } from '@firebase/util';
+import { ListenWriteType, QuestionAnswerListenWriteType } from '../types/listenWrite';
 
 const ExeWriteAndListen = () => {
-    const listenWrite = useSelector((item: any) => item.listenWrite.value);
+    const listenWrite = useSelector((item:any) => item.listenWrite.value);
     const userListenWrite = useSelector((item: any) => item.userListenWrite.value);
-
-    const [listQuestionAnswer, setListQuestionAnswer] = useState<any>([]);
-
+    const [listQuestionAnswer, setListQuestionAnswer] = useState<QuestionAnswerListenWriteType[]>([]);
     const { register, handleSubmit, formState } = useForm();
     const [question, setQuestion] = useState([]);
     const dispatch = useDispatch();
     const { id } = useParams();
-    const { errors }: any = formState;
     const [check, setCheck] = useState(false)
     const [checkDetailAnswer, setCheckDetailAnswer] = useState(false)
     const [numTrueAnswer, setNumTrueAnswer] = useState(0)
     const [convertValues, setConvertValues] = useState<any>([])
     const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
 
-
-
-    const onSubmit2 = async (item: any, index: any) => {
-        console.log(item);
-
+    const onSubmit2 = async (item: any) => {
         let convertValues2: any = [];
         for (let key in item) {
             const idQuestion = key.split("-")[1];
@@ -59,7 +51,7 @@ const ExeWriteAndListen = () => {
         let numAnswer = 0;
         await listQuestionAnswer.forEach((element, index) => {
             if (element.answer) {
-                for (let index = 0; index < element.answer.answer.length; index++) {
+                for (let index = 0; index < element.answer?.answer.length; index++) {
                         for (const key in convertValues2) {
                         if (element.answer && element.answer.idQuestion == convertValues2[key].idQuestion && (Number(convertValues2[key].keyQuestion) - 1) == index  ) {
                                 if (String(element.answer.answer[index]).toLowerCase() == convertValues2[key].answerUser.toLowerCase()) {
@@ -67,7 +59,6 @@ const ExeWriteAndListen = () => {
                                     convertValues2[key].answerCorrect = convertValues2[key].answerUser
                                     numAnswer += 1
                                 } else  {
-                                    console.log(convertValues2[key].answerUser.toLowerCase() + " ", element.answer.answer[index]);
                                     convertValues2[key].answerCorrect =  element.answer.answer[index] 
                                 }
                         }
@@ -75,11 +66,6 @@ const ExeWriteAndListen = () => {
                 }
             }
         });
-
-
-
-        console.log(convertValues2);
-
         setNumTrueAnswer(numAnswer)
         setConvertValues(convertValues2)
         setCheck(true)
@@ -98,10 +84,10 @@ const ExeWriteAndListen = () => {
         });
         return className
     }
+
     const listDetailAnswer = () => {
         setCheckDetailAnswer(true)
     }
-
 
     const btListenWrite = async () => {
         const { payload } = await dispatch(getListenWriteByIdCategory(id))
@@ -113,23 +99,16 @@ const ExeWriteAndListen = () => {
                 arr.push({ question: question[i], answer: answer })
             }
             setListQuestionAnswer(arr)
+            console.log(arr);
+            
         }
-        // await dispatch(addUserListenAndWrite({
-        //     listAnswer: [
-        //         ...convertValues
-        //     ],
-        //     numTrueAnswer: numTrueAnswer,
-        //     idListenWrite: id,
-        // }))
     }
 
     useEffect(() => {
         if (id) {
-
             btListenWrite();
         }
     }, [convertValues, numTrueAnswer, id])
-    // console.log(listQuestionAnswer);
 
     return (
         <div>
@@ -201,7 +180,6 @@ const ExeWriteAndListen = () => {
                             </div>
 
                         </form>
-
 
                     </div>
                     <div>
@@ -276,10 +254,8 @@ const ExeWriteAndListen = () => {
                             : ""}
                     </div>
                 </div>
-
                 <AdverDeatil />
             </div>
-
 
         </div >
     )
