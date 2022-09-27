@@ -3,71 +3,55 @@ import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Ta
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
-import { QuizType } from '../../../../types/quiz';
-import { changeBreadcrumb, getListQuizSlide, removeQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../../types/category';
-
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
 import { getListAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { AnswerQuizType } from '../../../../types/answerQuiz';
 import { ListenWriteType } from '../../../../types/listenWrite';
-import { getListListenWrite, removeListenSlide } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { changeBreadcrumb, getListListenWrite, removeListenSlide } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
 import ReactAudioPlayer from 'react-audio-player';
+import { getListQuestionListenWriteById } from '../../../../api/questionListenWrite';
+import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
+import { removeQuestionListenSlide } from '../../../../features/Slide/questionListenWrite/questionListenWrite';
+import { removeAnswerListenWriteSlide } from '../../../../features/Slide/answerListenWrite/answerListenWrite';
 
 interface DataType {
     key: React.Key;
     _id?: string,
     category: string,
-    //   content: string,
-    audio: any,
+    audio: string,
     timeLimit: any,
 }
 
-
 type DataIndex = keyof DataType;
 
-
-type Props = {}
-
-const ListListenWrite = (props: Props) => {
-
-    const breadcrumb = useAppSelector(item => item.quiz.breadcrumb)
-    //   const quizs = useAppSelector(item => item.quiz.value)
-    //   const answerQuizs = useAppSelector(item => item.answerQuiz.value)
+const ListListenWrite = () => {
+    const breadcrumb = useAppSelector(item => item.listenWrite.breadcrumb)
     const listenWrite = useAppSelector(item => item.listenWrite.value)
     const categories = useAppSelector(item => item.category.value)
     const dispatch = useAppDispatch();
-    //   console.log('quizs', quizs);
-    //   console.log('answerQuizs', answerQuizs);
-    console.log('categories', categories);
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [selected, setSelected] = useState<{ key: number, id: string | undefined }[]>([]);
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef<InputRef>(null);
-
     //------------------STATE--------------------
-    console.log(listenWrite);
-
 
     const dataTable = listenWrite.map((item: ListenWriteType, index) => {
         return {
             key: index + 1,
             _id: item._id,
-            category: categories.filter((cate: CategoryType) => { return cate._id == item.category }).reduce((result, item: any) => {
+            category: categories.filter((cate: CategoryType) => { return cate._id == item.category }).reduce((result, item: CategoryType) => {
                 return `${result}${item.title}`
             }, ""),
-            //   question: item.question,
             audio: item.audio,
             timeLimit: item.timeLimit,
-
             createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
             updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY")
         }
@@ -142,8 +126,6 @@ const ListListenWrite = (props: Props) => {
     });
 
     //------------------SEARCH--------------------
-
-
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         let rowSelected: { key: number, id: string | undefined }[] = []
         newSelectedRowKeys.map((item) => {
@@ -195,20 +177,33 @@ const ListListenWrite = (props: Props) => {
     }
     //------------------SELECT-ROW-------------------
 
-    const handleOk = (id) => {
+    const handleOk = (id: string) => {
         const key = 'updatable';
         setConfirmLoading(true);
-        console.log(id);
         message.loading({ content: 'Loading...', key });
 
         setTimeout(() => {
             if (Array.isArray(id)) {
-                dispatch(removeListenSlide(id))
+                const deleteList = async () => {
+                    const { payload } = await dispatch(removeListenSlide(id))
+                }
+                deleteList();
             } else {
-                dispatch(removeListenSlide(id))
+                const deleteList = async () => {
+                    const { payload } = await dispatch(removeListenSlide(id))
+                    if (payload) {
+                        const { data: question } = await getListQuestionListenWriteById(String(payload._id))
+                        for (let i = 0; i < question.length; i++) {
+                            await dispatch(removeQuestionListenSlide(question[i]._id))
+                            const { data: answer } = await listAnswerListenWriteById(question[i]._id)
+                            await dispatch(removeAnswerListenWriteSlide(answer._id))
+                        }
+                    }
+                }
+                deleteList();
             }
             setConfirmLoading(false);
-            message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
+            message.success({ content: 'Xóa Thành Công!', key });
         }, 2000);
     };
 
@@ -225,7 +220,6 @@ const ListListenWrite = (props: Props) => {
             dataIndex: 'key',
             key: "key",
             sorter: (a: any, b: any) => a.key - b.key,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
         },
         {
@@ -234,22 +228,20 @@ const ListListenWrite = (props: Props) => {
             key: "_id",
             ...getColumnSearchProps('_id'),
             sorter: (a: any, b: any) => a._id - b._id,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
         },
         {
             title: 'Audio',
             dataIndex: 'audio',
             key: "audio",
-            // sorter: (a: any, b: any) => a.audio - b.audio,
             render: (recore: any) => (
                 <Space>
-                      
+
                     <ReactAudioPlayer
-                       src={recore}
+                        src={recore}
                         controls
                     />
-                  
+
                 </Space>
             ),
             sortDirections: ['descend'],
@@ -264,7 +256,7 @@ const ListListenWrite = (props: Props) => {
             }
         },
 
-   
+
         {
             title: 'Ngày Tạo',
             dataIndex: 'createdAt',
@@ -284,15 +276,13 @@ const ListListenWrite = (props: Props) => {
                         <Link to={`/admin/listenWrite/${record._id}/edit`} >
                             <span className="text-white">Sửa</span>
                         </Link>
-
                     </Button>
-
                     <Popconfirm
                         placement="topRight"
                         title="Bạn Có Muốn Xóa?"
                         okText="Có"
                         cancelText="Không"
-                        onConfirm={() => { handleOk(record._id) }}
+                        onConfirm={() => { handleOk(record._id as string) }}
                         okButtonProps={{ loading: confirmLoading }}
                         onCancel={handleCancel}
                     >
@@ -308,17 +298,11 @@ const ListListenWrite = (props: Props) => {
 
     //------------------TABLE-COLUMM-------------------
 
-
-
-
-
-
     useEffect(() => {
         dispatch(changeBreadcrumb("QUẢN LÍ BÀI TẬP NGHE VÀ VIẾT"))
         dispatch(getListListenWrite())
         dispatch(getListAnswerQuizSlide())
         dispatch(getCategoryList())
-
     }, [])
 
     return (
@@ -326,7 +310,6 @@ const ListListenWrite = (props: Props) => {
             <AdminPageHeader breadcrumb={breadcrumb} />
             <Button type="primary" className="my-6" >
                 <Link to={`/admin/listenWrite/add`}>Thêm bài tập nghe và viết</Link>
-
             </Button>
 
             {selectedRowKeys.length > 1
@@ -334,7 +317,7 @@ const ListListenWrite = (props: Props) => {
                     title="Bạn Có Muốn Xóa Hết?"
                     okText="Có"
                     cancelText="Không"
-                    onConfirm={() => { handleOk(selected) }}
+                    onConfirm={() => { handleOk(String(selected)) }}
                     okButtonProps={{ loading: confirmLoading }}
                     onCancel={handleCancel}
                 >
@@ -348,22 +331,10 @@ const ListListenWrite = (props: Props) => {
                 {selectedRowKeys.length > 0 ? `Đã chọn ${selectedRowKeys.length} hàng` : ''}
             </span>
 
-
-
             <Table
                 rowClassName={"break-words"}
                 bordered
                 footer={() => `Hiển thị 10 trên tổng ${listenWrite.length}`}
-                // expandable={{
-                //   expandedRowRender: record => <div>
-                //     {answerQuizs.map((item: AnswerQuizType, index) => item.quiz === record._id
-                //       ? <p key={index + 1} style={{ margin: 0 }}>{item.answer}</p>
-                //       : "")}
-
-
-                //   </div>,
-
-                // }}
                 rowSelection={rowSelection}
                 columns={columns}
                 dataSource={dataTable} />

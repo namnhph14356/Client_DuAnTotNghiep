@@ -63,7 +63,6 @@
 
 .text__result__wrong {
   outline: none;
-  border-bottom: 1px solid #000;
   padding-left: 30px;
   color: #a93226;
   font-weight: 600;
@@ -71,7 +70,6 @@
 }
 .text__result__correct {
   outline: none;
-  border-bottom: 1px solid #000;
   padding-left: 30px;
   color: #2e86c1;
   font-weight: 600;

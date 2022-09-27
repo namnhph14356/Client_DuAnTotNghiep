@@ -27,9 +27,9 @@ import AdverDeatil from '../components/AdverDeatil';
 import NavDeatil from '../components/NavDeatil';
 import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
-import TimeCountDown from '../components/TimeCountDown';
 import Menu from '../components/Menu';
-
+import '../css/quiz.css'
+import TimeCountDown from '../components/TimeCountDown';
 
 let flag1: string = ""
 let flag2: number = 0
@@ -852,6 +852,7 @@ const QuizPage = () => {
                                     </button>
                                 </div>
                             </div>
+
                         </div>
 
                         <Menu />
