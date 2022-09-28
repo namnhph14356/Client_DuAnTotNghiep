@@ -6,41 +6,24 @@
  * License: Released for free under the Creative Commons Attribution 3.0 license (probootstrap.com/license)
  */
 @font-face {
-<<<<<<< HEAD
-<<<<<<< HEAD
   font-family: 'icomoon';
   src: url("../fonts/icomoon/icomoon.eot?1z9v6x");
-  src: url("../fonts/icomoon/icomoon.eot?1z9v6x#iefix") format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf?1z9v6x") format("truetype"), url("../fonts/icomoon/icomoon.woff?1z9v6x") format("woff"), url("../fonts/icomoon/icomoon.svg?1z9v6x#icomoon") format("svg");
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-  font-family: "icomoon";
-  src: url("../fonts/icomoon/icomoon.eot?1z9v6x");
   src: url("../fonts/icomoon/icomoon.eot?1z9v6x#iefix")
+   format("embedded-opentype"), url("../fonts/icomoon/icomoon.ttf?1z9v6x")
+    format("truetype"), url("../fonts/icomoon/icomoon.woff?1z9v6x")
+     format("woff"), url("../fonts/icomoon/icomoon.svg?1z9v6x#icomoon") format("svg");
+  font-family: "icomoon";
+  /* src: url("../fonts/icomoon/icomoon.eot?1z9v6x#iefix")
       format("embedded-opentype"),
     url("../fonts/icomoon/icomoon.ttf?1z9v6x") format("truetype"),
     url("../fonts/icomoon/icomoon.woff?1z9v6x") format("woff"),
-    url("../fonts/icomoon/icomoon.svg?1z9v6x#icomoon") format("svg");
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
+    url("../fonts/icomoon/icomoon.svg?1z9v6x#icomoon") format("svg"); */
   font-weight: normal;
   font-style: normal;
 }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 p {
   font-weight: 500;
 }
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
-p {
-  font-weight: 500;
-}
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
 html {
   overflow-x: hidden;
   font-size: 1em;
@@ -54,23 +37,12 @@ body {
   line-height: 1.8;
   color: #7e8890;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 a{
   font-weight: 400;
 }
-li{
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-a {
-  font-weight: 400;
-}
+
 li {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   font-weight: 400;
 }
 
@@ -89,22 +61,7 @@ li {
   color: #ffffff;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 h1, h2, .heading-with-icon, h3, h4, .probootstrap-product-tour h5 {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-h1,
-h2,
-.heading-with-icon,
-h3,
-h4,
-.probootstrap-product-tour h5 {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   color: #374252;
   font-family: "Rubik", sans-serif;
   margin: 1.414em 0 0.5em;
@@ -117,26 +74,13 @@ h1 {
   font-size: 1.602em;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 h2, .heading-with-icon {
-=======
-h2,
-.heading-with-icon {
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
-h2,
-.heading-with-icon {
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   font-size: 1.424em;
 }
 
 h3 {
   font-size: 1.266em;
 }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 h4, .probootstrap-product-tour h5 {
   font-size: 1.125em;
 }
@@ -146,69 +90,36 @@ small, .font_small {
 }
 
 p, ul, ol {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-h4,
-.probootstrap-product-tour h5 {
   font-size: 1.125em;
-}
-
-small,
-.font_small {
-  font-size: 0.889em;
-}
-
-p,
-ul,
-ol {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   margin-bottom: 1.3em;
 }
 
+
 a {
-<<<<<<< HEAD
-<<<<<<< HEAD
   -webkit-transition: .3s all;
   transition: .3s all;
   color: #6078EA;
 }
 
 a:hover, a:focus, a:active {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   -webkit-transition: 0.3s all;
   transition: 0.3s all;
   color: #6078ea;
 }
 
-a:hover,
+/* a:hover,
 a:focus,
 a:active {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   color: black;
   text-decoration: none;
-}
+} */
 
 .probootstrap-header {
-<<<<<<< HEAD
-<<<<<<< HEAD
   background: #6078EA;
   padding-top: 30px;
   z-index: 1;
-  background: #17ead9;
-  background: -webkit-gradient(left top, right top, color-stop(0%, #17ead9), color-stop(100%, #6078ea));
+  /* background: -webkit-gradient(left top, right top, color-stop(0%, #17ead9), color-stop(100%, #6078ea)); */
   background: -webkit-gradient(linear, left top, right top, from(#17ead9), to(#6078ea));
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   background: #6078ea;
   padding-top: 30px;
   z-index: 1;
@@ -219,17 +130,6 @@ a:active {
     color-stop(0%, #17ead9),
     color-stop(100%, #6078ea)
   );
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#17ead9),
-    to(#6078ea)
-  );
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   background: linear-gradient(to right, #17ead9 0%, #6078ea 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$firstcolor, endColorstr=$secondcolor, GradientType=1 );
 }
@@ -253,19 +153,7 @@ a:active {
   font-weight: 500;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .probootstrap-logo:hover, .probootstrap-logo:focus, .probootstrap-logo:active {
-=======
-.probootstrap-logo:hover,
-.probootstrap-logo:focus,
-.probootstrap-logo:active {
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
-.probootstrap-logo:hover,
-.probootstrap-logo:focus,
-.probootstrap-logo:active {
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   color: #ffffff;
 }
 
@@ -291,23 +179,11 @@ a:active {
   z-index: 1100;
   height: 100vh;
   width: 300px;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  background: #6078EA;
   padding: 40px;
-  -webkit-transition: .3s all ease-out;
-  transition: .3s all ease-out;
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   background: #6078ea;
   padding: 40px;
   -webkit-transition: 0.3s all ease-out;
   transition: 0.3s all ease-out;
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   -webkit-transform: translateX(300px);
   transform: translateX(300px);
 }
@@ -325,78 +201,26 @@ a:active {
   margin: 0 0 20px 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .probootstrap-mobile-menu-active .probootstrap-nav .extra-text .social-buttons li {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-.probootstrap-mobile-menu-active
-  .probootstrap-nav
-  .extra-text
-  .social-buttons
-  li {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   display: inline-block;
-  *display: inline;
+  /* *display: inline; */
   zoom: 1;
   padding: 0;
   margin: 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .probootstrap-mobile-menu-active .probootstrap-nav .extra-text .social-buttons li a {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-.probootstrap-mobile-menu-active
-  .probootstrap-nav
-  .extra-text
-  .social-buttons
-  li
-  a {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   color: #ffffff;
   padding: 10px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-.probootstrap-mobile-menu-active .probootstrap-nav .extra-text .social-buttons li:first-child a {
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-.probootstrap-mobile-menu-active
-  .probootstrap-nav
-  .extra-text
-  .social-buttons
-  li:first-child
-  a {
-<<<<<<< HEAD
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
+/* .probootstrap-mobile-menu-active .probootstrap-nav .extra-text .social-buttons li:first-child a {
   padding-left: 0;
-}
+} */
 
 .probootstrap-mobile-menu-active .probootstrap-nav .extra-text h5 {
   text-transform: uppercase;
-<<<<<<< HEAD
-<<<<<<< HEAD
-  letter-spacing: .1em;
-=======
   letter-spacing: 0.1em;
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
-=======
-  letter-spacing: 0.1em;
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -764,9 +588,6 @@ a:active {
 .btn.btn-primary:focus, .btn.btn-primary:active {
   outline: none;
   border: 1px solid #17EAD9;
-=======
-=======
->>>>>>> 0835bd9099c51eb4259e8111f57c2125c005a142
   border: 1px solid #6078ea;
   background: #6078ea;
   color: #ffffff;
