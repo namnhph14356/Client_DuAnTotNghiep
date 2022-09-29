@@ -48,7 +48,6 @@ const Login = (props: Props) => {
         localStorage.setItem("user", JSON.stringify(payload))
         message.success('Login successfully !');
         navigate("/")
-
       }
     } catch (error) {
       alert("Error !!!")

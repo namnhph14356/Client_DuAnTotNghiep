@@ -18,11 +18,10 @@ export const getListUser = () => {
     const url = "/users";
     return instance.get(url);
 }
-export const getUser = (id:any) => {
+export const getUserById = (id:any) => {
     const url = `/users/${id}`;
     return instance.get(url);
 }
-
 
 export const addUser = (user:UserType) => {
     const url = "/users";
