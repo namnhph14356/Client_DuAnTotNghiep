@@ -18,3 +18,246 @@
 }
 
 /* end header */
+
+.probootstrap-header {
+  background: #6078ea;
+  padding-top: 30px;
+  height: 80px;
+  z-index: 1;
+  background: #17ead9;
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, #17ead9),
+    color-stop(100%, #6078ea)
+  );
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#17ead9),
+    to(#6078ea)
+  );
+  background: linear-gradient(to right, #17ead9 0%, #6078ea 100%);
+}
+
+.probootstrap-header.probootstrap-header-no-intro {
+  padding-bottom: 30px;
+}
+
+.probootstrap-feature-first {
+  position: relative;
+  background: #ecedee;
+}
+
+.probootstrap-logo {
+  float: left;
+  color: #ffffff;
+  padding-left: 60px;
+  font-size: 20px;
+  display: block;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.probootstrap-logo:hover,
+.probootstrap-logo:focus,
+.probootstrap-logo:active {
+  color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .probootstrap-logo {
+    padding-left: 0px;
+  }
+}
+
+.probootstrap-nav {
+  padding-right: 60px;
+  float: right;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-nav {
+  position: fixed;
+  display: block !important;
+  overflow-y: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding-right: 0;
+  z-index: 1100;
+  height: 100vh;
+  width: 300px;
+  background: #6078ea;
+  padding: 40px;
+  -webkit-transition: 0.3s all ease-out;
+  transition: 0.3s all ease-out;
+  -webkit-transform: translateX(300px);
+  transform: translateX(300px);
+}
+
+.probootstrap-mobile-menu-active .probootstrap-nav .extra-text {
+  display: block;
+  float: left;
+  clear: both;
+  margin-top: 30px;
+  color: #ffffff;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-nav .extra-text .social-buttons {
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.probootstrap-mobile-menu-active
+  .probootstrap-nav
+  .extra-text
+  .social-buttons
+  li {
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.probootstrap-mobile-menu-active
+  .probootstrap-nav
+  .extra-text
+  .social-buttons
+  li
+  a {
+  color: #ffffff;
+  padding: 10px;
+}
+
+.probootstrap-mobile-menu-active
+  .probootstrap-nav
+  .extra-text
+  .social-buttons
+  li:first-child
+  a {
+  padding-left: 0;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-nav .extra-text h5 {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.probootstrap-mobile-menu-active.show .probootstrap-nav {
+  -webkit-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+.probootstrap-main-nav {
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav {
+  float: left;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.probootstrap-main-nav li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+  font-size: 18px;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav li {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.probootstrap-main-nav li a {
+  padding: 10px;
+  color: #ffffff;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav li a {
+  margin-bottom: 10px;
+  padding: 5px 0;
+  display: block;
+}
+
+.probootstrap-main-nav li.probootstrap-cta {
+  margin-left: 20px;
+}
+
+.probootstrap-main-nav li.probootstrap-cta a {
+  border: 2px solid #ffffff;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-radius: 4px;
+}
+
+.probootstrap-main-nav li.probootstrap-cta a:hover {
+  background: #ffffff;
+  color: #6078ea;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav li.probootstrap-cta {
+  margin-left: 0px;
+  margin-top: 20px;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav li.probootstrap-cta a {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.probootstrap-mobile-menu-active .probootstrap-main-nav li {
+  display: block;
+}
+
+.mobile-menu-overlay {
+  z-index: 1099;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: 0.3s all ease-out;
+  transition: 0.3s all ease-out;
+}
+
+.probootstrap-mobile-menu-active.show .mobile-menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.probootstrap-intro {
+  text-align: center;
+  padding: 10em 0 16em 0;
+}
+
+@media screen and (max-width: 768px) {
+  .probootstrap-intro {
+    padding: 7em 0 7em 0;
+  }
+}
+
+.probootstrap-intro h1 {
+  font-size: 67px;
+  color: #ffffff;
+  font-weight: 300;
+  line-height: 1.15;
+}
+
+@media screen and (max-width: 768px) {
+  .probootstrap-intro h1 {
+    font-size: 36px;
+  }
+}
