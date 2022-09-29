@@ -2,7 +2,7 @@ import React from 'react'
 
 const NavDeatil = () => {
     return (
-        <div className='col-span-2'>
+        <div >
         <ul className='nav__deatail__learning'>
             <li className='nav__item__deatail__learning'>
                 <button className='btn__nav__deatil__learning'>

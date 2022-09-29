@@ -71,7 +71,7 @@ function App() {
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
-              <Route path='grammar' element={<Grammar />}/>
+              <Route path='grammar' element={<Grammar />} />
             </Route>
           </Route>
 
@@ -91,9 +91,9 @@ function App() {
             <Route path='add' element={<AdminLearnAdd />} />
           </Route> */}
           <Route path="category" >
-              <Route index element={<CategoryList />} />
-              <Route path='add' element={<AddCategory />} />
-            </Route>
+            <Route index element={<CategoryList />} />
+            <Route path='add' element={<AddCategory />} />
+          </Route>
         </Route>
 
         <Route path='admin' element={<AdminLayout />}>
@@ -118,7 +118,7 @@ function App() {
           <Route path="contact" >
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
-          </Route>          
+          </Route>
 
           <Route path="user" >
             <Route index element={<ListUser />} />
