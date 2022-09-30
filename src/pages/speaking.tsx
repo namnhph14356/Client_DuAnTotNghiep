@@ -50,9 +50,10 @@ const SpeakingPage = () => {
 
   // Lối phần tử last slide vào mảng slide cũ
   return (
-    <div>
-      <div className="box__deatil__learning__main">
-        <NavDeatil />
+      <div className="m-auto grid grid-cols-12 gap-8 mt-[70px]">
+        <div className='col-span-2'>
+          <NavDeatil />
+        </div>
         <div className="main__topic col-span-7">
           <div className="desc__title__cocabulary">
             <h2>
@@ -148,9 +149,10 @@ const SpeakingPage = () => {
           </Carousel>
           <Menu />
         </div>
-        <AdverDeatil />
+        <div className="col-span-3  advertisement__source__learning">
+          <AdverDeatil />
+        </div>
       </div>
-    </div>
   );
 };
 
