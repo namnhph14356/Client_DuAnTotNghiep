@@ -1,12 +1,10 @@
 
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import BannerPage from '../Component/BannerPage'
-import Footer from '../Component/Footer'
-import HeaderComponent from '../Component/HeaderHome'
+import BannerPage from '../components/BannerPage';
 // import Count from '../features/count/Count'
 // import Product from '../features/product/Product'
-
+import './../css/home.css';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -23,7 +21,6 @@ const Home = () => {
     }
     return (
         <div>
-            <HeaderComponent />
             <BannerPage />
             {/* START: section */}
             <section className="probootstrap-section probootstrap-section-colored">
@@ -347,8 +344,6 @@ const Home = () => {
                     </div>
                 </form>
             </section>
-
-            <Footer />
         </div>
     )
 }

@@ -53,14 +53,9 @@ export const uploadVideo = async (video:any) => {
 
     const CLOUDINARY_PRESET = "longchanhthon";
     const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/chanh-thon/video/upload";
-
-
-
     let imgLink = "";
 
     const file =  video?.files[0];
-    console.log(file);
-    
     if (file) {
         const formData = new FormData();
         formData.append("file", file);
@@ -69,13 +64,9 @@ export const uploadVideo = async (video:any) => {
         const {data} = await axios.post(CLOUDINARY_API_URL, formData, {
             headers:{
                 "Content-Type": "application/form-data",
-                // 'Access-Control-Allow-Origin':'*',
-                // 'Access-Control-Allow-Headers':'Origin',
-                // 'Access-Control-Allow-Credentials':true
             },
         });
         imgLink = data.url
-        
     }
     return imgLink
 }

@@ -164,8 +164,6 @@ const CommentItem = ({ item }: any) => {
         </div>
     )
 
-
-
 }
 const CommentBox = () => {
     const [rating, setRating] = useState(3)

@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 
 
 
@@ -10,21 +11,21 @@ export const changeInput = (input: any) => {
 }
 
 
-export const speakInput = (speech: any) => {
-    console.log(speech.text);
+
+export const speakInput = (question: any, answer:any) => {
     
-   if (speech.answer.length > 0) {
-    const arrayAnswer = speech.answer[0].split(",");
-
-    const quesToArr = speech.text.split("___")
+   if (answer && answer.answer.length > 0) {
+    // const arrayAnswer = speech.answer[0].split(",");
+    const quesToArr = question.text.split("___")
     var tempQues: any = [];
-
+    console.log(quesToArr);
+    
     quesToArr.forEach((item2: any, index2: number) => {
-        console.log(arrayAnswer[index2]);
+        // console.log(question.answer[index2]);
 
         if (index2 < quesToArr.length - 1) {
             tempQues.push(<span key={index2 + 1}>{item2}</span>,
-                <span>{arrayAnswer[index2]}</span>)
+                <span>{answer.answer[index2]}</span>)
 
         } else {
             tempQues.push(<span key={index2 + 1}>{item2}</span>)
@@ -39,10 +40,13 @@ export const speakInput = (speech: any) => {
     });
     console.log(mangAbc);
     const result = mangAbc.join("")
+    console.log(result);
+    
     return result
    }
-
-   return speech.text
+   console.log(question.text);
+   
+   return question.text
 
 
 }

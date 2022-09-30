@@ -1,21 +1,23 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Space, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { UploadOutlined } from "@ant-design/icons";
-import axios from "axios";
-import AdminPageHeader from '../../../../Component/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../../types/category';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ReactAudioPlayer from 'react-audio-player';
-import { uploadVideo } from '../../../../utils/upload';
-import { addListen, editListen } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { changeVideo, uploadVideo } from '../../../../utils/upload';
+import { addListen, changeBreadcrumb, editListen, getListListenWrite } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
 import { ListenWriteType } from '../../../../types/listenWrite';
 import { detailListenWrite } from '../../../../api/listenWrite';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
+import { addQuestionListenSlide, editQuestionListenWriteSlide } from '../../../../features/Slide/questionListenWrite/questionListenWrite';
+import { addAnswerListenWriteSlide, editAnswerListenWriteSlide } from '../../../../features/Slide/answerListenWrite/answerListenWrite';
+import { getListQuestionListenWriteById } from '../../../../api/questionListenWrite';
+import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
+import { async } from '@firebase/util';
 
 type Props = {}
 
@@ -36,120 +38,144 @@ type SightsKeys = keyof typeof sights;
 const FormListenWrite = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
   const breadcrumb = useAppSelector(data => data.quiz.breadcrumb)
   const categories = useAppSelector(data => data.category.value)
+  const listWrite = useAppSelector(data => data.listenWrite.value)
+  const [categoryExist, setCategoryExist] = useState<string[]>([])
   const [listenWrite, setListenWrite] = useState<ListenWriteType>()
-  const [audio, setAudio] = useState<any>("");
+  const [audio, setAudio] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const [fileList, setfileList] = useState<any>();
-
-  console.log(categories);
 
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
   };
 
   const { id } = useParams();
-  console.log(id);
 
-
-  const onFinish = async (value: any) => {
-
-    const imgPost = document.querySelector("#upload_image");
-    // console.log(value.content);
-    let convertAnswer:any = []
-    for (let key in value.content) {
-      console.log(value.content[key].answer);
-      
-     if (value.content[key].answer) {
-      value.content[key].answer = value.content[key].answer.replaceAll(" ", "").split(",");
-      // convertAnswer.push(answer)
-     }
-     
-    
+  const listCate = async () => {
+    let arr: string[] = []
+    listWrite.map((item: ListenWriteType) => {
+      arr.push(item.category);
+    })
+    setCategoryExist(arr)
   }
 
-  console.log(value.content);
-  
+  const onFinish = async (value: ListenWriteType) => {
+    const imgPost = document.querySelector("#upload_image");
+    for (let key in value.content) {
+      if (value.content[key].answer) {
+        value.content[key].answer = await value.content[key].answer.toString().replaceAll(" ", "").split(",");
+      }
+    }
+
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
-
     let imgLink = await uploadVideo(imgPost);
-    console.log(imgLink);
-    console.log("value", value);
-
 
     if (id) {
-      console.log(imgLink);
-      console.log(audio);
-
-      dispatch(editListen({
+      const { payload } = await dispatch(editListen({
         _id: value._id,
         area: value.area,
         category: value.category,
-        content: [{
-            name: value.content.name,
-            text: value.content.text,
-            answer: value.content.a,
-        }],
         audio: imgLink || audio
       }));
+
+      if (payload) {
+        value.content?.forEach(async (e: {
+          _id: string,
+          name: string,
+          text: string,
+          answer?: string
+        }) => {
+          const { payload: question } = await dispatch(editQuestionListenWriteSlide({ _id: e._id, idListenWrite: payload._id, name: e.name, text: e.text }))
+          if (question && e.answer) {
+            const { payload: answer } = await dispatch(editAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
+          }
+        });
+      }
+
       message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
       navigate("/admin/listenWrite");
-
     } else {
-      dispatch(addListen({
+      const { payload } = await dispatch(addListen({
         area: value.area,
         category: value.category,
-        content: value.content,
         audio: imgLink
       }));
-      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+
+      if (payload) {
+        value.content?.forEach(async (e: {
+          _id: string,
+          name: string,
+          text: string,
+          answer?: string
+        }) => {
+          const { payload: question } = await dispatch(addQuestionListenSlide({ idListenWrite: payload._id, name: e.name, text: e.text }))
+          if (question && e.answer) {
+            const { payload: answer } = await dispatch(addAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
+          }
+        });
+      }
+      message.success({ content: 'Thêm Thành Công!', key });
       navigate("/admin/listenWrite");
     }
-
-
   };
 
   const onFinishFailed = (errorInfo) => {
     id ? message.error('Sửa Không Thành Công!') : message.error('Thêm Không Thành Công!');
-
   };
 
   const onReset = () => {
     form.resetFields();
   };
 
-
-
   useEffect(() => {
     if (id) {
       const getListenAndWrite = async () => {
         const { data } = await detailListenWrite(id)
-        console.log("data edit", data);
         setListenWrite(data);
-        console.log(data);
         setAudio(data.audio)
-        form.setFieldsValue(data);
+        let arr: {
+          _id: string,
+          name: string,
+          text: string,
+          answer?: string
+        }[] = [];
+        if (data) {
+          const { data: question } = await getListQuestionListenWriteById(String(data._id))
+          for (let i = 0; i < question.length; i++) {
+            const { data: answer } = await listAnswerListenWriteById(question[i]._id)
+            arr.push({ ...question[i], answer: answer ? answer.answer : null })
+          }
+        }
+        const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
+        form.setFieldsValue({
+          _id: id,
+          area: data.area,
+          category: category[0].title,
+          audio: data.imgLink,
+          content: arr
+        });
         dispatch(changeBreadcrumb("SỬA BÀI TẬP NGHE VÀ VIẾT"))
       }
       getListenAndWrite()
     } else {
       dispatch(changeBreadcrumb("THÊM BÀI TẬP NGHE VÀ VIẾT"))
     }
-
     dispatch(getCategoryList())
+    dispatch(getListListenWrite())
+    listCate();
 
-  }, [])
-
-
+    const imgPreview = document.getElementById("img-preview");
+    const imgPost = document.getElementById("upload_image");
+    changeVideo(imgPost, imgPreview);
+  }, [id])
 
   return (
-    <div className="container">
+    <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+      <div>
         <Form form={form} layout="vertical" name="dynamic_form_nest_item" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
@@ -167,9 +193,7 @@ const FormListenWrite = (props: Props) => {
                     <Form.Item
                       noStyle
                       shouldUpdate={(prevValues, curValues) =>
-
                         prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
-
                       }
                     >
                       {() => (
@@ -224,22 +248,16 @@ const FormListenWrite = (props: Props) => {
 
           <Form.Item
             label="Audio"
-
             tooltip="Audio"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
             <Input type={'file'} id={'upload_image'} />
-            <ReactAudioPlayer style={{ margin: "20px 0" }}
-              src={audio}
+            <ReactAudioPlayer
+              id='img-preview'
+              src={audio ? audio : ""}
               controls
             />
           </Form.Item>
-
-
-
-
-
-
 
           <Form.Item
             label="Danh mục"
@@ -247,32 +265,18 @@ const FormListenWrite = (props: Props) => {
             tooltip="Danh Mục Category"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            {id
-              ? <Select >
-                {categories?.map((item: CategoryType, index) => (
-                  <Option key={index + 1} value={item._id}>
-                    {item.title}
-                  </Option>
-                ))}
-              </Select>
-
-              : <Select
-                defaultValue={categories?.map((item: CategoryType, index) => {
-                  if (item._id === listenWrite?.category) {
-                    return <Option key={index + 1} value={item._id}>
+            <Select>
+              {categories.map((item: CategoryType) => {
+                const index = categoryExist.findIndex((e) => e == item._id);
+                if (index == -1) {
+                  return <>
+                    <Option key={item._id} value={item._id}>
                       {item.title}
                     </Option>
-                  }
-                })}
-              >
-
-                {categories?.map((item: CategoryType, index) => (
-                  <Option key={index + 1} value={item._id}>
-                    {item.title}
-                  </Option>
-                ))}
-              </Select>}
-
+                  </>
+                }
+              })}
+            </Select>
 
           </Form.Item>
 
@@ -282,24 +286,14 @@ const FormListenWrite = (props: Props) => {
             </Button>
           </Form.Item>
         </Form>
-
-        {/* <ReactAudioPlayer
-          src="http://res.cloudinary.com/chanh-thon/video/upload/v1659450744/upload_preset/a6ulgrn8zn5qjp8ak2wr.mp3"
-          controls 
-          /> */}
-      </div>
-
-        
-      
         <div>
           <h3>* Ghi chú:</h3>
-          <ul style={{listStyle:"inside", marginLeft:"20px", color:"#0a76cf"}}>
+          <ul style={{ listStyle: "inside", marginLeft: "20px", color: "#0a76cf" }}>
             <li>Câu thoại: Dùng "___" (Ba dấu gạch chân) để tạo khoảng chống để điền đáp án</li>
             <li>Abccc</li>
           </ul>
         </div>
-      
-
+      </div>
     </div>
   )
 }

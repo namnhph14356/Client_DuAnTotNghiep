@@ -64,13 +64,16 @@
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-[96px] gap-x-[28px] 
   }
 
+  .image__item__learning{
+
+  }
+
   .item__list__learning {
     @apply shadow-md   z-10;
   }
 
   .img__learning__item{
-     height: 275px;
-     width: 360px;
+    @apply h-64 w-full
   }
   /* .item__list__learning{
     border: 1px solid #E5E7E9;
@@ -87,7 +90,7 @@
   }
 
   .title__tiem__learning {
-    @apply text-center	my-[32px] text-lg	font-bold	font-sans;
+    @apply text-center	py-6 text-base	font-semibold	font-sans ;
   }
 
   .btn__display_item button {
@@ -131,3 +134,6 @@
     cursor: no-drop;
   }
   
+  .text{ 
+    @apply px-0
+  }
