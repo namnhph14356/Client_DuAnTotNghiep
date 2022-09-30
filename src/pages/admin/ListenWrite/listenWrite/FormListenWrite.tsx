@@ -86,11 +86,21 @@ const FormListenWrite = (props: Props) => {
           _id: string,
           name: string,
           text: string,
+          order: number,
           answer?: string
-        }) => {
-          const { payload: question } = await dispatch(editQuestionListenWriteSlide({ _id: e._id, idListenWrite: payload._id, name: e.name, text: e.text }))
-          if (question && e.answer) {
-            const { payload: answer } = await dispatch(editAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
+        }, index: number) => {
+          const { data: listQuestion } = await getListQuestionListenWriteById(payload._id)
+          const findIndex = listQuestion.findIndex((item: any) => item._id === e._id);
+          if (findIndex !== -1) {
+            const { payload: question } = await dispatch(editQuestionListenWriteSlide({ _id: e._id, idListenWrite: payload._id, name: e.name, text: e.text, order: index }))
+            if (question && e.answer) {
+              const { payload: answer } = await dispatch(editAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
+            }
+          } else {
+            const { payload: question } = await dispatch(addQuestionListenSlide({ idListenWrite: payload._id, name: e.name, text: e.text, order: index }))
+            if (question && e.answer) {
+              const { payload: answer } = await dispatch(addAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
+            }
           }
         });
       }
@@ -109,9 +119,12 @@ const FormListenWrite = (props: Props) => {
           _id: string,
           name: string,
           text: string,
+          order: number,
           answer?: string
-        }) => {
-          const { payload: question } = await dispatch(addQuestionListenSlide({ idListenWrite: payload._id, name: e.name, text: e.text }))
+        }, index: number) => {
+
+          const { payload: question } = await dispatch(addQuestionListenSlide({ idListenWrite: payload._id, name: e.name, text: e.text, order: index }))
+
           if (question && e.answer) {
             const { payload: answer } = await dispatch(addAnswerListenWriteSlide({ idQuestion: question._id, answer: e.answer }))
           }
@@ -153,7 +166,8 @@ const FormListenWrite = (props: Props) => {
         form.setFieldsValue({
           _id: id,
           area: data.area,
-          category: category[0].title,
+          // category: category[0].title,
+          category: data.category,
           audio: data.imgLink,
           content: arr
         });
