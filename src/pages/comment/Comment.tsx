@@ -49,7 +49,6 @@ const CommentItem = ({ item }: any) => {
     const [cmt, setCmt] = useState<any>();
     const dispath = useDispatch();
     // console.log(item.dislike.length);
-
     useEffect(() => {
         setCmt(item)
     })
@@ -150,13 +149,13 @@ const CommentItem = ({ item }: any) => {
             <div style={{ marginLeft: '60px', marginBottom: '10px' }}>
                 <Tooltip key="comment-basic-like" title="Like">
                     <span onClick={() => like(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-                        {item.like.find(like => like.userId === user.user._id ) ? <LikeFilled /> : <LikeOutlined /> }
+                        {item.like.find(like => like.userId === user.user._id) ? <LikeFilled /> : <LikeOutlined />}
                         <span className="comment-action">{item.like.length}</span>
                     </span>
                 </Tooltip>,
                 <Tooltip key="comment-basic-dislike" title="Dislike" >
                     <span onClick={() => dislike(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-                    {item.dislike.find(dislike => dislike.userId === user.user._id ) ? <DislikeFilled /> : <DislikeOutlined /> }
+                        {item.dislike.find(dislike => dislike.userId === user.user._id) ? <DislikeFilled /> : <DislikeOutlined />}
                         <span className="comment-action">{item.dislike.length}</span>
                     </span>
                 </Tooltip>

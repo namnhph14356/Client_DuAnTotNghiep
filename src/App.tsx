@@ -49,9 +49,6 @@ import QuizPage from './pages/QuizPage';
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
 import CommentBox from './pages/comment/Comment';
-
-
-
 import TestPage from './pages/Test';
 import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
