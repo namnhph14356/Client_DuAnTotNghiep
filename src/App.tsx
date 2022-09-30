@@ -48,6 +48,7 @@ import SpeakingPage from './pages/speaking';
 import QuizPage from './pages/QuizPage';
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
+import CommentBox from './pages/comment/Comment';
 import TestPage from './pages/Test';
 import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
@@ -76,6 +77,7 @@ function App() {
           </Route>
 
           <Route path="contact" element={<Contact />} />
+          <Route path="comment" element={<CommentBox />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />

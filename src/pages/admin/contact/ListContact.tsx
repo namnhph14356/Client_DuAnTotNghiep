@@ -22,6 +22,7 @@ const ListContact = () => {
     useEffect(() => {
         dispath(getContactList())
     }, []);
+console.log(contact);
 
     // console.log(category);
 
