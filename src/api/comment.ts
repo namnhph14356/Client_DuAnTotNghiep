@@ -12,7 +12,11 @@ export const addComment = (comment:CommentType) => {
     return instance.post(url, comment);
 }
 export const editComment = (comment:CommentType) => {
-    const url = `/comment/${comment.id}`;
+    const url = `/comment/${comment._id}`;
+    return instance.put(url, comment);
+}
+export const updateLike = (comment:CommentType) => {
+    const url = `/comment/like/${comment._id}`;
     return instance.put(url, comment);
 }
 

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addComment, editComment, listComment, removeComment } from "../../api/comment";
-import { CommentType } from "../../types/comment";
-import { editdContactSlide, getContactList, getContactsById, removeContacts } from "../Slide/contact/ContactSlide";
+import { addComment, editComment, listComment, removeComment, updateLike } from "../../../api/comment";
+import { CommentType } from "../../../types/comment";
 
 
 export const getCommentList:any = createAsyncThunk(
@@ -32,6 +31,16 @@ export const editdCommentSlide:any = createAsyncThunk(
         return data;
     }
 )
+export const updateLikeSlice:any = createAsyncThunk(
+    "comment/updateLike",
+    async (Comment:CommentType) => {
+        
+        const {data} = await updateLike(Comment);
+        console.log(data);
+        
+        return data;
+    }
+)
 
 export const removeCommentSlice:any = createAsyncThunk(
     "comment/deleteComment",
@@ -55,7 +64,7 @@ export const getCommentByIdSlice:any = createAsyncThunk(
 )
 
 const commentSlide = createSlice({
-    name:"contact",
+    name:"comment",
     initialState:{
         value:[]
     },
@@ -72,6 +81,12 @@ const commentSlide = createSlice({
             state.value.push(action.payload)
         })
         builer.addCase(editdCommentSlide.fulfilled, (state:any, action) => {
+            console.log(state.value);
+            state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+            console.log("edit state:"+ state.value);
+            
+        })
+        builer.addCase(updateLikeSlice.fulfilled, (state:any, action) => {
             console.log(state.value);
             state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
             console.log("edit state:"+ state.value);
