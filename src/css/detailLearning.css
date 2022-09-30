@@ -298,3 +298,16 @@
 
 } 
 
+.dateLearning {
+  @apply my-4 text-left;
+}
+.dateLearning button {
+  @apply bg-[#ccc] text-[#fff] py-2 px-14 rounded-md text-base ;
+  /* border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%; */
+  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+}
+
+.dateLearning button:hover {
+  background: linear-gradient(to right, #6078ea 0, blue  100%);
+}
