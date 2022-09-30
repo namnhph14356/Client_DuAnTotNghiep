@@ -84,3 +84,20 @@
   margin: 7px 0px !important;
 
 }
+/* Q&A Vocabulary */
+
+.answer__vocab{
+  border: 1px solid orange;
+  border-radius: 8px;
+  font-weight: bold;
+  width: 100%;
+  line-height: 35px;
+  height: 35px;
+  text-align: center;
+  margin-top: 12px;
+}
+.answer__vocab:hover{
+  background: orange;
+  color: white;
+  cursor: pointer;
+}
