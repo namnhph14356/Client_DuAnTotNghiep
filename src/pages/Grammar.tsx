@@ -5,6 +5,7 @@ import Menu from "../components/Menu";
 import NavDeatil from "../components/NavDeatil";
 import { GammarType } from "../types/grammar";
 import "../css/grammar.css";
+import { NavLink } from "react-router-dom";
 type Props = {};
 
 const Grammar = (props: Props) => {
@@ -47,7 +48,7 @@ console.log(grammar);
             </span>
         </div>
           <div className="box__btn__question m-auto">
-            <button className="btn__next__question">Tiếp tục</button>
+            <NavLink to={"/learning/detailLearning/exerciseDaily"} className="btn__next__question" >Tiếp tục</NavLink>
           </div>
 
           <Menu />

@@ -6,10 +6,11 @@
   @apply h-[62px] shadow-md;
 }
 .box__main__topic{
+  @apply border;
   padding: 20px
 }
 .box__deatil__learning__main{
-  @apply grid grid-cols-12
+  @apply grid grid-cols-12 gap-8 w-10/12 m-auto mt-[70px] 
 }
 
 .header__learning_box {
@@ -72,10 +73,7 @@
 /* and header */
 
 .main__topic {
-  @apply  m-auto mt-[69px] w-[90%]
-}
-.main__topic {
-  border: 1px solid #ccc;
+  @apply   w-full 
 }
 
 .title__deatial__learning {
@@ -203,7 +201,17 @@
 .box__list__detail {
   background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
   padding: 10px;
+  box-shadow: inset 0 0 0 0 #489EE4;
+  width: 100%;
+  transition: ease-out 0.5s;
+  outline: none;
 }
+.box__list__detail:hover {
+  width: 100%;
+  box-shadow: inset 300px 0 300px 0px #489EE4;
+  transition: ease-out 0.5s;
+}
+
 .box__list__detail ul {
   display: flex;
   margin-bottom: 0 !important;
@@ -212,19 +220,28 @@
   margin: 0px 10px;
   color: #fff;
 }
+
 .box__list__detail i {
   margin: 0px 10px;
 }
+.box__list__detail p {
+  color: #fff;
+  margin: 0px 10px;
+}
+.box__list__detail:hover  li {
+  color: black;
+}
+
+
 .nav__deatail__learning{
   @apply mt-[70px]
 }
 .nav__deatail__learning li {
   margin: 20px 0px;
-  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+  background: linear-gradient(to right, #6078ea 0, #17ead9  100%);
   width: 200px;
   height: 60px;
-  /* border: 4px solid #17ead9; */
-  box-shadow: inset 0 0 0 0 #1A5276;
+  box-shadow: inset 0 0 0 0 #6078ea;
   transition: ease-out 0.3s;
   color: #fff;
   border-radius: 0px 50px 50px 0px;
@@ -232,27 +249,16 @@
   padding: 20px 10px;
 }
 .nav__deatail__learning li:hover {
-  box-shadow: inset 200px 0 0 0 #1A5276;
+  transition: ease-out 0.3s;
+  background: linear-gradient(to right, #6078ea 0, blue  100%);
+  /* box-shadow: inset 100px 0 0 0 #6078ea; */
   cursor: pointer;
 }
 
-.btn__nav__deatil__learning {
-  /* font-weight: 500;
-  padding: 
-  color: #fff;
-}
-.btn__nav__deatil__learning :hover {
-}
-.nav__item__deatail__learning:hover {
-  /* margin-left: 20px;
-  transition: 1s;
-  background-color: #4a235a; */
-}
+
 .advertisement__source__learning{
-  
-  margin-top: 40px;
   width: 100%;
-  background-color: #2471A3;
+  background: #489EE4;
   padding: 20px;
   color: #fff;
   max-height: 600px;
@@ -273,10 +279,9 @@
 
 }
 .btn__cart__adver {
-  background-color: #A93226;
+  background: rgb(31, 72, 194);
   padding: 5px 20px;
   border-radius: 3px;
-  
 }
 .btn__cart__adver i{
   margin-right: 5px;
@@ -292,3 +297,17 @@
   @apply font-bold
 
 } 
+
+.dateLearning {
+  @apply my-4 text-left;
+}
+.dateLearning button {
+  @apply bg-[#ccc] text-[#fff] py-2 px-14 rounded-md text-base ;
+  /* border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%; */
+  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+}
+
+.dateLearning button:hover {
+  background: linear-gradient(to right, #6078ea 0, blue  100%);
+}

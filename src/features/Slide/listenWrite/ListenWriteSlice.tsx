@@ -6,7 +6,7 @@ import { ListenWriteType } from "../../../types/listenWrite";
 
 
 
-export const getListListenWrite: any = createAsyncThunk(
+export const getListListenWrite = createAsyncThunk(
      'listenWrite/getListListenWrite',
      async () => {
           const { data } = await listListenWrite();
@@ -14,17 +14,17 @@ export const getListListenWrite: any = createAsyncThunk(
      }
 )
 
-export const getListenWriteById: any = createAsyncThunk(
+export const getListenWriteById = createAsyncThunk(
      'listenWrite/getListenWriteById',
-     async (id: any) => {
+     async (id: string) => {
           const { data } = await detailListenWrite(id);
           return data
      }
 )
 
-export const getListenWriteByIdCategory: any = createAsyncThunk(
+export const getListenWriteByIdCategory:any = createAsyncThunk(
      'listenWrite/getListenWriteByIdCategory',
-     async (id: any) => {
+     async (id: string) => {
           const { data } = await detailListenWriteByIdCategory(id);
           return data
      }
@@ -47,12 +47,7 @@ export const editListen = createAsyncThunk(
 )
 
 export const removeListenSlide = createAsyncThunk(
-     'quizs/removeListenWrite',
-     // async (id: any) => {
-     //      const { data } = await removeQuiz(id)
-     //      return data
-     // }
-
+     'listenWrite/removeListenWrite',
      async (arr: any) => {
           if (Array.isArray(arr)) {
 
@@ -115,5 +110,5 @@ const listenWriteSlice = createSlice({
           })
      }
 })
-
+export const { changeBreadcrumb } = listenWriteSlice.actions
 export default listenWriteSlice.reducer

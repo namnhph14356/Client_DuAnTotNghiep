@@ -48,12 +48,14 @@ import SpeakingPage from './pages/speaking';
 import QuizPage from './pages/QuizPage';
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
+import CommentBox from './pages/comment/Comment';
 import TestPage from './pages/Test';
 import TestPage2 from './pages/Test2';
 import ExeQuiz from './pages/ExeQuiz';
 import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
+import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 
 
 function App() {
@@ -72,10 +74,12 @@ function App() {
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
               <Route path='grammar' element={<Grammar />}/>
+              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/>
             </Route>
           </Route>
 
           <Route path="contact" element={<Contact />} />
+          <Route path="comment" element={<CommentBox />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
           <Route path="user" element={<User />} />
@@ -91,9 +95,9 @@ function App() {
             <Route path='add' element={<AdminLearnAdd />} />
           </Route> */}
           <Route path="category" >
-              <Route index element={<CategoryList />} />
-              <Route path='add' element={<AddCategory />} />
-            </Route>
+            <Route index element={<CategoryList />} />
+            <Route path='add' element={<AddCategory />} />
+          </Route>
         </Route>
 
         <Route path='admin' element={<AdminLayout />}>
@@ -118,7 +122,7 @@ function App() {
           <Route path="contact" >
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
-          </Route>          
+          </Route>
 
           <Route path="user" >
             <Route index element={<ListUser />} />

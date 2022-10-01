@@ -28,9 +28,14 @@
 .audio__listen audio {
   @apply w-[100%];
 }
-.conversation__box {
-  @apply mt-[73px] bg-[#fff] py-[20px] px-[30px] rounded;
+
+.content{
+  @apply   py-[20px] px-8 rounded;
 }
+
+/* .conversation__box {
+  @apply  bg-[#fff] py-[20px] px-[30px] rounded;
+} */
 
 .inp__text {
   border-bottom: 1px solid #000;
@@ -50,7 +55,7 @@
 }
 
 .btn__Check__answer {
-  @apply mt-[30px] text-center;
+  @apply my-4 text-center;
 }
 .btn__Check__answer button {
   @apply bg-[#ccc] text-[#fff] py-[5px] px-[70px] rounded-md;
@@ -59,11 +64,23 @@
    background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
 }
 
+.btn__next_exe {
+  @apply text-center;
+}
+.btn__next_exe button {
+  @apply bg-[#ccc] text-[#fff] py-1 px-[40px] rounded-md ;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  background: linear-gradient(to right,#6078ea 0,#17ead9 100%);
+}
+.btn__next_exe button:hover {
+  background: linear-gradient(to right, #6078ea 0, blue  100%);
+}
+
 /* check result */
 
 .text__result__wrong {
   outline: none;
-  border-bottom: 1px solid #000;
   padding-left: 30px;
   color: #a93226;
   font-weight: 600;
@@ -71,7 +88,6 @@
 }
 .text__result__correct {
   outline: none;
-  border-bottom: 1px solid #000;
   padding-left: 30px;
   color: #2e86c1;
   font-weight: 600;
@@ -93,11 +109,17 @@ background: linear-gradient(to right,#17ead9 0,#6078ea 100%);
   @apply bg-white rounded-md py-[5px] px-[50px] text-[16px] font-bold;
 }
 .table__list__result {
-  @apply w-[645px] m-auto;
+  @apply w-full m-auto;
 }
 .table__list__result thead {
   border-bottom: 1px solid #ccc;
+  
 }
+.table__list__result thead th{
+  border-bottom: 1px solid #ccc;
+  @apply text-center py-[10px] text-[16px] font-bold mx-auto;
+}
+
 .table__list__result td {
   @apply text-center py-[10px] text-[16px] font-bold;
 }
@@ -108,7 +130,7 @@ background: linear-gradient(to right,#17ead9 0,#6078ea 100%);
   @apply text-[#A93226] text-[20px];
 }
 .table__list__result tbody {
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
 }
 
 
@@ -128,7 +150,8 @@ background: linear-gradient(to right,#17ead9 0,#6078ea 100%);
 }
 
 .result__medium td {
-  @apply text-[16px] font-normal;
+  /* @apply text-[16px] font-normal; */
+  
 }
 .correct__text__writer {
   color: #2e86c1;
