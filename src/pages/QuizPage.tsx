@@ -33,7 +33,6 @@ import Menu from '../components/Menu';
 
 let flag1: string = ""
 let flag2: number = 0
-let checkPause: boolean = false
 
 const CountdownWrapper = ({ time, reset }) => {
     const ref = useRef<any>();
@@ -42,7 +41,8 @@ const CountdownWrapper = ({ time, reset }) => {
     let point = 1000
     let countdownApi: CountdownApi | null = null;
     const [state, setState] = useState<any>()
-    let timeCurrent: string = ""
+    let minutesUser = 0
+    let secondsUser = 0
 
     //---TimeLimitCountdown---
     //Đếm ngược thời gian làm 
@@ -70,12 +70,18 @@ const CountdownWrapper = ({ time, reset }) => {
             if (flag2 < 0) {
                 flag2 = 0
             }
-            flag1 = timeCurrent
+
+            secondsUser = secondsUser + 1
+            if(secondsUser === 60){
+                minutesUser = minutesUser + 1
+                secondsUser = 0 
+            }
+            flag1 = `${minutesUser}:${secondsUser}`
 
             if (timeLimit === 0) {
                 timeLimit = 100;
             }
-            timeCurrent = `${minutes}:${seconds}`
+           
             return <div className="">
                 <Progress
                     strokeColor={{
@@ -105,9 +111,6 @@ const CountdownWrapper = ({ time, reset }) => {
 const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizPage = () => {
-    console.log("flag1", flag1);
-    console.log("flag2", flag2);
-
 
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
@@ -115,10 +118,7 @@ const QuizPage = () => {
     const [check, setCheck] = useState(false)
     const [check2, setCheck2] = useState<any>()
     const [done, setDone] = useState<any>()
-    // let check2: any = null
-    console.log("select", select)
     const timeSlice = useAppSelector(item => item.time.value)
-
 
     const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
     const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
@@ -141,7 +141,6 @@ const QuizPage = () => {
 
     // kiểm tra đúng sai ghép câu
     const [quizCompound, setQuizCompound] = useState<any>([])
-    console.log("quizCompound", quizCompound)
     let checkFlag = 0
     let answerType3 = 0
     if (quizList) {
@@ -149,7 +148,7 @@ const QuizPage = () => {
         const checkFlag2 = quizList[quizIndex].quiz.question.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? 1 : 0
         checkFlag = checkFlag2
         answerType3 = flag
-        
+
     }
 
     //---Countinute---
@@ -164,7 +163,6 @@ const QuizPage = () => {
         setQuizCompound([])
         checkFlag = 0
         answerType3 = 0
-
         if (quizIndex >= quizList.length - 1) {
             setDone(true)
         } else {
@@ -210,7 +208,7 @@ const QuizPage = () => {
         const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
             const { data } = await detailHistory(item._id)
             // const { data: data2 } = await detailQuiz(item._id)
-            
+
             // console.log("correctAnswer data2", data2);
             // const correctAnswer = quizList?.map((item: any, index: number) => {
             //     return item.answerQuiz.filter((item2: any, index: number) => {
@@ -239,8 +237,6 @@ const QuizPage = () => {
     // Gán kết quả khi thay đổi giá trị trong input
     const onChangeInput = (e, index) => {
         const val = e.target.value.toLowerCase()
-        // console.log("val", val);
-
         const existingItem = input2.find((item: any) => item.key === index);
         if (!existingItem) {
             input2 = [...input2, { key: index, value: val }]
@@ -249,7 +245,6 @@ const QuizPage = () => {
             input2 = input2.map((item: any) => item.key === index ? { key: index, value: val } : item)
         }
         checkInput(index)
-        // console.log("input2", input2);
         setCheckInputLength(input2)
     }
 
@@ -267,31 +262,15 @@ const QuizPage = () => {
                 }
             })
         })
-        // console.log("check10", check10);
-        // console.log("input2.length", input2.length);
-        // console.log("quizList[quizIndex].answerQuiz.length", quizList[quizIndex].answerQuiz.length);
         if (input2.length === quizList[quizIndex].answerQuiz.length) {
             let test = check10.every(item => item.check === true)
-            // console.log("test", test);
-            // console.log("select 0", select);
-            // console.log("check2 0", check2);
             if (test === true) {
                 setCheck2(true)
-                // check2 = true
-                // console.log("check2 1", check2);
-
             } else {
                 setCheck2(false)
-                // check2 = false
-                // console.log("check2 2", check2);
-
             }
-
-
         } else {
             setCheck2(false)
-            // check2 = false
-            // console.log("check2 2", check2);
         }
     }
 
@@ -342,7 +321,6 @@ const QuizPage = () => {
     //Hiện Modal kết quả
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [history, setHistory] = useState<any>([]);
-    console.log("history", history);
 
     const showModal = async () => {
         setIsModalOpen(true);
@@ -359,13 +337,8 @@ const QuizPage = () => {
 
     //---ModelCollapse---
     const onChange = (key: string | string[]) => {
-        console.log("ModelCollapse", key);
     };
 
-    // console.log("quizList[quizIndex]",quizList[quizIndex]);
-    console.log("quiz2", quiz2);
-    console.log("quizList", quizList);
-    console.log("timeSlice", timeSlice);
 
 
     useEffect(() => {
@@ -373,7 +346,6 @@ const QuizPage = () => {
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
             const { data } = await detailCategory(id)
-            console.log(data);
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)
@@ -385,7 +357,6 @@ const QuizPage = () => {
                 return data
             }))
             setHistory(test2)
-
         }
         getQuiz()
     }, [id])
@@ -393,8 +364,11 @@ const QuizPage = () => {
 
     return (
         <>
-            <div className='box__deatil__learning__main'>
-                <NavDeatil />
+            <div className='m-auto grid grid-cols-12 gap-8 mt-[70px]'>
+
+                <div className='col-span-2'>
+                    <NavDeatil />
+                </div>
 
                 <div className='col-span-7 main__topic'>
                     <div className='item__quiz__topic'>
@@ -415,8 +389,6 @@ const QuizPage = () => {
 
                             <h2>
                                 Câu hỏi thông dụng <span>
-
-
                                     /   {quiz2?.category?.title}
                                 </span>
                             </h2>
@@ -452,11 +424,8 @@ const QuizPage = () => {
                                         return <div key={index + 1} className="choose__answer__quiz" onClick={() => {
                                             if (check !== true) {
                                                 setSelect({ id: item2._id, isCorrect: item2.isCorrect })
-                                                // setCheck2(select?.isCorrect === 1 ? true : false)
                                                 setCheck(false)
                                             }
-                                            console.log("select", select);
-                                            console.log("check2", check2);
                                         }}>
                                             <div className={`py-[10px] border-2 ${item2._id == select?.id
                                                 ? " bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2]"
@@ -496,11 +465,8 @@ const QuizPage = () => {
                                                     onClick={() => {
                                                         if (check !== true) {
                                                             setSelect({ id: item._id, isCorrect: item.isCorrect })
-                                                            // setCheck2(select?.isCorrect === 1 ? true : false)
                                                             setCheck(false)
                                                         }
-                                                        console.log("select", select);
-                                                        console.log("check2", check2);
                                                     }}
                                                 >
                                                     <div className="img__result__question__item">
@@ -515,7 +481,6 @@ const QuizPage = () => {
 
                                         : quizList[quizIndex]?.quiz?.type === 3
                                             ? <div className="box__item__chosse__question">
-
                                                 <div className="btn__choose__result !justify-start mb-4">
                                                     {quizCompound?.map((item, index) => {
                                                         return <div key={index + 1}
@@ -563,22 +528,9 @@ const QuizPage = () => {
                                                             }
                                                             onClick={() => {
                                                                 if (check !== true) {
-
-                                                                    // setCheck2(select?.isCorrect === 1 ? true : false)
                                                                     setCheck(false)
                                                                     setQuizCompound([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }])
-                                                                    // quizCompound2 = quizCompound2.push({ id: item._id, isCorrect: item.isCorrect, answer: item.answer })
-                                                                    // quizCompound2 = [...quizCompound2, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }]
-
-                                                                    // quizCompound2.push({ id: item._id, isCorrect: item.isCorrect, answer: item.answer })
-                                                                    // console.log("quizCompound2 2",quizCompound2)
-
-
                                                                 }
-
-
-
-
                                                             }}
                                                         >
                                                             <button>
@@ -587,7 +539,6 @@ const QuizPage = () => {
                                                         </div>
                                                     })}
                                                 </div>
-
                                             </div>
                                             : ""
                                 : ""
@@ -641,11 +592,8 @@ const QuizPage = () => {
                                 </div>
 
                                 <div className='mt-8 md:basis-1/4'>
-                                    {/* <button className='btn__next__question'>
-                                        Tiếp tục
-                                    </button> */}
                                     <button
-                                        // disabled={select === null && input2.length === 0 ? true : false}
+                                        disabled={select === null  ? true : false}
                                         className={`${check === true
                                             ? select?.isCorrect === 1 || check2 === true
                                                 ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] "
@@ -655,15 +603,10 @@ const QuizPage = () => {
                                             setCheck(true)
                                             increase()
 
-                                            // if(quizCompound && answerType3){
-                                            //     if (checkFlag === 1 ) {
-                                            //         setSelect({ isCorrect: 1, type: 3 })
-                                            //     }
-                                            // }
                                             if (checkFlag === 1) {
                                                 setSelect({ isCorrect: 1, type: 3 })
                                             }
-                                            if (checkFlag === 0 &&  select === null) {
+                                            if (checkFlag === 0 && select === null) {
                                                 setSelect({ isCorrect: 0, type: 3 })
                                                 console.log("abc")
                                             }
@@ -674,7 +617,7 @@ const QuizPage = () => {
                                                     quiz: quizList[quizIndex].quiz._id,
                                                     answerQuiz: select.id,
                                                     time: flag1,
-                                                    point: select.isCorrect?Math.round(flag2): 0,
+                                                    point: select.isCorrect ? Math.round(flag2) : 0,
                                                     isCorrect: select.isCorrect
                                                 }])
                                             } else {
@@ -682,19 +625,15 @@ const QuizPage = () => {
                                                 setResult([...result, {
                                                     quiz: quizList[quizIndex].quiz._id,
                                                     time: flag1,
-                                                    point: checkFlag === 1? Math.round(flag2):0,
+                                                    point: checkFlag === 1 ? Math.round(flag2) : 0,
                                                     isCorrect: checkFlag,
                                                     answer: answerType3
                                                 }])
                                             }
                                             console.log("result", result);
 
-
-                                            // console.log("setCheck2(false) check2", check2);
-                                            // console.log("setCheck2(false) check", check);
-                                            // select.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
-                                            // audioCorrect.play()
-                                            check2 === true ? audioCorrect.play() : audioWrong.play()
+                                            speak({ text: `${select?.isCorrect === 1 ? "Correct": "Wrong"}`, voice: voices[2] })
+                                            // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
                                         }}>
                                         Kiểm tra
                                     </button>
@@ -710,30 +649,61 @@ const QuizPage = () => {
                         Open Modal
                     </Button>
 
-                    <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+
+                    <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={'60%'}>
                         <Collapse defaultActiveKey={history?.length} onChange={onChange}>
 
                             {history?.map((item: any, index: number) => {
                                 return <Panel
+                                    key={index + 1}
                                     showArrow={false}
                                     header={
-                                        <div key={index + 1} className="flex flex-row gap-4">
-                                            <div className="">{moment(item.history.createdAt).format("h:mm:ss a, MMM Do YYYY")}</div>
+                                        <div key={index + 1} className="flex flex-row justify-between gap-4">
+                                            <div className="">{moment(item.history.createdAt).format("H:mm:ss, Do/MM/YYYY")}</div>
                                             <div className="">{item.category?.title}</div>
                                             <div className="">{item.history?.totalCorrect}/{quizList.length}</div>
                                             <div className="">{item.history.result === 0 ? "Fail" : "Pass"}</div>
                                         </div>
                                     }
-                                    key={index + 1}
                                 >
-                                    {item.userQuiz.map((item2: any, index: number) => {
-                                        return <div key={index + 1} className="flex flex-row gap-4">
-                                            <div className="">{item2.answerQuiz ? item2.correctAnswer.answer : item2.quiz?.question?.toLowerCase().replace("?","").trim()}</div>
-                                            <div className="">{item2.answerQuiz ? item2.answerQuiz.answer : item2.answer}</div>
-                                            <div className="">{item2.time}</div>
-                                            <div className="">{Math.round(item2.point)}</div>
-                                        </div>
-                                    })}
+                                    <table className='table__list__result'>
+                                        <thead>
+                                            <tr>
+                                                <th className='m-auto'>Câu trả lời chính xác</th>
+                                                <th className='m-auto'>Câu trả lời của bạn</th>
+                                                <th className='m-auto'>Thời gian</th>
+                                                <th>Điểm</th>
+                                                <th>Kết quả</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className='body__table__result '>
+                                            {item.userQuiz.map((item2: any, index: number) => {
+                                                return <tr key={index + 1} className="">
+                                                    <td className="">{item2.answerQuiz ? item2.correctAnswer.answer : item2.quiz?.question?.toLowerCase().replace("?", "").trim()}</td>
+                                                    <td className="">{item2.answerQuiz ? item2.answerQuiz.answer : item2.answer}</td>
+                                                    <td className="">{item2.time}</td>
+                                                    <td className="">{Math.round(item2.point)}</td>
+                                                    <td>
+                                                        {item2.answerQuiz?.isCorrect === item2.correctAnswer?.isCorrect || item2.answer === item2.quiz?.question.toLowerCase().replace("?", "").trim()
+                                                            ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
+                                                            : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}
+                                                    </td>
+                                                </tr>
+                                            })}
+
+                                        </tbody>
+                                        <tfoot className='border-t'>
+                                            <tr className='result__medium'>
+                                                <td>Kết quả:</td>
+                                                <td> </td>
+                                                <td>{item.history?.totalCorrect}/{quizList.length}</td>
+                                                <td>{item.history.totalPoint}</td>
+                                                <td>{item.history.result === 0 ? "Fail" : "Pass"}</td>
+
+                                            </tr>
+
+                                        </tfoot>
+                                    </table>
                                 </Panel>
                             })}
 
@@ -741,7 +711,9 @@ const QuizPage = () => {
                     </Modal>
                 </div>
 
-                <AdverDeatil />
+                <div className="col-span-3  advertisement__source__learning">
+                    <AdverDeatil />
+                </div>
             </div>
 
         </>
