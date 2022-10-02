@@ -48,8 +48,6 @@ const BannerUser = (props: Props) => {
   const [preview, setPreview] = useState<string>();
   const [info, getInfo] = useState<UserType>()
   const { errors } = formState;
-console.log(info);
-
 
   const navigate = useNavigate()
   const id = data.user._id
@@ -67,13 +65,11 @@ console.log(info);
   }
   const onSubmit: SubmitHandler<UserType> = async data => {
 
-
     try {
       const imgPost = document.querySelector<any>("#file-upload");
       const imgLink = await uploadImage(imgPost);
       if (imgPost.files.length) {
         const response = await uploadImage(imgPost);
-        console.log(response);
         data.img = response;
       }
       await editUser(data);
@@ -85,9 +81,6 @@ console.log(info);
     }
   }
 
-
-  console.log(data);
-  
   return (
     <div>
       <div className="mt-[65px] pb-2">

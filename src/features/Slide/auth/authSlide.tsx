@@ -101,20 +101,28 @@ const authSlide = createSlice({
         logout(){
             localStorage.removeItem("user");
         },
+
     },
+    // extraReducers: (builer) => {
+    //     builer.addCase(getUserList.fulfilled, (state, action) => {
+    //         state.value = action.payload;  
+    //     })
+    //     builer.addCase(getUser.fulfilled, (state, action) => {
+    //         state.value = action.payload;  
+
+
+    // },
     extraReducers: (builer) => {
         builer.addCase(getUserList.fulfilled, (state, action) => {
-            state.value = action.payload;  
-        })
-        builer.addCase(getUser.fulfilled, (state, action) => {
-            state.value = action.payload;  
+            state.value = action.payload; 
         })
         builer.addCase(addUserSlide.fulfilled, (state:any, action) => {
             state.value.push(action.payload)
         })
         builer.addCase(editUserSlide.fulfilled, (state:any, action) => {
-            console.log(state.value);
             state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+
+
         })
         builer.addCase(removeUserSlide.fulfilled,  (state:any, action:any) => {
             state.value = state.value.filter((arrow:any) => arrow._id !== action.payload._id);   
@@ -127,12 +135,13 @@ const authSlide = createSlice({
             state.value = action.payload;  
         })
         builer.addCase(forgotPassword.fulfilled,  (state:any, action:any) => {
-           console.log(action.payload);
         })
         builer.addCase(newPass.fulfilled,  (state:any, action:any) => {
         })
         builer.addCase(changeOtp.fulfilled,  (state:any, action:any) => {
-         })      
+         })
+       
+        
     }
 })
 export const { logout } = authSlide.actions

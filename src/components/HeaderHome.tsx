@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const HeaderComponent = () => {
   const navigate = useNavigate()
   const dispath = useDispatch()
-  const user = useSelector(((item:any) => item.user.value))
+  const user = useSelector(((item: any) => item.user.value))
   console.log(user);
-  
+
   const onLogout = () => {
     const confirm = window.confirm("Bạn muốn đăng xuất ?")
     if (confirm) {
@@ -20,11 +20,12 @@ const HeaderComponent = () => {
     }
   }
   console.log(user);
-  
+
   // const getUser = async (id) => {
   //     const {payload} = await dispath(getUser(id))
   //     console.log(payload);
   // }
+
 
   return (
     <div>

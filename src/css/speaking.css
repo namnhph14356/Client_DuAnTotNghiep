@@ -19,12 +19,22 @@
 }
 .vocabulary__speaking{
     margin-left: 20px;
+    line-height: 15px;
+    font-weight: 500;
+}
+.carousel-status{
+  color: #c33528 !important;
+  font-size: larger !important;
+  font-weight: bold;
+  line-height: 50px;
+  /* display: none; */
+
 }
 .btn__volume__vocabulary i{
     font-size: 20px;
 }
 .info__vocabulry{
-    padding: 20px;
+    /* padding: 20px; */
 }
 /* .btn__next__question{
   @apply border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right shadow-xl  transition duration-500
@@ -59,4 +69,35 @@
 }
 .count__question__vocabulary h4{
   color: #fff;
+}
+.audioVocabulary{
+  height: initial;
+}
+.control-arrow{
+  width: 40px !important;
+  height: 40px !important;
+  background-color: #FF9533 !important;
+  border-radius: 50% !important;
+  top: 70% !important;
+}
+.control-arrow::before{
+  margin: 7px 0px !important;
+
+}
+/* Q&A Vocabulary */
+
+.answer__vocab{
+  border: 1px solid orange;
+  border-radius: 8px;
+  font-weight: bold;
+  width: 100%;
+  line-height: 35px;
+  height: 35px;
+  text-align: center;
+  margin-top: 12px;
+}
+.answer__vocab:hover{
+  background: orange;
+  color: white;
+  cursor: pointer;
 }

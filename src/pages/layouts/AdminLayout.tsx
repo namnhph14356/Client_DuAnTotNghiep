@@ -143,14 +143,7 @@ const AdminLayout = () => {
 
                 </Header>
 
-                <Content
-                    className=" main__content__admin"
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        height: '80vh',
-                    }}
-                >
+                <Content  className=" main__content__admin  p-8" >
                     <Outlet />
                 </Content>
             </Layout>

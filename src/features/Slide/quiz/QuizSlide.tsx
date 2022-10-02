@@ -30,25 +30,16 @@ export const editQuizSlide = createAsyncThunk(
 
 export const removeQuizSlide = createAsyncThunk(
      'quizs/removeQuiz',
-     // async (id: any) => {
-     //      const { data } = await removeQuiz(id)
-     //      return data
-     // }
-
      async (arr: any) => {
           if (Array.isArray(arr)) {
-               console.log("arr > 0", arr);
 
                let dataRemove: QuizType[] = []
                for (let i = 0; i < arr.length; i++) {
                     const { data } = await removeQuiz(arr[i].id)
                     dataRemove.push(data)
                }
-               console.log("dataRemove", dataRemove);
                return dataRemove
           } else {
-               console.log("arr", arr);
-
                const { data } = await removeQuiz(arr)
                return data
           }
@@ -85,16 +76,13 @@ const quizSlice = createSlice({
           })
           builder.addCase(removeQuizSlide.fulfilled, (state: any, action: any) => {
                // state.value = state.value.filter(item => item._id !== action.payload._id)
-               console.log("action.payload._id", action.payload);
                if (Array.isArray(action.payload)) {
                     const payload = {
                          excludeIds: action.payload.map(item => {
                               return item._id
                          })
                     }
-                    console.log("payload", payload);
                     state.value = state.value.filter(item => !payload.excludeIds.includes(item._id))
-                    console.log("state.value", state.value);
                } else {
                     state.value = state.value.filter(item => item._id !== action.payload._id)
                }

@@ -30,21 +30,14 @@ export const editAnswerQuizSlide = createAsyncThunk(
 export const removeAnswerQuizSlide = createAsyncThunk(
     'answerQuiz/removeAnswerQuiz',
     async (arr: any) => {
-        // const { data } = await removeAnswerQuiz(id)
-        // return data
         if (Array.isArray(arr)) {
-            console.log("arr > 0", arr);
-
             let dataRemove: AnswerQuizType[] = []
             for (let i = 0; i < arr.length; i++) {
                 const { data } = await removeAnswerQuiz(arr[i].id)
                 dataRemove.push(data)
             }
-            console.log("dataRemove", dataRemove);
             return dataRemove
         } else {
-            console.log("arr", arr);
-
             const { data } = await removeAnswerQuiz(arr)
             return data
         }
@@ -80,9 +73,7 @@ const answerQuizSlide = createSlice({
                         return item._id
                     })
                 }
-                console.log("payload", payload);
                 state.value = state.value.filter(item => !payload.excludeIds.includes(item._id))
-                console.log("state.value", state.value);
             } else {
                 state.value = state.value.filter(item => item._id !== action.payload._id)
             }

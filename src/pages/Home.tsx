@@ -1,7 +1,9 @@
 
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import BannerPage from '../components/BannerPage'
+import BannerPage from '../components/BannerPage';
+// import Count from '../features/count/Count'
+// import Product from '../features/product/Product'
 import './../css/home.css';
 
 const Home = () => {

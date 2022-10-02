@@ -1,13 +1,10 @@
 import React from 'react'
 
-import Footer from '../components/Footer'
-
 type Props = {}
 
 const Store = (props: Props) => {
   return (
     <div>
-
 
       <section className='w-10/12 mx-auto py-[30px]'>
         <div>
