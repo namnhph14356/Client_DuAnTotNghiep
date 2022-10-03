@@ -56,6 +56,8 @@ import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
+import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
+import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
 
 
 function App() {
@@ -88,6 +90,9 @@ function App() {
 
         </Route>
         <Route path='menageteacher' element={<TeacherLayout />}>
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='class' element={<AdminClassList />} />
           <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
@@ -97,8 +102,6 @@ function App() {
             <Route path='add' element={<AddCategory />} />
           </Route>
         </Route>
-
-        
 
         <Route path='admin' element={<AdminLayout />}>
 
