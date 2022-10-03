@@ -88,17 +88,17 @@ function App() {
 
         </Route>
         <Route path='menageteacher' element={<TeacherLayout />}>
-          <Route index element={<LessonListTeacher />} />
-          <Route path='add' element={<AdminLearnAdd />} />
-          {/* <Route path="list" >
+          <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
-          </Route> */}
+          </Route>
           <Route path="category" >
             <Route index element={<CategoryList />} />
             <Route path='add' element={<AddCategory />} />
           </Route>
         </Route>
+
+        
 
         <Route path='admin' element={<AdminLayout />}>
 
@@ -109,10 +109,6 @@ function App() {
             <Route path='edit/:id' element={<Add />} />
           </Route>
 
-          <Route path="contact" >
-            <Route index element={<ListContact />} />
-            <Route path='edit/:id' element={<EditContact />} />
-          </Route>
 
           <Route path="contact" >
             <Route index element={<ListContact />} />
