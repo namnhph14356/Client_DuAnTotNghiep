@@ -1,9 +1,3 @@
-import React, { useState } from 'react'
-import { NavLink, useNavigate, useRoutes } from 'react-router-dom'
-import { logout } from '../features/Slide/auth/authSlide';
-import { message, Modal } from "antd";
-// import '../css/header.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
@@ -84,27 +78,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const HeaderComponent = () => {
-  const navigate = useNavigate()
-  const dispath = useDispatch()
-  const user = useSelector(((item: any) => item.user.value))
-  console.log(user);
-
-  const onLogout = () => {
-    const confirm = window.confirm("Bạn muốn đăng xuất ?")
-    if (confirm) {
-      localStorage.removeItem("user");
-      message.success("Đăng xuất thành công !")
-    }
-  }
-  console.log(user);
-
-  // const getUser = async (id) => {
-  //     const {payload} = await dispath(getUser(id))
-  //     console.log(payload);
-  // }
-
-
+export default function Example() {
   return (
     <div className="relative bg-gray-50">
       <Popover className="relative bg-white shadow">
@@ -112,8 +86,12 @@ const HeaderComponent = () => {
           <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <a href="#">
-                <span className="sr-only"></span>
-                VianEnglish
+                <span className="sr-only">Your Company</span>
+                <img
+                  className="h-8 w-auto sm:h-10"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  alt=""
+                />
               </a>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
@@ -407,5 +385,3 @@ const HeaderComponent = () => {
     </div>
   )
 }
-
-export default HeaderComponent

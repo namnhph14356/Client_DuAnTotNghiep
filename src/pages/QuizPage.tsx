@@ -15,7 +15,7 @@ import { detailQuiz } from '../api/quiz';
 import reactStringReplace from 'react-string-replace'
 import { motion, AnimatePresence } from "framer-motion"
 import { DebounceInput } from 'react-debounce-input';
-import './../css/quiz.css'
+// import './../css/quiz.css'
 
 import moment from 'moment';
 
