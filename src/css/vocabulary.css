@@ -1,0 +1,48 @@
+.voabulary__page{
+    @apply w-8/12 m-auto grid grid-cols-12 gap-5 mt-3
+}
+.main__voacbulary{
+    @apply col-span-9 
+}
+.nav__speaking{
+    
+}
+.btn__comment__speaking{
+    border-right: 1px solid #ccc;
+}
+.list__item__vocabulary{
+    @apply shadow px-3 py-2 grid grid-cols-12 gap-4
+}
+.img__vocabulary{
+    @apply col-span-3
+}
+.info__vocabulary{
+    @apply col-span-9
+}
+.title__vocabulary__item{
+    @apply text-2xl text-red-700
+}
+.title__vocabulary__item i{
+    @apply mr-3 text-black
+}
+.title__vocabulary__item span{
+    @apply ml-2 text-base text-stone-600
+}
+.item__vocabulary p{
+    @apply mb-0 font-medium
+}
+.item__vocabulary span{
+    @apply text-red-400
+}
+.item__exemple__vocabulary{
+    @apply mt-2 
+}
+.item__exemple__vocabulary i{
+    @apply mr-2
+}
+.item__exemple__vocabulary p{
+    @apply mb-0
+}
+.item__exemple__vocabulary span{
+    @apply ml-6 text-red-400
+}
