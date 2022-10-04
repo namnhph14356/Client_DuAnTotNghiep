@@ -1,11 +1,10 @@
 .conversation__page{
-    @apply w-8/12 m-auto grid grid-cols-12 gap-5 mt-3
 }
 .main__conversation{
     @apply col-span-9
 }
 .content__conversation{
-    @apply shadow px-3 py-2 mt-3
+    @apply shadow px-3 py-8 
 }
 .question__audio{
     @apply mt-4 

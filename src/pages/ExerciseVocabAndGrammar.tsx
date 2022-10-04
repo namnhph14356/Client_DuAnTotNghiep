@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import AdverDeatil from "../components/AdverDeatil";
 import Menu from "../components/Menu";
 import NavDeatil from "../components/NavDeatil";
 import { useSpeechSynthesis } from "react-speech-kit";
@@ -78,7 +77,7 @@ const ExerciseVocabAndGrammar = (props: Props) => {
                 </>
           <Menu />
         </div>
-        <AdverDeatil />
+        {/* <AdverDeatil /> */}
       </div>
     </div>
    </>

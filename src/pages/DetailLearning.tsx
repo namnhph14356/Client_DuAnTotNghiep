@@ -1,16 +1,12 @@
 /* eslint-disable no-lone-blocks */
-
-
 import { Collapse, Modal } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams, NavLink } from 'react-router-dom';
 import { detailCategory } from '../api/category';
-import AdverDeatil from '../components/AdverDeatil';
+import ChooseClass from '../components/AdverDeatil/ChooseClass';
 import '../css/detailLearning.css'
 
 const DetailLearning = () => {
-
-
   return (
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
@@ -22,111 +18,121 @@ const DetailLearning = () => {
             CÁC PHẦN HỌC CHÍNH :
           </h3>
           <div className="list__main__learning">
-            <NavLink to={'/learning/detailLearning/speak'}>
-              <div className="item__list__learning">
-                <div className="info__item__list">
-                  <div>
-                    <i className="fa-solid fa-ear-listen"></i>
+            <div>
+              <NavLink to={'/learning/detailLearning/:id/speak'}>
+                <div className="item__list__learning">
+                  <div className="info__item__list">
+                    <div>
+                      <i className="fa-solid fa-ear-listen"></i>
+                    </div>
+                    <div>
+                      <h4 className="title__info__item">
+                        Luyện nghe nói
+                      </h4>
+                      <p>
+                        00 điểm |<span> bắt buộc</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="title__info__item">
-                      Luyện nghe nói
-                    </h4>
-                    <p>
-                      00 điểm |<span> bắt buộc</span>
-                    </p>
-                  </div>
-                </div>
-                <div className='icon__item__list'>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              </div>
-            </NavLink>
-            <NavLink to={'/learning/detailLearning/vocabulary'}>
-              <div className="item__list__learning">
-                <div className="info__item__list">
-                  <div>
-                    <i className="fa-solid fa-file-word"></i>
-                  </div>
-                  <div>
-                    <h4 className="title__info__item">
-                      Luyện từ vựng
-                    </h4>
-                    <p>
-                      00 điểm |<span> bắt buộc</span>
-                    </p>
+                  <div className='icon__item__list'>
+                    <i className="fa-solid fa-chevron-right"></i>
                   </div>
                 </div>
-                <div className='icon__item__list'>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              </div>
-            </NavLink>
-            <NavLink to={'/learning/detailLearning/grammar'}>
-              <div className="item__list__learning">
-                <div className="info__item__list">
-                  <div>
-                    <i className="fa-solid fa-bars-staggered"></i>
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to={'/learning/detailLearning/:id/vocabulary'}>
+                <div className="item__list__learning">
+                  <div className="info__item__list">
+                    <div>
+                      <i className="fa-solid fa-file-word"></i>
+                    </div>
+                    <div>
+                      <h4 className="title__info__item">
+                        Luyện từ vựng
+                      </h4>
+                      <p>
+                        00 điểm |<span> bắt buộc</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="title__info__item">
-                      Luyện cấu trúc câu
-                    </h4>
-                    <p>
-                      00 điểm |<span> bắt buộc</span>
-                    </p>
-                  </div>
-                </div>
-                <div className='icon__item__list'>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              </div>
-            </NavLink>
-            <NavLink to={'/learning/detailLearning/conversation'}>
-              <div className="item__list__learning">
-                <div className="info__item__list">
-                  <div>
-                    <i className="fa-solid fa-comment"></i>
-                  </div>
-                  <div>
-                    <h4 className="title__info__item">
-                      Luyện hội thoại
-                    </h4>
-                    <p>
-                      00 điểm |<span> bắt buộc</span>
-                    </p>
+                  <div className='icon__item__list'>
+                    <i className="fa-solid fa-chevron-right"></i>
                   </div>
                 </div>
-                <div className='icon__item__list'>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </div>
-              </div>
-            </NavLink>
-            <NavLink to={'/learning/detailLearning/grammar'}>
-              <div className="item__list__learning">
-                <div className="info__item__list">
-                  <div>
-                    <i className="fa-solid fa-book-open"></i>
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to={'/learning/detailLearning/:id/grammar'}>
+                <div className="item__list__learning">
+                  <div className="info__item__list">
+                    <div>
+                      <i className="fa-solid fa-bars-staggered"></i>
+                    </div>
+                    <div>
+                      <h4 className="title__info__item">
+                        Luyện cấu trúc câu
+                      </h4>
+                      <p>
+                        00 điểm |<span> bắt buộc</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="title__info__item">
-                      Luyện ngữ pháp
-                    </h4>
-                    <p>
-                      00 điểm |<span> bắt buộc</span>
-                    </p>
+                  <div className='icon__item__list'>
+                    <i className="fa-solid fa-chevron-right"></i>
                   </div>
                 </div>
-                <div className='icon__item__list'>
-                  <i className="fa-solid fa-chevron-right"></i>
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to={'/learning/detailLearning/:id/conversation'}>
+                <div className="item__list__learning">
+                  <div className="info__item__list">
+                    <div>
+                      <i className="fa-solid fa-comment"></i>
+                    </div>
+                    <div>
+                      <h4 className="title__info__item">
+                        Luyện hội thoại
+                      </h4>
+                      <p>
+                        00 điểm |<span> bắt buộc</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className='icon__item__list'>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </div>
                 </div>
-              </div>
-            </NavLink>
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to={'/learning/detailLearning/:id/grammar'}>
+                <div className="item__list__learning">
+                  <div className="info__item__list">
+                    <div>
+                      <i className="fa-solid fa-book-open"></i>
+                    </div>
+                    <div>
+                      <h4 className="title__info__item">
+                        Luyện ngữ pháp
+                      </h4>
+                      <p>
+                        00 điểm |<span> bắt buộc</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className='icon__item__list'>
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
           </div>
         </div>
       </div>
       <div className="setting__detail__learning">
-        tuy chon
+        <ChooseClass />
       </div>
     </div>
   )
