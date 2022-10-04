@@ -14,7 +14,7 @@
     @apply flex
 }
 .review__exercirse li{
-    @apply pr-1 pl-2 text-cyan-500
+    @apply pr-1 pl-2 text-cyan-500 cursor-pointer
 }
 .review__exercirse li{
    border-right: 1px solid #ccc;

@@ -59,6 +59,7 @@ import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
+import SignIn from './pages/Login';
 
 
 function App() {
@@ -171,8 +172,8 @@ function App() {
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
 
-        <Route path='/login' element={<Login />}> </Route>
-        <Route path='/register' element={<SignUp />}></Route>
+        <Route path='sigin' element={<SignIn />}> </Route>
+        <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>

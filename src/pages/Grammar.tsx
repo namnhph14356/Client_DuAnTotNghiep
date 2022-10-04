@@ -85,7 +85,7 @@ const Grammar = () => {
           </div>
           <div className="next__page__grammar">
             <button>
-              <NavLink to={'/'} className='text-white hover:text-white'>
+              <NavLink to={'/learning/detailLearning/exercise'} className='text-white hover:text-white'>
                 Bài tập
               </NavLink>
             </button>

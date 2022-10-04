@@ -31,7 +31,7 @@ type FormInputs = {
   password: string | number,
 }
 
-const Login = (props: Props) => {
+const SignIn = (props: Props) => {
   const { register, handleSubmit, formState } = useForm<FormInputs>(validation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -159,4 +159,4 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+export default SignIn;

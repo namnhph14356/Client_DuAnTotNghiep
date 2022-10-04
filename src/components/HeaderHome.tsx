@@ -49,18 +49,17 @@ const HeaderComponent = () => {
               </div>
             </div>
             <div className=" ml-10 space-x-4">
-              <a
-                href="#"
+              <NavLink to={'/sigin'}
                 className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75"
               >
                 Sign in
-              </a>
-              <a
-                href="#"
+              </NavLink>
+              <NavLink to={'/signup'}
+
                 className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
               >
                 Sign up
-              </a>
+              </NavLink>
             </div>
           </div>
           <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
@@ -73,8 +72,8 @@ const HeaderComponent = () => {
         </nav>
       </header>
 
-     
-     
+
+
     </div>
   )
 }
