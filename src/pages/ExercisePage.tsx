@@ -1,5 +1,5 @@
 import React from 'react'
-import HeaderDetail from '../components/HeaderDetail'
+// import HeaderDetail from '../components/HeaderDetail'
 import NavDeatil from '../components/NavDeatil'
 import './../css/exercise.css'
 
@@ -7,7 +7,7 @@ const ExercisePage = () => {
     return (
         <div className='exercise__page'>
             <div className="main__exercise">
-                <HeaderDetail />
+                {/* <HeaderDetail /> */}
                 <div className="nav__speaking">
                     <div className="count__question">
                         <p>

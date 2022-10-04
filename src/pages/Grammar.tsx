@@ -1,19 +1,34 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import HeaderDetail from "../components/HeaderDetail";
 import NavDeatil from "../components/NavDeatil";
 import '../css/grammar.css'
 
 const Grammar = () => {
+
+  const backPage = () => {
+    history.back();
+  }
+  
   return (
     <div className="grammar__page">
       <div className="main__grammar__page">
-        <HeaderDetail />
+      <div className="w-full bg-indigo-600 px-4 py-2">
+          <div className='flex gap-4'>
+            <div className='my-auto' onClick={backPage}>
+              <i className="fa-solid fa-angle-left text-5xl text-white font-bold cursor-pointer"></i>
+            </div>
+            <div className='my-auto'>
+              <div className='text-xl uppercase text-white'>Luyện nghe hội thoại</div>
+              <div className='text-white'>00 Điểm</div>
+            </div>
+          </div>
+        </div>
         <div className="nav__speaking">
-          <div className="count__question">
-            <p>
-              câu số 1 / <span>10</span>
-            </p>
+        <div className="count__question">
+            <div>
+              Câu số 1 / <span>10</span>
+            </div>
           </div>
           <div>
             <button className="btn__start__speaking">
@@ -92,7 +107,6 @@ const Grammar = () => {
           </div>
         </div>
       </div>
-      <NavDeatil />
     </div>
   );
 };

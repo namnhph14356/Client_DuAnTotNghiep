@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import AdverDeatil from '../components/AdverDeatil';
 import Footer from '../components/Footer';
 import NavDeatil from '../components/NavDeatil';
 
@@ -481,7 +480,6 @@ const ExeQuiz = () => {
                     </div>
                 </div>
 
-                <AdverDeatil />
             </div>
 
 

@@ -44,7 +44,6 @@ import FileTeacher from './pages/fileTeacher/FileTeacher';
 import TeacherPage from './pages/TeacherPage';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
 import CoursePage from './pages/CoursePage';
-import SpeakingPage from './pages/speaking';
 import QuizPage from './pages/QuizPage';
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
@@ -60,7 +59,8 @@ import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
 import SignIn from './pages/Login';
-
+import DetailLearningLayout from './pages/layouts/DetailLearningLayout';
+import SpeakingPage from './pages/speaking';
 
 function App() {
   return (
@@ -73,20 +73,14 @@ function App() {
             <Route index element={<Learning />} />
             <Route path="detailLearning">
               <Route index element={<DetailLearning />} />
-              <Route path='speak' element={<SpeakingPage />} />
-              <Route path='vocabulary' element={<Vocabulary />} />
-              <Route path='grammar' element={<Grammar />} />
-              <Route path='conversation' element={<ConversationPage />} />
-              <Route path='exercise' element={<ExercisePage />} />
-              {/* <Route path='writeAndListen' element={<ExeWriteAndListen />} /> */}
-
-              {/* <Route path=":id" element={<DetailLearning />} /> */}
-              {/* <Route path=":id/quiz2" element={<ExeQuiz />} />
-              <Route path=':id/speak' element={<SpeakingPage />} />
-              <Route path=':id/quiz' element={<QuizPage />} />
-              <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
-              <Route path='grammar' element={<Grammar />}/>
-              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/> */}
+              <Route path=':id' element={<DetailLearningLayout />}>
+                <Route path='speak' element={<SpeakingPage />} />
+                <Route path='vocabulary' element={<Vocabulary />} />
+                <Route path='grammar' element={<Grammar />} />
+                <Route path='conversation' element={<ConversationPage />} />
+                <Route path='exercise' element={<ExercisePage />} />
+                <Route path='writeAndListen' element={<ExeWriteAndListen />} />
+              </Route>
             </Route>
           </Route>
 

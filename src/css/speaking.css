@@ -1,5 +1,5 @@
 .speaking__page{
-  @apply w-8/12 m-auto mt-3 grid grid-cols-12 gap-6
+
 }
 .main__speaking{
   @apply col-span-9
@@ -22,8 +22,8 @@
 .nav__speaking{
   @apply flex justify-between 
 }
-.count__question p{
-  @apply mb-0 font-bold
+.count__question {
+  @apply mt-auto font-bold
 }
 .btn__start__speaking{
   @apply  px-4 py-2 
@@ -38,7 +38,7 @@
   @apply bg-slate-50 px-5 py-2
 }
 .qustion__content__speaking h3{
-  @apply text-lime-500 text-2xl
+  @apply text-indigo-600 text-2xl
 }
 .qustion__content__speaking span{
   @apply text-black text-2xl ml-3
@@ -56,11 +56,11 @@
   @apply text-center pb-3
 }
 .answer__question button{
-  @apply bg-lime-600 text-white font-semibold px-4 py-1
+  @apply bg-indigo-600 text-white font-semibold px-4 py-1
 }
 .chosse__learning{
   @apply col-span-3 shadow px-3 py-2 max-h-[300px]
 }
 .nav__chosse__learning li{
-  @apply bg-[#3eae48] text-white mb-1 px-2 py-1 cursor-pointer hover:bg-green-400 font-medium
+  @apply bg-indigo-600 text-white mb-1 px-2 py-1 cursor-pointer hover:bg-green-400 font-medium
 }

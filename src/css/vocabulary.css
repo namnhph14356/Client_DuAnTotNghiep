@@ -1,5 +1,4 @@
 .voabulary__page{
-    @apply w-8/12 m-auto grid grid-cols-12 gap-5 mt-3
 }
 .main__voacbulary{
     @apply col-span-9 

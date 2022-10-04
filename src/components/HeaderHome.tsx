@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate, useRoutes } from 'react-router-dom'
 import { logout } from '../features/Slide/auth/authSlide';
 import { message, Modal } from "antd";
-// import '../css/header.css';
 import { useDispatch, useSelector } from 'react-redux';
 const navigation = [
   { name: 'Học thử', to: '/learning' },
@@ -23,13 +22,6 @@ const HeaderComponent = () => {
       message.success("Đăng xuất thành công !")
     }
   }
-  console.log(user);
-
-  // const getUser = async (id) => {
-  //     const {payload} = await dispath(getUser(id))
-  //     console.log(payload);
-  // }
-
 
   return (
     <div className="relative bg-gray-50">

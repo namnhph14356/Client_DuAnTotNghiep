@@ -1,19 +1,33 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
-import HeaderDetail from "../components/HeaderDetail";
 import "../css/speaking.css";
 
 
 const SpeakingPage = () => {
 
+  const backPage = () => {
+    history.back();
+  }
+  
   return (
     <div className="speaking__page">
       <div className="main__speaking">
-        <HeaderDetail/>
+        <div className="w-full bg-indigo-600 px-4 py-2">
+          <div className='flex gap-4'>
+            <div className='my-auto' onClick={backPage}>
+              <i className="fa-solid fa-angle-left text-5xl text-white font-bold cursor-pointer"></i>
+            </div>
+            <div className='my-auto'>
+              <div className='text-xl uppercase text-white'>Luyện nghe hội thoại</div>
+              <div className='text-white'>00 Điểm</div>
+            </div>
+          </div>
+        </div>
         <div className="nav__speaking">
           <div className="count__question">
-            <p>
-              câu số 1 / <span>10</span>
-            </p>
+            <div>
+              Câu số 1 / <span>10</span>
+            </div>
           </div>
           <div>
             <button className="btn__start__speaking">
@@ -36,7 +50,7 @@ const SpeakingPage = () => {
           </div>
           <div className="main__content__spaeking">
             <div className="img__question">
-              <img src="https://file.removal.ai/preview/tmp-633bd94aedabd.png" alt="" />
+              <img src="https://i.pinimg.com/564x/23/6e/ad/236eadcccca3d08761bdf336d328ec43.jpg" alt="" />
             </div>
             <div className="choose__question">
               <fieldset className="border-t border-b border-gray-200">
@@ -120,25 +134,9 @@ const SpeakingPage = () => {
           </div>
           <div className="answer__question">
             <button >
-              xem kết quả
+              Xem kết quả
             </button>
           </div>
-        </div>
-      </div>
-      <div className="chosse__learning">
-        <h3 className="title__chosse__learning">
-          Bạn muốn đến phần:
-        </h3>
-        <div className="nav__chosse__learning">
-          <ul>
-            <li>Luyện nghe nói phản xa</li>
-            <li>Luyện từ vựng</li>
-            <li>Luyện hội thoại</li>
-            <li>Luyện ngữ pháp</li>
-            <li>Luyện ngữ pháp</li>
-            <li>Luyện ngữ pháp</li>
-            <li>Luyện ngữ pháp</li>
-          </ul>
         </div>
       </div>
     </div>
