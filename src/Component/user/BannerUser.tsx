@@ -2,7 +2,7 @@ import { Button, Col, message, Modal, Row, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { editUser, getUser } from "../../api/user";
+import { editUser, getUserById } from "../../api/user";
 import { UserType } from "../../types/category";
 import { uploadImage } from "../../utils/upload";
 import './style.css'
@@ -55,7 +55,7 @@ console.log(info);
   const id = data.user._id
   useEffect(() => {
     const getProducts = async () => {
-      const { data } = await getUser(id);
+      const { data } = await getUserById(id);
       reset(data)
       getInfo(data)
     }

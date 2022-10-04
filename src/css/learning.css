@@ -1,139 +1,68 @@
-.header__learning {
-    @apply h-[62px] shadow-md  ;
-  }
-  .header__learning_box {
-    @apply w-10/12 m-auto flex justify-between h-[62px]  relative   ;
-   
-  }
-  .header__learning_box .logo {
-    @apply my-auto space-x-4;
-  }
-  .header__learning_box .logo #menu-btn{
-    @apply  md:hidden font-bold ;
-  }
-  /* .header__learning_box .nav__learning-menu {
-    @apply  my-auto ;
-  } */
-  .nav__learning-menu{
-    @apply   top-[110%] left-[-110%]  invisible md:visible  md:opacity-100 my-auto rounded-full;
-  }
+.learning__page{
+  @apply w-10/12 m-auto bg-white sm:rounded-lg my-8 grid grid-cols-12
+}
+.box__learning{
+  @apply col-span-9 mr-[20px]  shadow-md p-3
+}
+.box__learning{
+  border:  1px solid #eee;
+}
+.box__learning__title{
+  @apply mt-2 bg-indigo-600 py-1 px-4 text-white uppercase font-semibold ;
+}
+.content__learning{
+  @apply px-8
+}
+.desc__content__learning{
+  @apply text-orange-500 mt-4 py-2
+}
 
-  .nav__learning{
-    @apply   flex  space-x-0 sm:space-x-3 my-auto md:space-x-12  ;
-  }
-
-  .nav__user {
-    @apply  space-x-0 sm:space-x-3 my-auto md:space-x-12 text-end ;
-  }
-
-  .nav__learning-menu.active {
-    @apply visible absolute  top-[110%]  left-[0%] w-full text-white  opacity-100 my-auto rounded-full; 
-
-    transition: .2s linear;
-    background: #4A235A;
-
-  }
-  .nav__learning-menu.active .nav__learning li {
-    @apply   py-1 text-center mx-auto 
-  }
-
-  .nav__learning a {
-    @apply text-base font-sans font-normal md:font-bold;
-  }
-
-  .nav__user i {
-    @apply text-amber-400;
-  }
-  .nav__user a {
-    @apply text-amber-400 text-lg md:text-xl;
-  }
-  .nav__icon__user {
-    @apply text-black !important;
-  }
-
-  /* main learning */
-
-  .content__learning {
-    @apply mt-[66px] mb-[50px] w-8/12 m-auto ;
-  }
-  .title_learning {
-    @apply text-2xl	text-center	font-bold mt-[4rem]
-  }
-
-  .box__list__learning {
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-[96px] gap-x-[28px] 
-  }
-
-  .image__item__learning{
-
-  }
-
-  .item__list__learning {
-    @apply shadow-md   z-10;
-  }
-
-  .img__learning__item{
-    @apply h-64 w-full
-  }
-  /* .item__list__learning{
-    border: 1px solid #E5E7E9;
-    transition: 0.5s;
-  }
-  .item__list__learning:hover{
-    transform: scale(1.1);
-    z-index: 2;
-    background-color: #F8F9F9;
-    cursor: pointer;
-  } */
-  .item__list__learning img {
-    @apply max-w-full z-0	 ;
-  }
-
-  .title__tiem__learning {
-    @apply text-center	py-6 text-base	font-semibold	font-sans ;
-  }
-
-  .btn__display_item button {
-    @apply text-xs	mt-[50px] font-sans;
-  }
-  .item__list__learning__key {
-    @apply shadow-md   relative  ;
-  }
-  .item__list__learning__key{
-    border: 1px solid #E5E7E9
-  }
-  .item__list__learning__key .col img{
-    @apply  max-w-full ;
-  }
-  .item__list__learning__key .col{
-    @apply opacity-50
-  }
-
-  .item__lock_learning {
-    @apply  absolute top-[50%] left-[50%] opacity-100 ;
-  }
-
-
-  .btn__see__more{
-    width: 200px;
-    height: 32px;
-    border: 3px solid#4A235A;
-    color: #000;
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 0 #4A235A;
-    transition: ease-out 0.3s;
-    outline: none;
-  }
-  .btn__see__more:hover{
-    box-shadow: inset 200px 0 0 0 #4A235A;
-    cursor: pointer;
-    color: #fff;
-  }
-
-  .item__list__learning__key{
-    cursor: no-drop;
-  }
-  
-  .text{ 
-    @apply px-0
-  }
+.learning__time{
+}
+.box__learning__time{
+  @apply flex justify-between 
+}
+.box__learning__time{
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+}
+.learning__btn__time{
+  @apply flex my-auto
+}
+.learning__page__time{
+  @apply my-1
+}
+.statistical__learning__time{
+  @apply flex justify-between mt-3
+}
+.statistical__topic__learning{
+ @apply flex
+}
+.statistical__topic__learning li{
+  @apply py-1
+}
+.statistical__topic__learning__point{
+  @apply ml-[50px] text-[red] 
+}
+.btn__learning__statistical{
+  @apply mr-[50px] mt-[30px]
+}
+.btn__start__statistical{
+  @apply bg-[#3dae48] px-8 font-semibold py-1 text-white mr-3
+}
+.btn__exam__statistical{
+  @apply bg-[#3dae48] px-8 font-semibold py-1 text-white
+}
+.box__buy__source{
+  @apply col-span-3 p-2 text-center max-h-[200px]
+}
+.box__buy__source{
+ border: 1px solid #ccc;
+  height: auto;
+}
+.title__buy__source{
+    @apply flex justify-center mt-2
+}
+.btn__buy__coures__cart{
+  @apply bg-red-600 text-white py-1 px-8 
+}

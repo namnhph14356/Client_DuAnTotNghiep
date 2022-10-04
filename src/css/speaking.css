@@ -1,103 +1,66 @@
-.box__result__speak {
-  @apply w-[100%] mt-[50px];
-}
-
-.main__vocabulary {
-  @apply w-6/12 m-auto mt-[69px];
-}
-
-.main__vocabulary {
-  border: 1px solid #ccc;
-}
-
-.box__header__topic {
-  background-color: #F2F4F4;
-  height: 64px;
-  padding: 20px;
-  display: flex;
-  
-}
-.vocabulary__speaking{
-    margin-left: 20px;
-    line-height: 15px;
-    font-weight: 500;
-}
-.carousel-status{
-  color: #c33528 !important;
-  font-size: larger !important;
-  font-weight: bold;
-  line-height: 50px;
-  /* display: none; */
+.speaking__page{
 
 }
-.btn__volume__vocabulary i{
-    font-size: 20px;
+.main__speaking{
+  @apply col-span-9
 }
-.info__vocabulry{
-    /* padding: 20px; */
+.header__speaking__page{
+  @apply bg-neutral-500 flex px-2 py-1
 }
-/* .btn__next__question{
-  @apply border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right shadow-xl  transition duration-500
-} */
-.btn__next__question{
-  border: 1px solid #ccc;
-  padding: 5px 30px;
-  transition: 0.5s;
-  border-radius: 4px;
-
+.icon__header i{
+  @apply text-2xl text-white font-bold mt-1
 }
-.btn__next__question:hover{
-  background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
-  color: #fff;
-
+.title__header__speaking{
+  @apply ml-3
 }
-.box__btn__question{
-  
-  padding: 20px;
+.title__header__speaking h3{
+  @apply text-white mb-0
 }
-.desc__title__cocabulary{
-  background: linear-gradient(to right,#6078ea 0,#17ead9 100%);;
-  padding: 5px 20px;
-  border: 1px solid #ccc
+.title__header__speaking p{
+  @apply text-white mb-0
 }
-.desc__title__cocabulary h2 {
-  margin-top: 10px;
-  color: #fff;
+.nav__speaking{
+  @apply flex justify-between 
 }
-.desc__title__cocabulary i {
-  margin: 0px 5px;
+.count__question {
+  @apply mt-auto font-bold
 }
-.count__question__vocabulary h4{
-  color: #fff;
+.btn__start__speaking{
+  @apply  px-4 py-2 
 }
-.audioVocabulary{
-  height: initial;
+.btn__comment__speaking{
+  @apply bg-slate-200 px-4 py-2 hover:bg-slate-300
 }
-.control-arrow{
-  width: 40px !important;
-  height: 40px !important;
-  background-color: #FF9533 !important;
-  border-radius: 50% !important;
-  top: 70% !important;
+.content__speaking{
+  @apply shadow
 }
-.control-arrow::before{
-  margin: 7px 0px !important;
-
+.qustion__content__speaking{
+  @apply bg-slate-50 px-5 py-2
 }
-/* Q&A Vocabulary */
-
-.answer__vocab{
-  border: 1px solid orange;
-  border-radius: 8px;
-  font-weight: bold;
-  width: 100%;
-  line-height: 35px;
-  height: 35px;
-  text-align: center;
-  margin-top: 12px;
+.qustion__content__speaking h3{
+  @apply text-indigo-600 text-2xl
 }
-.answer__vocab:hover{
-  background: orange;
-  color: white;
-  cursor: pointer;
+.qustion__content__speaking span{
+  @apply text-black text-2xl ml-3
+}
+.main__content__spaeking{
+  @apply grid grid-cols-12 gap-4 px-8 py-3
+}
+.img__question{
+  @apply  col-span-3
+}
+.choose__question{
+  @apply col-span-9
+}
+.answer__question{
+  @apply text-center pb-3
+}
+.answer__question button{
+  @apply bg-indigo-600 text-white font-semibold px-4 py-1
+}
+.chosse__learning{
+  @apply col-span-3 shadow px-3 py-2 max-h-[300px]
+}
+.nav__chosse__learning li{
+  @apply bg-indigo-600 text-white mb-1 px-2 py-1 cursor-pointer hover:bg-green-400 font-medium
 }

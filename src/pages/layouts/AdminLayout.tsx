@@ -81,12 +81,12 @@ const AdminLayout = () => {
 
 
     return (
-        <Layout className='h-screen' style={{ width: "100%" }}>
-            <Sider className='sider__bar__admin h-screen ' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+        <Layout className='h-full' style={{ width: "100%" }}>
+            <Sider className='sider__bar__admin h-[100%]  ' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
                 <div className="logo flex justify-center py-2 bg-[#001529]" >
                     <NavLink aria-current="page" className="logo active text-[#fff]" to="/"> VianEnglish </NavLink>
                 </div>
-                <Menu className='menu__bar__admin h-full'
+                <Menu className='menu__bar__admin'
                     theme="dark"
                     mode="inline"
                     onClick={handleClick}

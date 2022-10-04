@@ -2,29 +2,21 @@ import React from 'react'
 
 const NavDeatil = () => {
     return (
-        <div >
-        <ul className='nav__deatail__learning'>
-            <li className='nav__item__deatail__learning'>
-                <button className='btn__nav__deatil__learning'>
-                    Khởi động
-                </button>
-            </li>
-            <li className='nav__item__deatail__learning'>
-                <button className='btn__nav__deatil__learning'>
-                    Câu hỏi thông dụng
-                </button>
-            </li>
-            <li className='nav__item__deatail__learning'>
-                <button className='btn__nav__deatil__learning'>
-                    Hỏi và đáp
-                </button>
-            </li>
-            <li className='nav__item__deatail__learning'>
-                <button className='btn__nav__deatil__learning'>
-                    tổng điểm
-                </button>
-            </li>
-        </ul>
+        <div className="chosse__learning">
+            <h3 className="title__chosse__learning">
+                Bạn muốn đến phần:
+            </h3>
+            <div className="nav__chosse__learning">
+                <ul>
+                    <li>Luyện nghe nói phản xa</li>
+                    <li>Luyện từ vựng</li>
+                    <li>Luyện hội thoại</li>
+                    <li>Luyện ngữ pháp</li>
+                    <li>Luyện ngữ pháp</li>
+                    <li>Luyện ngữ pháp</li>
+                    <li>Luyện ngữ pháp</li>
+                </ul>
+            </div>
         </div>
     )
 }

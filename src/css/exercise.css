@@ -1,0 +1,30 @@
+.exercise__page{
+    @apply w-8/12 m-auto grid grid-cols-12 gap-6 mt-3
+}
+.main__exercise{
+    @apply col-span-9
+}
+.content__exercirse{
+    @apply shadow mt-3 px-5 py-2
+}
+.review__exercirse{
+    @apply float-right
+}
+.review__exercirse ul{
+    @apply flex
+}
+.review__exercirse li{
+    @apply pr-1 pl-2 text-cyan-500 cursor-pointer
+}
+.review__exercirse li{
+   border-right: 1px solid #ccc;
+}
+.btn__execrcirse{
+    @apply mt-3
+}
+.btn__submit__exe{
+    @apply bg-[#ccc] px-4 py-1 rounded mr-2
+}
+.btn__reset__exe{
+    @apply bg-[#ccc] px-4 py-1 rounded 
+}

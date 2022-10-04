@@ -1,313 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.header__learning {
-  @apply h-[62px] shadow-md;
+.detail__learning__page{
+  @apply w-10/12 m-auto grid grid-cols-12 gap-8 my-8
 }
-.box__main__topic{
-  @apply border;
-  padding: 20px
+.content__detail__learning{
+  @apply col-span-9 grid grid-cols-2 gap-4 shadow px-8 py-4
 }
-.box__deatil__learning__main{
-  @apply grid grid-cols-12 gap-8 w-10/12 mt-[70px] 
+.setting__detail__learning{
+  @apply col-span-3 
 }
-
-.header__learning_box {
-  @apply w-10/12 m-auto flex justify-between h-[62px] relative;
+.content__detail__learning{
+  border: 1px solid #ccc;
 }
-
-.header__learning_box .logo {
-  @apply my-auto space-x-4;
+.video__learning{
+  @apply w-full h-auto
 }
-
-.header__learning_box .logo #menu-btn {
-  @apply md:hidden font-bold;
-}
-
-/* .header__learning_box .nav__learning-menu {
-    @apply  my-auto ;
-  } */
-.nav__learning-menu {
-  @apply top-[110%] left-[-110%] invisible md:visible md:opacity-100 my-auto rounded-full;
-}
-
-.nav__learning {
-  @apply flex space-x-0 sm:space-x-3 my-auto md:space-x-12;
-}
-
-.nav__user {
-  @apply space-x-0 sm:space-x-3 my-auto md:space-x-12 text-end;
-}
-
-.nav__learning-menu.active {
-  @apply visible absolute top-[110%] left-[0%] w-full text-white opacity-100 my-auto rounded-full;
-
-  transition: 0.2s linear;
-  background: #4a235a;
-}
-
-.nav__learning-menu.active .nav__learning li {
-  @apply py-1 text-center mx-auto;
-}
-.nav__learning-menu.active .nav__learning a {
-  @apply text-white;
-}
-
-.nav__learning a {
-  @apply text-base font-sans font-normal md:font-bold text-black;
-}
-
-.nav__user i {
-  @apply text-amber-400;
-}
-
-.nav__user a {
-  @apply text-amber-400 text-lg md:text-xl;
-}
-
-.nav__icon__user {
-  @apply text-black !important;
-}
-
-/* and header */
-
-.main__topic {
-  @apply   w-full 
-}
-
-.title__deatial__learning {
-  font-size: 20px;
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 700;
-}
-.info__topic {
-  font-size: 16px;
-  font-weight: 400;
-}
-.btn__start__topic {
-  background: linear-gradient(to right, #17ead9 0, #6078ea 100%);
-  width: 100%;
-  padding: 10px;
-  height: 52px;
-}
-.btn__start__topic a {
-  color: #fff;
-  float: left;
-  margin-right: 10px;
-  font-weight: 400;
-}
-.btn__start__topic span {
-  color: #fff;
-  float: left;
-  font-weight: 400;
-}
-.btn__start__topic i {
-  color: #fff;
-  margin-right: 10px;
-}
-.btn__start__topic a:hover {
-  color: #fff;
-}
-
-.box__video__topic {
-  @apply w-8/12 m-auto mt-[69px];
-}
-.title__video__topic {
-  @apply text-xl	font-bold;
-}
-
-.box__video__topic p {
-  @apply text-sm	font-bold;
-}
-
-.box__btn__video {
-  @apply text-center mt-[42px];
-}
-.btn__previous,
-.btn__next {
-  @apply border border-[#ccc]	w-[92px] h-[30px];
-}
-.box__btn__video i {
-  @apply p-[5px];
-}
-
-.box__topic {
-  @apply grid grid-cols-1 sm:grid-cols-2 gap-[30px] lg:grid-cols-3;
-}
-
-.img__topic {
-  @apply col-span-1;
-}
-
-.img__topic img {
-  @apply rounded-lg w-[100%] max-w-full;
-}
-
-.desc__topic {
-  @apply col-span-2 my-auto;
-}
-
-.title__topic {
-  @apply text-xl font-bold font-sans;
-}
-
-.desc__topic p {
-  @apply mt-[10px] text-base font-sans;
-}
-
-.desc__topic button {
-  @apply mt-[17px] border-4 rounded-full p-[8px] border-red-600;
-}
-
-.box__review {
-  @apply mt-[89px] w-8/12 m-auto mb-[261px];
-}
-
-.title__review {
-  @apply text-2xl font-bold text-center;
-}
-
-.list__detail__learning {
-  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-[80px] mt-[52px] lg:grid-cols-3;
-}
-
-.item__detail__learning img {
-  @apply w-[100%];
-}
-
-.item__detail__learning {
-  @apply shadow-md;
-}
-.item__detail__learning {
-  border: 1px solid #e5e7e9;
-  transition: 0.5s;
-}
-.item__detail__learning:hover {
-  transform: scale(1.1);
-  z-index: 2;
-  background-color: #f8f9f9;
-  cursor: pointer;
-}
-
-.item__detail__learning img {
-  @apply w-[283px] h-[200px];
-}
-
-.item__detail__learning h4 {
-  @apply mt-[30px] mb-[30px] lg:mt-[50px] text-xl font-bold text-center;
-}
-
-.box__list__detail {
-  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
-  padding: 10px;
-  box-shadow: inset 0 0 0 0 #489EE4;
-  width: 100%;
-  transition: ease-out 0.5s;
-  outline: none;
-}
-.box__list__detail:hover {
-  width: 100%;
-  box-shadow: inset 300px 0 300px 0px #489EE4;
-  transition: ease-out 0.5s;
-}
-
-.box__list__detail ul {
-  display: flex;
-  margin-bottom: 0 !important;
-}
-.box__list__detail li {
-  margin: 0px 10px;
-  color: #fff;
-}
-
-.box__list__detail i {
-  margin: 0px 10px;
-}
-.box__list__detail p {
-  color: #fff;
-  margin: 0px 10px;
-}
-.box__list__detail:hover  li {
-  color: black;
-}
-
-
-.nav__deatail__learning{
-  @apply mt-[70px]
-}
-.nav__deatail__learning li {
-  margin: 20px 0px;
-  background: linear-gradient(to right, #6078ea 0, #17ead9  100%);
-  width: 200px;
-  height: 60px;
-  box-shadow: inset 0 0 0 0 #6078ea;
-  transition: ease-out 0.3s;
-  color: #fff;
-  border-radius: 0px 50px 50px 0px;
-  font-weight: 600;
-  padding: 20px 10px;
-}
-.nav__deatail__learning li:hover {
-  transition: ease-out 0.3s;
-  background: linear-gradient(to right, #6078ea 0, blue  100%);
-  /* box-shadow: inset 100px 0 0 0 #6078ea; */
-  cursor: pointer;
-}
-
-
-.advertisement__source__learning{
-  width: 100%;
-  background: #489EE4;
-  padding: 20px;
-  color: #fff;
-  max-height: 600px;
-}
-.title__adver__source{
-  @apply text-center text-base	font-sans text-[#fff]
+.deatil__main__learning{
 
 }
-.price__surce__learing{
-  @apply text-center 
+.list__main__learning{
+  @apply divide-y
 }
-.price__surce__learing{
-  border-bottom: 2px solid #fff;
-  padding-bottom: 20px;
+.title__detail__main{
+  @apply text-indigo-600 text-xl
 }
-.price__surce__learing p{
-  @apply font-medium text-[12px]
-
+.item__list__learning{
+  @apply flex justify-between py-1 
 }
-.btn__cart__adver {
-  background: rgb(31, 72, 194);
-  padding: 5px 20px;
-  border-radius: 3px;
+.item__list__learning{
 }
-.btn__cart__adver i{
-  margin-right: 5px;
-} 
-.title__info__adver{
-  @apply text-[15px] font-sans font-semibold mt-[10px]
+.info__item__list{
+  @apply flex
 }
-.item__menu__info__adver{
-  @apply mt-[10px]
+.info__item__list p {
+  @apply  mb-0 text-red-600
 }
-.item__menu__info__adver h3{
-
-  @apply font-bold
-
-} 
-
-.dateLearning {
-  @apply my-4 text-left;
+.info__item__list span {
+  @apply ml-2
 }
-.dateLearning button {
-  @apply bg-[#ccc] text-[#fff] py-2 px-14 rounded-md text-base ;
-  /* border-top-right-radius: 100%;
-  border-bottom-right-radius: 100%; */
-  background: linear-gradient(to right, #6078ea 0, #17ead9 100%);
+.title__info__item{
+  @apply mb-0 cursor-pointer
 }
-
-.dateLearning button:hover {
-  background: linear-gradient(to right, #6078ea 0, blue  100%);
+.info__item__list i{
+  @apply mr-3 text-xl text-indigo-600 
+}
+.icon__item__list i{
+  @apply text-indigo-600 text-2xl mr-3 mt-2
 }
