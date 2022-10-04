@@ -63,62 +63,64 @@ const DetailLearning = () => {
               </div>
             </NavLink>
             <NavLink to={'/learning/detailLearning/grammar'}>
-            <div className="item__list__learning">
-              <div className="info__item__list">
-                <div>
-                  <i className="fa-solid fa-bars-staggered"></i>
+              <div className="item__list__learning">
+                <div className="info__item__list">
+                  <div>
+                    <i className="fa-solid fa-bars-staggered"></i>
+                  </div>
+                  <div>
+                    <h4 className="title__info__item">
+                      Luyện cấu trúc câu
+                    </h4>
+                    <p>
+                      00 điểm |<span> bắt buộc</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="title__info__item">
-                    Luyện cấu trúc câu
-                  </h4>
-                  <p>
-                    00 điểm |<span> bắt buộc</span>
-                  </p>
+                <div className='icon__item__list'>
+                  <i className="fa-solid fa-chevron-right"></i>
                 </div>
               </div>
-              <div className='icon__item__list'>
-                <i className="fa-solid fa-chevron-right"></i>
-              </div>
-            </div>
             </NavLink>
-            <div className="item__list__learning">
-              <div className="info__item__list">
-                <div>
-                  <i className="fa-solid fa-comment"></i>
+            <NavLink to={'/learning/detailLearning/conversation'}>
+              <div className="item__list__learning">
+                <div className="info__item__list">
+                  <div>
+                    <i className="fa-solid fa-comment"></i>
+                  </div>
+                  <div>
+                    <h4 className="title__info__item">
+                      Luyện hội thoại
+                    </h4>
+                    <p>
+                      00 điểm |<span> bắt buộc</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="title__info__item">
-                    Luyện hội thoại
-                  </h4>
-                  <p>
-                    00 điểm |<span> bắt buộc</span>
-                  </p>
+                <div className='icon__item__list'>
+                  <i className="fa-solid fa-chevron-right"></i>
                 </div>
               </div>
-              <div className='icon__item__list'>
-                <i className="fa-solid fa-chevron-right"></i>
-              </div>
-            </div>
+            </NavLink>
             <NavLink to={'/learning/detailLearning/grammar'}>
-            <div className="item__list__learning">
-              <div className="info__item__list">
-                <div>
-                  <i className="fa-solid fa-book-open"></i>
+              <div className="item__list__learning">
+                <div className="info__item__list">
+                  <div>
+                    <i className="fa-solid fa-book-open"></i>
+                  </div>
+                  <div>
+                    <h4 className="title__info__item">
+                      Luyện ngữ pháp
+                    </h4>
+                    <p>
+                      00 điểm |<span> bắt buộc</span>
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="title__info__item">
-                    Luyện ngữ pháp
-                  </h4>
-                  <p>
-                    00 điểm |<span> bắt buộc</span>
-                  </p>
+                <div className='icon__item__list'>
+                  <i className="fa-solid fa-chevron-right"></i>
                 </div>
               </div>
-              <div className='icon__item__list'>
-                <i className="fa-solid fa-chevron-right"></i>
-              </div>
-            </div>
             </NavLink>
           </div>
         </div>

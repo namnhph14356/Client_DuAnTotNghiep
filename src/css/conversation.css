@@ -1,0 +1,49 @@
+.conversation__page{
+    @apply w-8/12 m-auto grid grid-cols-12 gap-5 mt-3
+}
+.main__conversation{
+    @apply col-span-9
+}
+.content__conversation{
+    @apply shadow px-3 py-2 mt-3
+}
+.question__audio{
+    @apply mt-4 
+}
+.title__listien__chosse , .title__check__input{
+    border-bottom: 2px solid #ccc;
+}
+.title__listien__chosse , .title__check__input{
+    @apply mb-5
+}
+.title__check__input{
+    @apply mt-[20px]
+}
+.item__question__inpt_check i{
+    @apply text-lime-600 text-xl mx-3
+} 
+.table__conversation__check td{
+ 
+}
+.item__question__inpt_check input{
+    outline: none;
+    border-bottom: 1px solid #ccc;
+}
+.item__question__inpt_check span{
+    @apply font-normal
+}
+.user__affter{
+    @apply bg-slate-50
+}
+.user__affter input{
+    @apply bg-slate-50
+}
+.btn__check__result{
+    @apply mt-3 text-center
+}
+.btn__submit__check{
+    @apply bg-[#588926] text-white px-5 py-1 rounded mr-2
+}
+.btn__reset__submit{
+    @apply bg-[#588926] text-white px-5 py-1 rounded 
+}

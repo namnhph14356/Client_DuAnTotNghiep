@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import HeaderDetail from "../components/HeaderDetail";
 import "../css/speaking.css";
 
 
@@ -7,17 +8,7 @@ const SpeakingPage = () => {
   return (
     <div className="speaking__page">
       <div className="main__speaking">
-        <div className="header__speaking__page">
-          <div className="icon__header">
-            <i className="fa-solid fa-chevron-left"></i>
-          </div>
-          <div className="title__header__speaking">
-            <h3>
-              Luyện nghe nói phản xạ
-            </h3>
-            <p>10 câu | <span>bắt buộc</span></p>
-          </div>
-        </div>
+        <HeaderDetail/>
         <div className="nav__speaking">
           <div className="count__question">
             <p>

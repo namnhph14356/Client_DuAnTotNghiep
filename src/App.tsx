@@ -57,6 +57,8 @@ import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 import Vocabulary from './pages/Vocabulary';
+import ConversationPage from './pages/ConversationPage';
+import ExercisePage from './pages/ExercisePage';
 
 
 function App() {
@@ -73,6 +75,9 @@ function App() {
               <Route path='speak' element={<SpeakingPage />} />
               <Route path='vocabulary' element={<Vocabulary />} />
               <Route path='grammar' element={<Grammar />} />
+              <Route path='conversation' element={<ConversationPage />} />
+              <Route path='exercise' element={<ExercisePage />} />
+              {/* <Route path='writeAndListen' element={<ExeWriteAndListen />} /> */}
 
               {/* <Route path=":id" element={<DetailLearning />} /> */}
               {/* <Route path=":id/quiz2" element={<ExeQuiz />} />
