@@ -29,8 +29,7 @@ const DetailLearning = () => {
 
   return (
     <div>
-      <div className='box__deatil__learning__main'>
-        <div className="main__topic col-span-9 w-full">
+        <div className="main__topic  w-full">
           <div className='box__main__topic'>
             <h2 className="title__deatial__learning">
               Giới thiệu lớp tiếng Anh cho trẻ em
@@ -140,35 +139,8 @@ const DetailLearning = () => {
             </Modal>
             : ""}
         </div>
-
-        <div className="col-span-3 advertisement__source__learning">
-          <AdverDeatil />
-        </div>
-      </div>
     </div>
   )
 }
 
 export default DetailLearning
-
-{/* <table className='table__list__result'>
-
-<tbody className='body__table__result '>
-  <tr >
-    <td>{index + 1}</td>
-    <td className={checkAnswerIscorrect(item.idQuestion, item.keyQuestion)}>{item.answerUser}</td>
-    <td className='correct__text__writer'>{item.answerCorrect} </td>
-    <td>{item.isCorrect == true
-      ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
-      : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}</td>
-  </tr>
-</tbody>
-<tfoot className='border-t'>
-  <tr className='result__medium'>
-    <td>Kết quả:</td>
-    <td> </td>
-    <td><span className='font-bold'>{numTrueAnswer}/{convertValues.length}</span></td>
-    <td>Chưa đạt yêu cầu</td>
-  </tr>
-</tfoot>
-</table> */}

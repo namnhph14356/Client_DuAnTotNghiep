@@ -1,62 +1,92 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const AdverDeatil = () => {
   return (
     <div>
-      <h2 className="title__adver__source">
-        Học tiếng anh cùng evan
-      </h2>
-      <div className="price__surce__learing">
-
-        <p>
-          <i className="fa-solid fa-dollar-sign"></i>
-          1,435,500 vnd <span>
-            GÓI VOGUE PRO TRỌN ĐỜI
-          </span>
-        </p>
-        <button className='btn__cart__adver'>
-          <i className="fa-solid fa-cart-shopping"></i>
-          Thanh toán
-        </button>
+      <div className='p-4 pb-8 border shadow-lg mb-8'>
+        <div className='text-xl mb-4'>BẠN MUỐN ĐẾN PHẦN: </div>
+        <ul className='m-0 p-0 divide-y-2'>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Luyện nghe nói từ phản xạ</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Luyện từ vựng</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Luyện cấu trúc và câu</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Luyện hội thoại</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Luyện ngữ pháp</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Thi oral</NavLink></li>
+          <li className='bg-green-500 px-2 py-1'><NavLink to="" className='text-white'>Danh sách ngày học</NavLink></li>
+        </ul>
       </div>
 
-      <div className="info__adver__learning">
-        <div className="title__info__adver">
-          Kiểm tra trình độ
-        </div>
-        <div className="menu__info__adver">
-          <div className="item__menu__info__adver">
-            <h3>
-              Level 1
-            </h3>
-            <p>
-              Làm chủ bảng phiên âm IPA, nâng cao
-              vốn từ vựng, kỹ năng nghe và giao tiếp
-              được các chủ đề cơ bản
-            </p>
-          </div>
-          <div className="item__menu__info__adver">
-            <h3>
-              Level 2
-            </h3>
-            <p>
-              Luyện phản xạ nâng cao trong tiếng Anh
-              Luyện các chủ đề chuyên sâu, học thực tế:
-              1 buổi lý thuyết – 1 buổi thực hành
-              Tự tin thuyết trình bằng tiếng Anh trước đám đông
-            </p>
-          </div>
-          <div className="item__menu__info__adver">
-            <h3>
-              Level 3
-            </h3>
-            <p>
-              Chứng chỉ toeic quốc tế 500-700+
-              Nâng cao kiến thức chuyên môn
-              phục vụ trong công việc và cuộc sống
-            </p>
-          </div>
+      <div className='p-4 pb-8 border shadow-lg'>
+        <div className='text-xl mb-4'>TÙY CHỌN LỚP HỌC </div>
+        <div className='border py-4 bg-[#F8F8F8] px-4 '>
+          <div className='pb-4'>
+            <div className='font-semibold'>Chọn phần học bắt buộc:</div>
+            <form action="" className=' px-2'>
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input1" name="input1" />
+                <label htmlFor="input1">Từ vựng cơ bản</label><br />
+              </div>
 
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input2" name="input2" />
+                <label htmlFor="input2">Câu nói thông dụng</label><br />
+              </div>
+
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input3" name="input3" />
+                <label htmlFor="input3">Đàm thoại</label><br />
+              </div>
+
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input4" name="input4" />
+                <label htmlFor="input4">Ngữ pháp</label><br />
+              </div>
+            </form>
+          </div>
+          <div className='pb-4'>
+            <div className='font-semibold'>Tùy chọn bài tập:</div>
+            <div className='px-2'>
+              <div className='flex gap-2 my-1 '>
+                <span className='col-span-2 w-full my-auto'>Số ngày chọn bài: </span>
+                <span><input type="text" className='border  px-2  my-auto w-10 text-center' /></span>
+              </div>
+
+              <div className='flex gap-2 my-1'>
+                <span className='col-span-2 w-full my-auto'>Số lần lặp lại: </span>
+                <span><input type="text" className='border  px-2  my-auto w-10 text-center' /></span>
+              </div>
+
+            </div>
+          </div>
+          <div className='pb-4'>
+            <div className='font-semibold'>Chọn kì thi bắt buộc:</div>
+            <form action="" className=' px-2'>
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input1" name="input1" />
+                <label htmlFor="input1">Thi tuần</label><br />
+              </div>
+
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input2" name="input2" />
+                <label htmlFor="input2">Thi tháng</label><br />
+              </div>
+
+              <div className='flex gap-2'>
+                <input type="checkbox" id="input3" name="input3" />
+                <label htmlFor="input3">Thi quý</label><br />
+              </div>
+            </form>
+          </div>
+          <div className='pb-4'>
+            <div className='font-semibold'>Số ngày ôn Playlist:</div>
+            <div className='px-2'>
+              <div className='flex gap-2 my-1 '>
+                <span className='col-span-2 w-full my-auto'>Số ngày ôn bài: </span>
+                <span><input type="text" className='border  px-2  my-auto w-10 text-center' /></span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

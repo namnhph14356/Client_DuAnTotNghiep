@@ -117,39 +117,102 @@ const ExeWriteAndListen = () => {
   }, [convertValues, numTrueAnswer, id])
 
   return (
-    <div className="m-auto grid grid-cols-12 gap-8 mt-[70px]">
-      <div className='col-span-2'>
-        <NavDeatil />
+    <div className='pb-8 rounded-xl '>
+      <div className="w-full bg-green-500 px-4 py-2">
+        <div className='flex gap-4'>
+          <div className='my-auto'>
+            <i className="fa-solid fa-angle-left text-5xl text-white font-bold cursor-pointer"></i>
+          </div>
+          <div className='my-auto'>
+            <div className='text-xl uppercase text-white'>Luyện nghe hội thoại</div>
+            <div className='text-orange-600'>00 Điểm</div>
+          </div>
+        </div>
       </div>
-      <div className=' col-span-7 pb-8 rounded-xl '>
-        <div className='main__topic main__write__listen border'>
-          <div className="header__write__listen ">
-            <div className="title__header__write__listen">
-              <p className='font-semibold text-black text-xl uppercase'>
-                {listenWrite?.category?.title}
-              </p>
+      <nav className='text-center '>
+        <ul className='p-0 mb-0 divide-x-1  space-x-12 shadow-md'>
+          <li className='text-center py-2 px-3 inline-block border-transparent border-b-2  text-gray-500 hover:border-gray-300 hover:text-black cursor-pointer'>
+            <div><i className="fa-regular fa-pen-to-square  text-lg font-semibold"></i></div>
+            <div className='font-semibold '>Bài tập</div>
+          </li>
+          <li className='text-center py-2 px-3 inline-block border-transparent border-b-2  text-gray-500 hover:border-gray-300 hover:text-black cursor-pointer'>
+            <div><i className="fa-regular fa-comment-dots text-lg font-semibold"></i></div>
+            <div className='font-semibold '>Nghe và đọc</div>
+          </li>
+          <li className='text-center py-2 px-3 inline-block border-transparent border-b-2  text-gray-500 hover:border-gray-300 hover:text-black cursor-pointer'>
+            <div><i className="fa-sharp fa-solid fa-pencil  text-lg font-semibold"></i></div>
+            <div className='font-semibold '>Ghi chú</div>
+          </li>
+          <li className='text-center py-2 px-3 inline-block border-transparent border-b-2  text-gray-500 hover:border-gray-300 hover:text-black cursor-pointer'>
+            <div><i className="fa-solid fa-comment text-lg font-semibold"></i></div>
+            <div className='font-semibold '>Hỏi đáp</div>
+          </li>
+        </ul>
+      </nav>
+
+      <div className='main__topic main__write__listen border py-8 px-4 '>
+        <div className='px-4 pb-8'>
+          <audio
+            className='w-full rounded-none'
+            controls
+            src={listenWrite?.audio}>
+            Your browser does not support the
+            <code>audio</code> element.
+          </audio>
+        </div>
+        <div className='mx-4 my-8 p-8 rounded-xl border shadow-md'>
+          <div className=' text-lg'>
+            <div><i className="fa-solid fa-pen"></i> Nghe và trả lời câu hỏi.</div>
+          </div>
+          <div className='divide-y-2 divide-dotted'>
+            <div className='py-4'>
+              <div className='text-base font-medium'>1. What was Dave suffering from?</div>
+              <ul className='pl-5 mb-0'>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+              </ul>
             </div>
-            {check == true ?
-              <div className="btn__next_exe" >
-                <NavLink to={`/learning/detailLearning/${id}`} className="text-white hover:text-white">
-                  <button >
-                    Tiếp tục
-                  </button>
-                </NavLink>
-              </div>
-              : ""
-            }
+            <div className='py-4'>
+              <div className='text-base font-medium'>1. What was Dave suffering from?</div>
+              <ul className='pl-5 mb-0'>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+                <li className='flex gap-2'>
+                  <input className='' type="radio" name="radio1" id="radio1" />
+                  <label className='align-middle mt-[-1px]' htmlFor="radio1"> He had a headache.</label>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className='info__write__listen px-8'>
-            <p><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</p>
-          </div>
-          <div className="audio__listen px-8">
-            <audio
-              controls
-              src={listenWrite?.audio}>
-              Your browser does not support the
-              <code>audio</code> element.
-            </audio>
+        </div>
+
+        <div className='mx-4 my-8 p-8 rounded-xl border shadow-md'>
+          <div className='mb-8 text-lg'>
+            <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
           </div>
           <form onSubmit={handleSubmit(onSubmit2)}  >
             <div className="content">
@@ -171,14 +234,15 @@ const ExeWriteAndListen = () => {
 
                   return (
 
-                    <p key={index + 1} className="hover:cursor-pointer grid grid-cols-8 gap-4 "  >
-                      <div className='col-span-1 space-x-2'>
-                        <strong >{item.question.name}:</strong>
-                        {/* <button type="button" onClick={cancel}> Pause</button> */}
-                        <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 0.4, pitch: 1, voice: voices[2] })}><i className="fa-solid fa-volume-low"></i></span>
-                        <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: voices[2] })}><i className="fa-solid fa-volume-high"></i></span>
+                    <p key={index + 1} className="hover:cursor-pointer flex gap-8 w-full"  >
+                      {/* <div className=' whitespace-nowrap'> */}
+                      <div className='flex justify-between gap-4 '>
+                        <strong>{item.question.name}:</strong>
+                        {/* <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 0.4, pitch: 1, voice: voices[2] })}><i className="fa-solid fa-volume-low"></i></span> */}
+                        <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: voices[2] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
                       </div>
-                      <span className='col-span-7'>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
+                      {/* </div> */}
+                      <span className=''>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
                       {/* {item.question.text && <div className="text-sm text-danger" style={{ color: "red" }}>{errors[`inputAnswer-${item.question._id}-${index + 1}`]?.message}</div>} */}
                     </p>
                   )
@@ -187,90 +251,89 @@ const ExeWriteAndListen = () => {
 
             </div>
 
-            <div className="btn__Check__answer" >
-              <button >
-                Kiểm tra
-              </button>
-            </div>
+
 
           </form>
-
         </div>
-        <div>
-          {/* check result */}
-          {
-            check == true ?
-              <div className="answer__result">
-                <p>
-                  <i className="fa-solid fa-medal"></i>
-                  Bạn đã trả lời đúng : {numTrueAnswer}/{convertValues.length}
-                </p>
-                <button className='btn__detail__result' onClick={() => listDetailAnswer()}>
-                  Xem chi tiết
-                </button>
-              </div>
-              : ""
-          }
-          {/* listed result */}
 
-          {checkDetailAnswer == true ?
-
-            <Modal title="Kết quả bài kiểm tra" visible={checkDetailAnswer} onOk={handleOk} onCancel={handleCancel} width={'60%'} >
-              <Collapse defaultActiveKey={['1']} style={{ width: "100%", borderBottom: "1px solid #d9d9d9" }} >
-                <div>
-                  <div className="conversation__box">
-                    <table className='table__list__result'>
-                      <thead>
-                        <tr>
-                          <th className='m-auto'>
-                            .......
-                          </th>
-                          <th className='m-auto'>
-                            Câu trả lời của bạn
-                          </th>
-                          <th className='m-auto'>
-                            Câu trả lời chính xác
-                          </th>
-                          <th>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className='body__table__result '>
-
-                        {convertValues?.map((item, index) => {
-                          return (
-                            <tr key={index + 1}>
-                              <td>{index + 1}</td>
-                              <td className={checkAnswerIscorrect(item.idQuestion, item.keyQuestion)}>{item.answerUser}</td>
-                              <td className='correct__text__writer'>{item.answerCorrect} </td>
-                              <td>{item.isCorrect == true
-                                ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
-                                : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}</td>
-                            </tr>
-                          )
-                        })
-                        }
-
-                      </tbody>
-                      <tfoot className='border-t'>
-                        <tr className='result__medium'>
-                          <td>Kết quả:</td>
-                          <td> </td>
-                          <td><span className='font-bold'>{numTrueAnswer}/{convertValues.length}</span></td>
-                          <td>Chưa đạt yêu cầu</td>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div>
-                </div>
-              </Collapse>
-            </Modal>
-
-            : ""}
-        </div>
+        <div className="btn__Check__answer" >
+        <button >
+          Kiểm tra
+        </button>
       </div>
-      <div className="col-span-3  advertisement__source__learning">
-        <AdverDeatil />
+      </div>
+     
+      <div>
+        {/* check result */}
+        {
+          check == true ?
+            <div className="answer__result">
+              <p>
+                <i className="fa-solid fa-medal"></i>
+                Bạn đã trả lời đúng : {numTrueAnswer}/{convertValues.length}
+              </p>
+              <button className='btn__detail__result' onClick={() => listDetailAnswer()}>
+                Xem chi tiết
+              </button>
+            </div>
+            : ""
+        }
+        {/* listed result */}
+
+        {checkDetailAnswer == true ?
+
+          <Modal title="Kết quả bài kiểm tra" visible={checkDetailAnswer} onOk={handleOk} onCancel={handleCancel} width={'60%'} >
+            <Collapse defaultActiveKey={['1']} style={{ width: "100%", borderBottom: "1px solid #d9d9d9" }} >
+              <div>
+                <div className="conversation__box">
+                  <table className='table__list__result'>
+                    <thead>
+                      <tr>
+                        <th className='m-auto'>
+                          .......
+                        </th>
+                        <th className='m-auto'>
+                          Câu trả lời của bạn
+                        </th>
+                        <th className='m-auto'>
+                          Câu trả lời chính xác
+                        </th>
+                        <th>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className='body__table__result '>
+
+                      {convertValues?.map((item, index) => {
+                        return (
+                          <tr key={index + 1}>
+                            <td>{index + 1}</td>
+                            <td className={checkAnswerIscorrect(item.idQuestion, item.keyQuestion)}>{item.answerUser}</td>
+                            <td className='correct__text__writer'>{item.answerCorrect} </td>
+                            <td>{item.isCorrect == true
+                              ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
+                              : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}</td>
+                          </tr>
+                        )
+                      })
+                      }
+
+                    </tbody>
+                    <tfoot className='border-t'>
+                      <tr className='result__medium'>
+                        <td>Kết quả:</td>
+                        <td> </td>
+                        <td><span className='font-bold'>{numTrueAnswer}/{convertValues.length}</span></td>
+                        <td>Chưa đạt yêu cầu</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </Collapse>
+          </Modal>
+
+          : ""}
       </div>
     </div>
   )

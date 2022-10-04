@@ -56,6 +56,7 @@ import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
+import LearningLayout from './pages/layouts/LearningLayout';
 
 
 function App() {
@@ -67,14 +68,19 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
-            <Route path="detailLearning">
+
+            {/* <Route path='learning2' >
+              <Route index element={<ExeWriteAndListen />} />
+            </Route> */}
+
+            <Route path="detailLearning" element={<LearningLayout />}>
               <Route path=":id" element={<DetailLearning />} />
               <Route path=":id/quiz2" element={<ExeQuiz />} />
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
-              <Route path='grammar' element={<Grammar />}/>
-              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/>
+              <Route path='grammar' element={<Grammar />} />
+              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />} />
             </Route>
           </Route>
 

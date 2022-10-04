@@ -30,7 +30,7 @@
 }
 
 .content{
-  @apply   py-[20px] px-8 rounded;
+  @apply   rounded;
 }
 
 /* .conversation__box {

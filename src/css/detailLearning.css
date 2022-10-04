@@ -10,7 +10,7 @@
   padding: 20px
 }
 .box__deatil__learning__main{
-  @apply grid grid-cols-12 gap-8 w-10/12 m-auto mt-[70px] 
+  @apply grid grid-cols-12 gap-8 w-10/12 mt-[70px] 
 }
 
 .header__learning_box {
