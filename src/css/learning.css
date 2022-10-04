@@ -45,13 +45,13 @@
   @apply ml-[50px] text-[red] 
 }
 .btn__learning__statistical{
-  @apply mr-[50px] mt-[30px]
+  @apply  mt-[30px]
 }
 .btn__start__statistical{
-  @apply bg-[#3dae48] px-8 font-semibold py-1 text-white mr-3
+  @apply bg-indigo-600 px-8 font-semibold py-1 text-white mr-3
 }
 .btn__exam__statistical{
-  @apply bg-[#3dae48] px-8 font-semibold py-1 text-white
+  @apply bg-indigo-600 px-8 font-semibold py-1 text-white
 }
 .box__buy__source{
   @apply col-span-3 p-2 text-center max-h-[200px]
