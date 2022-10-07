@@ -39,8 +39,7 @@
 
 .inp__text {
   border-bottom: 1px solid #000;
-  outline: none;
-  padding-left: 30px;
+  @apply bg-slate-100 text-center outline-none
 }
 .inp__text:focus {
   border-color: #3498db;
@@ -55,13 +54,16 @@
 }
 
 .btn__Check__answer {
-  @apply my-4 text-center;
+  @apply my-4 space-x-8 text-center;
 }
 .btn__Check__answer button {
   @apply bg-[#ccc] text-[#fff] py-[5px] px-[70px] rounded-md;
 }
 .btn__Check__answer button {
-   background: linear-gradient(to right,#17ead9 0,#6078ea 100%);;
+  @apply bg-indigo-600 text-white
+}
+.btn__Check__answer button:hover {
+  @apply bg-indigo-400 text-black
 }
 
 .btn__next_exe {
@@ -81,16 +83,17 @@
 
 .text__result__wrong {
   outline: none;
-  padding-left: 30px;
-  color: #a93226;
+  background: #FBE1DB;
   font-weight: 600;
+  border: none;
   text-decoration: line-through;
 }
 .text__result__correct {
   outline: none;
-  padding-left: 30px;
-  color: #2e86c1;
+  border: none;
+  background: #CCF0A5;
   font-weight: 600;
+  text-decoration: line-through;
 }
 .answer__result {
   @apply text-center mt-[47px] rounded-lg py-[20px];
