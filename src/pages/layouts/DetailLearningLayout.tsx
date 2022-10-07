@@ -2,7 +2,6 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import ChooseClass from '../../components/AdverDeatil/ChooseClass'
 import MenuAdverDeatil from '../../components/AdverDeatil/MenuAdverDeatil'
-import ExeWriteAndListen from '../ExeWriteAndListen'
 
 const DetailLearningLayout = () => {
   return (

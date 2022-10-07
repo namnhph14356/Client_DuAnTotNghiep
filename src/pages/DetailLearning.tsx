@@ -19,7 +19,7 @@ const DetailLearning = () => {
           </h3>
           <div className="list__main__learning">
             <div>
-              <NavLink to={'/learning/detailLearning/:id/speak'}>
+              <NavLink to={'/learning/detailLearning/:id/speak/startUp'}>
                 <div className="item__list__learning">
                   <div className="info__item__list">
                     <div>
@@ -27,7 +27,7 @@ const DetailLearning = () => {
                     </div>
                     <div>
                       <h4 className="title__info__item">
-                        Luyện nghe nói
+                        Luyện nghe nói phản xạ
                       </h4>
                       <p>
                         00 điểm |<span> bắt buộc</span>
@@ -41,7 +41,7 @@ const DetailLearning = () => {
               </NavLink>
             </div>
             <div>
-              <NavLink to={'/learning/detailLearning/:id/vocabulary'}>
+              <NavLink to={'/learning/detailLearning/:id/vocabulary/lesson'}>
                 <div className="item__list__learning">
                   <div className="info__item__list">
                     <div>
@@ -63,7 +63,7 @@ const DetailLearning = () => {
               </NavLink>
             </div>
             <div>
-              <NavLink to={'/learning/detailLearning/:id/grammar'}>
+              <NavLink to={'/learning/detailLearning/:id/sentences/lesson'}>
                 <div className="item__list__learning">
                   <div className="info__item__list">
                     <div>
@@ -71,7 +71,7 @@ const DetailLearning = () => {
                     </div>
                     <div>
                       <h4 className="title__info__item">
-                        Luyện cấu trúc câu
+                        Luyện cấu trúc & câu
                       </h4>
                       <p>
                         00 điểm |<span> bắt buộc</span>
@@ -85,7 +85,7 @@ const DetailLearning = () => {
               </NavLink>
             </div>
             <div>
-              <NavLink to={'/learning/detailLearning/:id/conversation'}>
+              <NavLink to={'/learning/detailLearning/:id/conversation/listenWrite'}>
                 <div className="item__list__learning">
                   <div className="info__item__list">
                     <div>
@@ -107,7 +107,7 @@ const DetailLearning = () => {
               </NavLink>
             </div>
             <div>
-              <NavLink to={'/learning/detailLearning/:id/grammar'}>
+              <NavLink to={'/learning/detailLearning/:id/grammar/lesson'}>
                 <div className="item__list__learning">
                   <div className="info__item__list">
                     <div>
