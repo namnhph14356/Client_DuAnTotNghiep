@@ -19,6 +19,9 @@
 .list__main__learning{
   @apply divide-y
 }
+.list__main__learning div{
+  @apply hover:bg-slate-100 px-1 rounded
+}
 .title__detail__main{
   @apply text-indigo-600 text-xl
 }
