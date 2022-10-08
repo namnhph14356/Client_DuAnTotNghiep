@@ -208,7 +208,7 @@ function App() {
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
 
-        <Route path='sigin' element={<SignIn />}> </Route>
+        <Route path='signin' element={<SignIn />}> </Route>
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
