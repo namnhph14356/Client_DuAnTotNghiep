@@ -359,6 +359,8 @@ a:active {
   }
 }
 
+/* and header */
+
 .probootstrap-intro .probootstrap-subtitle {
   max-width: 500px;
   margin: 0 auto;
@@ -558,6 +560,8 @@ a:active {
   color: #ffffff;
   border: 1px solid #6078EA;
 }
+
+/* home page */
 
 .probootstrap-section {
   padding: 4em 0 7em 0;
@@ -782,6 +786,9 @@ a:active {
   line-height: 1.65;
 }
 
+
+/* footer  */
+
 .probootstrap-footer {
   padding: 7em 0 2em 0;
   background: #ecedee;
@@ -953,6 +960,8 @@ a:active {
   margin-right: 20px;
 }
 
+
+/* and */
 .link-with-icon i {
   position: relative;
   top: 2px;

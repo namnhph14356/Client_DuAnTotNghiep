@@ -58,6 +58,10 @@ import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
 import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
+import Vocabulary from './pages/Vocabulary';
+import ConversationPage from './pages/ConversationPage';
+import ExercisePage from './pages/ExercisePage';
+import SignIn from './pages/Login';
 
 
 function App() {
@@ -70,13 +74,21 @@ function App() {
           <Route path="learning">
             <Route index element={<Learning />} />
             <Route path="detailLearning">
-              <Route path=":id" element={<DetailLearning />} />
-              <Route path=":id/quiz2" element={<ExeQuiz />} />
+              <Route index element={<DetailLearning />} />
+              <Route path='speak' element={<SpeakingPage />} />
+              <Route path='vocabulary' element={<Vocabulary />} />
+              <Route path='grammar' element={<Grammar />} />
+              <Route path='conversation' element={<ConversationPage />} />
+              <Route path='exercise' element={<ExercisePage />} />
+              {/* <Route path='writeAndListen' element={<ExeWriteAndListen />} /> */}
+
+              {/* <Route path=":id" element={<DetailLearning />} /> */}
+              {/* <Route path=":id/quiz2" element={<ExeQuiz />} />
               <Route path=':id/speak' element={<SpeakingPage />} />
               <Route path=':id/quiz' element={<QuizPage />} />
               <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
               <Route path='grammar' element={<Grammar />}/>
-              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/>
+              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/> */}
             </Route>
           </Route>
 
@@ -159,8 +171,8 @@ function App() {
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
 
-        <Route path='/login' element={<Login />}> </Route>
-        <Route path='/register' element={<SignUp />}></Route>
+        <Route path='sigin' element={<SignIn />}> </Route>
+        <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
         <Route path='/welcome' element={<Welcome />}></Route>
