@@ -10,7 +10,7 @@ import Learning from './pages/Learning';
 import DetailLearning from './pages/DetailLearning';
 import FileUser from './pages/FileUser';
 import SignUp from './pages/SignUp';
-import ExeWriteAndListen from './pages/ExeWriteAndListen';
+import ExeWriteAndListen from './containers/Conversation/ExeWriteAndListen';
 import Login from './pages/Login';
 import ListUser from './pages/admin/Auth/listUser';
 import AddUser from './pages/admin/Auth/AddUser';
@@ -44,7 +44,6 @@ import FileTeacher from './pages/fileTeacher/FileTeacher';
 import TeacherPage from './pages/TeacherPage';
 import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
 import CoursePage from './pages/CoursePage';
-import SpeakingPage from './pages/speaking';
 import QuizPage from './pages/QuizPage';
 import ListContact from './pages/admin/contact/ListContact';
 import EditContact from './pages/admin/contact/EditContact';
@@ -58,11 +57,26 @@ import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
 import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
+
 import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
 import SignIn from './pages/Login';
 
+import DetailLearningLayout from './pages/layouts/DetailLearningLayout';
+import SpeakingPage from './pages/speaking';
+import ExeListenAndRead from './containers/Conversation/ExeListenAndRead';
+import Note from './containers/Note';
+import QuestionAnswer from './containers/QuestionAnswer';
+import StartUp from './containers/Speak/StartUp';
+import LessonVocabulary from './containers/Vocabulary/LessonVocabulary';
+import ExerciseVocabulary from './containers/Vocabulary/ExerciseVocabulary';
+import LessonGrammar from './containers/Grammar/LessonGrammar';
+import ExerciseGrammar from './containers/Grammar/ExerciseGrammar';
+import Sentences from './pages/Sentences';
+import LessonSentences from './containers/Sentences/LessonSentences';
+import ExerciseSentences from './containers/Sentences/ExerciseSentences';
+import ExamSentences from './containers/Sentences/ExamSentences';
 
 function App() {
   return (
@@ -75,20 +89,44 @@ function App() {
             <Route index element={<Learning />} />
             <Route path="detailLearning">
               <Route index element={<DetailLearning />} />
-              <Route path='speak' element={<SpeakingPage />} />
-              <Route path='vocabulary' element={<Vocabulary />} />
-              <Route path='grammar' element={<Grammar />} />
-              <Route path='conversation' element={<ConversationPage />} />
-              <Route path='exercise' element={<ExercisePage />} />
-              {/* <Route path='writeAndListen' element={<ExeWriteAndListen />} /> */}
+              <Route path=':id' element={<DetailLearningLayout />}>
 
-              {/* <Route path=":id" element={<DetailLearning />} /> */}
-              {/* <Route path=":id/quiz2" element={<ExeQuiz />} />
-              <Route path=':id/speak' element={<SpeakingPage />} />
-              <Route path=':id/quiz' element={<QuizPage />} />
-              <Route path=':id/writeAndListen' element={<ExeWriteAndListen />} />
-              <Route path='grammar' element={<Grammar />}/>
-              <Route path='exerciseDaily' element={<ExerciseVocabAndGrammar />}/> */}
+                <Route path='speak' element={<SpeakingPage />}>
+                  <Route path='startUp' element={<StartUp />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+                </Route>
+
+                <Route path='vocabulary' element={<Vocabulary />}>
+                  <Route path='lesson' element={<LessonVocabulary />} />
+                  <Route path='exercise' element={<ExerciseVocabulary />} />
+                  <Route path='note' element={<Note />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+                </Route>
+
+                <Route path='sentences' element={<Sentences />}>
+                  <Route path='lesson' element={<LessonSentences />} />
+                  <Route path='exercise' element={<ExerciseSentences />} />
+                  <Route path='exam' element={<ExamSentences />} />
+                  <Route path='note' element={<Note />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+                </Route>
+
+                <Route path='conversation' element={<ConversationPage />}>
+                  <Route path='listenWrite' element={<ExeWriteAndListen />} />
+                  <Route path='listenRead' element={<ExeListenAndRead />} />
+                  <Route path='note' element={<Note />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+                </Route>
+
+                <Route path='grammar' element={<Grammar />}>
+                  <Route path='lesson' element={<LessonGrammar />} />
+                  <Route path='exercise' element={<ExerciseGrammar />} />
+                  <Route path='note' element={<Note />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+                </Route>
+
+                <Route path='exercise' element={<ExercisePage />} />
+              </Route>
             </Route>
           </Route>
 

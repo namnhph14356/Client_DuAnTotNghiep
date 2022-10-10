@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate, useRoutes } from 'react-router-dom'
 import { logout } from '../features/Slide/auth/authSlide';
 import { message, Modal } from "antd";
-// import '../css/header.css';
 import { useDispatch, useSelector } from 'react-redux';
 const navigation = [
   { name: 'Học thử', to: '/learning' },
@@ -23,18 +22,11 @@ const HeaderComponent = () => {
       message.success("Đăng xuất thành công !")
     }
   }
-  console.log(user);
-
-  // const getUser = async (id) => {
-  //     const {payload} = await dispath(getUser(id))
-  //     console.log(payload);
-  // }
-
 
   return (
     <div className="relative bg-gray-50">
       <header className="bg-indigo-600">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
+        <nav className="mx-auto w-10/12 " aria-label="Top">
           <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">

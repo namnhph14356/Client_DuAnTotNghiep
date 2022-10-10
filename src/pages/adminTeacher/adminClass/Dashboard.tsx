@@ -7,7 +7,7 @@ const Dashboard = (props) => {
   return (
     <div>
       <Row>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} className="p-2">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ const Dashboard = (props) => {
             </div>
           </Card>
         </Col>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} className="p-2">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +71,7 @@ const Dashboard = (props) => {
             </div>
           </Card>
         </Col>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} className="p-2">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

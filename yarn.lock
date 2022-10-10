@@ -1978,6 +1978,16 @@
     protobufjs "^7.0.0"
     yargs "^16.2.0"
 
+"@headlessui/react@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.3.tgz#853c598ff47b37cdd192c5cbee890d9b610c3ec0"
+  integrity sha512-LGp06SrGv7BMaIQlTs8s2G06moqkI0cb0b8stgq7KZ3xcHdH3qMP+cRyV7qe5x4XEW/IGY48BW4fLesD6NQLng==
+
+"@heroicons/react@^2.0.11":
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.12.tgz#7e5a16c82512f89a30266dd36f8b8465b3e3e216"
+  integrity sha512-FZxKh3i9aKIDxyALTgIpSF2t6V6/eZfF5mRu41QlwkX3Oxzecdm1u6dpft6PQGxIBwO7TKYWaMAYYL8mp/EaOg==
+
 "@hookform/resolvers@^2.9.5":
   version "2.9.8"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.9.8.tgz#9af51d15602f3c6e3249714712d8275564e65b72"
@@ -2006,6 +2016,25 @@
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
+
+"@iconify/icons-heroicons-outline@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-heroicons-outline/-/icons-heroicons-outline-1.2.4.tgz#a812c5c03c19275c4880e40a0036e011dc270c64"
+  integrity sha512-gF/mu0F5KFo6zFYPc09HWyAsquvFe16NnnY17/bXleGFXWahYhpbEpOVC1bQvMELWERbnw8+sZ7RhjTLXbQeeQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/icons-heroicons-solid@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-heroicons-solid/-/icons-heroicons-solid-1.2.5.tgz#f8e969ee4186a99566818a96151e7c8a35a95ff9"
+  integrity sha512-IWwmiiZJApJnZuTieYrQahHGEHkGZqSLwwU8nqSgPbmYkmLCgvzn2Q59VCeryFKounzCJydWTBAlT0u8rcXLzA==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify/types@*":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
+  integrity sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -9048,6 +9077,13 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
+hashicon@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/hashicon/-/hashicon-0.3.0.tgz#e7dcd69b8e30dd9d67929f87be4d06e2fdef0951"
+  integrity sha512-rgwUbayXUspgn4Lgmw1FGLvGoqYxesRYwQPuG3sRhyqB5RQ2E1rz97MpmO+raOK9yoVZqVElarc/AzZTnAAadw==
+  dependencies:
+    js-sha3 "^0.8.0"
+
 hast-to-hyperscript@^9.0.0:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/hast-to-hyperscript/-/hast-to-hyperscript-9.0.1.tgz#9b67fd188e4c81e8ad66f803855334173920218d"
@@ -9120,6 +9156,11 @@ he@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+
+heroicons-react@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/heroicons-react/-/heroicons-react-1.4.1.tgz#52f88a7a178b3ebaaa488da87ead631c13d99846"
+  integrity sha512-lFB8N44eeju73p5IjaeRrRejXsWWjsmeLK1LQrXGI5UnV9qvkzk2VZoMx5HKLnp1xJI4i9pFh/g2uRc7M1jrjQ==
 
 hex-color-regex@^1.1.0:
   version "1.1.0"
@@ -10719,6 +10760,11 @@ js-sdsl@^4.1.4:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/js-sdsl/-/js-sdsl-4.1.5.tgz#1ff1645e6b4d1b028cd3f862db88c9d887f26e2a"
   integrity sha512-08bOAKweV2NUC1wqTtf3qZlnpOX/R2DU9ikpjOHs0H+ibQv3zpncVQg6um4uYtRtrwIX8M4Nh3ytK4HGlYAq7Q==
+
+js-sha3@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
 js-string-escape@^1.0.1:
   version "1.0.1"
@@ -14616,6 +14662,11 @@ redent@^3.0.0:
   dependencies:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
+
+redux-persist@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-6.0.0.tgz#b4d2972f9859597c130d40d4b146fecdab51b3a8"
+  integrity sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
 
 redux-thunk@^2.4.1:
   version "2.4.1"

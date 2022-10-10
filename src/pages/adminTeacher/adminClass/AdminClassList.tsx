@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import {
   Button,
   Card,
@@ -7,47 +6,87 @@ import {
   Form,
   Input,
   Modal,
+  notification,
   Row,
   Select,
   Table,
-  Tag,
   Typography,
 } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-const {Option} = Select;
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getClassById } from "../../../api/class";
+import { getListUser } from "../../../api/user";
+import {
+  createClass,
+  getClassByIdSlide,
+  getListClass,
+  removeClasses,
+  updateClass,
+} from "../../../features/Slide/class/classSlice";
+const { Option } = Select;
 const AdminClassList = (props) => {
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      ageRange: 32,
-      numberOfStudents: 32,
-      lever: 3,
-    },
-    {
-      key: "2",
-      name: "John",
-      ageRange: 42,
-      numberOfStudents: 32,
-      lever: 5,
-    },
-  ];
+  const dispatch = useDispatch();
+  const { listClass } = useSelector((state: any) => state.class);
+  const [idUpdate, setIdUpdate] = useState("");
+  const [objectUpdate, setObjectUpdate] = useState({});
+
+  const onUpdateClass = async (data) => {
+    
+    const { data: dataUp } = await getClassById(data._id);
+    if (dataUp && dataUp.class) {
+      setObjectUpdate({
+        ...dataUp.class,
+        userOfClass: dataUp.class.userOfClass.map((key) => ({
+          value: key.userId._id,
+          label: key.userId.username,
+        })),
+      });
+      setIsShowModal(true);
+      setIdUpdate(data._id);
+    }
+  };
+
+  const onRemove = (id: string) => {
+    dispatch(removeClasses(id)).then((res) => {
+      if (res) {
+        notification["success"]({
+          message: "Xoá lớp học thành công",
+        });
+      } else {
+        notification["error"]({
+          message: "Xoá lớp học thất bại",
+        });
+      }
+    });
+  };
+
+  const onRemoveClass = (id: string) => {
+    Modal.confirm({
+      title: "Bạn có muốn xoá lớp học không?",
+      icon: <ExclamationCircleOutlined />,
+      content: "Nếu xoá lớp học, bạn sẽ không thể hoàn tác lại lớp học",
+      okText: "Đồng ý",
+      cancelText: "Huỷ",
+      onOk: () => onRemove(id),
+    });
+  };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "nameClass",
+      dataIndex: "nameClass",
+      key: "nameClass",
     },
     {
-      title: "Age range",
-      dataIndex: "ageRange",
-      key: "ageRange",
+      title: "Link Join Class",
+      dataIndex: "linkJoinClass",
+      key: "linkJoinClass",
     },
     {
       title: "Number of Students",
       dataIndex: "numberOfStudents",
       key: "numberOfStudents",
+      render: (row, item) => `${item?.userOfClass?.length} student`,
     },
     {
       title: "Lever",
@@ -60,7 +99,7 @@ const AdminClassList = (props) => {
       key: "action",
       render: (row, item) => (
         <div className="d-flex">
-          <button>
+          <button onClick={() => onUpdateClass(item)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -76,7 +115,7 @@ const AdminClassList = (props) => {
               />
             </svg>
           </button>
-          <button>
+          <button onClick={() => onRemoveClass(item._id)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -101,15 +140,76 @@ const AdminClassList = (props) => {
 
   const onCloseAdd = () => {
     setIsShowModal(false);
+    setIdUpdate("");
+    setObjectUpdate({});
   };
 
-  const onAddClass = () => {};
+  const onAddClass = (value) => {
+    if (idUpdate !== "") {
+      value.userOfClass = value.userOfClass.map((item) => ({
+        userId: item?.userId?.value ? item?.userId?.value : item,
+        timeJoinClass: new Date(),
+      }));
+      dispatch(updateClass({ ...value, _id: idUpdate })).then((res) => {
+        if (res) {
+          notification["success"]({
+            message: "Cập nhật lớp học thành công",
+          });
+        } else {
+          notification["error"]({
+            message: "Cập nhật lớp học thất bại",
+          });
+        }
+      });
+    } else {
+      value.userOfClass = value.userOfClass.map((item) => ({
+        userId: item,
+        timeJoinClass: new Date(),
+      }));
+      dispatch(createClass(value)).then((res) => {
+        if (res) {
+          notification["success"]({
+            message: "Thêm mới lớp học thành công",
+          });
+        } else {
+          notification["error"]({
+            message: "Thêm mới lớp học thất bại",
+          });
+        }
+      });
+    }
+
+    setIsShowModal(false);
+  };
+  const [options, setOption] = useState<any[]>([]);
+  const getDataUser = async () => {
+    const { data } = await getListUser();
+    if (data && data.length > 0) {
+      setOption(
+        data.map((item: any) => ({
+          label: item.username,
+          value: item._id,
+        }))
+      );
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getListClass());
+    getDataUser();
+  }, []);
+
+  let totalStudent = 0;
+
+  if (listClass && listClass.length > 0) {
+    listClass.forEach((item) => (totalStudent += item.userOfClass.length));
+  }
 
   return (
     <div>
       {isShowModal && (
         <Modal
-          title="Create a new Class"
+          title={idUpdate !== "" ? "Update a Class" : "Create a new Class"}
           centered
           visible={isShowModal}
           onOk={onAddClass}
@@ -119,37 +219,64 @@ const AdminClassList = (props) => {
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            initialValues={objectUpdate}
             onFinish={onAddClass}
             autoComplete="off"
           >
             <Form.Item
               label="Class Name"
-              name="classname"
+              labelAlign="left"
+              name="nameClass"
               rules={[
-                { required: true, message: "Please input your classname!" },
+                { required: true, message: "Please input your name Class!" },
               ]}
             >
               <Input />
             </Form.Item>
-
             <Form.Item
-              label="Lever"
-              name="lever"
+              label="Link join class"
+              name="linkJoinClass"
+              labelAlign="left"
               rules={[
-                { required: true, message: "Please input your Lever!" },
+                {
+                  required: true,
+                  message: "Please input your Link join class!",
+                },
               ]}
             >
-              <Select
-                defaultValue="lucy"
-                style={{ width: '100%' }}
-              >
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
-                <Option value="disabled" disabled>
-                  Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="User Of Class"
+              labelAlign="left"
+              name="userOfClass"
+              rules={[
+                { required: true, message: "Please input your User Of Class!" },
+              ]}
+            >
+              {options && options.length > 0 && (
+                <Select
+                  mode="multiple"
+                  style={{ width: "100%" }}
+                  placeholder="Chọn user vào lớp học"
+                  options={options}
+                />
+              )}
+            </Form.Item>
+            <Form.Item
+              label="Lever"
+              labelAlign="left"
+              name="lever"
+              rules={[{ required: true, message: "Please input your Lever!" }]}
+            >
+              <Select placeholder="Chọn lever" style={{ width: "100%" }}>
+                <Option value="Beginner">Beginner </Option>
+                <Option value="High Beginner">High Beginner</Option>
+                <Option value="Low Intermediate">Low Intermediate</Option>
+                <Option value="Intermediate">Intermediate</Option>
+                <Option value="High Intermediate">High Intermediate</Option>
+                <Option value="Low Advanced">Low Advanced</Option>
+                <Option value="Advanced">Advanced</Option>
               </Select>
             </Form.Item>
 
@@ -162,7 +289,7 @@ const AdminClassList = (props) => {
         </Modal>
       )}
       <Row>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} className="p-2">
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +305,7 @@ const AdminClassList = (props) => {
               TOTAL NUMBER OF CLASSES
             </Typography.Title>
             <Typography.Title level={2} className="m-0 ">
-              1
+              {listClass?.length}
             </Typography.Title>
             <div className="flexBox-dash">
               <svg
@@ -194,7 +321,7 @@ const AdminClassList = (props) => {
             </div>
           </Card>
         </Col>
-        <Col xs={4} sm={4} md={4} lg={4} xl={4} className="p-2">
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -210,7 +337,7 @@ const AdminClassList = (props) => {
               TOTAL NUMBER OF STUDENTS
             </Typography.Title>
             <Typography.Title level={2} className="m-0 ">
-              60
+              {totalStudent}
             </Typography.Title>
             <div className="flexBox-dash">
               <svg
@@ -227,19 +354,24 @@ const AdminClassList = (props) => {
           </Card>
         </Col>
       </Row>
-      <div className="p-2 d-flex">
-        <Input
-          style={{ width: "20%" }}
-          placeholder="Search with class name"
-          prefix={<SearchOutlined className="site-form-item-icon" />}
-        />
-        <Button type="primary" onClick={onShowAdd} className="ms-2">
-          Create a new class
-        </Button>
-      </div>
+
       <div className="p-2">
-        <Typography.Title level={3}>Quản lý lớp học</Typography.Title>
-        <Table dataSource={dataSource} columns={columns} />
+        <div className="d-flex align-items-center justify-between">
+          <Typography.Title className="m-0 py-2" level={3}>
+            Quản lý lớp học
+          </Typography.Title>
+          <div className="py-2 d-flex">
+            <Input
+              style={{ width: "80%" }}
+              placeholder="Search with class name"
+              prefix={<SearchOutlined className="site-form-item-icon" />}
+            />
+            <Button type="primary" onClick={onShowAdd} className="ms-2">
+              Create a new class
+            </Button>
+          </div>
+        </div>
+        <Table dataSource={listClass} columns={columns} />
       </div>
     </div>
   );

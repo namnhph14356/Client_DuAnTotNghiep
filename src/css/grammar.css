@@ -1,11 +1,10 @@
 .grammar__page{
-    @apply w-8/12 m-auto grid grid-cols-12 gap-5 mt-3
 }
 .main__grammar__page{
     @apply col-span-9
 }
 .content__grammar{
-     @apply shadow px-5 py-2 mt-3
+     @apply shadow px-8 py-4 
 }
 .title__content__grammar{
     @apply text-center font-medium text-xl

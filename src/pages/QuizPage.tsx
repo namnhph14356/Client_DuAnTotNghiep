@@ -23,7 +23,6 @@ import { addUserQuiz } from '../api/userQuiz';
 import { addHistory, detailHistory } from '../api/history';
 import { HistoryType } from '../types/history';
 
-import AdverDeatil from '../components/AdverDeatil';
 import NavDeatil from '../components/NavDeatil';
 import TimeLimitCountdown from '../components/TimeLimitCountdown';
 import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
@@ -712,7 +711,7 @@ const QuizPage = () => {
                 </div>
 
                 <div className="col-span-3  advertisement__source__learning">
-                    <AdverDeatil />
+                    
                 </div>
             </div>
 

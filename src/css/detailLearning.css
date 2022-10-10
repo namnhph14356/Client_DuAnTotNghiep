@@ -1,8 +1,11 @@
 .detail__learning__page{
-  @apply w-8/12 m-auto grid grid-cols-12 mt-3
+  @apply w-10/12 m-auto grid grid-cols-12 gap-8 my-8
 }
 .content__detail__learning{
-  @apply col-span-8 grid grid-cols-2 gap-4 shadow px-3 py-2
+  @apply col-span-9 grid grid-cols-2 gap-4 shadow px-8 py-4
+}
+.setting__detail__learning{
+  @apply col-span-3 
 }
 .content__detail__learning{
   border: 1px solid #ccc;
@@ -13,15 +16,19 @@
 .deatil__main__learning{
 
 }
+.list__main__learning{
+  @apply divide-y
+}
+.list__main__learning div{
+  @apply hover:bg-slate-100 px-1 rounded
+}
 .title__detail__main{
-  @apply text-cyan-700
+  @apply text-indigo-600 text-xl
 }
 .item__list__learning{
-  @apply flex justify-between py-1
+  @apply flex justify-between py-1 
 }
 .item__list__learning{
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
 }
 .info__item__list{
   @apply flex
@@ -36,8 +43,8 @@
   @apply mb-0 cursor-pointer
 }
 .info__item__list i{
-  @apply mr-3 text-xl text-cyan-700 
+  @apply mr-3 text-xl text-indigo-600 
 }
 .icon__item__list i{
-  @apply text-cyan-700 text-2xl mr-3 mt-2
+  @apply text-indigo-600 text-2xl mr-3 mt-2
 }

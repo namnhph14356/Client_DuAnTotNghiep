@@ -8,7 +8,6 @@ type AdminPageHeaderProps = {
 }
 
 const AdminPageHeader = ({breadcrumb}: AdminPageHeaderProps ) => {
-
     return (
       <div className="">
           <div className="pt-4">
@@ -24,8 +23,8 @@ const AdminPageHeader = ({breadcrumb}: AdminPageHeaderProps ) => {
               </Breadcrumb>
           </div>
           <PageHeader
-              className="site-page-header"
-              title={breadcrumb}
+              className="site-page-header text-indigo-600"
+              title={`${breadcrumb} / NGÀY 1`}
             style={{paddingLeft: 0}}
           />
       </div>
