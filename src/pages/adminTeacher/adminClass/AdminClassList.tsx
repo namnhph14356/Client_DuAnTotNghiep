@@ -14,7 +14,7 @@ import {
   Typography,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-const {Option} = Select;
+const { Option } = Select;
 const AdminClassList = (props) => {
   const dataSource = [
     {
@@ -105,6 +105,7 @@ const AdminClassList = (props) => {
 
   const onAddClass = () => {};
 
+
   return (
     <div>
       {isShowModal && (
@@ -136,14 +137,9 @@ const AdminClassList = (props) => {
             <Form.Item
               label="Lever"
               name="lever"
-              rules={[
-                { required: true, message: "Please input your Lever!" },
-              ]}
+              rules={[{ required: true, message: "Please input your Lever!" }]}
             >
-              <Select
-                defaultValue="lucy"
-                style={{ width: '100%' }}
-              >
+              <Select defaultValue="lucy" style={{ width: "100%" }}>
                 <Option value="jack">Jack</Option>
                 <Option value="lucy">Lucy</Option>
                 <Option value="disabled" disabled>
@@ -162,7 +158,7 @@ const AdminClassList = (props) => {
         </Modal>
       )}
       <Row>
-        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-2">
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +190,7 @@ const AdminClassList = (props) => {
             </div>
           </Card>
         </Col>
-        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-2">
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-2">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -227,18 +223,21 @@ const AdminClassList = (props) => {
           </Card>
         </Col>
       </Row>
-      <div className="p-2 d-flex">
-        <Input
-          style={{ width: "20%" }}
-          placeholder="Search with class name"
-          prefix={<SearchOutlined className="site-form-item-icon" />}
-        />
-        <Button type="primary" onClick={onShowAdd} className="ms-2">
-          Create a new class
-        </Button>
-      </div>
+
       <div className="p-2">
-        <Typography.Title level={3}>Quản lý lớp học</Typography.Title>
+        <div className="d-flex align-items-center justify-between">
+          <Typography.Title level={3}>Quản lý lớp học</Typography.Title>
+          <div className="py-2 d-flex">
+            <Input
+              style={{ width: "80%" }}
+              placeholder="Search with class name"
+              prefix={<SearchOutlined className="site-form-item-icon" />}
+            />
+            <Button type="primary" onClick={onShowAdd} className="ms-2">
+              Create a new class
+            </Button>
+          </div>
+        </div>
         <Table dataSource={dataSource} columns={columns} />
       </div>
     </div>

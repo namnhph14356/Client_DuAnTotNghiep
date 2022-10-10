@@ -52,14 +52,13 @@ const SignUp = (props: Props) => {
         email: userForm.email,
         password: userForm.password,
       };
-      // console.log(user.confirmPassword)
       const { payload } = await dispatch(signUp(user));
       console.log(payload);
       if (payload.message) {
         Modal.error({
           title: "Account is exist !",
           onOk: () => {
-            // navigate("/login")
+            navigate("/login")
           },
         });
       } else {

@@ -1,59 +1,59 @@
+/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
-import { getGrammarDetail } from "../api/grammar";
-import AdverDeatil from "../components/AdverDeatil";
-import Menu from "../components/Menu";
+import { NavLink, Outlet } from "react-router-dom";
 import NavDeatil from "../components/NavDeatil";
-import { GammarType } from "../types/grammar";
-import "../css/grammar.css";
-import { NavLink } from "react-router-dom";
-type Props = {};
+import '../css/grammar.css'
 
-const Grammar = (props: Props) => {
-  const [grammar, setGrammar] = useState<GammarType>();
-  const id = "632eaf3702bab4b8df45f300";
-  const image = "https://hocde.vn/wp-content/uploads/2019/09/th%C3%AC-hi%E1%BB%87n-t%E1%BA%A1i-%C4%91%C6%A1n.jpg";
-  useEffect(() => {
-    const getDeatil = async () => {
-      const { data } = await getGrammarDetail(id);
-      setGrammar(data);
-    };
-    getDeatil();
-  }, []);
-console.log(grammar);
+const Grammar = () => {
 
   return (
-    <div>
-      <div className="box__deatil__learning__main">
-        <NavDeatil />
-        <div className="main__topic col-span-7">
-          <div className="desc__title__cocabulary">
-            <h2>
-              Grammar / {grammar?.name}
-              <span className="text-lg text-[#A93226] font-bold"></span>
-            </h2>
+    <div className="grammar__page">
+      <div className="main__grammar__page">
+        <div className="w-full bg-indigo-600 px-4 py-2">
+          <div className='flex gap-4'>
+            <NavLink to={'/learning/detailLearning'} className='my-auto'>
+              <i className="fa-solid fa-angle-left text-5xl text-white font-bold cursor-pointer"></i>
+            </NavLink>
+            <div className='my-auto'>
+              <div className='text-xl uppercase text-white'>Luyện ngữ pháp</div>
+              <div className='text-white'>00 Điểm</div>
+            </div>
           </div>
-          {/* <div style={{backgroundImage:`url(${image})`}}></div> */}
-          <div className="image__grammar">
-          <img src={image} alt="" className="m-auto"/>
+        </div>
+        <div className="nav__speaking">
+          <div className="count__question">
+            <div>
+              Câu số 1 / <span>10</span>
+            </div>
           </div>
+          <div>
 
-        <div>
-            <h4 className="text-2xl text-center mt-12 font-bold">{grammar?.example}</h4>
-        </div>
+            <NavLink to={'/learning/detailLearning/:id/grammar/lesson'} className="text-black" >
+              <button className="btn__comment__speaking ">
+                <i className="fa-solid fa-book"></i> Bài học
+              </button>
+            </NavLink>
 
-        <div className="mt-12 ml-12">
-            <p className="text-red-600 text-xl font-bold">- Chú ý*</p>
-            <span className="text-lg">
-                {grammar?.note}
-            </span>
-        </div>
-          <div className="box__btn__question m-auto">
-            <NavLink to={"/learning/detailLearning/exerciseDaily"} className="btn__next__question" >Tiếp tục</NavLink>
+            <NavLink to={'/learning/detailLearning/:id/grammar/exercise'} className="text-black" >
+              <button className="btn__comment__speaking ">
+                <i className="fa-solid fa-pen-to-square mr-1"></i>Bài tập
+              </button>
+            </NavLink>
+
+            <NavLink to={'/learning/detailLearning/:id/grammar/note'} className="text-black" >
+              <button className="btn__comment__speaking ">
+                <i className="fa-solid fa-notes-medical"></i> Ghi chú
+              </button>
+            </NavLink>
+            <NavLink to={'/learning/detailLearning/:id/grammar/questionAndAnswer'} className="text-black" >
+              <button className="btn__comment__speaking ">
+                <i className="fa-solid fa-comments mr-2"></i> Hỏi và đáp
+              </button>
+            </NavLink>
+
           </div>
-
-          <Menu />
         </div>
-        <AdverDeatil />
+        <Outlet />
       </div>
     </div>
   );
