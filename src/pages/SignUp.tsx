@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { signUp } from "../features/Slide/auth/authSlide";
 import { Modal, message } from "antd";
-// import yup from 'yup'
+import { colors } from "../utils/color";
 type Props = {};
 
 const fromSchema = yup.object().shape({
@@ -41,6 +41,7 @@ const SignUp = (props: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { errors } = formState;
+
   if (errors) {
     if (errors.username) {
       message.error(String(errors.username.message))
@@ -57,10 +58,12 @@ const SignUp = (props: Props) => {
   }
   const onSubmit: SubmitHandler<FormInputs> = async (userForm: FormInputs) => {
     try {
+      let colorRandom = colors[Math.floor(Math.random() * colors.length)];
       const user = {
         username: userForm.username,
         email: userForm.email,
         password: userForm.password,
+        colorImage: colorRandom.color
       };
       const { payload } = await dispatch(signUp(user));
       if (payload.message) {

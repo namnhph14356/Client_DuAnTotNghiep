@@ -52,7 +52,8 @@ export const changeOTP = (user:any) => {
     const url = `/changeOTP`;
     return instance.post(url, user);
 } 
-export const getCurrenUser = (token:any) => {
-  const url = `/users/currentUser/${token}`;
+
+export const getCurrenUser = () => {
+  const url = `/users/currentUser/current`;
   return instance.get(url);
 }

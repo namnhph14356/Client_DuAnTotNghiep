@@ -4,10 +4,10 @@ import { addUser, changeOTP, editUser, forgotPass, getCurrenUser, getListUser, g
 import { UserType } from "../../../types/category";
 
 
-export const currentUserSlice:any = createAsyncThunk(
+export const currentUserSlice: any = createAsyncThunk(
   "user/currentUserSlice",
-  async (currentUser: any) => {
-    const { data } = await getCurrenUser(currentUser);
+  async () => {
+    const { data } = await getCurrenUser();
     return data
   }
 )
@@ -24,7 +24,6 @@ export const getUser: any = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
     const { data } = await getUserById(id);
-    console.log('data', data);
     return data
   }
 )
@@ -100,28 +99,29 @@ export const changeOtp: any = createAsyncThunk(
 
 const authSlide = createSlice({
   name: "user",
-
   initialState: {
     value: [],
     otp: [],
     isAuthticated: false
   },
   reducers: {
-    logout() {
-      localStorage.removeItem("user");
+    logout(state: any, action) {
+      localStorage.removeItem("tokenUser");
+      state.value = state.value.filter((arrow: any) => arrow._id !== action.payload._id);
     },
-
   },
 
   extraReducers: (builer) => {
-    builer.addCase(currentUserSlice.fulfilled, (state:any, action) => {
-      state.value = action.payload;
+    builer.addCase(currentUserSlice.fulfilled, (state: any, action) => {
+      if (action.payload) {
+        state.value = [action.payload]
+      }
     })
     builer.addCase(getUserList.fulfilled, (state, action) => {
       state.value = action.payload;
     })
     builer.addCase(addUserSlide.fulfilled, (state: any, action) => {
-      state.value.push(action.payload)
+      state.value = [...state.value, action.payload]
     })
     builer.addCase(editUserSlide.fulfilled, (state: any, action) => {
       state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
@@ -131,10 +131,6 @@ const authSlide = createSlice({
     })
     builer.addCase(signUp.fulfilled, (state: any, action: any) => {
       state.value = action.payload
-    })
-    builer.addCase(signIn.fulfilled, (state: any, action: any) => {
-      state.isAuthticated = true;
-      state.value = action.payload;
     })
     builer.addCase(forgotPassword.fulfilled, (state: any, action: any) => {
     })

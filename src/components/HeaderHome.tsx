@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useRoutes } from 'react-router-dom'
-import { logout } from '../features/Slide/auth/authSlide';
 import { message, Modal } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from './Avatar';
+import { logout } from '../features/Slide/auth/authSlide';
 const navigation = [
   { name: 'Học thử', to: '/learning' },
   { name: 'Liên hệ chúng tôi', to: 'contact' },
@@ -12,13 +12,16 @@ const navigation = [
 
 const HeaderComponent = () => {
   const user = useSelector(((item: any) => item.user.value))
+  const dispatch = useDispatch();
 
   const onLogout = () => {
-    const confirm = window.confirm("Bạn muốn đăng xuất ?")
-    if (confirm) {
-      // localStorage.removeItem("user");
-      message.success("Đăng xuất thành công !")
-    }
+    Modal.confirm({
+      title: "Bạn có chắc muốn đăng xuất không ?",
+      onOk: () => {
+        dispatch(logout(user[0]))
+        message.success("Đăng xuất thành công")
+      }
+    })
   }
 
   return (
@@ -39,16 +42,16 @@ const HeaderComponent = () => {
               </div>
             </div>
             {
-              user ?
+              user.length > 0 ?
                 <div className='text-white flex space-x-2 '>
                   <Link to="/" className='text-white my-auto'>
                     {user.img
-                      ? <Avatar image={user.img} />
-                      : <Avatar name={user.username} />
+                      ? <Avatar image={user[0].img} />
+                      : <Avatar name={user[0].username} color={user[0].colorImage} />
                     }
                   </Link>
                   <span className='my-auto'> / </span>
-                  <button className='my-auto'>Đăng xuất</button>
+                  <button className='my-auto' onClick={onLogout}>Đăng xuất</button>
                 </div>
                 :
                 <div className=" ml-10 space-x-4">
@@ -65,8 +68,6 @@ const HeaderComponent = () => {
                   </NavLink>
                 </div>
             }
-
-
           </div>
           <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
             {navigation.map((item) => (
@@ -77,9 +78,6 @@ const HeaderComponent = () => {
           </div>
         </nav>
       </header>
-
-
-
     </div>
   )
 }

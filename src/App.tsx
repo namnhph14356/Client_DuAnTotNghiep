@@ -11,7 +11,6 @@ import DetailLearning from './pages/DetailLearning';
 import FileUser from './pages/FileUser';
 import SignUp from './pages/SignUp';
 import ExeWriteAndListen from './containers/Conversation/ExeWriteAndListen';
-import Login from './pages/Login';
 import ListUser from './pages/admin/Auth/listUser';
 import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
@@ -58,7 +57,7 @@ import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
 import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
-import SignIn from './pages/Login';
+import SignIn from './pages/SignIn';
 import DetailLearningLayout from './pages/layouts/DetailLearningLayout';
 import SpeakingPage from './pages/speaking';
 import ExeListenAndRead from './containers/Conversation/ExeListenAndRead';
@@ -73,13 +72,14 @@ import Sentences from './pages/Sentences';
 import LessonSentences from './containers/Sentences/LessonSentences';
 import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
+import { PrivateRouteHomePage } from './midlerware/PrivateRoute';
 
 function App() {
   return (
     <div >
       <Routes>
 
-        <Route path='/' element={<WebsiteLayout />}>
+        <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
@@ -135,6 +135,8 @@ function App() {
           <Route path='teacher' element={<TeacherPage />} />
 
         </Route>
+
+
         <Route path='menageteacher' element={<TeacherLayout />}>
           <Route index element={<LessonListTeacher />} />
           <Route path='add' element={<AdminLearnAdd />} />
@@ -205,10 +207,10 @@ function App() {
           </Route>
 
         </Route>
+
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
-
-        <Route path='signin' element={<SignIn />}> </Route>
+        <Route path='/signin' element={<SignIn />}> </Route>
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>
