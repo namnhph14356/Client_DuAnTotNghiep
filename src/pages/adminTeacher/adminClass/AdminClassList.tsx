@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Button,
@@ -105,6 +105,14 @@ const AdminClassList = (props) => {
 
   const onAddClass = () => {};
 
+  const getListClass = async () => {
+    //  const {data} = await 
+  }
+
+  useEffect(() => {
+    
+  }, [])
+  
 
   return (
     <div>
