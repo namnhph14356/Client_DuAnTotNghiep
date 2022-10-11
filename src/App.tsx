@@ -73,6 +73,7 @@ import Sentences from './pages/Sentences';
 import LessonSentences from './containers/Sentences/LessonSentences';
 import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
+import Update from './containers/Note/update';
 
 function App() {
   return (
@@ -96,6 +97,8 @@ function App() {
                   <Route path='lesson' element={<LessonVocabulary />} />
                   <Route path='exercise' element={<ExerciseVocabulary />} />
                   <Route path='note' element={<Note />} />
+                  <Route path='updateNote' element={<Update />} />
+                  <Route path='updateNote/:id' element={<Update />} />
                   <Route path='questionAndAnswer' element={<QuestionAnswer />} />
                 </Route>
 
