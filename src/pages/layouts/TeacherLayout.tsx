@@ -5,6 +5,7 @@ import {
   UploadOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  BankOutlined
 } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import React, { useState } from 'react';
@@ -17,6 +18,18 @@ const LayoutTeacher = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const dataMenu = [
+    {
+      key: '0',
+      icon: <BankOutlined />,
+      label: 'Dashboard',
+      path: 'dashboard'
+    },
+    {
+      key: '10',
+      icon: <BankOutlined />,
+      label: 'Quản lý lớp học',
+      path: 'class'
+    },
     {
       key: '1',
       icon: <UserOutlined />,
@@ -65,7 +78,7 @@ const LayoutTeacher = () => {
           <Menu
             style={{ backgroundColor: 'white' }}
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={['0']}
             items={items2}
           />
         </Sider>
