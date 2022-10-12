@@ -12,7 +12,7 @@ const Avatar = ({ name, image, color }: AvatarProps) => {
       {
         image ?
           <div className='flex rounded-full bg-red-600 text-white h-8 w-8 '>
-            <img src={image} alt="" className='m-auto text-xs' />
+            <img src={image} alt="" className='m-auto text-xs rounded-full' />
           </div>
           :
           <div className='flex rounded-full  text-white h-8 w-8' style={{background:`${color}`}}>

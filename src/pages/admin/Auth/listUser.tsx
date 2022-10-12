@@ -4,12 +4,13 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { removeUser } from '../../../api/user';
-import { getUserList, removeUserSlide } from '../../../features/Slide/auth/authSlide';
+import { AppDispatch } from '../../../app/store';
+import { getUserList, removeUserSlide } from '../../../features/Slide/user/userSlide';
 
 const ListUser = () => {
 
     const users =  useSelector<any, any>(data => data.user.value);
-    const dispath = useDispatch();
+    const dispath = useDispatch<AppDispatch>();
 
     useEffect( () => {
       dispath(getUserList())

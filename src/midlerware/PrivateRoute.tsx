@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { AppDispatch } from '../app/store';
 import { currentUserSlice } from '../features/Slide/auth/authSlide';
 
 type PrivateRouteProps = {
@@ -16,7 +17,7 @@ export const PrivateRoute = (props: PrivateRouteProps) => {
 }
 
 export const PrivateRouteHomePage = (props: PrivateRouteProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const currentUser = async () => {
     await dispatch(currentUserSlice())
   }

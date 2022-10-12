@@ -4,6 +4,9 @@ import { message, Modal } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from './Avatar';
 import { logout } from '../features/Slide/auth/authSlide';
+import { RootState } from '../app/store';
+import { UserType } from '../types/user';
+
 const navigation = [
   { name: 'Học thử', to: '/learning' },
   { name: 'Liên hệ chúng tôi', to: 'contact' },
@@ -11,14 +14,14 @@ const navigation = [
 ]
 
 const HeaderComponent = () => {
-  const user = useSelector(((item: any) => item.user.value))
+  const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   const dispatch = useDispatch();
 
   const onLogout = () => {
     Modal.confirm({
       title: "Bạn có chắc muốn đăng xuất không ?",
       onOk: () => {
-        dispatch(logout(user[0]))
+        dispatch(logout(auth))
         message.success("Đăng xuất thành công")
       }
     })
@@ -42,12 +45,12 @@ const HeaderComponent = () => {
               </div>
             </div>
             {
-              user.length > 0 ?
+              auth ?
                 <div className='text-white flex space-x-2 '>
                   <Link to="/" className='text-white my-auto'>
-                    {user.img
-                      ? <Avatar image={user[0].img} />
-                      : <Avatar name={user[0].username} color={user[0].colorImage} />
+                    {auth.img
+                      ? <Avatar image={auth.img} />
+                      : <Avatar name={auth.username} color={auth.colorImage} />
                     }
                   </Link>
                   <span className='my-auto'> / </span>

@@ -9,6 +9,16 @@ export const login = (user:any) => {
     return instance.post(url, user);
 }
 
+export const signInWidthFacebook = (user:any) => {
+  const url = "/signInnWidthFacebook";
+  return instance.post(url, user);
+}
+
+export const signInWidthGoogle = (user:any) => {
+  const url = "/signInWidthGoogle";
+  return instance.post(url, user);
+}
+
 export const register = (user:any) => {
     const url = "/signup";
     return instance.post(url, user);

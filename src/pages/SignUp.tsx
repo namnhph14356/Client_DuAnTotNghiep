@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { signUp } from "../features/Slide/auth/authSlide";
 import { Modal, message } from "antd";
 import { colors } from "../utils/color";
+import { AppDispatch } from "../app/store";
 type Props = {};
 
 const fromSchema = yup.object().shape({
@@ -38,7 +39,7 @@ type FormInputs = {
 
 const SignUp = (props: Props) => {
   const { register, handleSubmit, formState } = useForm<FormInputs>(validation);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { errors } = formState;
 
@@ -86,7 +87,7 @@ const SignUp = (props: Props) => {
   };
 
 
-  const checkValue = (e: any) => {
+  const checkValue = (e) => {
     if (e.target.value !== "") {
       e.nativeEvent.path[2].classList.add('field--non-empty');
     } else {
