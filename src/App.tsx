@@ -54,6 +54,9 @@ import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
+import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
+import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
+
 import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
@@ -138,12 +141,13 @@ function App() {
 
 
         <Route path='menageteacher' element={<TeacherLayout />}>
-          <Route index element={<LessonListTeacher />} />
-          <Route path='add' element={<AdminLearnAdd />} />
-          {/* <Route path="list" >
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='class' element={<AdminClassList />} />
+          <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
-          </Route> */}
+          </Route>
           <Route path="category" >
             <Route index element={<CategoryList />} />
             <Route path='add' element={<AddCategory />} />
@@ -159,10 +163,6 @@ function App() {
             <Route path='edit/:id' element={<Add />} />
           </Route>
 
-          <Route path="contact" >
-            <Route index element={<ListContact />} />
-            <Route path='edit/:id' element={<EditContact />} />
-          </Route>
 
           <Route path="contact" >
             <Route index element={<ListContact />} />
