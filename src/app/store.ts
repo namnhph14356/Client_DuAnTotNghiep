@@ -7,12 +7,13 @@ import {
  } from "redux-persist";
  import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
+import authSlide from '../features/Slide/auth/authSlide';
 
 const persistConfig = {
   key: "root",
   storage,
   blacklist: [
-    "user" // những state ko muốn lưu ở trên local thì cho vào đây, tên theo tên của slide
+    // "user" // những state ko muốn lưu ở trên local thì cho vào đây, tên theo tên của slide
   ],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

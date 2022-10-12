@@ -2,32 +2,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
-import './../css/signin.css';
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import './../css/signup.css';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { signUp } from "../features/Slide/auth/authSlide";
-import { Modal } from "antd";
-
-// import yup from 'yup'
+import { Modal, message } from "antd";
+import { colors } from "../utils/color";
+import { AppDispatch } from "../app/store";
 type Props = {};
 
 const fromSchema = yup.object().shape({
   username: yup
     .string()
-    .required("Username is required")
-    .min(6, "Username length should be at least 20 characters"),
-  email: yup.string().required("Email is required").email("It not Email"),
+    .required("Không được để trống họ và tên !")
+    .min(6, "Họ và tên phải lớn hơn 6 kí tự !"),
+  email: yup.string().required("Không được để trống email !").email("Email sai cú pháp !"),
   password: yup
     .string()
-    .required("Password is required")
-    .min(6, "Password length should be at least 4 characters"),
+    .required("Không được để trống mật khẩu !")
+    .min(6, "Mật khẩu phải lớn hơn 6 kí tự !"),
   confirmPassword: yup
     .string()
-    .required("Password is required")
-    .oneOf([yup.ref("password")], "Passwords must and should match"),
+    .required("Không được để trống mật khẩu !")
+    .oneOf([yup.ref("password")], "Mật khẩu không trùng khớp !"),
 });
 const validation = { resolver: yupResolver(fromSchema) };
 
@@ -40,90 +39,98 @@ type FormInputs = {
 
 const SignUp = (props: Props) => {
   const { register, handleSubmit, formState } = useForm<FormInputs>(validation);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { errors } = formState;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onSubmit: SubmitHandler<FormInputs> = async (userForm: any) => {
-    console.log(userForm);
+
+  if (errors) {
+    if (errors.username) {
+      message.error(String(errors.username.message))
+    } else
+      if (errors.email) {
+        message.error(String(errors.email.message))
+      } else
+        if (errors.password) {
+          message.error(String(errors.password.message))
+        } else
+          if (errors.confirmPassword) {
+            message.error(String(errors.confirmPassword.message))
+          }
+  }
+  const onSubmit: SubmitHandler<FormInputs> = async (userForm: FormInputs) => {
     try {
+      let colorRandom = colors[Math.floor(Math.random() * colors.length)];
       const user = {
         username: userForm.username,
         email: userForm.email,
         password: userForm.password,
+        colorImage: colorRandom.color
       };
       const { payload } = await dispatch(signUp(user));
-      console.log(payload);
       if (payload.message) {
         Modal.error({
-          title: "Account is exist !",
+          title: "Tài khoản đã tồn tại !",
           onOk: () => {
-            navigate("/login")
           },
         });
       } else {
         Modal.success({
-          title: "Register successfully",
+          title: "Đăng kí tài khoản thành công !",
           onOk: () => {
-            navigate("/login");
+            navigate("/signin");
           },
         });
       }
     } catch (error) {
-      alert("Username is exist");
+      alert("Error");
     }
   };
 
+
+  const checkValue = (e) => {
+    if (e.target.value !== "") {
+      e.nativeEvent.path[2].classList.add('field--non-empty');
+    } else {
+      e.nativeEvent.path[2].classList.remove('field--non-empty');
+    }
+  }
   return (
     <div className="box__signup ">
-      <div className="signin__form col-span-12 w-10/12 m-auto  flex justify-center">
-        <div className="signin__main__right w-full my-24">
-          <h3 className="text-2xl font-bold text-center">Welcome back!</h3>
-          <p className="signin__main__right__text text-center my-8 ">
-            To keep connected with us please login with your personal info
-          </p>
-          <div className="text-center">
-            <NavLink to={"/login"} className="button px-4 border-1 rounded">Sign in</NavLink>
-          </div>
-        </div>
+      <div className="signin__form  m-auto px-8">
         <div className="signin__main__left  w-full ">
-          <div className="text-center mr-24">
-
-            <h1 className="text-3xl font-bold">Signin To Website </h1>
-            <div className="signin__main__right__login__google text-center my-6">
-              <i className="fa-brands fa-facebook" />
-              <i className="fa-brands fa-twitter" />
-              <i className="fa-solid fa-g" />
-            </div>
-            <p className="text-center">or user email acount</p>
+          <div className="text-center">
+            <h1 className="text-3xl font-bold mb-8">Đăng kí </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="m">
-                <input className="px-4 text-white" {...register('username')} type="text" placeholder="Name" />
-                <div className="text-red-500 float-left text-left px-4">{errors.username?.message}</div>
+              <div className="field">
+                <div className="field__input">
+                  <input spellCheck="false" data-testid="input-username" autoCapitalize="off" {...register('username')} type="text" onChange={(e) => checkValue(e)} className={`field__form-input text__ignore-subset ${errors.username ? 'outline-red-500' : ''}`} autoComplete="on" />
+                  <label className="field__label">Họ và tên</label><span className="field__placeholder" >Họ và tên</span>
+                </div>
               </div>
-              <div className="m">
-                <input className="px-4 text-white" {...register("email")} type="email" placeholder="Email" />
-                <div className="text-red-500 float-left text-left px-4">{errors.email?.message}</div>
+              <div className="field">
+                <div className="field__input">
+                  <input spellCheck="false" data-testid="input-username" autoCapitalize="off" {...register("email")} onChange={(e) => checkValue(e)} className={`field__form-input text__ignore-subset ${errors.email ? 'outline-red-500' : ''}`} type="email" autoComplete="on" />
+                  <label className="field__label">Email</label><span className="field__placeholder" >Email</span>
+                </div>
               </div>
-
+              <div className="field">
+                <div className="field__input">
+                  <input spellCheck="false" data-testid="input-password" autoCapitalize="off" {...register("password")} onChange={(e) => checkValue(e)} className={`field__form-input text__ignore-subset ${errors.password ? 'outline-red-500' : ''}`} type="password" autoComplete="on" />
+                  <label className="field__label">Mật khẩu</label><span className="field__placeholder">Mật khẩu</span>
+                </div>
+              </div>
+              <div className="field">
+                <div className="field__input">
+                  <input spellCheck="false" data-testid="input-password" autoCapitalize="off" {...register("confirmPassword")} onChange={(e) => checkValue(e)} className={`field__form-input text__ignore-subset ${errors.confirmPassword ? 'outline-red-500' : ''}`} type="password" autoComplete="on" />
+                  <label className="field__label">Xác nhận mật khẩu</label><span className="field__placeholder">xác nhận Mật khẩu</span>
+                </div>
+              </div>
               <div>
-                <input className="px-4 text-white" {...register("password")} type="password" placeholder="Password" />
-                <div className="text-red-500 float-left text-left px-4">{errors.password?.message}</div>
+                <button className="bg-blue-500 text-white rounded text-lg font-semibold py-4 w-full hover:cursor-pointer hover:bg-blue-600">ĐĂNG KÍ</button>
               </div>
-
-              <div>
-                <input className="px-4 text-white" {...register("confirmPassword")} type="password" placeholder="Confirm password" />
-                <div className="text-red-500 float-left text-left px-4">{errors.confirmPassword?.message}</div>
+              <div className="mt-6 text-right">
+                <span>Bạn đã có tài khoản?<Link to={'/signin'}> Đăng nhập</Link></span>
               </div>
-
-              <p className="my-6 text-center">
-
-              </p>
-
-              <div className="text-center">
-                <button className="button px-4 text-white border-1 rounded">Sign up</button>
-              </div>
-
             </form>
           </div>
         </div>

@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import AnswerQuizSlide from "../features/Slide/answerQuiz/AnswerQuizSlide";
-import authSlide from "../features/Slide/auth/authSlide";
 import CategorySlide from "../features/Slide/category/CategorySlide";
 import CountSlide from "../features/Slide/count/CountSlide";
 import ProductSlide from "../features/Slide/product/ProductSlide";
@@ -13,6 +12,8 @@ import UserListenWriteSlice from "../features/Slide/userListenWrite/UserListenWr
 import CommentSlice from "../features/Slide/comment/CommentSlice";
 import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLimitCountdown";
 import ClassSlide from "../features/Slide/class/classSlice";  
+import userSlide from "../features/Slide/user/userSlide";
+import authSlide from "../features/Slide/auth/authSlide";
 const rootReducer = combineReducers({
     count: CountSlide,
     product: ProductSlide,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     comment: CommentSlice,
     userListenWrite: UserListenWriteSlice,
     answerQuiz: AnswerQuizSlide,
-    user: authSlide,
+    user: userSlide,
+    auth: authSlide,
     time: TimeLimitCountdownSlice,
     class: ClassSlide,
 });

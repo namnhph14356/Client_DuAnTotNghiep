@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changeImage, uploadImage } from '../../../utils/upload';
-import { addUserSlide } from '../../../features/Slide/auth/authSlide';
 import toastr from 'toastr';
 import { Button, Form, Input } from 'antd';
+import { addUserSlide } from '../../../features/Slide/user/userSlide';
+import { AppDispatch } from '../../../app/store';
 
 const layout = {
     labelCol: { span: 3 },
@@ -25,7 +26,7 @@ const validateMessages = {
 
 const AddUser = () => {
     const category = useSelector<any, any>(data => data.category.value);
-    const dispath = useDispatch();
+    const dispath = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,21 +43,21 @@ const AddUser = () => {
         try {
             if (imgLink) {
                 console.log(imgLink);
-                dispath(addUserSlide(
-                    {
-                        title: values.category.title,
-                        image: imgLink,
-                        detail: values.category.detail
-                    }
-                ))
-
-                toastr.success("Add successfully");
-                setTimeout(() => {
-                    navigate('/admin/user')
-                }, 1000);
+                // dispath(addUserSlide(
+                //     {
+                //         title: values.category.title,
+                //         image: imgLink,
+                //         detail: values.category.detail
+                //     }
+                // ))
+                alert("Error !!")
+                // toastr.success("Add successfully");
+                // setTimeout(() => {
+                //     navigate('/admin/user')
+                // }, 1000);
 
             }
-        } catch (error: any) {
+        } catch (error) {
             toastr.error(error.response.data);
         }
 
