@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useRoutes } from 'react-router-dom'
 import { message, Modal } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import Avatar from './Avatar';
 import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
 import { UserType } from '../types/user';
+import { Avatar, AvatarDefault } from './Avatar';
 
 const navigation = [
   { name: 'Học thử', to: '/learning' },
@@ -16,7 +16,6 @@ const navigation = [
 const HeaderComponent = () => {
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   const dispatch = useDispatch();
-
   const onLogout = () => {
     Modal.confirm({
       title: "Bạn có chắc muốn đăng xuất không ?",
@@ -47,10 +46,10 @@ const HeaderComponent = () => {
             {
               auth ?
                 <div className='text-white flex space-x-2 '>
-                  <Link to="/" className='text-white my-auto'>
+                  <Link to="/user" className='text-white my-auto'>
                     {auth.img
-                      ? <Avatar image={auth.img} />
-                      : <Avatar name={auth.username} color={auth.colorImage} />
+                      ? <Avatar image={auth.img} className="text-sm w-10 h-10 text-white"/>
+                      : <AvatarDefault name={auth.username} color={String(auth.colorImage)} className="text-sm w-10 h-10 text-white" />
                     }
                   </Link>
                   <span className='my-auto'> / </span>
