@@ -77,7 +77,7 @@ const LessonListTeacher: React.FC = () => {
   return <>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' ,margin: '' }}>
       <Typography.Title level={5}>Quản lý video bài giảng/List</Typography.Title>
-      <Link to='/admin-teacher/learn-add'><Button type="primary" icon={<PlusOutlined />} size={size}>Thêm mới</Button></Link>
+      <Link to='add'><Button type="primary" icon={<PlusOutlined />} size={size}>Thêm mới</Button></Link>
     </div>
     <Table columns={columns} dataSource={data} />
   </>
