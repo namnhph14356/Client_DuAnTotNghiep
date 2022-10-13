@@ -2,26 +2,28 @@ import React from 'react'
 import { convertUsername } from '../../services/user'
 
 type AvatarProps = {
-  name?: string,
-  image?: string,
-  color?:string
+  image: string,
+  className?:string
 }
-const Avatar = ({ name, image, color }: AvatarProps) => {
+
+type AvatarDefaultProps = {
+  name: string,
+  color: string,
+  className?:string
+}
+
+export const Avatar = ({ image, className }: AvatarProps) => {
   return (
     <div>
-      {
-        image ?
-          <div className='flex rounded-full bg-red-600 text-white h-8 w-8 '>
-            <img src={image} alt="" className='m-auto text-xs rounded-full' />
-          </div>
-          :
-          <div className='flex rounded-full  text-white h-8 w-8' style={{background:`${color}`}}>
-            <span className='m-auto text-xs'>{convertUsername(String(name))}</span>
-          </div>
-      }
-
+      <img src={image} alt="" className={`m-auto rounded-full ${className} `} />
     </div>
   )
 }
 
-export default Avatar
+export const AvatarDefault = ({ name, color, className }: AvatarDefaultProps) => {
+  return (
+    <div className={`rounded-full`} style={{ background: `${color}` }}>
+      <div className={`m-auto ${className} flex justify-center items-center `}>{convertUsername(String(name))}</div>
+    </div>
+  )
+}

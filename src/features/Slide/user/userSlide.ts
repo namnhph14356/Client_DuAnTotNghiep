@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addUser, editUser, getListUser, getUserById, removeUser } from "../../../api/user";
-import { UserType } from "../../../types/category";
+import { UserType } from "../../../types/user";
 
 export interface UserSlice {
   value: UserType[],

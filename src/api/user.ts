@@ -1,6 +1,4 @@
-
-// import { UserType } from "../types";
-import { UserType } from "../types/category";
+import { UserType } from "../types/user";
 import instance from "./instance";
 
 
@@ -40,7 +38,7 @@ export const addUser = (user:UserType) => {
 
 export const editUser = (user:UserType) => {
     const url = `/users/${user._id}`;
-    return instance.put(url, user);
+    return instance.patch(url, user);
 } 
 
 export const removeUser = (id:any) => {

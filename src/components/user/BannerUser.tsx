@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserById } from "../../api/user";
-import { UserType } from "../../types/category";
 import { uploadImage } from "../../utils/upload";
 import './style.css'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import moment from "moment";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { UserType } from '../../types/user'
+import { Avatar, AvatarDefault } from "../Avatar";
 type Props = {};
 
 type FormTypes = {
@@ -38,33 +40,32 @@ const validation = { resolver: yupResolver(fromSchema) }
 
 const BannerUser = (props: Props) => {
   const [visible, setVisible] = useState(false);
-
-  const isAuthenticate = () => {
-    if (!localStorage.getItem('user')) return;
-    return JSON.parse(localStorage.getItem('user') as string);
-  }
-  const data = isAuthenticate()
+  const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
+  // const isAuthenticate = () => {
+  //   if (!localStorage.getItem('user')) return;
+  //   return JSON.parse(localStorage.getItem('user') as string);
+  // }
+  // const data = isAuthenticate()
   const { register, handleSubmit, formState, reset } = useForm<UserType>(validation);
   const [preview, setPreview] = useState<string>();
-  const [info, getInfo] = useState<UserType>()
+  // const [info, getInfo] = useState<UserType>()
   const { errors } = formState;
 
   const navigate = useNavigate()
-  const id = data.user._id
-  useEffect(() => {
-    const getProducts = async () => {
-      const { data } = await getUserById(id);
-      reset(data)
-      getInfo(data)
-    }
-    getProducts()
-  }, [id])
+  // const id = data.user._id
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     const { data } = await getUserById(id);
+  //     reset(data)
+  //     getInfo(data)
+  //   }
+  //   getProducts()
+  // }, [id])
   const handlePreview = (e: any) => {
 
     setPreview(URL.createObjectURL(e.target.files[0]));
   }
   const onSubmit: SubmitHandler<UserType> = async data => {
-
     try {
       const imgPost = document.querySelector<any>("#file-upload");
       const imgLink = await uploadImage(imgPost);
@@ -89,11 +90,11 @@ const BannerUser = (props: Props) => {
             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
               <Row className="items-center">
                 <Col className="info-image">
-                  <img
-                    className="rounded-full w-[154px] h-[154px]"
-                    src={info?.img}
-                    alt=""
-                  />
+              
+                  {auth.img
+                    ? <Avatar image={auth.img} className="text-4xl w-32" />
+                    : <AvatarDefault name={auth.username} color={String(auth.colorImage)} className="text-4xl w-32 h-32 text-white" />
+                  }
                 </Col>
                 <Col
                   xs={24}
@@ -103,8 +104,8 @@ const BannerUser = (props: Props) => {
                   xl={16}
                   className="info-detail ps-2"
                 >
-                  <Typography.Title level={3} className="font-bold text-[32px]">{info?.username}</Typography.Title>
-                  <span>Quê quán: {info?.address}</span>
+                  <Typography.Title level={3} className="font-bold text-[32px]">{auth?.username}</Typography.Title>
+                  <span>Quê quán: {auth?.address}</span>
                   <div className="flex py-4 items-center">
                     <div className="">
                       <img
@@ -113,7 +114,7 @@ const BannerUser = (props: Props) => {
                         alt=""
                       />
                     </div>
-                    <p className="px-2 m-0">Đã tham gia {moment(info?.createdAt).format("MM YYYY")}</p>
+                    <p className="px-2 m-0">Đã tham gia {moment(auth?.createdAt).format("MM YYYY")}</p>
                   </div>
                 </Col>
               </Row>
@@ -150,7 +151,7 @@ const BannerUser = (props: Props) => {
                   <form id='myForm' onSubmit={handleSubmit(onSubmit)}>
                     <div className="">
                       <img className="rounded-full w-[154px] h-[154px]"
-                        src={preview || info?.img} id='img-preview' alt="" width='100px' />
+                        src={preview || auth?.img} id='img-preview' alt="" width='100px' />
                       <input type="file" {...register('img')} onChange={e => handlePreview(e)} id='file-upload' />
                     </div>
                     <br />
