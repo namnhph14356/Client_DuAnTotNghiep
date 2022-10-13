@@ -208,7 +208,9 @@ const AdminClassList = (props) => {
   return (
     <div>
       {isShowModal && (
-        <Modal
+        <div >
+          <Modal
+          className="admin-class-wrapper"
           title={idUpdate !== "" ? "Update a Class" : "Create a new Class"}
           centered
           visible={isShowModal}
@@ -287,6 +289,7 @@ const AdminClassList = (props) => {
             </Form.Item>
           </Form>
         </Modal>
+        </div>
       )}
       <Row>
         <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-2">
@@ -371,7 +374,7 @@ const AdminClassList = (props) => {
             </Button>
           </div>
         </div>
-        <Table dataSource={listClass} columns={columns} />
+        <Table scroll={{y: '150px'}} dataSource={listClass} columns={columns} />
       </div>
     </div>
   );

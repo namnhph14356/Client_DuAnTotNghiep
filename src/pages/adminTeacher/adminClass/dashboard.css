@@ -14,16 +14,11 @@
 .ms-2{
     margin-left: 20px;
 }
-/* 
-.ant-modal-footer{
-    display: none;
-}
 
-.ant-modal-content{
-    min-width: 1000px;
-    margin: 0 auto;
+.admin-class-wrapper .ant-modal-footer{
+    display: none;
 }
 
 .justify-between{
     justify-content: space-between;
-} */
+}
