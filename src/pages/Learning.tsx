@@ -44,16 +44,17 @@ const Learning = () => {
   let days = useAppSelector<DayType[]>(item => item.day.valueByWeek)
   const [weekArrSelect, setWeekArrSelect] = useState<WeekType[]>()
   const [dayArrSelect, setDayArrSelect] = useState<DayType[]>()
+  const firstMonth = months?.reduce(function (prev, current) {
+    return (prev.order < current.order) ? prev : current
+  })
 
-  const [monthSelect, setMonthSelect] = useState<MonthType>(months.reduce(function (prev, current) {
+  const [monthSelect, setMonthSelect] = useState<MonthType | null>()
+  const [weekSelect, setWeekSelect] = useState<WeekType | null>(weeks.reduce(function (prev, current) {
     return (prev.order < current.order) ? prev : current
   }))
-  const [weekSelect, setWeekSelect] = useState<WeekType | null>(weeks.length !== 0 ? weeks.reduce(function (prev, current) {
-    return (prev.order < current.order) ? prev : current
-  }): null)
   const [daySelect, setDaySelect] = useState<DayType | null>(days.length !== 0 ? days.reduce(function (prev, current) {
     return (prev.order < current.order) ? prev : current
-  }): null)
+  }) : null)
 
   const dispatch = useAppDispatch()
 
@@ -69,21 +70,21 @@ const Learning = () => {
 
   useEffect(() => {
     dispatch(getCategoryList())
-    
+
     dispatch(getListMonthSlice())
     // const firstMonth = months.reduce(function (prev, current) {
     //   return (prev.order < current.order) ? prev : current
     // })
     // console.log("firstMonth", firstMonth);
     // setMonthSelect(firstMonth)
-    dispatch(getListWeekSliceByMonth(monthSelect?._id))
+    dispatch(getListWeekSliceByMonth(monthSelect ? monthSelect._id : firstMonth._id))
     dispatch(getListDaySliceByWeek(weekSelect?._id))
     console.log("months", months);
     console.log("weeks", weeks);
     console.log("days", days);
 
-    
-  }, [monthSelect,weekSelect])
+
+  }, [monthSelect, weekSelect])
   const [selected, setSelected] = useState(item[3])
   return (
     <div className='learning__page'>
@@ -104,7 +105,7 @@ const Learning = () => {
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
                       <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        {monthSelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                        {monthSelect ? monthSelect?.title : firstMonth?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -186,7 +187,7 @@ const Learning = () => {
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
                       <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                      {daySelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                        {daySelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -229,32 +230,30 @@ const Learning = () => {
                 <div className=" sm:flex sm:flex-1 sm:items-center sm:justify-between">
                   <div>
                     <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                      <NavLink
-                        to="#"
-                        aria-current="page"
-                        className="relative z-10 inline-flex items-center border  bg-indigo-600 px-3 py-2 text-sm font-medium text-white focus:z-20"
-                      >
-                        1
-                      </NavLink>
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        2
-                      </NavLink>
+                      {days.map((item: DayType, index: number) => {
+                        if (item._id === daySelect?._id) {
+                          return <NavLink
+                            key={index + 1}
+                            to="#"
+                            aria-current="page"
+                            className="relative z-10 inline-flex items-center border  bg-indigo-600 px-3 py-2 text-sm font-medium text-white focus:z-20"
+                            onClick={() => { setDaySelect(item) }}
+                          >
+                            {item.order}
+                          </NavLink>
+                        } else {
+                          return <NavLink
+                            key={index + 1}
+                            to="#"
+                            aria-current="page"
+                            className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+                            onClick={() => { setDaySelect(item) }}
+                          >
+                            {item.order}
+                          </NavLink>
+                        }
+                      })}
 
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        3
-                      </NavLink>
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        4
-                      </NavLink>
 
                     </nav>
                   </div>
