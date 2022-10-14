@@ -6,28 +6,26 @@ import { Progress, Button, Modal, Collapse } from 'antd';
 import Countdown, { CountdownApi } from 'react-countdown';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { getListQuizSlide } from '../features/Slide/quiz/QuizSlide';
-import { getListAnswerQuizSlide } from '../features/Slide/answerQuiz/AnswerQuizSlide';
-import { detailCategory } from '../api/category';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getListQuizSlide } from '../../features/Slide/quiz/QuizSlide';
+import { getListAnswerQuizSlide } from '../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { detailCategory } from '../../api/category';
 import { useParams, NavLink } from 'react-router-dom';
-import { detailQuiz } from '../api/quiz';
+import { detailQuiz } from '../../api/quiz';
 import reactStringReplace from 'react-string-replace'
 import { motion, AnimatePresence } from "framer-motion"
 import { DebounceInput } from 'react-debounce-input';
-import './../css/quiz.css'
+import '../../css/quiz.css'
 
 import moment from 'moment';
 
-import { addUserQuiz } from '../api/userQuiz';
-import { addHistory, detailHistory } from '../api/history';
-import { HistoryType } from '../types/history';
+import { addUserQuiz } from '../../api/userQuiz';
+import { addHistory, detailHistory } from '../../api/history';
+import { HistoryType } from '../../types/history';
 
-import NavDeatil from '../components/NavDeatil';
-import TimeLimitCountdown from '../components/TimeLimitCountdown';
-import { changeTime } from '../features/Slide/timeLimitCountdown/timeLimitCountdown';
-import TimeCountDown from '../components/TimeCountDown';
-import Menu from '../components/Menu';
+import Menu from '../../components/Menu';
+import QuizType2 from './QuizType2';
+import QuizType1 from './QuizType1';
 
 
 let flag1: string = ""
@@ -35,7 +33,7 @@ let flag2: number = 0
 
 const CountdownWrapper = ({ time, reset }) => {
     const ref = useRef<any>();
-    const Completionist = () => <span>You are good to go!</span>;
+    const Completionist = () => <span className="hidden">You are good to go!</span>;
     let timeLimit = 100
     let point = 1000
     let countdownApi: CountdownApi | null = null;
@@ -71,16 +69,16 @@ const CountdownWrapper = ({ time, reset }) => {
             }
 
             secondsUser = secondsUser + 1
-            if(secondsUser === 60){
+            if (secondsUser === 60) {
                 minutesUser = minutesUser + 1
-                secondsUser = 0 
+                secondsUser = 0
             }
             flag1 = `${minutesUser}:${secondsUser}`
 
             if (timeLimit === 0) {
                 timeLimit = 100;
             }
-           
+
             return <div className="">
                 <Progress
                     strokeColor={{
@@ -109,7 +107,7 @@ const CountdownWrapper = ({ time, reset }) => {
 
 const MemoCountdown = React.memo(CountdownWrapper);
 
-const QuizPage = () => {
+const QuizTypeSelect = () => {
 
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
@@ -140,6 +138,8 @@ const QuizPage = () => {
 
     // kiểm tra đúng sai ghép câu
     const [quizCompound, setQuizCompound] = useState<any>([])
+
+
     let checkFlag = 0
     let answerType3 = 0
     if (quizList) {
@@ -150,9 +150,20 @@ const QuizPage = () => {
 
     }
 
-    console.log("quizCompound",quizCompound);
-    console.log("checkFlag",checkFlag);
-    console.log("answerType3",answerType3);
+    const onHanldeSetSelect = (data: any, check: boolean) => {
+        if (Array.isArray(data)) {
+            setQuizCompound(data)
+        } else {
+            setSelect(data)
+        }
+
+        setCheck(check)
+    }
+
+
+    console.log("quizCompound", quizCompound);
+    console.log("checkFlag", checkFlag);
+    console.log("answerType3", answerType3);
 
     //---Countinute---
     // Chuyển câu hỏi
@@ -342,7 +353,7 @@ const QuizPage = () => {
     const onChange = (key: string | string[]) => {
     };
 
-    console.log("quizList",quizList)
+
 
     useEffect(() => {
         dispatch(getListQuizSlide())
@@ -367,118 +378,64 @@ const QuizPage = () => {
 
     return (
         <>
-            <div className='m-auto grid grid-cols-12 gap-8 mt-[70px]'>
+            <div className=''>
+                <div className=''>
+                    <div className='content__speaking'>
 
-                {/* <div className='col-span-2'>
-                    <NavDeatil />
-                </div> */}
+                        <div className="qustion__content__speaking flex flex-col">
+                            <div className="">
+                                {/* <Progress
+                                    strokeColor={{
+                                        from: '#108ee9',
+                                        to: '#87d068',
+                                    }}
+                                    percent={percent}
+                                    status="active"
+                                    className="!mt-[3px] !h-4 !text-white "
+                                    showInfo={false}
+                                /> */}
 
-                <div className='col-span-12 main__topic'>
-                    <div className='item__quiz__topic'>
-                        <div className="desc__title__cocabulary">
+                                <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
 
-                            <Progress
-                                strokeColor={{
-                                    from: '#108ee9',
-                                    to: '#87d068',
-                                }}
-                                percent={percent}
-                                status="active"
-                                className="!mt-[3px] !h-4 !text-white "
-                                showInfo={false}
-                            />
-
-                            <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
-
-                            <h2>
-                                Câu hỏi thông dụng <span>
-                                    /   {quiz2?.category?.title}
-                                </span>
-                            </h2>
-
-                            <div className='count__question__vocabulary'>
-                                <h4 >
-                                    Câu số <span>{quizIndex + 1}</span> / <span>{quizList?.length}</span>
-                                </h4>
                             </div>
-                        </div>
 
-                        <div className="box__question__quiz">
-                            <div className="box__header__topic">
-                                <button
-                                    className='btn__volume__vocabulary'
-                                    onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}
-                                >
-                                    <i className="fa-solid fa-volume-high"></i>
-                                </button>
+                            <div className="flex">
+                                <h3>
+                                    {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""} 
 
-                                <h3 className="vocabulary__speaking">
-                                    {quizList ? quizList[quizIndex]?.quiz?.question : ""} ?
                                 </h3>
-
+                                <button className='w-5 h-5' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
+                                    <span><i className="fa-solid fa-volume-high"></i></span>
+                                </button>
                             </div>
-
                         </div>
 
                         <div className="mt-5 p-5">
                             {quizList ?
                                 quizList[quizIndex]?.quiz?.type === 1
-                                    ? quizList[quizIndex]?.answerQuiz?.map((item2: any, index) => {
-                                        return <div key={index + 1} className="choose__answer__quiz" onClick={() => {
-                                            if (check !== true) {
-                                                setSelect({ id: item2._id, isCorrect: item2.isCorrect })
-                                                setCheck(false)
-                                            }
-                                        }}>
-                                            <div className={`py-[10px] border-2 ${item2._id == select?.id
-                                                ? " bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2]"
-                                                : "border-[#CCCCCC]"} 
-                                                ${check === true
-                                                    ? item2._id == select?.id
-                                                        ? select?.isCorrect === 1
-                                                            ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                            : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                        : ""
-                                                    : ""} text-center rounded-md shadow-xl relative cursor-pointer `
-                                            }>
-
-                                                <p className="my-auto text-xl font-bold">{item2.answer}</p>
-                                                <div className="px-[10px] py-[2px] border-2 border-[#CCCCCC] text-center rounded-2xl absolute bottom-[5px] left-[15px]">
-                                                    <span className="text-xl font-bold">{index + 1}</span>
-                                                </div>
-                                            </div>
+                                    ? <div className="main__content__spaeking">
+                                        <div className="img__question">
+                                            <img src="https://i.pinimg.com/564x/23/6e/ad/236eadcccca3d08761bdf336d328ec43.jpg" alt="" />
                                         </div>
-                                    })
+                                        <div className="choose__question">
+                                            <fieldset className="border-t border-b border-gray-200">
+                                                <legend className="sr-only">Notifications</legend>
+                                                <div className="divide-y divide-gray-200">
+
+                                                    {quizList[quizIndex]?.answerQuiz?.map((item2: any, index) => {
+                                                        return <QuizType1 key={index + 1} data={item2} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                                                    })}
+
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
 
                                     : quizList[quizIndex]?.quiz?.type === 2
                                         ? <div className="box__question__quiz__item ">
                                             {quizList[quizIndex].answerQuiz.map((item, index) => {
-                                                return <div key={index + 1}
-                                                    className={`border-2 list__question__item ${item._id == select?.id
-                                                        ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-                                                        : "border-[#CCCCCC]"} 
-                                                    ${check === true
-                                                            ? item._id == select?.id
-                                                                ? select?.isCorrect === 1
-                                                                    ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                                    : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                                : ""
-                                                            : ""} shadow-lg  mx-auto py-[20px] cursor-pointer rounded-xl `
-                                                    }
-                                                    onClick={() => {
-                                                        if (check !== true) {
-                                                            setSelect({ id: item._id, isCorrect: item.isCorrect })
-                                                            setCheck(false)
-                                                        }
-                                                    }}
-                                                >
-                                                    <div className="img__result__question__item">
-                                                        <img src={`../../../../assets/image/water.png`} />
-                                                    </div>
-                                                    <div className="title__result__question__item">
-                                                        <span className="text-xl font-bold">{index + 1}. {item.answer}</span>
-                                                    </div>
-                                                </div>
+                                                return <QuizType2 key={index + 1} data={item} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
                                             })}
                                         </div>
 
@@ -500,9 +457,7 @@ const QuizPage = () => {
                                                     })}
                                                 </div>
 
-                                                <div className="shelf__result__question__item">
 
-                                                </div>
                                                 <div className="btn__choose__result">
                                                     {quizList[quizIndex].answerQuiz.map((item, index) => {
                                                         const existAnswer = quizCompound.find(item2 => item2.id === item._id)
@@ -595,51 +550,55 @@ const QuizPage = () => {
                                 </div>
 
                                 <div className='mt-8 md:basis-1/4'>
-                                    <button
-                                        disabled={select === null && quizCompound === null  ? true : false}
-                                        className={`${check === true
-                                            ? select?.isCorrect === 1 || check2 === true
-                                                ? "bg-[#D6EAF8] text-[#5DADE2] border-[#5DADE2] "
-                                                : "bg-[#C0392B] text-white"
-                                            : "hover:bg-gray-100 "}  
-                                            border-2 border-[#CCCCCC] px-[30px] py-[5px] font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`} onClick={() => {
-                                            setCheck(true)
-                                            increase()
+                                    <div className={`answer__question`}>
+                                        <button
+                                            disabled={select === null && quizCompound === null ? true : false}
+                                            className={`${check === true
+                                                ? select?.isCorrect === 1 || check2 === true
+                                                    ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
+                                                    : "!bg-[#C0392B] !text-white"
+                                                : "hover:bg-purple-800 "}  
+                                                font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`}
+                                            onClick={() => {
+                                                setCheck(true)
+                                                increase()
 
-                                            if (checkFlag === 1) {
-                                                setSelect({ isCorrect: 1, type: 3 })
-                                            }
-                                            if (checkFlag === 0 && select === null) {
-                                                setSelect({ isCorrect: 0, type: 3 })
-                                                console.log("abc")
-                                            }
+                                                if (checkFlag === 1) {
+                                                    setSelect({ isCorrect: 1, type: 3 })
+                                                }
+                                                if (checkFlag === 0 && select === null) {
+                                                    setSelect({ isCorrect: 0, type: 3 })
+                                                    console.log("abc")
+                                                }
 
-                                            if (select !== null && select.type === undefined) {
-                                                console.log("result 2");
-                                                setResult([...result, {
-                                                    quiz: quizList[quizIndex].quiz._id,
-                                                    answerQuiz: select.id,
-                                                    time: flag1,
-                                                    point: select.isCorrect ? Math.round(flag2) : 0,
-                                                    isCorrect: select.isCorrect
-                                                }])
-                                            } else {
-                                                console.log("result 1");
-                                                setResult([...result, {
-                                                    quiz: quizList[quizIndex].quiz._id,
-                                                    time: flag1,
-                                                    point: checkFlag === 1 ? Math.round(flag2) : 0,
-                                                    isCorrect: checkFlag,
-                                                    answer: answerType3
-                                                }])
-                                            }
-                                            console.log("result", result);
+                                                if (select !== null && select.type === undefined) {
+                                                    console.log("result 2");
+                                                    setResult([...result, {
+                                                        quiz: quizList[quizIndex].quiz._id,
+                                                        answerQuiz: select.id,
+                                                        time: flag1,
+                                                        point: select.isCorrect ? Math.round(flag2) : 0,
+                                                        isCorrect: select.isCorrect
+                                                    }])
+                                                } else {
+                                                    console.log("result 1");
+                                                    setResult([...result, {
+                                                        quiz: quizList[quizIndex].quiz._id,
+                                                        time: flag1,
+                                                        point: checkFlag === 1 ? Math.round(flag2) : 0,
+                                                        isCorrect: checkFlag,
+                                                        answer: answerType3
+                                                    }])
+                                                }
+                                                console.log("result", result);
 
-                                            speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct": "Wrong"}`, voice: voices[2] })
-                                            // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
-                                        }}>
-                                        Kiểm tra
-                                    </button>
+                                                speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+                                                // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
+                                            }}
+                                        >
+                                            Xem kết quả
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -648,7 +607,7 @@ const QuizPage = () => {
 
                     </div>
 
-                    <Button type="primary" onClick={showModal}>
+                    <Button  type="primary" onClick={showModal}>
                         Open Modal
                     </Button>
 
@@ -713,10 +672,11 @@ const QuizPage = () => {
                         </Collapse>
                     </Modal>
                 </div>
+
             </div>
 
         </>
     )
 }
 
-export default QuizPage
+export default QuizTypeSelect
