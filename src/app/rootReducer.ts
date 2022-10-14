@@ -13,6 +13,7 @@ import UserListenWriteSlice from "../features/Slide/userListenWrite/UserListenWr
 import CommentSlice from "../features/Slide/comment/CommentSlice";
 import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLimitCountdown";
 import ClassSlide from "../features/Slide/class/classSlice";  
+import ReplycommentSlide from "../features/Slide/comment/ReplySilce"
 const rootReducer = combineReducers({
     count: CountSlide,
     product: ProductSlide,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     user: authSlide,
     time: TimeLimitCountdownSlice,
     class: ClassSlide,
+    reply: ReplycommentSlide,
 });
 
 export default rootReducer;
