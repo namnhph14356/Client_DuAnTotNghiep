@@ -8,6 +8,11 @@ export const listWeek = () => {
     return instance.get(url)
 }
 
+export const listWeekByMonth = (id: string) => {
+    const url = `/week/month/${id}`
+    return instance.get(url)
+}
+
 export const detailWeek = (id: string) => {
     const url = `/week/${id}`
     return instance.get(url)

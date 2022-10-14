@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addWeek, editWeek, listWeek, removeWeek } from "../../../api/week";
+import { addWeek, editWeek, listWeek, listWeekByMonth, removeWeek } from "../../../api/week";
 import { WeekType } from "../../../types/week";
 
 
@@ -11,6 +11,14 @@ export const getListWeekSlice = createAsyncThunk(
      'weeks/getListWeek',
      async () => {
           const { data } = await listWeek()
+          return data
+     }
+)
+
+export const getListWeekSliceByMonth = createAsyncThunk(
+     'weeks/getListWeekByMonth',
+     async (id: any) => {
+          const { data } = await listWeekByMonth(id)
           return data
      }
 )
@@ -56,6 +64,7 @@ const weekSlice = createSlice({
      name: "Weeks",
      initialState: {
           value: [],
+          valueByMonth: [],
           breadcrumb: ""
      },
      reducers: {
@@ -69,6 +78,11 @@ const weekSlice = createSlice({
                state.value = action.payload
 
           })
+          builder.addCase(getListWeekSliceByMonth.fulfilled, (state, action) => {
+               state.valueByMonth = action.payload
+
+          })
+
           builder.addCase(addWeekSlice.fulfilled, (state: any, action) => {
                state.value = [...state.value, action.payload]
                

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDay, editDay, listDay, removeDay } from "../../../api/day";
+import { addDay, editDay, listDay, listDayByWeek, removeDay } from "../../../api/day";
 import { DayType } from "../../../types/day";
 
 
@@ -11,6 +11,14 @@ export const getListDaySlice = createAsyncThunk(
      'days/getListDay',
      async () => {
           const { data } = await listDay()
+          return data
+     }
+)
+
+export const getListDaySliceByWeek = createAsyncThunk(
+     'days/getListDayByWeek',
+     async (id: any) => {
+          const { data } = await listDayByWeek(id)
           return data
      }
 )
@@ -56,6 +64,7 @@ const daySlice = createSlice({
      name: "Days",
      initialState: {
           value: [],
+          valueByWeek: [],
           breadcrumb: ""
      },
      reducers: {
@@ -67,6 +76,10 @@ const daySlice = createSlice({
           
           builder.addCase(getListDaySlice.fulfilled, (state, action) => {
                state.value = action.payload
+
+          })
+          builder.addCase(getListDaySliceByWeek.fulfilled, (state, action) => {
+               state.valueByWeek = action.payload
 
           })
           builder.addCase(addDaySlice.fulfilled, (state: any, action) => {

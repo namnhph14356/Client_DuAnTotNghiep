@@ -7,6 +7,11 @@ export const listDay = () => {
     return instance.get(url)
 }
 
+export const listDayByWeek = (id: string) => {
+    const url = `/day/week/${id}`
+    return instance.get(url)
+}
+
 export const detailDay = (id: string) => {
     const url = `/day/${id}`
     return instance.get(url)

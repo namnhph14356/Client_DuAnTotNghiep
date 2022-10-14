@@ -9,6 +9,12 @@ import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowPathIcon, CheckIcon, ChevronDownIcon, ChevronUpDownIcon, DocumentTextIcon, EllipsisHorizontalIcon, HomeIcon, LockClosedIcon, ShieldCheckIcon, UserPlusIcon } from '@heroicons/react/20/solid'
 import { ShoppingBag } from 'heroicons-react'
+import { getListMonthSlice } from '../features/Slide/month/MonthSlice'
+import { getListWeekSlice, getListWeekSliceByMonth } from '../features/Slide/week/WeekSlice'
+import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/DaySlice'
+import { MonthType } from '../types/month'
+import { WeekType } from '../types/week'
+import { DayType } from '../types/day'
 
 
 
@@ -33,11 +39,51 @@ function classNames(...classes) {
 }
 const Learning = () => {
   const categories = useAppSelector(item => item.category.value)
+  let months = useAppSelector<MonthType[]>(item => item.month.value)
+  let weeks = useAppSelector<WeekType[]>(item => item.week.valueByMonth)
+  let days = useAppSelector<DayType[]>(item => item.day.valueByWeek)
+  const [weekArrSelect, setWeekArrSelect] = useState<WeekType[]>()
+  const [dayArrSelect, setDayArrSelect] = useState<DayType[]>()
+
+  const [monthSelect, setMonthSelect] = useState<MonthType>(months.reduce(function (prev, current) {
+    return (prev.order < current.order) ? prev : current
+  }))
+  const [weekSelect, setWeekSelect] = useState<WeekType | null>(weeks.length !== 0 ? weeks.reduce(function (prev, current) {
+    return (prev.order < current.order) ? prev : current
+  }): null)
+  const [daySelect, setDaySelect] = useState<DayType | null>(days.length !== 0 ? days.reduce(function (prev, current) {
+    return (prev.order < current.order) ? prev : current
+  }): null)
+
   const dispatch = useAppDispatch()
+
+  console.log("months", months);
+  console.log("weeks", weeks);
+  console.log("days", days);
+
+  console.log("monthSelect", monthSelect);
+  console.log("weekSelect", weekSelect);
+  console.log("daySelect", daySelect);
+
+
 
   useEffect(() => {
     dispatch(getCategoryList())
-  }, [])
+    
+    dispatch(getListMonthSlice())
+    // const firstMonth = months.reduce(function (prev, current) {
+    //   return (prev.order < current.order) ? prev : current
+    // })
+    // console.log("firstMonth", firstMonth);
+    // setMonthSelect(firstMonth)
+    dispatch(getListWeekSliceByMonth(monthSelect?._id))
+    dispatch(getListDaySliceByWeek(weekSelect?._id))
+    console.log("months", months);
+    console.log("weeks", weeks);
+    console.log("days", days);
+
+    
+  }, [monthSelect,weekSelect])
   const [selected, setSelected] = useState(item[3])
   return (
     <div className='learning__page'>
@@ -58,7 +104,7 @@ const Learning = () => {
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
                       <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                        {monthSelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -72,7 +118,47 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {item.map((value) => (
+                        {months.map((item: MonthType, index: number) => (
+                          <Menu.Item >
+                            {({ active }) => (
+                              <p
+                                className={classNames(
+                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                )}
+                                onClick={() => { setMonthSelect(item) }}
+                              >
+
+                                {item.title}
+                              </p>
+                            )}
+                          </Menu.Item>
+                        ))}
+
+
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+                <div className="item__btn__time">
+                  <Menu as="div" className="relative inline-block text-left ">
+                    <div>
+                      <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
+                        {weekSelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+
+                        {weeks.map((item: WeekType) => (
 
                           <Menu.Item >
                             {({ active }) => (
@@ -81,9 +167,10 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
+                                onClick={() => { setWeekSelect(item) }}
                               >
 
-                                {value.name}
+                                {item.title}
                               </p>
                             )}
                           </Menu.Item>
@@ -99,7 +186,7 @@ const Learning = () => {
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
                       <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                      {daySelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -113,7 +200,7 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {item.map((value) => (
+                        {days.map((item: DayType) => (
 
                           <Menu.Item >
                             {({ active }) => (
@@ -122,50 +209,10 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
+                                onClick={() => { setDaySelect(item) }}
                               >
 
-                                {value.name}
-                              </p>
-                            )}
-                          </Menu.Item>
-
-                        ))}
-
-
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
-                <div className="item__btn__time">
-                  <Menu as="div" className="relative inline-block text-left ">
-                    <div>
-                      <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
-                        {item.map((value) => (
-
-                          <Menu.Item >
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                              >
-
-                                {value.name}
+                                {item.title}
                               </p>
                             )}
                           </Menu.Item>
