@@ -4,18 +4,36 @@ import { NavLink } from "react-router-dom";
 import { getUserNote } from "../../api/noteCouse";
 import MenuVocab from "../../components/VocabConponent/MenuVocab";
 import { NoteCouseType } from "../../types/noteCouse";
-
+import { ReactDimmer } from "react-dimmer";
+import Update from "./update";
+import { useDispatch, useSelector } from "react-redux";
+import { getNoteUser } from "../../features/Slide/note/NoteSlice";
+import { setConstantValue } from "typescript";
+import { store } from "../../app/store";
+type  Props = {
+}
 const Note = () => {
-  const [text, setText] = useState<NoteCouseType>();
+  const dataDemo = useSelector<any, any>(data => data.noteCouse.value )
+  // console.log("dataDemo", dataDemo);
+  
+  const [value, setValue] = useState<any>();
+  const [isModal, setIsModal] = useState(false);
+  const dispatch = useDispatch()
   const userId = "62d6f40c1649dde5e7d58458";
-  const dayId = "somethink";
+  const dayId = "hungchitestthoi";
+  // const userId = "131313123";
+  // const dayId = "jkdaasdnasd"
   useEffect(() => {
     const getText = async () => {
-      const { data } = await getUserNote(dayId, userId);
-      setText(data);
+      const {payload} =await dispatch(getNoteUser({dayId, userId}));
+      
+      setValue(payload);
     };
     getText();
   },[]);
+const triggerModal = () => {
+  setIsModal((prevState) => !prevState)
+}
 
   return (
     <>
@@ -23,16 +41,15 @@ const Note = () => {
     <div className="w-full h-auto bg-[#faf8dd] py-4 px-4 mt-6 rounded-xl">
       <div className="grid grid-cols-2 text-xl font-lg border-b-[1.5px] text-[#666] pb-2">
         <span className="grid justify-items-start">Ghi chú bài học</span>
-
-        <NavLink to={`/learning/detailLearning/:id/vocabulary/updateNote/${text?._id ? text._id : ""}`} className="grid justify-items-end" >
-        <i className="fa-duotone fa-notebook"></i>
-        click
-        </NavLink>
+{/* to={`/learning/detailLearning/:id/vocabulary/updateNote/${text?._id ? text._id : ""}`} */}
+        <button onClick={()=>triggerModal()}   className="grid justify-items-end" >
+        <i className="fa-regular fa-pen-to-square"></i>
+        </button>
       </div>
       <div className="mt-2">
         {" "}
-        {text?.text ? (
-          <span dangerouslySetInnerHTML={{__html:`${text?.text}`}}></span>
+        {value?.text ? (
+          <span dangerouslySetInnerHTML={{__html:`${dataDemo?.text}`}}></span>
         ) : (
           <i>
             Hãy ghi chú những điểm tâm đắc hay cần lưu ý về bài học để tham khảo
@@ -41,6 +58,16 @@ const Note = () => {
         )}
       </div>
     </div>
+          
+    {isModal && <Update dataForm={dataDemo ? dataDemo : ""}/>}
+
+          <ReactDimmer
+            isOpen={isModal}
+            exitDimmer={setIsModal}
+            zIndex={100}
+            blur={1}
+      
+          />
     </>
   );
 };

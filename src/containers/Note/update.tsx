@@ -7,52 +7,72 @@ import { NavLink, useNavigate, useParams} from 'react-router-dom';
 import { editUserNote, getUserNote, userAddNote } from '../../api/noteCouse';
 import MenuVocab from '../../components/VocabConponent/MenuVocab';
 import { NoteCouseType } from '../../types/noteCouse';
-type Props = {}
-const Update = (props: Props) => {
-    const backPage = () => {
-        // eslint-disable-next-line no-restricted-globals
-        history.go(-1);
-    }
+import { useDispatch, useSelector } from 'react-redux';
+import { addNote, editNote, getData, getNoteUser } from '../../features/Slide/note/NoteSlice';
+type Props = {
 
-    const [value, setValue] = useState<NoteCouseType>();
-    const userId:string = "62d6f40c1649dde5e7d58458";
-    const dayId:string = "somethink";
-    useEffect(()=>{
-        const getValue = async () => {
-            const {data} = await  getUserNote(dayId, userId)
-            form.setFieldsValue(data)
-        }
-        getValue()
-    },[]);
-    const {id} = useParams();
+}
+interface IModalProps {
+    closeModal: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+const Update = ( props:any) => {
+    const dataDemo = useSelector<any, any>(data => data.noteCouse.value);
+    console.log("update",dataDemo?.text);
     
-    const [form] = Form.useForm();
+    const [value, setValue] = useState<NoteCouseType>();
+    // const userId:string = "62d6f40c1649dde5e7d58458";
+    // const dayId:string = "hungchitestthoi";
+    const dispatch = useDispatch();
+    console.log("---------------------------");
+    const dayId = props.dataForm.dayId;
+    const userId = props.dataForm.userId;
+    // console.log("daadadad",dayId, userId);
+    
+    // useEffect(()=>{
+    //     const getValue = async () => {
+            
+    //         const {payload} = await dispatch(getNoteUser({dayId, userId}))
+    //         console.log("payload",payload);
+            
+    //         setValue(payload)   
+    //         // dispatch(getData("asd"));
+    //         console.log("value",value);
+            
+    //         form.setFieldsValue(payload)
+    //     }
+    //     getValue()
+    // },[]);
+    
+    const [form] = Form.useForm();  
+    form.setFieldsValue(dataDemo)
+    const id = dataDemo?._id
+ 
     const onFinish = async (note:any) => {
-        console.log(note);
+        // console.log(note);
         
         try {
             if(id){
-                const data =  await editUserNote({...note,id})
+                const newNote = {...note, id}
+                dispatch(editNote(newNote))
+                // closeModal((prevState) => prevState)  
                 message.success("Cập nhật thành công");
-                navigate("/learning/detailLearning/:id/vocabulary/note")
             }else{
-                const data = await userAddNote({...note, dayId, userId});
+               const newNote =  {...note, dayId, userId};
+               dispatch(addNote(newNote))
                 message.success("Cập nhật thành công");
-                navigate("/learning/detailLearning/:id/vocabulary/note")
             }
         } catch (error) {
             console.log('Lỗi');
             
         }
     }
-    const navigate = useNavigate();
     const onFinishFailed = (errorInfo: any) => {
 		console.log('Failed:', errorInfo);
 	};
   return (
-    <>
+    <div className='modal'>
     {/* <MenuVocab /> */}
-    <div  className='w-full h-auto bg-[#faf8dd] py-4 px-4 mt-6 rounded-xl'>
+    <div  className='w-full h-screen bg-[#faf8dd] py-4 px-4 rounded-xl'>
     <div className="text-xl font-lg border-b-[1.5px] text-[#666] pb-2">
         <span className="grid justify-items-start">Ghi chú bài học</span>
       </div>
@@ -64,17 +84,15 @@ const Update = (props: Props) => {
       labelCol={{ span: 24 }}
       >
         <Form.Item 
-        // {...register("text")}
         name="text"
         >
-            <ReactQuill className='mt-4' value={value?.text} theme="snow"  style={{background:"#fff"}}  />
+            <ReactQuill   className='quill_custom mt-4 rounded' value={dataDemo?.text} theme="snow"  style={{background:"#fff"}}  />
         </Form.Item>
             <button className='p-2 bg-green-500 font-bold text-white rounded'>Lưu ghi chú</button>
      
         </Form>
-        <button className='p-2 bg-green-500 font-bold text-white rounded ml-2' onClick={()=>backPage()}>Thoát</button>
     </div>
-    </>
+    </div>
   )
 }
 

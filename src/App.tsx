@@ -97,8 +97,6 @@ function App() {
                   <Route path='lesson' element={<LessonVocabulary />} />
                   <Route path='exercise' element={<ExerciseVocabulary />} />
                   <Route path='note' element={<Note />} />
-                  <Route path='updateNote' element={<Update />} />
-                  <Route path='updateNote/:id' element={<Update />} />
                   <Route path='questionAndAnswer' element={<QuestionAnswer />} />
                 </Route>
 

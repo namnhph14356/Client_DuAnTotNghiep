@@ -15,6 +15,8 @@ const LessonVocabulary = () => {
     }
     getVocab()
   },[])
+  console.log(dataVocab);
+  
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } =
   useSpeechSynthesis();
   return (
