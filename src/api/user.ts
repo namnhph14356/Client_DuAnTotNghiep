@@ -1,12 +1,20 @@
-
-// import { UserType } from "../types";
-import { UserType } from "../types/category";
+import { UserType } from "../types/user";
 import instance from "./instance";
 
 
 export const login = (user:any) => {
     const url = "/signin";
     return instance.post(url, user);
+}
+
+export const signInWidthFacebook = (user:any) => {
+  const url = "/signInnWidthFacebook";
+  return instance.post(url, user);
+}
+
+export const signInWidthGoogle = (user:any) => {
+  const url = "/signInWidthGoogle";
+  return instance.post(url, user);
 }
 
 export const register = (user:any) => {
@@ -30,7 +38,7 @@ export const addUser = (user:UserType) => {
 
 export const editUser = (user:UserType) => {
     const url = `/users/${user._id}`;
-    return instance.put(url, user);
+    return instance.patch(url, user);
 } 
 
 export const removeUser = (id:any) => {
@@ -52,3 +60,8 @@ export const changeOTP = (user:any) => {
     const url = `/changeOTP`;
     return instance.post(url, user);
 } 
+
+export const getCurrenUser = () => {
+  const url = `/users/currentUser/current`;
+  return instance.get(url);
+}

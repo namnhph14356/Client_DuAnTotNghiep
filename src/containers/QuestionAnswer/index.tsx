@@ -350,7 +350,7 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
             <div dangerouslySetInnerHTML={{ __html: `${reply.content}` }}></div>
           </p>
         }
-        datetime={<span style={{ fontSize: '11px', fontWeight: 'bold' }}>{moment(reply.date).local().fromNow()}</span>}
+        datetime={<span style={{ fontSize: '11px', fontWeight: 'bold' }}>{moment(reply.createdAt).local().fromNow()}</span>}
 
       />
 
