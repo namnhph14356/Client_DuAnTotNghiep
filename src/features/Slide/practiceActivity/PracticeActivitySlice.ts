@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addPracticeActivity, editPracticeActivity, listPracticeActivity, removePracticeActivity } from "../../../api/practiceActivity";
+import { addPracticeActivity, editPracticeActivity, listPracticeActivity, listPracticeActivityByDay, removePracticeActivity } from "../../../api/practiceActivity";
 import { PracticeActivityType } from "../../../types/practiceActivity";
 
 
@@ -11,6 +11,14 @@ export const getListPracticeActivitylice = createAsyncThunk(
      'practiceActivities/getListPracticeActivity',
      async () => {
           const { data } = await listPracticeActivity()
+          return data
+     }
+)
+
+export const getListPracticeActivitySliceByDay = createAsyncThunk(
+     'practiceActivities/getListPracticeActivityByDay',
+     async (id: any) => {
+          const { data } = await listPracticeActivityByDay(id)
           return data
      }
 )
@@ -56,6 +64,7 @@ const practiceActivitySlice = createSlice({
      name: "PracticeActivity",
      initialState: {
           value: [],
+          valueByDay: [],
           breadcrumb: ""
      },
      reducers: {
@@ -67,6 +76,10 @@ const practiceActivitySlice = createSlice({
           
           builder.addCase(getListPracticeActivitylice.fulfilled, (state, action) => {
                state.value = action.payload
+
+          })
+          builder.addCase(getListPracticeActivitySliceByDay.fulfilled, (state, action) => {
+               state.valueByDay = action.payload
 
           })
           builder.addCase(addPracticeActivitylice.fulfilled, (state: any, action) => {
