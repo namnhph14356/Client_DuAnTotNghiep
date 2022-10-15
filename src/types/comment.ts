@@ -18,4 +18,11 @@ export type CommentType = {
             status: string
         }
     ],
+    reply:[
+        {
+            userId: string,
+            userName: string,
+            content: string
+        }
+    ]
 }
