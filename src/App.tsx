@@ -11,7 +11,6 @@ import DetailLearning from './pages/DetailLearning';
 import FileUser from './pages/FileUser';
 import SignUp from './pages/SignUp';
 import ExeWriteAndListen from './containers/Conversation/ExeWriteAndListen';
-import Login from './pages/Login';
 import ListUser from './pages/admin/Auth/listUser';
 import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
@@ -55,10 +54,13 @@ import TeacherLayout from './pages/layouts/TeacherLayout';
 import LessonListTeacher from './pages/adminTeacher/AdminLearn';
 import Grammar from './pages/Grammar';
 import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
+import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
+import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
+
 import Vocabulary from './pages/Vocabulary';
 import ConversationPage from './pages/ConversationPage';
 import ExercisePage from './pages/ExercisePage';
-import SignIn from './pages/Login';
+import SignIn from './pages/SignIn';
 import DetailLearningLayout from './pages/layouts/DetailLearningLayout';
 import SpeakingPage from './pages/speaking';
 import ExeListenAndRead from './containers/Conversation/ExeListenAndRead';
@@ -73,14 +75,15 @@ import Sentences from './pages/Sentences';
 import LessonSentences from './containers/Sentences/LessonSentences';
 import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
-import Update from './containers/Note/update';
+import QuizTypeSelect from './components/quiz/QuizTypeSelect';
+import { PrivateRouteHomePage } from './midlerware/PrivateRoute';
 
 function App() {
   return (
     <div >
       <Routes>
 
-        <Route path='/' element={<WebsiteLayout />}>
+        <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
@@ -90,6 +93,8 @@ function App() {
 
                 <Route path='speak' element={<SpeakingPage />}>
                   <Route path='startUp' element={<StartUp />} />
+                  <Route path='quiz2' element={<QuizPage />} />
+                  <Route path='quiz' element={<QuizTypeSelect />} />
                   <Route path='questionAndAnswer' element={<QuestionAnswer />} />
                 </Route>
 
@@ -136,13 +141,16 @@ function App() {
           <Route path='teacher' element={<TeacherPage />} />
 
         </Route>
+
+
         <Route path='menageteacher' element={<TeacherLayout />}>
-          <Route index element={<LessonListTeacher />} />
-          <Route path='add' element={<AdminLearnAdd />} />
-          {/* <Route path="list" >
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path='dashboard' element={<Dashboard />} />
+          <Route path='class' element={<AdminClassList />} />
+          <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
-          </Route> */}
+          </Route>
           <Route path="category" >
             <Route index element={<CategoryList />} />
             <Route path='add' element={<AddCategory />} />
@@ -158,10 +166,6 @@ function App() {
             <Route path='edit/:id' element={<Add />} />
           </Route>
 
-          <Route path="contact" >
-            <Route index element={<ListContact />} />
-            <Route path='edit/:id' element={<EditContact />} />
-          </Route>
 
           <Route path="contact" >
             <Route index element={<ListContact />} />
@@ -206,10 +210,10 @@ function App() {
           </Route>
 
         </Route>
+
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
-
-        <Route path='sigin' element={<SignIn />}> </Route>
+        <Route path='/signin' element={<SignIn />}> </Route>
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/forgotPassword' element={<ForgotPassword />}></Route>
         <Route path='/newPassword/:email' element={<NewPassword />}></Route>

@@ -13,16 +13,12 @@ import { store } from "../../app/store";
 type  Props = {
 }
 const Note = () => {
-  const dataDemo = useSelector<any, any>(data => data.noteCouse.value )
-  // console.log("dataDemo", dataDemo);
-  
+  const dataForm = useSelector<any, any>(data => data.noteCouse.value )  
   const [value, setValue] = useState<any>();
   const [isModal, setIsModal] = useState(false);
   const dispatch = useDispatch()
-  const userId = "62d6f40c1649dde5e7d58458";
-  const dayId = "hungchitestthoi";
-  // const userId = "131313123";
-  // const dayId = "jkdaasdnasd"
+  const userId = "6329d7cdfe189857201a8ce4";
+  const dayId = "day16"
   useEffect(() => {
     const getText = async () => {
       const {payload} =await dispatch(getNoteUser({dayId, userId}));
@@ -30,7 +26,7 @@ const Note = () => {
       setValue(payload);
     };
     getText();
-  },[]);
+  },[dayId]);
 const triggerModal = () => {
   setIsModal((prevState) => !prevState)
 }
@@ -41,15 +37,14 @@ const triggerModal = () => {
     <div className="w-full h-auto bg-[#faf8dd] py-4 px-4 mt-6 rounded-xl">
       <div className="grid grid-cols-2 text-xl font-lg border-b-[1.5px] text-[#666] pb-2">
         <span className="grid justify-items-start">Ghi chú bài học</span>
-{/* to={`/learning/detailLearning/:id/vocabulary/updateNote/${text?._id ? text._id : ""}`} */}
         <button onClick={()=>triggerModal()}   className="grid justify-items-end" >
         <i className="fa-regular fa-pen-to-square"></i>
         </button>
       </div>
       <div className="mt-2">
         {" "}
-        {value?.text ? (
-          <span dangerouslySetInnerHTML={{__html:`${dataDemo?.text}`}}></span>
+        {dataForm?.text ? (
+          <span dangerouslySetInnerHTML={{__html:`${dataForm?.text}`}}></span>
         ) : (
           <i>
             Hãy ghi chú những điểm tâm đắc hay cần lưu ý về bài học để tham khảo
@@ -59,7 +54,7 @@ const triggerModal = () => {
       </div>
     </div>
           
-    {isModal && <Update dataForm={dataDemo ? dataDemo : ""}/>}
+    {isModal && <Update dataForm={dataForm ? dataForm : ""}/>}
 
           <ReactDimmer
             isOpen={isModal}

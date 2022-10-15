@@ -1,0 +1,24 @@
+.flexBox-dash{
+    display: flex;
+    justify-content: end;
+}
+
+.icon-dashboard{
+    color: coral;
+}
+
+.d-flex{
+    display: flex;
+}
+
+.ms-2{
+    margin-left: 20px;
+}
+
+.admin-class-wrapper .ant-modal-footer{
+    display: none;
+}
+
+.justify-between{
+    justify-content: space-between;
+}

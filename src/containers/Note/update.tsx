@@ -16,50 +16,28 @@ interface IModalProps {
     closeModal: React.Dispatch<React.SetStateAction<boolean>>;
   }
 const Update = ( props:any) => {
-    const dataDemo = useSelector<any, any>(data => data.noteCouse.value);
-    console.log("update",dataDemo?.text);
-    
-    const [value, setValue] = useState<NoteCouseType>();
-    // const userId:string = "62d6f40c1649dde5e7d58458";
-    // const dayId:string = "hungchitestthoi";
+
     const dispatch = useDispatch();
-    console.log("---------------------------");
     const dayId = props.dataForm.dayId;
     const userId = props.dataForm.userId;
-    // console.log("daadadad",dayId, userId);
+//     const userId = "6329d7cdfe189857201a8ce4";
+//   const dayId = "day16"
     
-    // useEffect(()=>{
-    //     const getValue = async () => {
-            
-    //         const {payload} = await dispatch(getNoteUser({dayId, userId}))
-    //         console.log("payload",payload);
-            
-    //         setValue(payload)   
-    //         // dispatch(getData("asd"));
-    //         console.log("value",value);
-            
-    //         form.setFieldsValue(payload)
-    //     }
-    //     getValue()
-    // },[]);
+    const data =  props.dataForm
+    const [form] = Form.useForm();
+    form.setFieldsValue(data)  
+    const id = data?._id
     
-    const [form] = Form.useForm();  
-    form.setFieldsValue(dataDemo)
-    const id = dataDemo?._id
- 
     const onFinish = async (note:any) => {
-        // console.log(note);
-        
+  
         try {
             if(id){
                 const newNote = {...note, id}
                 dispatch(editNote(newNote))
-                // closeModal((prevState) => prevState)  
-                message.success("Cập nhật thành công");
             }else{
                const newNote =  {...note, dayId, userId};
                dispatch(addNote(newNote))
-                message.success("Cập nhật thành công");
+         
             }
         } catch (error) {
             console.log('Lỗi');
@@ -86,7 +64,7 @@ const Update = ( props:any) => {
         <Form.Item 
         name="text"
         >
-            <ReactQuill   className='quill_custom mt-4 rounded' value={dataDemo?.text} theme="snow"  style={{background:"#fff"}}  />
+            <ReactQuill   className='quill_custom mt-4 rounded' value={data?.text} theme="snow"  style={{background:"#fff"}}  />
         </Form.Item>
             <button className='p-2 bg-green-500 font-bold text-white rounded'>Lưu ghi chú</button>
      
