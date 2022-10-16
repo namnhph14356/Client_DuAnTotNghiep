@@ -14,6 +14,9 @@ import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLi
 import ClassSlide from "../features/Slide/class/classSlice";  
 import userSlide from "../features/Slide/user/userSlide";
 import authSlide from "../features/Slide/auth/authSlide";
+
+import NoteSlice from "../features/Slide/note/NoteSlice";
+
 import MonthSlice from "../features/Slide/month/MonthSlice";
 import CourseSlide from "../features/Slide/course/CourseSlide";
 import WeekSlice from "../features/Slide/week/WeekSlice";
@@ -35,6 +38,7 @@ const rootReducer = combineReducers({
     auth: authSlide,
     time: TimeLimitCountdownSlice,
     class: ClassSlide,
+    noteCouse: NoteSlice,
     course: CourseSlide,
     month: MonthSlice,
     week: WeekSlice,

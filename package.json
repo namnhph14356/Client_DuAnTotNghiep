@@ -36,6 +36,7 @@
     "react-comments-section": "^2.0.10",
     "react-countdown": "^2.3.2",
     "react-debounce-input": "^3.3.0",
+    "react-dimmer": "^1.0.7",
     "react-dom": "^18.2.0",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.2.2",
