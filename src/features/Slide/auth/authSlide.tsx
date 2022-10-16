@@ -4,7 +4,7 @@ import { changeOTP, forgotPass, getCurrenUser, login, newPassword, register, sig
 
 export interface AuthSlice {
   value: Object,
-  otp: string[],
+  otp: string,
   isAuthticated: boolean
 }
 
@@ -54,7 +54,7 @@ export const signUp = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (email: { email: String }) => {
+  async (email:{email:string}) => {
     const { data } = await forgotPass(email);
     return data
   }
@@ -62,15 +62,8 @@ export const forgotPassword = createAsyncThunk(
 
 export const newPass = createAsyncThunk(
   "auth/changePassword",
-  async (user: { email: string | undefined, password: string | number }) => {
-    const { data } = await newPassword(user);
-    return data
-  }
-)
-export const changeOtp = createAsyncThunk(
-  "auth/changeOtp",
-  async (user: { email: string, otp: string | number, otpHash: string | undefined }) => {
-    const { data } = await changeOTP(user);
+  async (email:{email:string, password:string}) => {
+    const { data } = await newPassword(email);
     return data
   }
 )
@@ -79,7 +72,7 @@ const authSlide = createSlice({
   name: "auth",
   initialState: {
     value: {},
-    otp: [],
+    otp: '',
     isAuthticated: false
   },
   reducers: {
@@ -111,8 +104,6 @@ const authSlide = createSlice({
     builer.addCase(forgotPassword.fulfilled, (state: AuthSlice, action) => {
     })
     builer.addCase(newPass.fulfilled, (state: AuthSlice, action) => {
-    })
-    builer.addCase(changeOtp.fulfilled, (state: AuthSlice, action) => {
     })
   }
 })
