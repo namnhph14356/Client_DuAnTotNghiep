@@ -11,7 +11,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from '../../types/user'
-import { Avatar, AvatarDefault } from "../Avatar";
+import { Avatar } from "../Avatar";
 type Props = {};
 
 type FormTypes = {
@@ -90,11 +90,7 @@ const BannerUser = (props: Props) => {
             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
               <Row className="items-center">
                 <Col className="info-image">
-              
-                  {auth.img
-                    ? <Avatar image={auth.img} className="text-4xl w-32" />
-                    : <AvatarDefault name={auth.username} color={String(auth.colorImage)} className="text-4xl w-32 h-32 text-white" />
-                  }
+                  <Avatar image={String(auth.img)} className="text-4xl w-32" />
                 </Col>
                 <Col
                   xs={24}

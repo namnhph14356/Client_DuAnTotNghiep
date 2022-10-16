@@ -11,6 +11,7 @@ import { signUp } from "../features/Slide/auth/authSlide";
 import { Modal, message } from "antd";
 import { colors } from "../utils/color";
 import { AppDispatch } from "../app/store";
+import { convertUsername } from "../services/user";
 type Props = {};
 
 const fromSchema = yup.object().shape({
@@ -60,11 +61,12 @@ const SignUp = (props: Props) => {
   const onSubmit: SubmitHandler<FormInputs> = async (userForm: FormInputs) => {
     try {
       let colorRandom = colors[Math.floor(Math.random() * colors.length)];
+      const img = `https://ui-avatars.com/api/?uppercase=true&name=${convertUsername(userForm.username)}&background=${colorRandom.color}&size=500`
       const user = {
         username: userForm.username,
         email: userForm.email,
         password: userForm.password,
-        colorImage: colorRandom.color
+        img: img
       };
       const { payload } = await dispatch(signUp(user));
       if (payload.message) {
