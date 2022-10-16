@@ -42,7 +42,7 @@ export const signInWidthGoogleSlice = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
   "auth/register",
-  async (user: { username: string, email: string, password: string | number, colorImage: string }, { rejectWithValue }) => {
+  async (user: { username: string, email: string, password: string | number, img: string }, { rejectWithValue }) => {
     try {
       const { data } = await register(user);
       return data

@@ -6,12 +6,6 @@ type AvatarProps = {
   className?:string
 }
 
-type AvatarDefaultProps = {
-  name: string,
-  color: string,
-  className?:string
-}
-
 export const Avatar = ({ image, className }: AvatarProps) => {
   return (
     <div>
@@ -20,10 +14,3 @@ export const Avatar = ({ image, className }: AvatarProps) => {
   )
 }
 
-export const AvatarDefault = ({ name, color, className }: AvatarDefaultProps) => {
-  return (
-    <div className={`rounded-full`} style={{ background: `${color}` }}>
-      <div className={`m-auto ${className} flex justify-center items-center `}>{convertUsername(String(name))}</div>
-    </div>
-  )
-}
