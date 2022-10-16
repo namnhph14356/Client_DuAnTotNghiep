@@ -1,9 +1,11 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
 type Props = {}
 
 const MenuVocab = (props: Props) => {
+  const { id ,dayId} = useParams()
+  // const {idDay} = useParams();
   return (
    <>
    <div className="w-full bg-indigo-600 px-4 py-2">
@@ -24,24 +26,24 @@ const MenuVocab = (props: Props) => {
             </div> */}
           </div>
           <div>
-          <NavLink to={'/learning/detailLearning/:id/vocabulary/lesson'} className="text-black" >
+          <NavLink to={`/learning/${id}/detailLearning/${dayId}/vocabulary/lesson`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-book"></i> Bài học
               </button>
             </NavLink>
 
-            <NavLink to={'/learning/detailLearning/:id/vocabulary/exercise'} className="text-black" >
+            <NavLink to={`/learning/${id}/detailLearning/${dayId}/vocabulary/exercise`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-pen-to-square mr-1"></i>Bài tập
               </button>
             </NavLink>
 
-            <NavLink to={'/learning/detailLearning/:id/vocabulary/note'} className="text-black" >
+            <NavLink to={`/learning/${id}/detailLearning/${dayId}/vocabulary/note`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-notes-medical"></i> Ghi chú
               </button>
             </NavLink>
-            <NavLink to={'/learning/detailLearning/:id/vocabulary/questionAndAnswer'} className="text-black" >
+            <NavLink to={`/learning/${id}/detailLearning/${dayId}/vocabulary/questionAndAnswer`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-comments mr-2"></i> Hỏi và đáp
               </button>

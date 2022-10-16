@@ -89,7 +89,7 @@ function App() {
             <Route index element={<Learning />} />
             <Route path=":id/detailLearning">
               <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
-              <Route path=':id' element={<DetailLearningLayout />}>
+              <Route path=':dayId' element={<DetailLearningLayout />}>
 
                 <Route path='listenSpeak' element={<SpeakingPage />}>
                   <Route path='startUp' element={<StartUp />} />

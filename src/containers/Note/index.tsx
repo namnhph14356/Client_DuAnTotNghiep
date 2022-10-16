@@ -1,6 +1,6 @@
 import { async } from "@firebase/util";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { getUserNote } from "../../api/noteCouse";
 import MenuVocab from "../../components/VocabConponent/MenuVocab";
 import { NoteCouseType } from "../../types/noteCouse";
@@ -16,9 +16,11 @@ const Note = () => {
   const dataForm = useSelector<any, any>(data => data.noteCouse.value )  
   const [value, setValue] = useState<any>();
   const [isModal, setIsModal] = useState(false);
-  const dispatch = useDispatch()
-  const userId = "6329d7cdfe189857201a8ce4";
-  const dayId = "day16"
+  const userId = localStorage.getItem("user") ? JSON.parse(String(localStorage.getItem("user"))).user._id : ""; 
+
+  const dispatch = useDispatch(); 
+  const {dayId} = useParams();
+  
   useEffect(() => {
     const getText = async () => {
       const {payload} =await dispatch(getNoteUser({dayId, userId}));
@@ -54,7 +56,7 @@ const triggerModal = () => {
       </div>
     </div>
           
-    {isModal && <Update dataForm={dataForm ? dataForm : ""}/>}
+    {isModal && <Update dataForm={dataForm ? dataForm : {dayId, userId}}/>}
 
           <ReactDimmer
             isOpen={isModal}

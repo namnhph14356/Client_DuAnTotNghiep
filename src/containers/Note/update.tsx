@@ -20,8 +20,6 @@ const Update = ( props:any) => {
     const dispatch = useDispatch();
     const dayId = props.dataForm.dayId;
     const userId = props.dataForm.userId;
-//     const userId = "6329d7cdfe189857201a8ce4";
-//   const dayId = "day16"
     
     const data =  props.dataForm
     const [form] = Form.useForm();
