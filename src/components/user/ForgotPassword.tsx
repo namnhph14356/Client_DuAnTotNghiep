@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { changeOtp, forgotPassword } from '../../features/Slide/auth/authSlide';
+import { forgotPassword } from '../../features/Slide/auth/authSlide';
 import '../../css/signin.css';
 import { AppDispatch } from '../../app/store';
 const fromSchema = yup.object().shape({
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
   const onSubmit: SubmitHandler<FormInputs> = async (userForm: FormInputs) => {
     try {
       if (!userForm.otp) {
-        const { payload } = await dispatch(forgotPassword({ email: userForm.email }) ) 
+        const { payload } = await dispatch(forgotPassword({email: userForm.email}) ) 
         if (payload.message === "Tài khoản không tồn tại !") {
           message.error(payload.message);
         } else {
@@ -49,10 +49,8 @@ const ForgotPassword = () => {
           setchange(true)
         }
       } else {
-        const { payload } = await dispatch(changeOtp({ email: userForm.email, otp: userForm.otp, otpHash: otp }))
-
-        if (payload.message) {
-          message.error(payload.message);
+        if (userForm.otp !== String(otp)) {
+          message.error("Mã OTP không chính xác!");
         } else {
           navigate(`/newPassword/${userForm.email}`)
         }
