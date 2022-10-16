@@ -134,7 +134,7 @@ const QuizTypeSelect = () => {
     let input2: any = []
     let check10: any = []
     const [quizIndex, setQuizIndex] = useState<number>(0)
-    const { id }: any = useParams()
+    const { id, dayId }: any = useParams()
     const ref = useRef(null)
     const [result, setResult] = useState<any[]>([])
     const [onReset, setOnReset] = useState<boolean>(false)
@@ -153,26 +153,20 @@ const QuizTypeSelect = () => {
         answerType3 = flag
 
     }
-
     const onHanldeSetSelect = (data: any, check: boolean) => {
+        console.log("data", data)
         if (Array.isArray(data)) {
-            setCheck(false)
             setQuizCompound(data)
         } else if (data.type === 5) {
             setSelect(data)
-            setCheck(true)
-            onCheck()
+            onCheckType5(data)
             setTimeout(() => {
                 onContinute()
             }, 1000)
         } else {
             setSelect(data)
-            setCheck(check)
         }
-
-        
     }
-
 
 
     //---Check---
@@ -181,14 +175,14 @@ const QuizTypeSelect = () => {
         setCheck(true)
         increase()
 
-        if ( checkFlag === 1) {
+        if (checkFlag === 1) {
             setSelect({ isCorrect: 1, type: 3 })
         }
-        if (checkFlag === 0 && select === null) {
+        if (checkFlag === 0 && quizCompound.length !== 0) {
             setSelect({ isCorrect: 0, type: 3 })
         }
 
-        if (select !== null && select.type !== undefined) {
+        if (select !== null && select.type === undefined) {
             setResult([...result, {
                 quiz: quizList[quizIndex].quiz._id,
                 answerQuiz: select.id,
@@ -208,6 +202,21 @@ const QuizTypeSelect = () => {
 
         speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
         // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
+    }
+
+    //---Check---
+    // check Đáp án
+    const onCheckType5 = (data) => {
+        setCheck(true)
+        increase()
+        setResult([...result, {
+            quiz: quizList[quizIndex].quiz._id,
+            answerQuiz: data.id,
+            time: flag1,
+            point: data.isCorrect ? Math.round(flag2) : 0,
+            isCorrect: data.isCorrect
+        }])
+        speak({ text: `${data.isCorrect === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
     }
 
     //---Countinute---
@@ -248,7 +257,8 @@ const QuizTypeSelect = () => {
 
         const { data: data2 } = await addHistory({
             user: "62c853c16948a16fbde3b43e",
-            category: quiz2.category._id,
+            learningProgress: "",
+            practiceActivity: quiz2.itemPracticeActivity._id,
             totalPoint: totalPoint,
             totalCorrect: totalCorrect,
             result: pass,
@@ -258,80 +268,17 @@ const QuizTypeSelect = () => {
             const flag = { ...result[index], history: data2._id }
             const { data } = await addUserQuiz(flag)
         }
-
-        const { data } = await detailCategory(id)
-        console.log(data);
+        const { data } = await detailPracticeActivity(dayId)
         setQuiz2(data)
 
         const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
             const { data } = await detailHistory(item._id)
-            // const { data: data2 } = await detailQuiz(item._id)
 
-            // console.log("correctAnswer data2", data2);
-            // const correctAnswer = quizList?.map((item: any, index: number) => {
-            //     return item.answerQuiz.filter((item2: any, index: number) => {
-            //         if (item2.isCorrect === 1) {
-            //             return item2
-
-            //         }
-            //     })
-            // })
-            // console.log("correctAnswer", correctAnswer);
             return data
         }))
         setHistory(test2)
-
         setIsModalOpen(true);
-
-
-
     }
-
-
-
-    const [checkInputLength, setCheckInputLength] = useState<any>([])
-
-    //---ChangeInput---
-    // Gán kết quả khi thay đổi giá trị trong input
-    const onChangeInput = (e, index) => {
-        const val = e.target.value.toLowerCase()
-        const existingItem = input2.find((item: any) => item.key === index);
-        if (!existingItem) {
-            input2 = [...input2, { key: index, value: val }]
-            check10 = [...check10, { key: index, check: false }]
-        } else {
-            input2 = input2.map((item: any) => item.key === index ? { key: index, value: val } : item)
-        }
-        checkInput(index)
-        setCheckInputLength(input2)
-    }
-
-    //---CheckInputResult---
-    // Kiểm tra kết quả input 
-    const checkInput = (flag) => {
-        input2.map((item2: any) => {
-            quizList[quizIndex]?.answerQuiz.map((item: any, index) => {
-                if (index === flag) {
-                    if (item.answer.toLowerCase() === item2.value) {
-                        check10 = check10.map((item: any) => item.key === flag ? { key: flag, check: true } : item)
-                    } else {
-                        check10 = check10.map((item: any) => item.key === flag ? { key: flag, check: false } : item)
-                    }
-                }
-            })
-        })
-        if (input2.length === quizList[quizIndex].answerQuiz.length) {
-            let test = check10.every(item => item.check === true)
-            if (test === true) {
-                setCheck2(true)
-            } else {
-                setCheck2(false)
-            }
-        } else {
-            setCheck2(false)
-        }
-    }
-
 
     //---QuizProgress---
     //Tiến trình làm bài Quiz
@@ -353,26 +300,6 @@ const QuizTypeSelect = () => {
             array[j] = temp;
         }
         return array;
-    }
-
-    //---ReplaceStringInput quiz listen and write ---
-    //thay các chuỗi string trong câu hỏi thành input
-    const replaceString = (e, b) => {
-        let str = e
-        b.map((item: any, index) => {
-            str = reactStringReplace(str, item.answer, (match, i) => {
-                return <input key={index} id={`input${index + 1}`} className={`${item.answer.length <= 5 ? "w-24" : "w-48 "}  border-b-2 border-black focus:outline-none focus:border-[#130ff8]`} type="text" name={`input${index + 1}`}
-                    onChange={(e) => {
-                        setTimeout(() => {
-                            onChangeInput(e, index)
-                        }, 300)
-                    }}
-                />
-            });
-        })
-
-        return str
-
     }
 
     //---ModalResult---
@@ -403,8 +330,7 @@ const QuizTypeSelect = () => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
-            // const { data } = await detailCategory(id)
-            const { data } = await detailPracticeActivity(id)
+            const { data } = await detailPracticeActivity(dayId)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)
@@ -426,8 +352,8 @@ const QuizTypeSelect = () => {
             <div className=''>
                 <div className=''>
                     <div className='content__speaking'>
-
                         <div className="flex flex-col qustion__content__speaking">
+                            
                             <div className="">
                                 {/* <Progress
                                     strokeColor={{
@@ -549,7 +475,7 @@ const QuizTypeSelect = () => {
                                                     : "!bg-[#C0392B] !text-white"
                                                 : "hover:bg-purple-800 "}  
                                                 font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`}
-                                            onClick={() => {onCheck()}}
+                                            onClick={() => { onCheck() }}
                                         >
                                             Kiểm tra
                                         </button>
