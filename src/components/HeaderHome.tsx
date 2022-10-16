@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
 import { UserType } from '../types/user';
-import { Avatar, AvatarDefault } from './Avatar';
+import { Avatar } from './Avatar';
 
 const navigation = [
   { name: 'Học thử', to: '/learning' },
@@ -47,10 +47,7 @@ const HeaderComponent = () => {
               auth ?
                 <div className='text-white flex space-x-2 '>
                   <Link to="/user" className='text-white my-auto'>
-                    {auth.img
-                      ? <Avatar image={auth.img} className="text-sm w-10 h-10 text-white"/>
-                      : <AvatarDefault name={auth.username} color={String(auth.colorImage)} className="text-sm w-10 h-10 text-white" />
-                    }
+                    <Avatar image={String(auth.img)} className="text-sm w-10 h-10 text-white" />
                   </Link>
                   <span className='my-auto'> / </span>
                   <button className='my-auto' onClick={onLogout}>Đăng xuất</button>
