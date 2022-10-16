@@ -28,11 +28,11 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
                 }
             }}
         >
-            <div className="img__result__question__item self-center">
-                <img src={`../../../../assets/image/water.png`} />
+            <div className="self-center img__result__question__item">
+                <img src={`../../../../../assets/image/water.png`} />
             </div>
-            <div className="title__result__question__item text-center w-full block self-center">
-                <span className="text-base font-bold block">{data.answer}</span>
+            <div className="self-center block w-full text-center title__result__question__item">
+                <span className="block text-base font-bold">{data.answer}</span>
             </div>
         </div>
 

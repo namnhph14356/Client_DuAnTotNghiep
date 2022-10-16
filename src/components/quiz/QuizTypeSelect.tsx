@@ -28,6 +28,8 @@ import QuizType2 from './QuizType2';
 import QuizType1 from './QuizType1';
 import { detailDay } from '../../api/day';
 import { detailPracticeActivity } from '../../api/practiceActivity';
+import QuizType3 from './QuizType3';
+import QuizType5 from './QuizType5';
 
 
 let flag1: string = ""
@@ -154,18 +156,59 @@ const QuizTypeSelect = () => {
 
     const onHanldeSetSelect = (data: any, check: boolean) => {
         if (Array.isArray(data)) {
+            setCheck(false)
             setQuizCompound(data)
+        } else if (data.type === 5) {
+            setSelect(data)
+            setCheck(true)
+            onCheck()
+            setTimeout(() => {
+                onContinute()
+            }, 1000)
         } else {
             setSelect(data)
+            setCheck(check)
         }
 
-        setCheck(check)
+        
     }
 
 
-    console.log("quizCompound", quizCompound);
-    console.log("checkFlag", checkFlag);
-    console.log("answerType3", answerType3);
+
+    //---Check---
+    // check Đáp án
+    const onCheck = () => {
+        setCheck(true)
+        increase()
+
+        if ( checkFlag === 1) {
+            setSelect({ isCorrect: 1, type: 3 })
+        }
+        if (checkFlag === 0 && select === null) {
+            setSelect({ isCorrect: 0, type: 3 })
+        }
+
+        if (select !== null && select.type !== undefined) {
+            setResult([...result, {
+                quiz: quizList[quizIndex].quiz._id,
+                answerQuiz: select.id,
+                time: flag1,
+                point: select.isCorrect ? Math.round(flag2) : 0,
+                isCorrect: select.isCorrect
+            }])
+        } else {
+            setResult([...result, {
+                quiz: quizList[quizIndex].quiz._id,
+                time: flag1,
+                point: checkFlag === 1 ? Math.round(flag2) : 0,
+                isCorrect: checkFlag,
+                answer: answerType3
+            }])
+        }
+
+        speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+        // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
+    }
 
     //---Countinute---
     // Chuyển câu hỏi
@@ -213,7 +256,6 @@ const QuizTypeSelect = () => {
         })
         for (let index = 0; index < result.length; index++) {
             const flag = { ...result[index], history: data2._id }
-            console.log("flag", flag);
             const { data } = await addUserQuiz(flag)
         }
 
@@ -404,7 +446,7 @@ const QuizTypeSelect = () => {
 
                             <div className="flex">
                                 <h3>
-                                    {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""} 
+                                    {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""}
 
                                 </h3>
                                 <button className='w-5 h-5' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
@@ -443,65 +485,10 @@ const QuizTypeSelect = () => {
                                         </div>
 
                                         : quizList[quizIndex]?.quiz?.type === 3
-                                            ? <div className="box__item__chosse__question">
-                                                <div className="btn__choose__result !justify-start mb-4">
-                                                    {quizCompound?.map((item, index) => {
-                                                        return <div key={index + 1}
-                                                            className={`border-2 border-[#CCCCCC] item__btn__choose `}
-                                                            onClick={() => {
-                                                                setQuizCompound(quizCompound.filter((item2, index) => item2.id !== item.id))
-
-                                                            }}
-                                                        >
-                                                            <button>
-                                                                {item.answer}
-                                                            </button>
-                                                        </div>
-                                                    })}
-                                                </div>
-
-
-                                                <div className="btn__choose__result">
-                                                    {quizList[quizIndex].answerQuiz.map((item, index) => {
-                                                        const existAnswer = quizCompound.find(item2 => item2.id === item._id)
-                                                        if (existAnswer) {
-                                                            return <div key={index + 1}
-                                                                className={`border-2 bg-[#CCCCCC] item__btn__choose `
-                                                                }
-
-                                                            >
-                                                                <button className="bg-[#CCCCCC] text-[#CCCCCC]">
-                                                                    {item.answer}
-                                                                </button>
-                                                            </div>
-                                                        }
-                                                        return <div key={index + 1}
-                                                            className={`border-2 ${item._id == select?.id
-                                                                ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-                                                                : "border-[#CCCCCC]"} 
-                                                                ${check === true
-                                                                    ? item._id == select?.id
-                                                                        ? select?.isCorrect === 1
-                                                                            ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                                                            : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                                                        : ""
-                                                                    : ""} item__btn__choose `
-                                                            }
-                                                            onClick={() => {
-                                                                if (check !== true) {
-                                                                    setCheck(false)
-                                                                    setQuizCompound([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }])
-                                                                }
-                                                            }}
-                                                        >
-                                                            <button>
-                                                                {item.answer}
-                                                            </button>
-                                                        </div>
-                                                    })}
-                                                </div>
-                                            </div>
-                                            : ""
+                                            ? <QuizType3 data={quizList[quizIndex].answerQuiz} check={check} quizCompound={quizCompound} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                                            : quizList[quizIndex]?.quiz?.type === 5
+                                                ? <QuizType5 data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                                                : ""
                                 : ""
                             }
 
@@ -562,44 +549,9 @@ const QuizTypeSelect = () => {
                                                     : "!bg-[#C0392B] !text-white"
                                                 : "hover:bg-purple-800 "}  
                                                 font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`}
-                                            onClick={() => {
-                                                setCheck(true)
-                                                increase()
-
-                                                if (checkFlag === 1) {
-                                                    setSelect({ isCorrect: 1, type: 3 })
-                                                }
-                                                if (checkFlag === 0 && select === null) {
-                                                    setSelect({ isCorrect: 0, type: 3 })
-                                                    console.log("abc")
-                                                }
-
-                                                if (select !== null && select.type === undefined) {
-                                                    console.log("result 2");
-                                                    setResult([...result, {
-                                                        quiz: quizList[quizIndex].quiz._id,
-                                                        answerQuiz: select.id,
-                                                        time: flag1,
-                                                        point: select.isCorrect ? Math.round(flag2) : 0,
-                                                        isCorrect: select.isCorrect
-                                                    }])
-                                                } else {
-                                                    console.log("result 1");
-                                                    setResult([...result, {
-                                                        quiz: quizList[quizIndex].quiz._id,
-                                                        time: flag1,
-                                                        point: checkFlag === 1 ? Math.round(flag2) : 0,
-                                                        isCorrect: checkFlag,
-                                                        answer: answerType3
-                                                    }])
-                                                }
-                                                console.log("result", result);
-
-                                                speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
-                                                // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
-                                            }}
+                                            onClick={() => {onCheck()}}
                                         >
-                                            Xem kết quả
+                                            Kiểm tra
                                         </button>
                                     </div>
                                 </div>
@@ -610,7 +562,7 @@ const QuizTypeSelect = () => {
 
                     </div>
 
-                    <Button  type="primary" onClick={showModal}>
+                    <Button type="primary" onClick={showModal}>
                         Open Modal
                     </Button>
 
