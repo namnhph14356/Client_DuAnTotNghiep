@@ -87,11 +87,11 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
-            <Route path="detailLearning">
+            <Route path=":id/detailLearning">
               <Route index element={<DetailLearning />} />
               <Route path=':id' element={<DetailLearningLayout />}>
 
-                <Route path='speak' element={<SpeakingPage />}>
+                <Route path='listenSpeak' element={<SpeakingPage />}>
                   <Route path='startUp' element={<StartUp />} />
                   <Route path='quiz2' element={<QuizPage />} />
                   <Route path='quiz' element={<QuizTypeSelect />} />

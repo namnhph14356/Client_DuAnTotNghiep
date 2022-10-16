@@ -9,6 +9,12 @@ import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowPathIcon, CheckIcon, ChevronDownIcon, ChevronUpDownIcon, DocumentTextIcon, EllipsisHorizontalIcon, HomeIcon, LockClosedIcon, ShieldCheckIcon, UserPlusIcon } from '@heroicons/react/20/solid'
 import { ShoppingBag } from 'heroicons-react'
+import { getListMonthSlice } from '../features/Slide/month/MonthSlice'
+import { getListWeekSlice, getListWeekSliceByMonth } from '../features/Slide/week/WeekSlice'
+import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/DaySlice'
+import { MonthType } from '../types/month'
+import { WeekType } from '../types/week'
+import { DayType } from '../types/day'
 
 
 
@@ -32,11 +38,55 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 const Learning = () => {
-  const categories = useAppSelector(item => item.category.value)
+
   const dispatch = useAppDispatch()
+  const categories = useAppSelector(item => item.category.value)
+  let months = useAppSelector<MonthType[]>(item => item.month.value)
+  let weeks = useAppSelector<WeekType[]>(item => item.week.value)
+  let days = useAppSelector<DayType[]>(item => item.day.value)
+
+  const [monthSelect, setMonthSelect] = useState<MonthType | null>()
+  const [weekSelect, setWeekSelect] = useState<WeekType | null>()
+  const [daySelect, setDaySelect] = useState<DayType | null>()
+  const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
+  const days2 = days.filter((item: DayType) => item.week === weekSelect?._id)
+
+  const findSmallestOrder = (data, id) => {
+    const temp = data?.filter((item: WeekType) => item.month === id)
+    const minPrice = Math.min(...temp.map(({ order }) => order))
+    const cheapeastShirt = temp.find(({ order }: any) => minPrice === order)
+    return cheapeastShirt
+  }
+
+  console.log("monthSelect",monthSelect);
+  console.log("weekSelect",weekSelect);
+  console.log("daySelect",daySelect);
+
+  console.log("weeks2",weeks2);
+  console.log("days2",days2);
+  
 
   useEffect(() => {
     dispatch(getCategoryList())
+    dispatch(getListMonthSlice())
+    dispatch(getListWeekSlice())
+    dispatch(getListDaySlice())
+    const flag = months.reduce(function (prev, current) {
+      return (prev.order < current.order) ? prev : current
+    })
+    const temp = weeks?.filter((item: WeekType) => item.month === flag._id)
+    setMonthSelect(months?.reduce(function (prev, current) {
+      return (prev.order < current.order) ? prev : current
+    }))
+    // setWeekSelect(findSmallestOrder(weeks, monthSelect?._id))
+    setWeekSelect(temp?.reduce(function (prev, current) {
+      return (prev.order < current.order) ? prev : current
+    }))
+    setDaySelect(days?.reduce(function (prev, current) {
+      return (prev.order < current.order) ? prev : current
+    }))
+
+
   }, [])
   const [selected, setSelected] = useState(item[3])
   return (
@@ -49,7 +99,8 @@ const Learning = () => {
         </div>
         <div className="content__learning">
           <div className='desc__content__learning'>
-            30 ngày làm quen với giao tiếp tiếng Anh
+            {/* 30 ngày làm quen với giao tiếp tiếng Anh */}
+            {monthSelect?.title}
           </div>
           <div className="learning__time">
             <div className='box__learning__time'>
@@ -57,8 +108,8 @@ const Learning = () => {
                 <div className="item__btn__time">
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
-                      <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                      <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
+                        {`Chặng ${monthSelect?.order}`} <span className='h-full my-auto'><ChevronDownIcon className='w-5 h-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -72,7 +123,50 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {item.map((value) => (
+                        {months.map((item: MonthType, index: number) => (
+                          <Menu.Item >
+                            {({ active }) => (
+                              <p
+                                className={classNames(
+                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                )}
+                                onClick={() => {
+                                  setMonthSelect(item)
+                                  setWeekSelect(findSmallestOrder(weeks, item?._id))
+                                }}
+                              >
+
+                                {`Chặng ${item?.order}`}
+                              </p>
+                            )}
+                          </Menu.Item>
+                        ))}
+
+
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
+                <div className="item__btn__time">
+                  <Menu as="div" className="relative inline-block text-left ">
+                    <div>
+                      <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
+                        {weekSelect ? weekSelect.title : "Tuần 1"} <span className='h-full my-auto'><ChevronDownIcon className='w-5 h-5' /></span>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+
+                        {weeks2.map((item: WeekType) => (
 
                           <Menu.Item >
                             {({ active }) => (
@@ -81,9 +175,10 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
+                                onClick={() => { setWeekSelect(item) }}
                               >
 
-                                {value.name}
+                                {item.title}
                               </p>
                             )}
                           </Menu.Item>
@@ -98,8 +193,8 @@ const Learning = () => {
                 <div className="item__btn__time">
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
-                      <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
+                      <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
+                        {daySelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='w-5 h-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -113,7 +208,7 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {item.map((value) => (
+                        {days2.map((item: DayType) => (
 
                           <Menu.Item >
                             {({ active }) => (
@@ -122,50 +217,10 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
+                                onClick={() => { setDaySelect(item) }}
                               >
 
-                                {value.name}
-                              </p>
-                            )}
-                          </Menu.Item>
-
-                        ))}
-
-
-                      </Menu.Items>
-                    </Transition>
-                  </Menu>
-                </div>
-                <div className="item__btn__time">
-                  <Menu as="div" className="relative inline-block text-left ">
-                    <div>
-                      <Menu.Button className="relative text-base text-indigo-600 font-semibold w-full flex cursor-default py-2 pr-4 text-left sm:text-lg">
-                        Chặng 1 <span className='h-full my-auto'><ChevronDownIcon className='h-5 w-5' /></span>
-                      </Menu.Button>
-                    </div>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="transform opacity-0 scale-95"
-                      enterTo="transform opacity-100 scale-100"
-                      leave="transition ease-in duration-75"
-                      leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95"
-                    >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
-                        {item.map((value) => (
-
-                          <Menu.Item >
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                              >
-
-                                {value.name}
+                                {item.title}
                               </p>
                             )}
                           </Menu.Item>
@@ -181,33 +236,31 @@ const Learning = () => {
               <div className="learning__page__time">
                 <div className=" sm:flex sm:flex-1 sm:items-center sm:justify-between">
                   <div>
-                    <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                      <NavLink
-                        to="#"
-                        aria-current="page"
-                        className="relative z-10 inline-flex items-center border  bg-indigo-600 px-3 py-2 text-sm font-medium text-white focus:z-20"
-                      >
-                        1
-                      </NavLink>
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        2
-                      </NavLink>
+                    <nav className="inline-flex -space-x-px rounded-md shadow-sm isolate" aria-label="Pagination">
+                      {days2.map((item: DayType, index: number) => {
+                        if (item._id === daySelect?._id) {
+                          return <NavLink
+                            key={index + 1}
+                            to="#"
+                            aria-current="page"
+                            className="relative z-10 inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-indigo-600 border focus:z-20"
+                            onClick={() => { setDaySelect(item) }}
+                          >
+                            {item.order}
+                          </NavLink>
+                        } else {
+                          return <NavLink
+                            key={index + 1}
+                            to="#"
+                            aria-current="page"
+                            className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:z-20"
+                            onClick={() => { setDaySelect(item) }}
+                          >
+                            {item.order}
+                          </NavLink>
+                        }
+                      })}
 
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        3
-                      </NavLink>
-                      <NavLink
-                        to="#"
-                        className="relative inline-flex items-center border border-gray-300 bg-white  px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-                      >
-                        4
-                      </NavLink>
 
                     </nav>
                   </div>
@@ -237,7 +290,7 @@ const Learning = () => {
 
               <div className="btn__learning__statistical">
                 <button className='btn__start__statistical'>
-                  <NavLink to={'/learning/detailLearning'} className='text-white hover:text-white'>
+                  <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='text-white hover:text-white'>
                     Bắt đầu học
                   </NavLink>
                 </button>
@@ -249,7 +302,7 @@ const Learning = () => {
           </div>
 
           <div className="total__learning">
-            <p className='text-cyan-700  font-semibold'>
+            <p className='font-semibold text-cyan-700'>
               Tổng kết nội dung có thể gặt hái được:
             </p>
             <table className="min-w-full divide-y divide-gray-300">
@@ -257,40 +310,40 @@ const Learning = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-6"
+                    className="py-3 pl-4 pr-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase sm:pl-6"
                   >
                     Name
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+                    className="px-3 py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase"
                   >
                     Title
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+                    className="px-3 py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase"
                   >
                     Email
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+                    className="px-3 py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase"
                   >
                     Role
                   </th>
 
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {people.map((person) => (
                   <tr key={person.email}>
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
                       {person.name}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.role}</td>
+                    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{person.title}</td>
+                    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{person.email}</td>
+                    <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">{person.role}</td>
 
                   </tr>
                 ))}
@@ -304,7 +357,7 @@ const Learning = () => {
 
       <div className="box__buy__source">
         <h3 className="title__buy__source">
-          <ShoppingBag className='h-5 w-5' />  Lớp học tiếng Anh giao tiếp 360
+          <ShoppingBag className='w-5 h-5' />  Lớp học tiếng Anh giao tiếp 360
         </h3>
         <p>
           350,000 ĐỒNG / <span>360 ngày sử dụng</span>

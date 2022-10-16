@@ -26,6 +26,8 @@ import { HistoryType } from '../../types/history';
 import Menu from '../../components/Menu';
 import QuizType2 from './QuizType2';
 import QuizType1 from './QuizType1';
+import { detailDay } from '../../api/day';
+import { detailPracticeActivity } from '../../api/practiceActivity';
 
 
 let flag1: string = ""
@@ -359,7 +361,8 @@ const QuizTypeSelect = () => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
-            const { data } = await detailCategory(id)
+            // const { data } = await detailCategory(id)
+            const { data } = await detailPracticeActivity(id)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)
@@ -382,7 +385,7 @@ const QuizTypeSelect = () => {
                 <div className=''>
                     <div className='content__speaking'>
 
-                        <div className="qustion__content__speaking flex flex-col">
+                        <div className="flex flex-col qustion__content__speaking">
                             <div className="">
                                 {/* <Progress
                                     strokeColor={{
@@ -410,7 +413,7 @@ const QuizTypeSelect = () => {
                             </div>
                         </div>
 
-                        <div className="mt-5 p-5">
+                        <div className="p-5 mt-5">
                             {quizList ?
                                 quizList[quizIndex]?.quiz?.type === 1
                                     ? <div className="main__content__spaeking">
