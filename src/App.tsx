@@ -77,6 +77,8 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
+import FormVocabulary from './pages/admin/Vocabulary/Form';
 
 function App() {
   return (
@@ -209,6 +211,11 @@ function App() {
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
+          <Route path='vocabulary'>
+            <Route index element={<ListVocabulary />} />
+            <Route path='add' element={<FormVocabulary />} />
+            <Route path=':id/edit' element={<FormVocabulary />} />
+          </Route>
         </Route>
 
         <Route path='/test' element={<TestPage />}> </Route>
