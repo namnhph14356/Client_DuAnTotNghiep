@@ -28,20 +28,29 @@ interface EditorProps {
   value: string;
 }
 const CommentList = ({ comments }: { comments: CommentType[] }) => {
-
+  const dispath = useDispatch();
+  const replyy = useSelector<any, any>(data => data.reply.value);
+  useEffect(() => {
+    dispath(getReplyCommentList())
+  }, []);
 
   return (
-    <List
-      dataSource={comments}
-      header={`${comments.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}
-      itemLayout="horizontal"
-      renderItem={(item: CommentType) => {
-        return (
-          <CommentItem item={item} />
-        )
-      }
-      }
-    />
+    <div className="w-fullbg-white rounded-lg border p-1 md:p-3">
+      <h3 className="font-semibold p-1">{`${comments.length + replyy.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
+      <div className="flex flex-col gap-5 m-3">
+        <List
+          dataSource={comments}
+          itemLayout="horizontal"
+          renderItem={(item: CommentType) => {
+            return (
+              <CommentItem item={item} />
+            )
+          }
+          }
+        />
+      </div>
+    </div>
+
   )
 }
 
@@ -179,74 +188,82 @@ const CommentItem = ({ item }: any) => {
   };
 
   return (
-    <div style={{ borderLeft: '5px solid #a9a9a9' }}>
-      <Comment
+    <div>
+      <div>
+        <div className="flex w-full justify-between border rounded-md">
 
-        // actions={actions}
-        author={<h1 style={{ fontSize: '15px' }}>{item.author}</h1>}
-        avatar={<img src={item.avatar} style={{ width: '50px' }} />}
-        content={
-          <p style={{ fontSize: '15px' }}>
-            <div dangerouslySetInnerHTML={{ __html: `${item.content}` }}></div>
-            <p style={{ fontSize: '10px' }}><Rate style={{ fontSize: '150%' }} disabled defaultValue={item.rating} /></p>
-          </p>
+          <div className="p-3">
+            <div className="flex gap-3 items-center">
+              <img src={item.avatar}
+                className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
+              <h3 className="font-bold">
+                {item.author}
+                <br />
+                <span className="text-sm text-gray-400 font-normal">{moment(item.createdAt).local().fromNow()}</span>
+                <span style={{ fontSize: '10px', marginLeft: '10px' }}><Rate style={{ fontSize: '150%' }} disabled defaultValue={item.rating} /></span>
+              </h3>
+            </div>
+            <p className="text-gray-600 mt-2" dangerouslySetInnerHTML={{ __html: `${item.content}` }}>
+            </p>
+            <Tooltip key="comment-basic-like" title="Like">
+              <span onClick={() => like(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
+                {item.like.find(like => like.userId === user.user._id) ? <LikeFilled /> : <LikeOutlined />}
+                <span className="comment-action">{item.like.length}</span>
+              </span>
+            </Tooltip>,
+            <Tooltip key="comment-basic-dislike" title="Dislike" >
+              <span onClick={() => dislike(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
+                {item.dislike.find(dislike => dislike.userId === user.user._id) ? <DislikeFilled /> : <DislikeOutlined />}
+                <span className="comment-action">{item.dislike.length}</span>
+              </span>
+            </Tooltip>
+            <button className="text-right text-blue-500 ml-1" onClick={() => setReply(!reply)}>Trả lời</button>
 
-        }
-        datetime={<span style={{ fontSize: '11px', fontWeight: 'bold' }}>{moment(item.createdAt).local().fromNow()}</span>}
-      >
-      </Comment>
-      <div style={{ marginLeft: '60px', marginBottom: '10px' }}>
-        <Tooltip key="comment-basic-like" title="Like">
-          <span onClick={() => like(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-            {item.like.find(like => like.userId === user.user._id) ? <LikeFilled /> : <LikeOutlined />}
-            <span className="comment-action">{item.like.length}</span>
-          </span>
-        </Tooltip>,
-        <Tooltip key="comment-basic-dislike" title="Dislike" >
-          <span onClick={() => dislike(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-            {item.dislike.find(dislike => dislike.userId === user.user._id) ? <DislikeFilled /> : <DislikeOutlined />}
-            <span className="comment-action">{item.dislike.length}</span>
-          </span>
-        </Tooltip>
-        <span style={{ marginLeft: '5px', fontWeight: 'bold', cursor: 'pointer' }} key="comment-basic-reply-to" onClick={() => setReply(!reply)}>Trả lời</span>
-        {item.userId === user.user._id ?
-          <Popconfirm
-            placement="bottomLeft"
-            title="Bạn có muốn xóa bình luận này"
-            onConfirm={() => {
-              deleteComment(item._id);
-            }}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
-          </Popconfirm>
-
-
-          : null
-        }
-        {fil.map((reply) => {
-          return (
-            <ReplyComment reply={reply} cmt={cmt} _id={id} />
-          )
-        })}
-        {reply ?
-          <div>
-            <Form onFinish={onFinish}>
-              <Form.Item name={['replycomment', 'content']}>
-                <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
-              </Form.Item>
-              <Form.Item>
-                <Button htmlType="submit" type="primary">
-                  Bình luận
-                </Button>
-              </Form.Item>
-            </Form>
           </div>
-          : null
-        }
+          <div className="flex flex-col items-end gap-3 pr-3 py-3">
+            {item.userId === user.user._id ?
+              <Popconfirm
+                placement="bottomLeft"
+                title="Bạn có muốn xóa bình luận này"
+                onConfirm={() => {
+                  deleteComment(item._id);
+                }}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+              >
+                <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
+              </Popconfirm>
+              : null
+            }
+          </div>
+        </div>
+        <div>
+          {fil.map((reply) => {
+            return (
+              <ReplyComment reply={reply} cmt={cmt} _id={id} />
+            )
+          })}
+        </div>
+        <div className='ml-10 mt-5'>
+          {reply ?
+            <div>
+              <Form onFinish={onFinish}>
+                <Form.Item name={['replycomment', 'content']}>
+                  <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
+                </Form.Item>
+                <Form.Item>
+                  <Button htmlType="submit" type="primary">
+                    Bình luận
+                  </Button>
+                </Form.Item>
+              </Form>
+            </div>
+            : null
+          }
+        </div>
       </div>
+
     </div>
   )
 
@@ -303,8 +320,6 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
   };
   const dislike = (e) => {
     const NewUser = { ...reply }
-
-
     if (!user) {
       toas.error("Bạn cần phải đăng nhập để thực hiện chức năng này");
     } else {
@@ -340,48 +355,51 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
 
   return (
     <>
-      <Comment
-
-        // actions={actions}
-        author={<h1 style={{ fontSize: '15px' }}>{reply.author}</h1>}
-        avatar={<img src={reply.avatar} style={{ width: '50px' }} />}
-        content={
-          <p style={{ fontSize: '15px' }}>
-            <div dangerouslySetInnerHTML={{ __html: `${reply.content}` }}></div>
+      <div className="text-gray-300 font-bold pl-20">|</div>
+      <div className="flex justify-between border ml-9  rounded-md">
+        <div className="p-3">
+          <div className="flex gap-3 items-center">
+            <img src={reply.avatar}
+              className="object-cover w-10 h-10 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
+            <h3 className="font-bold">
+              {reply.author}
+              <br />
+              <span className="text-sm text-gray-400 font-normal">{moment(reply.createdAt).local().fromNow()}</span>
+            </h3>
+          </div>
+          <p className="text-gray-600 mt-2" dangerouslySetInnerHTML={{ __html: `${reply.content}` }}>
           </p>
-        }
-        datetime={<span style={{ fontSize: '11px', fontWeight: 'bold' }}>{moment(reply.createdAt).local().fromNow()}</span>}
-
-      />
-
-      <Tooltip key="comment-basic-like" title="Like">
-        <span onClick={() => like(reply._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-          {reply.like.find(like => like.userId === user.user._id) ? <LikeFilled /> : <LikeOutlined />}
-          <span className="comment-action">{reply.like.length}</span>
-        </span>
-      </Tooltip>,
-      <Tooltip key="comment-basic-dislike" title="Dislike" >
-        <span onClick={() => dislike(reply._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
-          {reply.dislike.find(dislike => dislike.userId === user.user._id) ? <DislikeFilled /> : <DislikeOutlined />}
-          <span className="comment-action">{reply.dislike.length}</span>
-        </span>
-      </Tooltip>
-
-      {reply.userId === user.user._id ?
-        <Popconfirm
-          placement="bottomLeft"
-          title="Bạn có muốn xóa bình luận này"
-          onConfirm={() => {
-            deleteReply(reply._id);
-          }}
-          onCancel={cancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
-        </Popconfirm>
-        : null
-      }
+          <Tooltip key="comment-basic-like" title="Like">
+            <span onClick={() => like(reply._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
+              {reply.like.find(like => like.userId === user.user._id) ? <LikeFilled /> : <LikeOutlined />}
+              <span className="comment-action">{reply.like.length}</span>
+            </span>
+          </Tooltip>,
+          <Tooltip key="comment-basic-dislike" title="Dislike" >
+            <span onClick={() => dislike(reply._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
+              {reply.dislike.find(dislike => dislike.userId === user.user._id) ? <DislikeFilled /> : <DislikeOutlined />}
+              <span className="comment-action">{reply.dislike.length}</span>
+            </span>
+          </Tooltip>
+        </div>
+        <div className="flex flex-col gap-3 pr-3 py-3">
+          {reply.userId === user.user._id ?
+            <Popconfirm
+              placement="bottomLeft"
+              title="Bạn có muốn xóa bình luận này"
+              onConfirm={() => {
+                deleteReply(reply._id);
+              }}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
+            </Popconfirm>
+            : null
+          }
+        </div>
+      </div>
     </>
   )
 }
@@ -459,9 +477,6 @@ const QuestionAnswer = () => {
                 <Form.Item name={['comment', 'rating']}>
                   <Rate onChange={setRating} value={rating} defaultValue={3} />
                 </Form.Item>
-                {/* <Form.Item name={['comment', 'content']}>
-                  <TextArea rows={2} onChange={handleChange} value={value} />
-                </Form.Item> */}
                 <Form.Item name={['comment', 'content']}>
                   <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
                 </Form.Item>
