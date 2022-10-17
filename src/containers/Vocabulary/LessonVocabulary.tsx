@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom';
 import { useSpeechSynthesis } from "react-speech-kit";
 import { listVocabulary } from '../../api/vocabulary';
-import MenuVocab from '../../components/VocabConponent/MenuVocab';
 import { VocabulatyType } from '../../types/vocabularyType';
 
 const LessonVocabulary = () => {
