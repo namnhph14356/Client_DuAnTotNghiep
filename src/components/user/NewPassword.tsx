@@ -41,8 +41,8 @@ const NewPassword = () => {
   const onSubmit: SubmitHandler<FormInputs> = async (userForm: FormInputs) => {
     try {
       const { payload } = await dispatch(newPass({
-        email: email,
-        password: userForm.password,
+        email: String(email),
+        password: String(userForm.password),
       }))
       if (payload.message) {
         message.warning(payload.message)

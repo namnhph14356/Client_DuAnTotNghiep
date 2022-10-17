@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 const LessonSentences = () => {
   return (
-    <div>LessonSentences</div>
+    <div>
+      <div>
+        
+      </div>
+    </div>
   )
 }
 

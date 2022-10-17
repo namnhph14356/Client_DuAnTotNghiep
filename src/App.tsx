@@ -75,7 +75,8 @@ import Sentences from './pages/Sentences';
 import LessonSentences from './containers/Sentences/LessonSentences';
 import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
-import { PrivateRouteHomePage } from './midlerware/PrivateRoute';
+import QuizTypeSelect from './components/quiz/QuizTypeSelect';
+import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
 
 function App() {
   return (
@@ -86,12 +87,14 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
-            <Route path="detailLearning">
-              <Route index element={<DetailLearning />} />
-              <Route path=':id' element={<DetailLearningLayout />}>
+            <Route path=":id/detailLearning">
+              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
+              <Route path=':dayId' element={<DetailLearningLayout />}>
 
-                <Route path='speak' element={<SpeakingPage />}>
+                <Route path='listenSpeak' element={<SpeakingPage />}>
                   <Route path='startUp' element={<StartUp />} />
+                  <Route path='quiz2' element={<QuizPage />} />
+                  <Route path='quiz' element={<QuizTypeSelect />} />
                   <Route path='questionAndAnswer' element={<QuestionAnswer />} />
                 </Route>
 

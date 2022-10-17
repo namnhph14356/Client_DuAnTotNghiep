@@ -473,7 +473,6 @@ const QuestionAnswer = () => {
 
             </Form.Item>) : (
               <Form onFinish={onFinish}>
-
                 <Form.Item name={['comment', 'rating']}>
                   <Rate onChange={setRating} value={rating} defaultValue={3} />
                 </Form.Item>
