@@ -75,15 +75,7 @@ const CommentItem = ({ item }: any) => {
   })
   const id = item._id
   const fil = replyy.filter(item => item.commentId === id)
-  // console.log(fil);
-
-
-  const isAuthenticate = () => {
-    if (!localStorage.getItem('user')) return;
-    return JSON.parse(localStorage.getItem('user') as string);
-  }
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-
   const like = (e) => {
     const NewUser = { ...item }
 
@@ -95,7 +87,6 @@ const CommentItem = ({ item }: any) => {
           return obj.userId !== user._id;
         });
         const newComment = { ...cmt, dislike: [...filtered], like: [...cmt.like, { userId: user._id, status: 'liked' }] }
-        console.log(newComment);
         dispath(editdCommentSlide(
           newComment
         ))
@@ -277,11 +268,6 @@ const CommentItem = ({ item }: any) => {
 }
 const ReplyComment = ({ reply, cmt, _id }: any) => {
   const dispath = useDispatch();
-
-  const isAuthenticate = () => {
-    if (!localStorage.getItem('user')) return;
-    return JSON.parse(localStorage.getItem('user') as string);
-  }
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const cancel = () => {
     return false
@@ -417,12 +403,7 @@ const QuestionAnswer = () => {
   const dispath = useDispatch();
   const [submitting, setSubmitting] = useState(false);
   const [value, setValue] = useState('');
-  const isAuthenticate = () => {
-    if (!localStorage.getItem('user')) return;
-    return JSON.parse(localStorage.getItem('user') as string);
-  }
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-
   const [form] = Form.useForm();
   // const user = isAuthenticate()
   const comment = useSelector<any, any>(data => data.comment.value);
@@ -443,7 +424,6 @@ const QuestionAnswer = () => {
             userId: user._id
           }
         ))
-        console.log(values.comment.content);
         toas.success("Bình luận thành công");
         setValue('')
         form.resetFields();
@@ -454,17 +434,6 @@ const QuestionAnswer = () => {
     }
 
   };
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    // setValue(e.target.value);
-  };
-  const handleClick = () => {
-    // setValue()
-  }
-  const thaydoi = (e) => {
-    console.log(e);
-    setValue(e)
-  }
-
 
   return (
     <>
@@ -495,10 +464,10 @@ const QuestionAnswer = () => {
                   <Rate onChange={setRating} value={rating} defaultValue={3} />
                 </Form.Item>
                 <Form.Item name={['comment', 'content']}>
-                  <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} value={value} onChange={setValue} />
+                  <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
                 </Form.Item>
                 <Form.Item>
-                  <Button loading={submitting} htmlType="submit" onClick={handleClick} type="primary">
+                  <Button loading={submitting} htmlType="submit" type="primary">
                     Bình luận
                   </Button>
                 </Form.Item>
