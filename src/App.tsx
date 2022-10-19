@@ -77,9 +77,13 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+
 import ListGrammar from './pages/admin/grammar/ListGrammar';
-import Form from './pages/admin/grammar/FormGrammar';
 import FormGrammar from './pages/admin/grammar/FormGrammar';
+
+import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
+import FormVocabulary from './pages/admin/Vocabulary/Form';
+
 
 function App() {
   return (
@@ -212,19 +216,20 @@ function App() {
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
-
-
-
-
-
-
           <Route path="grammar" >
             <Route index element={<ListGrammar />} />
             <Route path='add' element={<FormGrammar />} />
             <Route path=':id/edit' element={<FormGrammar />} />
-          </Route>
+
         </Route>
 
+        <Route path='vocabulary'>
+            <Route index element={<ListVocabulary />} />
+            <Route path='add' element={<FormVocabulary />} />
+            <Route path=':id/edit' element={<FormVocabulary />} />
+
+          </Route>
+        </Route>
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
         <Route path='/signin' element={<SignIn />}> </Route>

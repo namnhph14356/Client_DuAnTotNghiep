@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { detailDayIdGrammmar } from '../../api/grammar';
-import { GammarType } from '../../types/grammar';
 import parse from 'html-react-parser';
 const LessonGrammar = () => {
   const [grammar, setGrammar] = useState<any>();
@@ -13,15 +12,13 @@ const LessonGrammar = () => {
     }
     getData();
   },[])
-  console.log("grammar",grammar);
-  
   return (
     <div className="content__grammar">
       <h3 className="title__content__grammar">
       {grammar?.name}
       </h3>
       <div className="structure__exercise__grammar">
-      {parse(grammar?.description)}
+      {grammar?.description ? parse(grammar?.description) : ""}
 
         <div className="attention__grammar">
           <h3 className="title__structure__exercise__grammar">
