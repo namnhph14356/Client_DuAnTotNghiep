@@ -79,6 +79,7 @@ import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
+import DetailClass from './pages/adminTeacher/adminClass/DetailClass';
 
 function App() {
   return (
@@ -149,6 +150,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='class' element={<AdminClassList />} />
+          <Route path='class/detail/:id' element={<DetailClass />} />
           <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
