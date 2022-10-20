@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNoteUser } from "../../features/Slide/note/NoteSlice";
 import { setConstantValue } from "typescript";
 import { store } from "../../app/store";
+import parse from "html-react-parser";
 type  Props = {
 }
 const Note = () => {
@@ -46,7 +47,7 @@ const triggerModal = () => {
       <div className="mt-2">
         {" "}
         {dataForm?.text ? (
-          <span dangerouslySetInnerHTML={{__html:`${dataForm?.text}`}}></span>
+          <span >{parse(dataForm?.text)}</span>
         ) : (
           <i>
             Hãy ghi chú những điểm tâm đắc hay cần lưu ý về bài học để tham khảo
@@ -55,7 +56,7 @@ const triggerModal = () => {
         )}
       </div>
     </div>
-          
+    {/* dangerouslySetInnerHTML={{__html:`${dataForm?.text}`}}  */}
     {isModal && <Update dataForm={dataForm ? dataForm : {dayId, userId}}/>}
 
           <ReactDimmer
