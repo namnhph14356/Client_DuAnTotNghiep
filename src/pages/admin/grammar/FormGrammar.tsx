@@ -12,7 +12,6 @@ import { GammarType } from '../../../types/grammar';
 type Props = {}
 
 const FormGrammar = (props: Props) => {
-  const { Option } = Select;
   const [form] = Form.useForm();
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
@@ -63,11 +62,6 @@ const FormGrammar = (props: Props) => {
     readonly: false,
     addNewLineOnDBLClick: false
   };
-
-  const handleSetContext = (value:any) => {
-    console.log("value: ", value);
-    setGrammar(value);
-  };
   return (
     <div className="container">
       {/* <AdminPageHeader  />   */}
@@ -95,8 +89,6 @@ const FormGrammar = (props: Props) => {
             <JoditEditor 
             value={grammar} 
             config={config}
-            // onBlur={handleSetContext}
-            // onChange={handleSetContext}
             />
           </Form.Item>
 
