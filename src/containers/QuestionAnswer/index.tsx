@@ -16,6 +16,8 @@ import 'react-quill/dist/quill.snow.css';
 import { addReplyCommentSlide, editdReplyCommentSlide, getReplyCommentList, removeReplyCommentSlice } from '../../features/Slide/comment/ReplySilce';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
+import { getUser, getUserList } from '../../features/Slide/user/userSlide';
+import { getListUser, getUserById } from '../../api/user';
 
 const { TextArea } = Input;
 interface CommentItem {
@@ -23,12 +25,6 @@ interface CommentItem {
   avatar: string;
   content: React.ReactNode;
   datetime: string;
-}
-interface EditorProps {
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onSubmit: () => void;
-  submitting: boolean;
-  value: string;
 }
 const CommentList = ({ comments }: { comments: CommentType[] }) => {
   const dispath = useDispatch();
@@ -38,7 +34,7 @@ const CommentList = ({ comments }: { comments: CommentType[] }) => {
   }, []);
 
   return (
-    <div className="w-fullbg-white">
+    <div className="w-fullbg-white border rounded-md">
       <h3 className="font-semibold p-1">{`${comments.length + replyy.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
       <div className="flex flex-col gap-5 m-3">
         <List
@@ -58,14 +54,12 @@ const CommentList = ({ comments }: { comments: CommentType[] }) => {
 }
 
 const CommentItem = ({ item }: any) => {
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState<string | null>(null);
   const [cmt, setCmt] = useState<any>();
   const dispath = useDispatch();
   const [reply, setReply] = React.useState(false)
   const [submitting, setSubmitting] = useState(false);
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState<any>();
   const replyy = useSelector<any, any>(data => data.reply.value);
   useEffect(() => {
     dispath(getReplyCommentList())
@@ -74,8 +68,19 @@ const CommentItem = ({ item }: any) => {
     setCmt(item)
   })
   const id = item._id
+  const userId = item.userId 
+  useEffect(() => {
+    const getText = async () => {
+      const { payload } = await dispath(getUser(userId));
+      setValue(payload);
+    };
+    getText();
+  }, [userId]);
+  
   const fil = replyy.filter(item => item.commentId === id)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const users = useSelector<any, any>(data => data.user.value);
+  
   const like = (e) => {
     const NewUser = { ...item }
 
@@ -159,7 +164,7 @@ const CommentItem = ({ item }: any) => {
           {
             author: user.username,
             userId: user._id,
-            avatar: 'https://joeschmoe.io/api/v1/random',
+            avatar: users.img,
             content: values.replycomment.content,
             commentId: Newcomment._id
           }
@@ -173,19 +178,6 @@ const CommentItem = ({ item }: any) => {
     }
 
   };
-  const deleteComment = (id) => {
-    dispath(removeCommentSlice(id))
-    const fil = replyy.filter(item => item.commentId === id)
-    fil.map(e => {
-      dispath(removeReplyCommentSlice(e._id))
-    });
-    toas.success('Xóa thành công');
-  };
-
-  const cancel = () => {
-    return false
-  };
-
   return (
     <div>
       <div>
@@ -193,10 +185,12 @@ const CommentItem = ({ item }: any) => {
 
           <div className="">
             <div className="flex gap-3 items-center">
-              <img src={item.avatar}
+              <img src={value?.img}
                 className="object-cover w-12 h-12 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
               <div>
-                <h3 className='font-bold'>{item.author}</h3>
+                <h3 className='font-bold'>{value?.username}
+                  <span className="text-sm text-gray-400 font-normal pl-3">{moment(item.createdAt).local().fromNow()}</span>
+                </h3>
                 <Tooltip key="comment-basic-like" title="Like">
                   <span onClick={() => like(item._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
                     {item.like.find(like => like.userId === user._id) ? <LikeFilled /> : <LikeOutlined />}
@@ -210,30 +204,12 @@ const CommentItem = ({ item }: any) => {
                   </span>
                 </Tooltip>
                 <button className="ml-2 text-lg" onClick={() => setReply(!reply)}><CommentOutlined /></button>
-                <span className="text-sm text-gray-400 font-normal pl-3">{moment(item.createdAt).local().fromNow()}</span>
               </div>
             </div>
             <div className='pl-14'>
               <span><Rate style={{ fontSize: '110%' }} disabled defaultValue={item.rating} /></span>
               <p className="text-gray-600 mt-2 text-base" dangerouslySetInnerHTML={{ __html: `${item.content}` }}></p>
             </div>
-          </div>
-          <div className="flex flex-col items-end gap-3 pr-3 py-3">
-            {item.userId === user._id ?
-              <Popconfirm
-                placement="bottomLeft"
-                title="Bạn có muốn xóa bình luận này"
-                onConfirm={() => {
-                  deleteComment(item._id);
-                }}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
-              </Popconfirm>
-              : null
-            }
           </div>
         </div>
         <div className='pl-4'>
@@ -246,16 +222,22 @@ const CommentItem = ({ item }: any) => {
         <div className='ml-10 mt-5'>
           {reply ?
             <div>
-              <Form onFinish={onFinish}>
-                <Form.Item name={['replycomment', 'content']}>
-                  <ReactQuill theme="snow" />
-                </Form.Item>
-                <Form.Item>
-                  <Button htmlType="submit" type="primary">
-                    Bình luận
-                  </Button>
-                </Form.Item>
-              </Form>
+              <Comment
+                content={
+                  <div>
+                    <Form onFinish={onFinish}>
+                      <Form.Item name={['replycomment', 'content']}>
+                        <ReactQuill theme="snow" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button loading={submitting} htmlType="submit" type="primary">
+                          Bình luận
+                        </Button>
+                      </Form.Item>
+                    </Form>
+                  </div>
+                }
+              />
             </div>
             : null
           }
@@ -267,15 +249,17 @@ const CommentItem = ({ item }: any) => {
 
 }
 const ReplyComment = ({ reply, cmt, _id }: any) => {
+  const [value, setValue] = useState<any>();
   const dispath = useDispatch();
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-  const cancel = () => {
-    return false
-  };
-  const deleteReply = (id) => {
-    dispath(removeReplyCommentSlice(id))
-    toas.success('Xóa thành công');
-  }
+  const userId = reply.userId 
+  useEffect(() => {
+    const getText = async () => {
+      const { payload } = await dispath(getUser(userId));
+      setValue(payload);
+    };
+    getText();
+  }, [userId]);
   const like = (e) => {
     const NewUser = { ...reply }
 
@@ -353,10 +337,12 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
         <div className="flex justify-between ml-9">
           <div className="p-1">
             <div className="flex gap-3 items-center">
-              <img src={reply.avatar}
+              <img src={value?.img}
                 className="object-cover w-12 h-12 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
               <div>
-                <h3 className='font-bold'>{reply.author}</h3>
+                <h3 className='font-bold'>{value?.username}
+                  <span className="text-sm text-gray-400 font-normal pl-3">{moment(reply.createdAt).local().fromNow()}</span>
+                </h3>
                 <Tooltip key="comment-basic-like" title="Like">
                   <span onClick={() => like(reply._id)} style={{ fontSize: '15px', cursor: 'pointer' }}>
                     {reply.like.find(like => like.userId === user._id) ? <LikeFilled /> : <LikeOutlined />}
@@ -369,29 +355,11 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
                     <span className="comment-action pl-1">{reply.dislike.length}</span>
                   </span>
                 </Tooltip>
-                <span className="text-sm text-gray-400 font-normal pl-3">{moment(reply.createdAt).local().fromNow()}</span>
               </div>
             </div>
             <div className='pl-14'>
               <p className="text-gray-600 mt-2" dangerouslySetInnerHTML={{ __html: `${reply.content}` }}></p>
             </div>
-          </div>
-          <div className="flex flex-col gap-3 pr-3 py-3">
-            {reply.userId === user._id ?
-              <Popconfirm
-                placement="bottomLeft"
-                title="Bạn có muốn xóa bình luận này"
-                onConfirm={() => {
-                  deleteReply(reply._id);
-                }}
-                onCancel={cancel}
-                okText="Yes"
-                cancelText="No"
-              >
-                <span style={{ marginLeft: '5px', cursor: 'pointer', color: '#DC143C' }}>Xóa</span>
-              </Popconfirm>
-              : null
-            }
           </div>
         </div>
       </div>
@@ -405,7 +373,7 @@ const QuestionAnswer = () => {
   const [value, setValue] = useState('');
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const [form] = Form.useForm();
-  // const user = isAuthenticate()
+  const users = useSelector<any, any>(data => data.user.value);
   const comment = useSelector<any, any>(data => data.comment.value);
   useEffect(() => {
     dispath(getCommentList())
@@ -418,7 +386,7 @@ const QuestionAnswer = () => {
         dispath(addCommentSlide(
           {
             author: user.username,
-            avatar: 'https://joeschmoe.io/api/v1/random',
+            avatar: users.img,
             content: values.comment.content,
             rating: rating,
             userId: user._id
@@ -439,41 +407,21 @@ const QuestionAnswer = () => {
     <>
       < CommentList comments={comment} />
       <Comment
-        avatar={
-          <div>
-            {!user ? '' : <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
-          </div>
-        }
         content={
           <div>
-            {!user ? (<Form.Item name={['comment', 'content']}>
-              <List.Item.Meta
-                description={
-                  <Card style={{ textAlign: 'center' }}>
-                    <h1 style={{ fontSize: '20px' }}>Bạn cần phải đăng nhập để bình luận</h1>
-                    <NavLink to="/login"><Button type='primary' style={{ backgroundColor: 'black', marginRight: '30px' }}>Đăng nhập</Button></NavLink>
-                    <NavLink to="/register"><Button type='primary'>Đăng ký</Button></NavLink>
-                  </Card>
-                }
-              ></List.Item.Meta>
-
-
-            </Form.Item>) : (
-              <Form onFinish={onFinish} form={form}>
-                <Form.Item name={['comment', 'rating']}>
-                  <Rate onChange={setRating} value={rating} defaultValue={3} />
-                </Form.Item>
-                <Form.Item name={['comment', 'content']}>
-                  <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
-                </Form.Item>
-                <Form.Item>
-                  <Button loading={submitting} htmlType="submit" type="primary">
-                    Bình luận
-                  </Button>
-                </Form.Item>
-              </Form>
-
-            )}
+            <Form onFinish={onFinish} form={form}>
+              <Form.Item name={['comment', 'rating']}>
+                <Rate onChange={setRating} value={rating} defaultValue={3} />
+              </Form.Item>
+              <Form.Item name={['comment', 'content']}>
+                <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
+              </Form.Item>
+              <Form.Item>
+                <Button loading={submitting} htmlType="submit" type="primary">
+                  Bình luận
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         }
       />
