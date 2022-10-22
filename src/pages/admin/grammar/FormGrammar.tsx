@@ -19,11 +19,10 @@ const FormGrammar = (props: Props) => {
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
   const {id} = useParams();
   
-  const onFinish = async (value:any) => {
+  const onFinish = async (value:GammarType) => {
     const key = 'updatable';
 
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
       if (id) {
         updateGrammar(value);
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
@@ -33,9 +32,6 @@ const FormGrammar = (props: Props) => {
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
         navigate("/admin/grammar");
       }
-
-    }, 2000);
-
   };
   
   const onFinishFailed = (errorInfo) => {
