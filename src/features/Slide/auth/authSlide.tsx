@@ -1,6 +1,7 @@
 
 import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { changeOTP, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle } from "../../../api/user";
+import { changeOTP, editUser, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle } from "../../../api/user";
+import { UserType } from "../../../types/user";
 
 export interface AuthSlice {
   value: Object,
@@ -54,7 +55,7 @@ export const signUp = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (email:{email:string}) => {
+  async (email: { email: string }) => {
     const { data } = await forgotPass(email);
     return data
   }
@@ -62,9 +63,18 @@ export const forgotPassword = createAsyncThunk(
 
 export const newPass = createAsyncThunk(
   "auth/changePassword",
-  async (email:{email:string, password:string}) => {
+  async (email: { email: string, password: string }) => {
     const { data } = await newPassword(email);
     return data
+  }
+)
+export const editdUserSlide: any = createAsyncThunk(
+  "auth/editUser",
+  async (Comment: UserType) => {
+
+    const { data } = await editUser(Comment);
+
+    return data;
   }
 )
 
@@ -104,6 +114,10 @@ const authSlide = createSlice({
     builer.addCase(forgotPassword.fulfilled, (state: AuthSlice, action) => {
     })
     builer.addCase(newPass.fulfilled, (state: AuthSlice, action) => {
+    })
+    builer.addCase(editdUserSlide.fulfilled, (state: any, action) => {
+      state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+
     })
   }
 })

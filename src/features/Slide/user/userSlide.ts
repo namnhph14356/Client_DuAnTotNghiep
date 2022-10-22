@@ -16,7 +16,7 @@ export const getUserList = createAsyncThunk(
   }
 )
 
-export const getUser = createAsyncThunk(
+export const getUser:any = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
     const { data } = await getUserById(id);
@@ -32,7 +32,7 @@ export const addUserSlide = createAsyncThunk(
   }
 )
 
-export const editUserSlide = createAsyncThunk(
+export const editUserSlide:any = createAsyncThunk(
   "user/editUser",
   async (user: UserType) => {
     const { data } = await editUser(user);
@@ -71,6 +71,9 @@ const authSlide = createSlice({
     builer.addCase(removeUserSlide.fulfilled, (state: UserSlice, action) => {
       state.value = state.value.filter((arrow: UserType) => arrow._id !== action.payload._id);
     })
+    builer.addCase(getUser.fulfilled, (state:UserSlice, action) => {
+      state.value = action.payload;   
+  })
   }
 })
 

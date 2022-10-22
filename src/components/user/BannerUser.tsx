@@ -1,26 +1,23 @@
-import { Button, Col, message, Modal, Row, Typography } from "antd";
+import { Button, Col, Form, Input, InputNumber, message, Modal, Row, Typography, Upload } from "antd";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { editUser, getUserById } from "../../api/user";
 import { uploadImage } from "../../utils/upload";
 import './style.css'
+import { UploadOutlined } from '@ant-design/icons';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from '../../types/user'
 import { Avatar } from "../Avatar";
+import { editUserSlide, getUser } from "../../features/Slide/user/userSlide";
+import axios from 'axios';
+import { editdUserSlide } from "../../features/Slide/auth/authSlide";
 type Props = {};
 
-type FormTypes = {
-  _id: number,
-  username: string,
-  phone: number,
-  password: string,
-  img: string,
-}
 const phoneRegExp = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 
 const fromSchema = yup.object().shape({
@@ -38,45 +35,84 @@ const fromSchema = yup.object().shape({
 })
 const validation = { resolver: yupResolver(fromSchema) }
 
+const UpdateProfile = ({form,onSubmit,users,onChangeImage}) => {
+  {
+
+    return (
+      <Form form={form} id='myForm' name="nest-messages" onFinish={onSubmit} >
+        <Form.Item name="img" valuePropName="src" >
+          <img className="rounded-full w-[154px] h-[154px]"
+            src={users?.img} id='img-preview' alt="" width='100px' />
+        </Form.Item>
+        <Form.Item
+          label="Upload ảnh"
+          tooltip="Ảnh dành cho Quiz"
+          rules={[{ required: true, message: 'Không để Trống!' }]}
+        >
+          <Input type="file" accept='.png,.jpg' id='file-upload' className="form-control" onChange={onChangeImage} />
+        </Form.Item>
+        <Form.Item name={'username'} label="Họ và tên" rules={[{ required: true }]}>
+          <Input />
+        </Form.Item>
+        <Form.Item name={'phone'} label="Số điện thoại">
+          <Input />
+        </Form.Item>
+        <Form.Item name={'address'} label="Địa chỉ">
+          <Input />
+        </Form.Item>
+      </Form>
+    )
+  }
+}
+
 const BannerUser = (props: Props) => {
+  const [value, setValue] = useState<UserType>();
   const [visible, setVisible] = useState(false);
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
-  // const isAuthenticate = () => {
-  //   if (!localStorage.getItem('user')) return;
-  //   return JSON.parse(localStorage.getItem('user') as string);
-  // }
-  // const data = isAuthenticate()
   const { register, handleSubmit, formState, reset } = useForm<UserType>(validation);
-  const [preview, setPreview] = useState<string>();
+  const [fileList, setfileList] = useState<any>();
   // const [info, getInfo] = useState<UserType>()
   const { errors } = formState;
-
+  const [form] = Form.useForm();
   const navigate = useNavigate()
-  // const id = data.user._id
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     const { data } = await getUserById(id);
-  //     reset(data)
-  //     getInfo(data)
-  //   }
-  //   getProducts()
-  // }, [id])
-  const handlePreview = (e: any) => {
+  const id = auth._id
+  const dispath = useDispatch();
+  const users = useSelector<any, any>(data => data.user.value);
+  useEffect(() => {
+    const getText = async () => {
+      const { payload } = await dispath(getUser(id));
+      form.setFieldsValue(payload)
+      setValue(payload);
+    };
+    getText();
+  }, [id]);
+  console.log(users);
 
-    setPreview(URL.createObjectURL(e.target.files[0]));
+  const preview = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
+  const onChangeImage = async (e) => {
+    if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
+      setfileList(e.target.files[0])
+      const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+      imgPreview.src = await URL.createObjectURL(e.target.files[0])
+    } else {
+      message.error('File không hợp lệ!');
+    }
   }
-  const onSubmit: SubmitHandler<UserType> = async data => {
+  const onSubmit: SubmitHandler<UserType> = async (values: any) => {
     try {
       const imgPost = document.querySelector<any>("#file-upload");
-      const imgLink = await uploadImage(imgPost);
       if (imgPost.files.length) {
         const response = await uploadImage(imgPost);
-        data.img = response;
+        values.img = response;
       }
-      await editUser(data);
+      await dispath(editdUserSlide({
+        _id: id,
+        username: values.username,
+        phone: values.phone,
+        address: values.address,
+        img: values.img
+      }))
       message.success('Cập nhật thành công')
-      navigate('/user')
-
     } catch (error: any) {
       console.log(error)
     }
@@ -90,7 +126,7 @@ const BannerUser = (props: Props) => {
             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
               <Row className="items-center">
                 <Col className="info-image">
-                  <Avatar image={String(auth.img)} className="text-4xl w-32" />
+                  <Avatar image={String(value?.img)} className="text-4xl w-32" />
                 </Col>
                 <Col
                   xs={24}
@@ -100,17 +136,17 @@ const BannerUser = (props: Props) => {
                   xl={16}
                   className="info-detail ps-2"
                 >
-                  <Typography.Title level={3} className="font-bold text-[32px]">{auth?.username}</Typography.Title>
-                  <span>Quê quán: {auth?.address}</span>
+                  <Typography.Title level={3} className="font-bold text-[32px]">{value?.username}</Typography.Title>
+                  <span>Quê quán: {value?.address}</span>
                   <div className="flex py-4 items-center">
                     <div className="">
-                      <img
+                      {/* <img
                         className="w-[26px] h-[30px] object-cover"
-                        src="https://scontent.xx.fbcdn.net/v/t1.15752-9/287139066_753544432656658_6162782829047092404_n.png?stp=cp0_dst-png&_nc_cat=102&ccb=1-7&_nc_sid=aee45a&_nc_ohc=ffZrT9NGsjMAX9w9-G0&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVJBOUJWMH0Bgdro1htltEE3E-1bDQd84RwQ3vYGigdB8Q&oe=62E22D05"
+                        src="https://cdn-icons-png.flaticon.com/512/3564/3564808.png"
                         alt=""
-                      />
+                      /> */}
                     </div>
-                    <p className="px-2 m-0">Đã tham gia {moment(auth?.createdAt).format("MM YYYY")}</p>
+                    <p className="px-2 m-0">Đã tham gia {moment(value?.createdAt).format("MM YYYY")}</p>
                   </div>
                 </Col>
               </Row>
@@ -143,36 +179,8 @@ const BannerUser = (props: Props) => {
 
                 ]}
               >
-                <div className='edit_user'>
-                  <form id='myForm' onSubmit={handleSubmit(onSubmit)}>
-                    <div className="">
-                      <img className="rounded-full w-[154px] h-[154px]"
-                        src={preview || auth?.img} id='img-preview' alt="" width='100px' />
-                      <input type="file" {...register('img')} onChange={e => handlePreview(e)} id='file-upload' />
-                    </div>
-                    <br />
-                    <div>
-                      <label>Tên: </label>
-                      <input type="text" {...register('username')} /> <br />
-                      <div className="text-red-500 float-left text-left px-4">{errors.username?.message}</div>
-                    </div>
-                    <br />
-                    <div>
-                      <label>Số điện thoại: </label>
-                      <input type="text" {...register('phone')} /> <br />
-                      <div className="text-red-500 float-left text-left px-4">{errors.phone?.message}</div>
-                    </div>
-                    <br />
-                    <div>
-                      <label>Địa chỉ: </label>
-                      <input type="text" {...register('address')} /> <br />
-                      <div className="text-red-500 float-left text-left px-4">{errors.address?.message}</div>
-
-                    </div>
-                    <div>
-                      {/* <button className='button'>Sửa</button> */}
-                    </div>
-                  </form>
+                <div>
+                    <UpdateProfile form={form} onSubmit={onSubmit} onChangeImage={onChangeImage} users={users}  />
                 </div>
               </Modal>
             </Col>
