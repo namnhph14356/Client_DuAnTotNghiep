@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { addVocabulary, detailVocabulary, editVocabulary } from '../../../api/vocabulary';
 import ReactQuill from 'react-quill';
+import AdminPageHeader from '../../../components/AdminPageHeader';
 
 type Props = {}
 
@@ -49,13 +50,10 @@ const FormVocabulary = (props: Props) => {
     setTimeout(() => {
       if (id) {
         editVocabulary(value);
-        console.log(value);
-        
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
         navigate("/admin/vocabulary");
       } else {
         addVocabulary(value);
-        console.log(value);
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
         navigate("/admin/vocabulary");
       }
@@ -102,8 +100,8 @@ const FormVocabulary = (props: Props) => {
   },[])
   return (
     <div className="container">
-      {/* <AdminPageHeader  />   */}
-      <div className="pb-6 mx-6">
+      <AdminPageHeader  breadcrumb={"Form"} />  
+      <div className="">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />

@@ -24,13 +24,21 @@ const FormGrammar = (props: Props) => {
 
     message.loading({ content: 'Loading...', key });
       if (id) {
-        updateGrammar(value);
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/admin/grammar");
+        try {
+          updateGrammar(value);
+          message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+          navigate("/admin/grammar");
+        } catch (error) {
+          message.error({ content: 'Lỗi', key, duration: 2 });
+        }
       } else {
-        addGrammar(value);
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/admin/grammar");
+        try {
+          addGrammar(value);
+          message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+          navigate("/admin/grammar"); 
+        } catch (error) {
+          message.error({ content: 'Lỗi', key, duration: 2 });
+        }
       }
   };
   
@@ -61,7 +69,7 @@ const FormGrammar = (props: Props) => {
   return (
     <div className="container">
       {/* <AdminPageHeader  />   */}
-      <div className="pb-6 mx-6">
+      <div className="">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
