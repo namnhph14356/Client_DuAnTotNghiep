@@ -13,5 +13,6 @@ export type VocabulatyType = {
     category: string,
     pa:string,
     example:string,
-    place:number
+    place:number,
+    dayId?:string
 }
