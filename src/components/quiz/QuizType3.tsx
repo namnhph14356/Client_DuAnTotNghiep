@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
+import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType3Props = {
   data: any,
@@ -11,6 +12,18 @@ type QuizType3Props = {
 
 const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: QuizType3Props) => {
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
+  const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+  const onHandleSpeakSelect = ()=>{
+      data.forEach((item: any)=>{
+        if (transcript.toLowerCase().includes(item.answer.toLowerCase())) {
+          onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }],check)
+      }
+      })
+  }
+  useEffect(()=>{
+      onHandleSpeakSelect()
+  },[transcript])
+
   return (
     <div className="box__item__chosse__question">
       <div className="btn__choose__result !justify-start mb-4">

@@ -80,6 +80,10 @@ const GoogleSpeech = (props: Props) => {
             endButton.disabled = false;
             recordingStatus.style.visibility = 'visible';
             initRecording();
+            setTimeout(()=>{
+                stopRecording()
+            },5000)
+                                    
         }
 
         function stopRecording() {
@@ -129,7 +133,9 @@ const GoogleSpeech = (props: Props) => {
         socket.on('speechData', function (data) {
             // console.log(data.results[0].alternatives[0].transcript);
             var dataFinal = undefined || data.results[0].isFinal;
-
+            console.log("dataFinal", dataFinal);
+            console.log("data", data);
+            
             if (dataFinal === false) {
                 // console.log(resultText.lastElementChild);
                 if (removeLastSentence) {
@@ -150,6 +156,7 @@ const GoogleSpeech = (props: Props) => {
                         document.createTextNode('\u00A0')
                     );
                 }
+                console.log("dataFinal false", dataFinal);
             } else if (dataFinal === true) {
                 resultText.lastElementChild.remove();
 
@@ -174,7 +181,8 @@ const GoogleSpeech = (props: Props) => {
                 resultText.lastElementChild.appendChild(
                     document.createTextNode('\u002E\u00A0')
                 );
-
+                 console.log("dataFinal true", dataFinal);
+                 console.log("data final", data);
                 console.log("Google Speech sent 'final' Sentence.");
                 finalWord = true;
                 endButton.disabled = false;

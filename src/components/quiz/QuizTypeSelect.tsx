@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 
-import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useMemo, useCallback, useContext } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { Progress, Button, Modal, Collapse } from 'antd';
 import Countdown, { CountdownApi } from 'react-countdown';
@@ -30,6 +30,9 @@ import { detailDay } from '../../api/day';
 import { detailPracticeActivity } from '../../api/practiceActivity';
 import QuizType3 from './QuizType3';
 import QuizType5 from './QuizType5';
+import { SpeechContext } from '../../context/GoogleSpeechContext';
+import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
+
 
 
 let flag1: string = ""
@@ -127,7 +130,7 @@ const QuizTypeSelect = () => {
     // const audioCorrect = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3")
     // const audioWrong = new Audio("../assets/audio/Fail-sound-effect-2.mp3")
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-
+    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const [quiz2, setQuiz2] = useState<any>([])
     const [quizList, setQuizList] = useState<any>()
     const [percent, setPercent] = useState<number>(0);
@@ -144,6 +147,12 @@ const QuizTypeSelect = () => {
     const [quizCompound, setQuizCompound] = useState<any>([])
 
 
+    console.log("speechValue quiz", speechValue);
+    console.log("transcript quiz", transcript);
+    console.log("quizList", quizList);
+    console.log("select", select)
+    console.log("quizCompound", quizCompound)
+    console.log("result", result)
     let checkFlag = 0
     let answerType3 = 0
     if (quizList) {
@@ -353,7 +362,7 @@ const QuizTypeSelect = () => {
                 <div className=''>
                     <div className='content__speaking'>
                         <div className="flex flex-col qustion__content__speaking">
-                            
+
                             <div className="">
                                 {/* <Progress
                                     strokeColor={{
@@ -370,13 +379,18 @@ const QuizTypeSelect = () => {
 
                             </div>
 
-                            <div className="flex">
-                                <h3>
-                                    {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""}
+                            <div className="flex justify-between items-center ">
+                                <div className="flex items-center gap-2">
+                                    <h3 className="m-0">
+                                        {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""}
 
-                                </h3>
-                                <button className='w-5 h-5' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
-                                    <span><i className="fa-solid fa-volume-high"></i></span>
+                                    </h3>
+                                    <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
+                                        <span><i className="fa-solid fa-volume-high"></i></span>
+                                    </button>
+                                </div>
+                                <button className=''  >
+                                    <GoogleSpeechSpeaker />
                                 </button>
                             </div>
                         </div>

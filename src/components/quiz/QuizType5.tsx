@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
+import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType5Props = {
     data: any,
@@ -10,6 +11,19 @@ type QuizType5Props = {
 
 const QuizType5 = ({ data, check, select, onHanldeSetSelect }: QuizType5Props) => {
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
+
+    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+    const onHandleSpeakSelect = () => {
+
+        if (data.answer.toLowerCase() === transcript.toLowerCase()) {
+            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect, type: 5 }, check)
+
+        }
+    }
+    useEffect(() => {
+        onHandleSpeakSelect()
+    }, [transcript])
+
     return (
         <div className="main__content__spaeking">
             <div className="img__question">
