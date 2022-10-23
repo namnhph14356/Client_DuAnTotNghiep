@@ -23,43 +23,40 @@ const Home = () => {
         <div>
             <BannerPage />
             {/* START: section */}
-            <section className="probootstrap-section probootstrap-section-colored">
+            <section className="our-product">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate">
-                            <h2>More Benefits</h2>
-                            <p className="lead">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                        <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate pt-8 mb-8">
+                            <h2 className='text-xl text-white'>More Benefits</h2>
+                            <p className="lead text-white">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in  <br /> which roasted parts of sentences fly into your mouth.</p>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-heart2" /> <span>We bring emotion</span></h3>
+                    <div className=" grid grid-cols-3 gap-4 pt-8 pb-8">
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-heart2" /> <span className='text-white'>We bring emotion</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                         </div>
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-rocket" /> <span>We guide companies</span></h3>
+                        <div className=" probootstrap-animate ">
+                            <h3 className="heading-with-icon"><i className="icon-rocket" /> <span className='text-white'>We guide companies</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                         </div>
-                        <div className="clearfix visible-sm-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-image" /> <span>We design extraordinary</span></h3>
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-image" /> <span className='text-white'>We design extraordinary</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                         </div>
-                        <div className="clearfix visible-md-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-briefcase" /> <span>We bring emotion</span></h3>
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-briefcase" /><span className='text-white'>We bring emotion</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                         </div>
-                        <div className="clearfix visible-sm-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-chat" /> <span>We guide companies</span></h3>
+                        
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-chat" /> <span className='text-white'>We guide companies</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                         </div>
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-colours" /> <span>We design extraordinary</span></h3>
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-colours" /> <span className='text-white'>We design extraordinary</span></h3>
                             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                        </div>
-                        <div className="clearfix visible-sm-block" />
+                        </div> <div className="clearfix visible-sm-block" />
                     </div>
                 </div>
             </section>
@@ -67,48 +64,44 @@ const Home = () => {
 
             <div>
                 {/* START: section */}
-                <section className="probootstrap-section probootstrap-section-extra last">
-                    <div className="container-fluid probootstrap-absolute">
+                <section className="probootstrap-section probootstrap-section-extra last grid grid-cols-2 mt-8">
+                <div className="container">
                         <div className="row">
-                            <div className="col-md-7 col-md-push-6 probootstrap-animate" data-animate-effect="fadeInRight">
-                                <img width={"100%"} src="https://megastudy.edu.vn/upload/tinymce/banner.png" alt="Free Bootstrap Template by uicookies.com" className="img-responsive shadow-left" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-5 col-md-5 section-heading probootstrap-animate">
+                            <div className="col-lg-5 col-md-5 section-heading probootstrap-animate ml-8">
                                 <h2>We bring emotion to our product</h2>
 
                                 <blockquote className="probootstrap-quote">
-                                    <p>“ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam dolorem est numquam natus eum dolorum, quisquam id vel dolores repellendus cupiditate, exercitationem aut ducimus, reiciendis iusto eveniet quidem iure!
+                                    <p className='text-black'>“ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam dolorem est numquam natus eum dolorum, quisquam id vel dolores repellendus cupiditate, exercitationem aut ducimus, reiciendis iusto eveniet quidem iure!
                                         A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.”</p>
                                 </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container-fluid probootstrap-absolute">
+                        <div className="row">
+                            <div className="col-md-7 col-md-push-6 probootstrap-animate" data-animate-effect="fadeInRight">
+                                <img  src="https://megastudy.edu.vn/upload/tinymce/banner.png" alt="Free Bootstrap Template by uicookies.com" width={"100%"}  className="img-responsive" />
                             </div>
                         </div>
                     </div>
                 </section>
                 {/* END: section */}
                 {/* START: section */}
-                <section className="probootstrap-section probootstrap-section-extra ">
+                <section className="probootstrap-section probootstrap-section-extra grid grid-cols-2">
                     <div className="container-fluid probootstrap-absolute mt-[50px]">
                         <div className="row">
                             <div className="col-md-8 col-md-pull-2 probootstrap-animate" data-animate-effect="fadeInLeft">
-                                <img src="https://telacademyvn.com/Uploads/7F147FD3915DD461E068B29F5C39353E/images/ti%E1%BA%BFng%20Anh%20giao%20ti%E1%BA%BFp%20trong%20l%E1%BB%9Bp%20h%E1%BB%8Dc.jpg" width={"100%"} alt='' className="img-responsive" />
+                                <img w-full src="https://telacademyvn.com/Uploads/7F147FD3915DD461E068B29F5C39353E/images/ti%E1%BA%BFng%20Anh%20giao%20ti%E1%BA%BFp%20trong%20l%E1%BB%9Bp%20h%E1%BB%8Dc.jpg" width={"100%"} alt='' className="img-responsive" />
                             </div>
                         </div>
                     </div>
                     <div className="container ">
-                        <div className="row mt-[50px]">
-                            <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate">
-                                <h2>We design extraordinary</h2>
-                                <p className="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <div className="row ">
+                            <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate ml-8">
+                                <h2 >We design extraordinary</h2>
                                 <blockquote className="probootstrap-quote">
-                                    <figure className="probootstrap-quote-logo facebook">
-                                        <img src="img/facebook.png" alt="Free Bootstrap Template by uicookies.com" className="img-responsive" />
-                                    </figure>
-                                    <p>“A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.”</p>
-                                    <p className="probootstrap-quote-author"><img src="img/person_5.jpg" alt="Free Bootstrap Template by uicookies.com" /> Janet Morris, Facebook</p>
+                                    <p className='text-black'>“ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam dolorem est numquam natus eum dolorum, quisquam id vel dolores repellendus cupiditate, exercitationem aut ducimus, reiciendis iusto eveniet quidem iure!
+                                        A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.”</p>
                                 </blockquote>
                             </div>
                         </div>
@@ -118,7 +111,7 @@ const Home = () => {
             </div>
             {/* teacher  */}
             <section className='box__teacher'>
-                <h2 className="title__lecturers">
+                <h2 className="title__lecturers mt-8 mb-8">
                     Giảng  Viên Của Vogue
                 </h2>
                 <div className="list__teacher">
@@ -170,7 +163,7 @@ const Home = () => {
                 <h2 className="title__course__main">
                     ĐĂNG KÝ KHÓA HỌC
                 </h2>
-                <div className='distance__course'>
+                <div className='distance__course'>   
 
 
                     <div className="box__course">
