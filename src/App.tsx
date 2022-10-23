@@ -118,7 +118,7 @@ function App() {
                 <Route path='sentences' element={<Sentences />}>
                   <Route path='lesson'>
                     <Route index element={<LessonSentences />} />
-                    <Route path=':id' element={<DetailSentence />} />
+                    <Route path=':idDetailSentence' element={<DetailSentence />} />
                   </Route>
                   <Route path='exercise' element={<ExerciseSentences />} />
                   <Route path='exam' element={<ExamSentences />} />
