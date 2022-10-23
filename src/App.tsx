@@ -95,9 +95,9 @@ function App() {
         <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route index element={<Learning />} />
+            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
             <Route path=":dayId/detailLearning">
-              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
+              <Route index element={<DetailLearning /> } />
               <Route path=':id' element={<DetailLearningLayout />}>
 
                 <Route path='listenSpeak' element={<SpeakingPage />}>

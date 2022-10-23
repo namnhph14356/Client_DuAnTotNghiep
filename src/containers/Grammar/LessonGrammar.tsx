@@ -4,10 +4,10 @@ import { detailDayIdGrammmar } from "../../api/grammar";
 import parse from "html-react-parser";
 const LessonGrammar = () => {
   const [grammar, setGrammar] = useState<any>();
-  const { dayId } = useParams();
+  const { dayId, id } = useParams();
   useEffect(() => {
     const getData = async () => {
-      const { data } = await detailDayIdGrammmar(dayId);
+      const { data } = await detailDayIdGrammmar(id);
       setGrammar(data);
     };
     getData();
@@ -28,7 +28,7 @@ const LessonGrammar = () => {
       <div className="next__page__grammar">
         <button>
           <NavLink
-            to={"/learning/detailLearning/exercise"}
+            to={`/learning/${dayId}/detailLearning/${id}/grammar/exercise`}
             className="text-white hover:text-white"
           >
             Bài tập
