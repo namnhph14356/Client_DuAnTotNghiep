@@ -149,7 +149,7 @@ const QuizTypeSelect = () => {
 
     console.log("speechValue quiz", speechValue);
     console.log("transcript quiz", transcript);
-    console.log("quizList", quizList);
+    // console.log("quizList", quizList);
     console.log("select", select)
     console.log("quizCompound", quizCompound)
     console.log("result", result)
@@ -162,10 +162,20 @@ const QuizTypeSelect = () => {
         answerType3 = flag
 
     }
+    let arrSelect: any = []
     const onHanldeSetSelect = (data: any, check: boolean) => {
         console.log("data", data)
         if (Array.isArray(data)) {
             setQuizCompound(data)
+            console.log("data true", data)
+            console.log("quizCompound true", quizCompound)
+        } else if(!Array.isArray(data) && data.type === 3){
+            
+            arrSelect = [...arrSelect,data]
+            setQuizCompound(arrSelect)
+            console.log("data false", data)
+            console.log("arrSelect", arrSelect)
+            console.log("quizCompound false", quizCompound)
         } else if (data.type === 5) {
             setSelect(data)
             onCheckType5(data)
@@ -277,7 +287,7 @@ const QuizTypeSelect = () => {
             const flag = { ...result[index], history: data2._id }
             const { data } = await addUserQuiz(flag)
         }
-        const { data } = await detailPracticeActivity(dayId)
+        const { data } = await detailPracticeActivity(id)
         setQuiz2(data)
 
         const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
@@ -339,7 +349,7 @@ const QuizTypeSelect = () => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
-            const { data } = await detailPracticeActivity(dayId)
+            const { data } = await detailPracticeActivity(id)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)

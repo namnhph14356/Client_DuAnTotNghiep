@@ -13,16 +13,18 @@ type QuizType3Props = {
 const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: QuizType3Props) => {
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
   const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
-  const onHandleSpeakSelect = ()=>{
-      data.forEach((item: any)=>{
-        if (transcript.toLowerCase().includes(item.answer.toLowerCase())) {
-          onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }],check)
-      }
+  const onHandleSpeakSelect = () => {
+    for (let i = 0, a = transcript.split(' '); i < a.length; i++) {
+      data.forEach((item: any) => {
+        if (a[i].replace(',', '').toLowerCase().trim() === item.answer.toLowerCase().trim()) {
+          onHanldeSetSelect({ id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }, check)
+        }
       })
+    }
   }
-  useEffect(()=>{
-      onHandleSpeakSelect()
-  },[transcript])
+  useEffect(() => {
+    onHandleSpeakSelect()
+  }, [transcript, speechValue])
 
   return (
     <div className="box__item__chosse__question">
@@ -31,7 +33,7 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
           return <div key={index + 1}
             className={`border-2 border-[#CCCCCC] item__btn__choose `}
             onClick={() => {
-              onHanldeSetSelect(quizCompound.filter((item2, index) => item2.id !== item.id),check)
+              onHanldeSetSelect(quizCompound.filter((item2, index) => item2.id !== item.id), check)
 
             }}
           >
@@ -71,8 +73,8 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
             }
             onClick={() => {
               if (check !== true) {
-                
-                onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer }],check)
+
+                onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }], check)
               }
             }}
           >
