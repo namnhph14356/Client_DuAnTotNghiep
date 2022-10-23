@@ -1,17 +1,17 @@
 /* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import "../css/speaking.css";
 
 
 const SpeakingPage = () => {
-
+  const { dayId } = useParams()
   return (
     <div className="speaking__page">
       <div className="main__speaking">
         <div className="w-full bg-indigo-600 px-4 py-2">
           <div className='flex gap-4'>
-            <NavLink to={'/learning/detailLearning'} className='my-auto'>
+            <NavLink to={`/learning/${dayId}/detailLearning`} className='my-auto'>
               <i className="fa-solid fa-angle-left text-5xl text-white font-bold cursor-pointer"></i>
             </NavLink>
             <div className='my-auto'>
@@ -28,14 +28,15 @@ const SpeakingPage = () => {
           </div>
           <div>
 
-          <NavLink to={'/learning/detailLearning/:id/speak/startUp'} className="text-black" >
+            <NavLink to={'/learning/detailLearning/:id/speak/startUp'} className="text-black" >
               <button className="btn__comment__speaking ">
-              <i className="fa-solid fa-book"></i> Khởi động
+                <i className="fa-solid fa-book"></i> Khởi động
               </button>
+
             </NavLink>
             <NavLink to={'/learning/detailLearning/:id/speak/questionAndAnswer'} className="text-black" >
               <button className="btn__comment__speaking ">
-              <i className="fa-solid fa-comments"></i> Hỏi và đáp
+                <i className="fa-solid fa-comments"></i> Hỏi và đáp
               </button>
             </NavLink>
 

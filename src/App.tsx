@@ -81,6 +81,8 @@ import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/Private
 import ListGrammar from './pages/admin/grammar/ListGrammar';
 import FormGrammar from './pages/admin/grammar/FormGrammar';
 
+import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
+
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
 
@@ -94,9 +96,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<Learning />} />
-            <Route path=":id/detailLearning">
+            <Route path=":dayId/detailLearning">
               <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
-              <Route path=':dayId' element={<DetailLearningLayout />}>
+              <Route path=':id' element={<DetailLearningLayout />}>
 
                 <Route path='listenSpeak' element={<SpeakingPage />}>
                   <Route path='startUp' element={<StartUp />} />
@@ -230,6 +232,9 @@ function App() {
 
           </Route>
         </Route>
+
+
+        <Route path='/ggspeech' element={<GoogleSpeech />}> </Route>
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
         <Route path='/signin' element={<SignIn />}> </Route>

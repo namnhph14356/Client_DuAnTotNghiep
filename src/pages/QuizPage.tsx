@@ -176,57 +176,57 @@ const QuizPage = () => {
     //---Finish---
     // Kết thúc làm bài và đẩy đáp án đã chọn lên server
     const onFinish = async () => {
-        let totalPoint = 0
-        let totalCorrect = 0
-        const quizListHalf = quizList.length / 2
-        let pass = 0
-        result.forEach((item: any, index: number) => {
-            totalPoint = totalPoint + item.point
-            if (item.isCorrect === 1) {
-                totalCorrect = totalCorrect + 1
-            }
-            if (totalCorrect > quizListHalf) {
-                pass = 1
-            }
-        })
+        // let totalPoint = 0
+        // let totalCorrect = 0
+        // const quizListHalf = quizList.length / 2
+        // let pass = 0
+        // result.forEach((item: any, index: number) => {
+        //     totalPoint = totalPoint + item.point
+        //     if (item.isCorrect === 1) {
+        //         totalCorrect = totalCorrect + 1
+        //     }
+        //     if (totalCorrect > quizListHalf) {
+        //         pass = 1
+        //     }
+        // })
 
-        const { data: data2 } = await addHistory({
-            user: "62c853c16948a16fbde3b43e",
-            category: quiz2.category._id,
-            totalPoint: totalPoint,
-            totalCorrect: totalCorrect,
-            result: pass,
-            type: 2
-        })
-        for (let index = 0; index < result.length; index++) {
-            const flag = { ...result[index], history: data2._id }
-            console.log("flag", flag);
-            const { data } = await addUserQuiz(flag)
-        }
+        // const { data: data2 } = await addHistory({
+        //     user: "62c853c16948a16fbde3b43e",
+        //     category: quiz2.category._id,
+        //     totalPoint: totalPoint,
+        //     totalCorrect: totalCorrect,
+        //     result: pass,
+        //     type: 2
+        // })
+        // for (let index = 0; index < result.length; index++) {
+        //     const flag = { ...result[index], history: data2._id }
+        //     console.log("flag", flag);
+        //     const { data } = await addUserQuiz(flag)
+        // }
 
-        const { data } = await detailCategory(id)
-        console.log(data);
-        setQuiz2(data)
+        // const { data } = await detailCategory(id)
+        // console.log(data);
+        // setQuiz2(data)
 
-        const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
-            const { data } = await detailHistory(item._id)
-            // const { data: data2 } = await detailQuiz(item._id)
+        // const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
+        //     const { data } = await detailHistory(item._id)
+        //     // const { data: data2 } = await detailQuiz(item._id)
 
-            // console.log("correctAnswer data2", data2);
-            // const correctAnswer = quizList?.map((item: any, index: number) => {
-            //     return item.answerQuiz.filter((item2: any, index: number) => {
-            //         if (item2.isCorrect === 1) {
-            //             return item2
+        //     // console.log("correctAnswer data2", data2);
+        //     // const correctAnswer = quizList?.map((item: any, index: number) => {
+        //     //     return item.answerQuiz.filter((item2: any, index: number) => {
+        //     //         if (item2.isCorrect === 1) {
+        //     //             return item2
 
-            //         }
-            //     })
-            // })
-            // console.log("correctAnswer", correctAnswer);
-            return data
-        }))
-        setHistory(test2)
+        //     //         }
+        //     //     })
+        //     // })
+        //     // console.log("correctAnswer", correctAnswer);
+        //     return data
+        // }))
+        // setHistory(test2)
 
-        setIsModalOpen(true);
+        // setIsModalOpen(true);
 
 
 
