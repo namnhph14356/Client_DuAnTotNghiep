@@ -78,6 +78,9 @@ import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
 
+import ListGrammar from './pages/admin/grammar/ListGrammar';
+import FormGrammar from './pages/admin/grammar/FormGrammar';
+
 import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
 
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
@@ -215,10 +218,18 @@ function App() {
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
-          <Route path='vocabulary'>
+          <Route path="grammar" >
+            <Route index element={<ListGrammar />} />
+            <Route path='add' element={<FormGrammar />} />
+            <Route path=':id/edit' element={<FormGrammar />} />
+
+        </Route>
+
+        <Route path='vocabulary'>
             <Route index element={<ListVocabulary />} />
             <Route path='add' element={<FormVocabulary />} />
             <Route path=':id/edit' element={<FormVocabulary />} />
+
           </Route>
         </Route>
 
