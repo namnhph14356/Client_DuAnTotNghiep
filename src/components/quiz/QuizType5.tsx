@@ -15,7 +15,7 @@ const QuizType5 = ({ data, check, select, onHanldeSetSelect }: QuizType5Props) =
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const onHandleSpeakSelect = () => {
 
-        if (data.answer.toLowerCase() === transcript.toLowerCase()) {
+        if (data?.answer?.toLowerCase() === transcript.toLowerCase()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect, type: 5 }, check)
 
         }

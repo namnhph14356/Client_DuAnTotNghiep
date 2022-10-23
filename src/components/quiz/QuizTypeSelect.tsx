@@ -382,7 +382,12 @@ const QuizTypeSelect = () => {
                             <div className="flex justify-between items-center ">
                                 <div className="flex items-center gap-2">
                                     <h3 className="m-0">
-                                        {quizList ? quizList[quizIndex]?.quiz?.question + "?" : ""}
+                                        {quizList
+                                            ? quizList[quizIndex]?.quiz?.type !== 3
+                                                ? quizList[quizIndex]?.quiz?.question + "?"
+                                                : ""
+                                            : ""
+                                        }
 
                                     </h3>
                                     <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
