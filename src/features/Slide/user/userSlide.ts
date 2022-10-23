@@ -8,7 +8,7 @@ export interface UserSlice {
   isAuthticated: boolean
 }
 
-export const getUserList = createAsyncThunk(
+export const getUserList:any = createAsyncThunk(
   "user/getListUser",
   async () => {
     const { data } = await getListUser();
@@ -16,7 +16,7 @@ export const getUserList = createAsyncThunk(
   }
 )
 
-export const getUser = createAsyncThunk(
+export const getUser:any = createAsyncThunk(
   "user/getUserById",
   async (id: string) => {
     const { data } = await getUserById(id);

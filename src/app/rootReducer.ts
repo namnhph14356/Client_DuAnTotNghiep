@@ -12,6 +12,7 @@ import UserListenWriteSlice from "../features/Slide/userListenWrite/UserListenWr
 import CommentSlice from "../features/Slide/comment/CommentSlice";
 import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLimitCountdown";
 import ClassSlide from "../features/Slide/class/classSlice";  
+import ReplycommentSlide from "../features/Slide/comment/ReplySilce"
 import userSlide from "../features/Slide/user/userSlide";
 import authSlide from "../features/Slide/auth/authSlide";
 
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
     auth: authSlide,
     time: TimeLimitCountdownSlice,
     class: ClassSlide,
+    reply: ReplycommentSlide,
     noteCouse: NoteSlice,
     course: CourseSlide,
     month: MonthSlice,

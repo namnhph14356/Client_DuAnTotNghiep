@@ -108,6 +108,6 @@
 }
 
 /* Custom react quill */
-.ql-editor {
+.quill_custom {
   height: 250px !important;
 }
