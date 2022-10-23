@@ -77,6 +77,7 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+import DetailSentence from './containers/Sentences/DetailSentence';
 
 import ListGrammar from './pages/admin/grammar/ListGrammar';
 import FormGrammar from './pages/admin/grammar/FormGrammar';
@@ -115,7 +116,10 @@ function App() {
                 </Route>
 
                 <Route path='sentences' element={<Sentences />}>
-                  <Route path='lesson' element={<LessonSentences />} />
+                  <Route path='lesson'>
+                    <Route index element={<LessonSentences />} />
+                    <Route path=':id' element={<DetailSentence />} />
+                  </Route>
                   <Route path='exercise' element={<ExerciseSentences />} />
                   <Route path='exam' element={<ExamSentences />} />
                   <Route path='note' element={<Note />} />
