@@ -16,7 +16,7 @@ type PracticeActivityArr = {
 }
 
 const DetailLearning = () => {
-  const { id } = useParams();
+  const { dayId } = useParams();
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
   console.log("practiceActivity", practiceActivity);
@@ -66,8 +66,8 @@ const DetailLearning = () => {
 
 
   useEffect(() => {
-    dispatch(getListPracticeActivitySliceByDay(id))
-  }, [id])
+    dispatch(getListPracticeActivitySliceByDay(dayId))
+  }, [dayId])
 
   return (
     <div className='detail__learning__page'>
@@ -82,7 +82,7 @@ const DetailLearning = () => {
           <div className="list__main__learning">
             {practiceLearning.map((item: PracticeActivityType, index: number) => {
               return <div key={index + 1}>
-                <NavLink to={`/learning/${id}/detailLearning/${item._id}/${onChangeURL(item.type)}`}>
+                <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.type)}`}>
                   <div className="item__list__learning">
                     <div className="info__item__list">
                       <div>

@@ -22,12 +22,8 @@ const Grammar = () => {
         </div>
         <div className="nav__speaking">
           <div className="count__question">
-            <div>
-              Câu số 1 / <span>10</span>
-            </div>
           </div>
           <div>
-
             <NavLink to={'/learning/detailLearning/:id/grammar/lesson'} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-book"></i> Bài học
