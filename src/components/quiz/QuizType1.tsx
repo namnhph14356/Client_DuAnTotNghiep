@@ -13,14 +13,14 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const onHandleSpeakSelect = ()=>{
-        if (data.answer.toLowerCase()  === transcript.toLowerCase()) {
+        if (data.answer.toLowerCase().trim()  === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
         }
     }
 
     useEffect(()=>{
         onHandleSpeakSelect()
-    },[transcript])
+    },[transcript, speechValue])
 
     return (
         <div className={`relative flex items-start py-4 

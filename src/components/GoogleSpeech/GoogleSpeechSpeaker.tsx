@@ -147,7 +147,7 @@ const GoogleSpeechSpeaker = (props: Props) => {
                 // console.log("dataFinal true", dataFinal);
                 // console.log("data final", data);
                 onHandleUpdateSpeech(data)
-                onHandleUpdateTranscript(data.results[0].alternatives[0].transcript)
+                onHandleUpdateTranscript(data.results[0].alternatives[0].transcript.toLowerCase())
                 // console.log("Google Speech sent 'final' Sentence.");
 
                 finalWord = true;

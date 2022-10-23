@@ -277,7 +277,7 @@ const QuizTypeSelect = () => {
             const flag = { ...result[index], history: data2._id }
             const { data } = await addUserQuiz(flag)
         }
-        const { data } = await detailPracticeActivity(dayId)
+        const { data } = await detailPracticeActivity(id)
         setQuiz2(data)
 
         const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
@@ -339,7 +339,7 @@ const QuizTypeSelect = () => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
-            const { data } = await detailPracticeActivity(dayId)
+            const { data } = await detailPracticeActivity(id)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)

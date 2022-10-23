@@ -100,7 +100,7 @@ const ExerciseGrammar = () => {
 
   const calculatePoints = (array: any) => {
     const soDiem1cau = 10 / questionQuiz.length
-    let index = array.filter((val) => val.isCorrect === true);
+    let index = array.filter((val) => val.isCorrect === 1);
     const point = soDiem1cau * index.length
     setPoint(point)
     return { totalCorrect: index.length, score: point }
@@ -224,7 +224,7 @@ const ExerciseGrammar = () => {
                       <span> {item.question}</span>
                     </div>
                     <span >{convertQuizz.length > 0 && check == true ?
-                      convertQuizz[index].isCorrect == true ?
+                      convertQuizz[index].isCorrect == 1 ?
                         <i className="fa-solid fa-check text-green-500 text-xl rounded font-bold"></i>
                         :
                         <i className="fa-solid fa-xmark text-red-500  text-xl my-auto "></i>

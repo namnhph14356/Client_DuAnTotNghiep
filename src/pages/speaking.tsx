@@ -5,7 +5,7 @@ import "../css/speaking.css";
 
 
 const SpeakingPage = () => {
-  const { dayId } = useParams()
+  const { dayId, id } = useParams()
   return (
     <div className="speaking__page">
       <div className="main__speaking">
@@ -28,13 +28,13 @@ const SpeakingPage = () => {
           </div>
           <div>
 
-            <NavLink to={'/learning/detailLearning/:id/speak/startUp'} className="text-black" >
+            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/quiz`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-book"></i> Khởi động
               </button>
 
             </NavLink>
-            <NavLink to={'/learning/detailLearning/:id/speak/questionAndAnswer'} className="text-black" >
+            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/questionAndAnswer`} className="text-black" >
               <button className="btn__comment__speaking ">
                 <i className="fa-solid fa-comments"></i> Hỏi và đáp
               </button>

@@ -11,14 +11,14 @@ type QuizType2Props = {
 const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) => {
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const onHandleSpeakSelect = ()=>{
-        if (data.answer.toLowerCase()  === transcript.toLowerCase()) {
+        if (data.answer.toLowerCase().trim()  === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
 
         }
     }
     useEffect(()=>{
         onHandleSpeakSelect()
-    },[transcript])
+    },[transcript,speechValue])
 
     return (
         <div className={`border-2 list__question__item ${data._id == select?.id
