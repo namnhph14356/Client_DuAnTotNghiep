@@ -109,7 +109,7 @@
 
 /* Custom react quill */
 .quill_custom {
-  height: 250px !important;
+  height: 200px !important;
 }
 .quill_custom .ql-editor{
  background-color: #fff;

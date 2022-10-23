@@ -45,10 +45,12 @@ const Note = () => {
 
         dispatch(addNote(newNote))
         message.success("Cập nhật thành công !")
+        setOpen(false)
       } else {
         const newNote = { ...note, id: value._id }
         dispatch(editNote(newNote))
         message.success("Cập nhật thành công !")
+        setOpen(false)
       }
 
     } catch (error) {
@@ -71,7 +73,7 @@ const Note = () => {
         </div>
         <div className="mt-2">
           {" "}
-          { open || dataForm && dataForm.text !== "<p><br></p>" ? (
+          {dataForm && dataForm.text !== "<p><br></p>" ? (
             <Form form={form}
               initialValues={{}}
               onFinish={onFinish}
@@ -82,9 +84,22 @@ const Note = () => {
               <Form.Item
                 name="text"
               >
-                <ReactQuill className='quill_custom bg-white mt-4 mb-8 rounded h-full p-0' value={dataForm ? dataForm?.text : ""}  theme="snow" style={{ background: "#fff", }} />
+                <p >{parse(dataForm?.text)}</p>
               </Form.Item>
-              <button className='p-2 bg-green-500 font-bold text-white rounded'>Lưu ghi chú</button>
+
+              {open &&
+                <div>
+                  <Form.Item
+                    name="text"
+                  >
+                    <ReactQuill className='quill_custom bg-white mt-4 mb-8 rounded h-full p-0' value={dataForm ? dataForm?.text : ""} theme="snow" style={{ background: "#fff", }} />
+                  </Form.Item>
+                  <div className="space-x-4">
+                    <button className='p-2 bg-green-500 font-bold text-white rounded'>Lưu ghi chú</button>
+                    <button className='p-2 bg-green-500 font-bold text-white rounded' onClick={() => setOpen(false)}>Thoát</button>
+                  </div>
+                </div>
+              }
 
             </Form>
           ) : (
@@ -92,7 +107,7 @@ const Note = () => {
               Hãy ghi chú những điểm tâm đắc hay cần lưu ý về bài học để tham khảo
               sau này.
             </i>
-          ) }
+          )}
         </div>
       </div>
     </>
