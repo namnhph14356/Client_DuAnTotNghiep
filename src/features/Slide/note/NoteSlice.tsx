@@ -7,7 +7,7 @@ import { NoteCouseType } from "../../../types/noteCouse";
 export const getNoteUser:any = createAsyncThunk(
     "noteCouse/getUserNote",
     async (req:any) => {
-        const {data} = await getUserNote(req?.dayId, req?.userId);
+        const {data} = await getUserNote(req?.dayId, req?.id);
         // getData()
         return data;
     }
@@ -18,7 +18,6 @@ export const addNote:any = createAsyncThunk(
     async (note:NoteCouseType) => {
         try {
             const {data} = await userAddNote(note);
-            message.success("Cập nhật thành công");
             return data;   
         } catch (error) {
             message.error("Lỗi");
@@ -31,7 +30,6 @@ export const editNote:any = createAsyncThunk(
     async (note:NoteCouseType) => {
         try {
             const {data} = await editUserNote(note);
-            message.success("Cập nhật thành công");
              return data;
         } catch (error) {
             message.error("Lỗi");
@@ -47,7 +45,7 @@ export const initialStateValue = [];
 const noteSlide = createSlice({
     name:"noteCouse",
     initialState:{
-        value:initialStateValue
+        value:{}
     },
     reducers:{
         getData: (state, action) => {
@@ -57,7 +55,6 @@ const noteSlide = createSlice({
     extraReducers:  (builer) => {
         builer.addCase(getNoteUser.fulfilled, (state:any, action:any) => {
             state.value = action.payload;
-            
         })
         builer.addCase(addNote.fulfilled, (state:any, action:any) => {
             state.value = action.payload;

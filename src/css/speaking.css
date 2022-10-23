@@ -111,3 +111,6 @@
 .quill_custom {
   height: 250px !important;
 }
+.quill_custom .ql-editor{
+ background-color: #fff;
+}
