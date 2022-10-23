@@ -77,6 +77,7 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+import DetailSentence from './containers/Sentences/DetailSentence';
 
 function App() {
   return (
@@ -88,7 +89,7 @@ function App() {
           <Route path="learning">
             <Route index element={<Learning />} />
             <Route path=":id/detailLearning">
-              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
+              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning>} />
               <Route path=':dayId' element={<DetailLearningLayout />}>
 
                 <Route path='listenSpeak' element={<SpeakingPage />}>
@@ -106,7 +107,10 @@ function App() {
                 </Route>
 
                 <Route path='sentences' element={<Sentences />}>
-                  <Route path='lesson' element={<LessonSentences />} />
+                  <Route path='lesson'>
+                    <Route index element={<LessonSentences />} />
+                    <Route path=':id' element={<DetailSentence />} />
+                  </Route>
                   <Route path='exercise' element={<ExerciseSentences />} />
                   <Route path='exam' element={<ExamSentences />} />
                   <Route path='note' element={<Note />} />
