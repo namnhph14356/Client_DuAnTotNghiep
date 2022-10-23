@@ -192,7 +192,7 @@ p{
 }
 .box__course{
    border: 2px solid red;
-    padding: 70px 20px 20px 20px;
+    padding: 70px 12px 20px 12px;
    border-radius: 5px;
    position: relative;
 }
@@ -345,6 +345,11 @@ p{
     background-color: #C0392B;
     color: #fff; 
 }
-
+.our-product{
+    background-color:#6078EA;
+}
+.probootstrap-animate{
+    color :#fff
+}
 
   

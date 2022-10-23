@@ -24,8 +24,6 @@ const TimeCountdown = ({ time }: TimeCountdownProps) => {
         } else {
 
             let tempTime = moment.duration(120000);
-            // console.log("minutes", tempTime.minutes());
-            // console.log("seconds", tempTime.seconds());
             const total = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 100
             const total2 = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 1000
             timeLimit = timeLimit - total

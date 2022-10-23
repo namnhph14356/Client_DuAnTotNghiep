@@ -1,9 +1,9 @@
 export type GammarType = {
     _id?:string,
     name:string,
-    iamge:string,
-    example:string,
-    note?: string,
-    createdAt:string,
-    updatedAt:string,
+    image?:string,
+    description:string,
+    summary?:string,
+    createdAt:any,
+    updatedAt:any,
 }

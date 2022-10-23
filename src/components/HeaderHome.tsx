@@ -16,12 +16,14 @@ const navigation = [
 const HeaderComponent = () => {
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onLogout = () => {
     Modal.confirm({
       title: "Bạn có chắc muốn đăng xuất không ?",
       onOk: () => {
         dispatch(logout(auth))
         message.success("Đăng xuất thành công")
+        navigate('/')
       }
     })
   }

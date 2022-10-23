@@ -162,7 +162,7 @@ const AdminClassList = (props) => {
         }
       });
     } else {
-      value.userOfClass = value.userOfClass.map((item) => ({
+      value.userOfClass = value.userOfClass?.map((item) => ({
         userId: item,
         timeJoinClass: new Date(),
       }));
@@ -236,36 +236,6 @@ const AdminClassList = (props) => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Link join class"
-              name="linkJoinClass"
-              labelAlign="left"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Link join class!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="User Of Class"
-              labelAlign="left"
-              name="userOfClass"
-              rules={[
-                { required: true, message: "Please input your User Of Class!" },
-              ]}
-            >
-              {options && options.length > 0 && (
-                <Select
-                  mode="multiple"
-                  style={{ width: "100%" }}
-                  placeholder="Chọn user vào lớp học"
-                  options={options}
-                />
-              )}
-            </Form.Item>
-            <Form.Item
               label="Lever"
               labelAlign="left"
               name="lever"
@@ -281,6 +251,21 @@ const AdminClassList = (props) => {
                 <Option value="Advanced">Advanced</Option>
               </Select>
             </Form.Item>
+            <Form.Item
+              label="User Of Class"
+              labelAlign="left"
+              name="userOfClass"
+            >
+              {options && options.length > 0 && (
+                <Select
+                  mode="multiple"
+                  style={{ width: "100%" }}
+                  placeholder="Chọn user vào lớp học"
+                  options={options}
+                />
+              )}
+            </Form.Item>
+            
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
@@ -374,7 +359,7 @@ const AdminClassList = (props) => {
             </Button>
           </div>
         </div>
-        <Table scroll={{y: '150px'}} dataSource={listClass} columns={columns} />
+        <Table scroll={{y: '40vh'}} dataSource={listClass} columns={columns} />
       </div>
     </div>
   );
