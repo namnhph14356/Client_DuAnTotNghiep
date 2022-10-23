@@ -58,13 +58,6 @@ const Learning = () => {
     return cheapeastShirt
   }
 
-  console.log("monthSelect",monthSelect);
-  console.log("weekSelect",weekSelect);
-  console.log("daySelect",daySelect);
-
-  console.log("weeks2",weeks2);
-  console.log("days2",days2);
-  
 
   useEffect(() => {
     dispatch(getCategoryList())
@@ -74,17 +67,14 @@ const Learning = () => {
     const flag = months.reduce(function (prev, current) {
       return (prev.order < current.order) ? prev : current
     })
-    const temp = weeks?.filter((item: WeekType) => item.month === flag._id)
+    const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
+      return (prev.order < current.order) ? prev : current
+    })
     setMonthSelect(months?.reduce(function (prev, current) {
       return (prev.order < current.order) ? prev : current
     }))
-    // setWeekSelect(findSmallestOrder(weeks, monthSelect?._id))
-    setWeekSelect(temp?.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    }))
-    setDaySelect(days?.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    }))
+    setWeekSelect(temp)
+    setDaySelect(days.find((item: DayType) => item.week === temp._id))
 
 
   }, [])
@@ -99,7 +89,6 @@ const Learning = () => {
         </div>
         <div className="content__learning">
           <div className='desc__content__learning'>
-            {/* 30 ngày làm quen với giao tiếp tiếng Anh */}
             {monthSelect?.title}
           </div>
           <div className="learning__time">
@@ -194,7 +183,7 @@ const Learning = () => {
                   <Menu as="div" className="relative inline-block text-left ">
                     <div>
                       <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
-                        {daySelect?.title} <span className='h-full my-auto'><ChevronDownIcon className='w-5 h-5' /></span>
+                        {daySelect ? daySelect.title : "Ngày 1"} <span className='h-full my-auto'><ChevronDownIcon className='w-5 h-5' /></span>
                       </Menu.Button>
                     </div>
                     <Transition

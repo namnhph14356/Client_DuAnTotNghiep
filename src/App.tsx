@@ -77,8 +77,12 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+
+import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
+
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
+
 
 function App() {
   return (
@@ -218,6 +222,8 @@ function App() {
           </Route>
         </Route>
 
+
+        <Route path='/ggspeech' element={<GoogleSpeech />}> </Route>
         <Route path='/test' element={<TestPage />}> </Route>
         <Route path='/test2' element={<TestPage2 />}> </Route>
         <Route path='/signin' element={<SignIn />}> </Route>

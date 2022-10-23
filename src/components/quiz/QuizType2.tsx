@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { SpeechContext } from '../../context/GoogleSpeechContext'
 
 type QuizType2Props = {
     data: any,
@@ -8,6 +9,16 @@ type QuizType2Props = {
 }
 
 const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) => {
+    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+    const onHandleSpeakSelect = ()=>{
+        if (data.answer.toLowerCase()  === transcript.toLowerCase()) {
+            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
+
+        }
+    }
+    useEffect(()=>{
+        onHandleSpeakSelect()
+    },[transcript])
 
     return (
         <div className={`border-2 list__question__item ${data._id == select?.id
@@ -28,11 +39,11 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
                 }
             }}
         >
-            <div className="img__result__question__item self-center">
-                <img src={`../../../../assets/image/water.png`} />
+            <div className="self-center img__result__question__item">
+                <img src={`../../../../../assets/image/water.png`} />
             </div>
-            <div className="title__result__question__item text-center w-full block self-center">
-                <span className="text-base font-bold block">{data.answer}</span>
+            <div className="self-center block w-full text-center title__result__question__item">
+                <span className="block text-base font-bold">{data.answer}</span>
             </div>
         </div>
 
