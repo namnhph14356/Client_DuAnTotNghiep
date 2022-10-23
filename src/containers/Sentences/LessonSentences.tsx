@@ -5,7 +5,7 @@ const LessonSentences = () => {
   return (
     <div>
       <div>
-        
+        LessonSentences
       </div>
     </div>
   )
