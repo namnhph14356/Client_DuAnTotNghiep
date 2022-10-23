@@ -77,6 +77,10 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+import DetailSentence from './containers/Sentences/DetailSentence';
+
+import ListGrammar from './pages/admin/grammar/ListGrammar';
+import FormGrammar from './pages/admin/grammar/FormGrammar';
 
 import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
 
@@ -92,9 +96,9 @@ function App() {
         <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route index element={<Learning />} />
+            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
             <Route path=":dayId/detailLearning">
-              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning> } />
+              <Route index element={<DetailLearning /> } />
               <Route path=':id' element={<DetailLearningLayout />}>
 
                 <Route path='listenSpeak' element={<SpeakingPage />}>
@@ -112,7 +116,10 @@ function App() {
                 </Route>
 
                 <Route path='sentences' element={<Sentences />}>
-                  <Route path='lesson' element={<LessonSentences />} />
+                  <Route path='lesson'>
+                    <Route index element={<LessonSentences />} />
+                    <Route path=':id' element={<DetailSentence />} />
+                  </Route>
                   <Route path='exercise' element={<ExerciseSentences />} />
                   <Route path='exam' element={<ExamSentences />} />
                   <Route path='note' element={<Note />} />
@@ -215,10 +222,18 @@ function App() {
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
-          <Route path='vocabulary'>
+          <Route path="grammar" >
+            <Route index element={<ListGrammar />} />
+            <Route path='add' element={<FormGrammar />} />
+            <Route path=':id/edit' element={<FormGrammar />} />
+
+        </Route>
+
+        <Route path='vocabulary'>
             <Route index element={<ListVocabulary />} />
             <Route path='add' element={<FormVocabulary />} />
             <Route path=':id/edit' element={<FormVocabulary />} />
+
           </Route>
         </Route>
 

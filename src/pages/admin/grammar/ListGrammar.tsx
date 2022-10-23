@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { listVocabulary, deleteVocabulary } from "../../../api/vocabulary";
 import {
   Table,
   Breadcrumb,
@@ -18,47 +17,50 @@ import type { InputRef } from "antd";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { VocabulatyType } from "../../../types/vocabularyType";
+import { deleteGrammar, getListGrammar } from "../../../api/grammar";
+import { GammarType } from "../../../types/grammar";
+import { useDispatch } from "react-redux";
+import { changeBreadcrumb } from "../../../features/Slide/category/CategorySlide";
 import AdminPageHeader from "../../../components/AdminPageHeader";
 type Props = {};
 
 interface DataType {
   key: React.Key;
   _id?: string;
-  words: string;
-  wordForm: string;
-  image: string;
-  meaning: string;
-  createdAt: any;
-  updatedAt: any;
+  name: string;
+  description: string;
+  dayId?: string;
+  summary?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 type DataIndex = keyof DataType;
-const ListVocabulary = (props: Props) => {
-  const [vocabulary, setVocabulary] = useState([]);
+const ListGrammar = (props: Props) => {
+  const [grammar, setGrammar] = useState([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-
+  const dispatch = useDispatch();
   // Call api
   useEffect(() => {
     const getData = async () => {
-      const { data } = await listVocabulary();
-      setVocabulary(data);
+      const { data } = await getListGrammar();
+      setGrammar(data);
     };
     getData();
   }, []);
-  const dataSources = vocabulary?.map((items: any, index: any) => {
+  const dataSources = grammar?.map((items: any, index: any) => {
     console.log(items.wordForm);
 
     return {
       key: index + 1,
       stt: index + 1,
       _id: items._id,
-      words: items.words,
-      meaning: items.meaning,
-      wordForm: items.wordForm,
-      image: items.image,
+      name: items.name,
+      description: items.description,
+      dayId: items.dayId,
+      summary: items.summary,
       createdAt: moment(items.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
@@ -98,10 +100,8 @@ const ListVocabulary = (props: Props) => {
     Modal.confirm({
       title: "You want to delete this Contact ?",
       onOk: async () => {
-        await deleteVocabulary(_id);
-        setVocabulary(
-          vocabulary.filter((item: VocabulatyType) => item._id !== _id)
-        );
+        await deleteGrammar(_id);
+        setGrammar(grammar.filter((item: GammarType) => item._id !== _id));
       },
     });
   };
@@ -181,61 +181,32 @@ const ListVocabulary = (props: Props) => {
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
-
     {
-      title: "Words",
-      dataIndex: "words",
-      key: "words",
-      ...getColumnSearchProps("words"),
+      title: "Name",
+      dataIndex: "name",
+      key: "Name",
     },
     {
-      title: "WordForm",
-      key: "wordForm",
-      // dataIndex: "wordForm"
-      render: (record: any) => (
-        <div className="">
-          {record.wordForm === "1" ? (
-            <Tag color="green">Nouns</Tag>
-          ) : record.wordForm === "2" ? (
-            <Tag color="blue">Adj</Tag>
-          ) : record.wordForm === "3" ? (
-            <Tag color="purple">Adv</Tag>
-          ) : record.wordForm === "4" ? (
-            <Tag color="purple">Verbs</Tag>
-          ) : (
-            <Tag color="red">ERROR</Tag>
-          )}
-        </div>
-      ),
-      // ...getColumnSearchProps('wordForm'),
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+      className: "description_grammar",
     },
     {
-      title: "Meaning",
-      dataIndex: "meaning",
-      key: "meaning",
-      ...getColumnSearchProps("meaning"),
-    },
-    {
-      title: "Image",
-      key: "image",
-      render: (record) => (
-        <div className="">
-          <Image width={100} height={100} src={record.image} />
-        </div>
-      ),
+      title: "Summary",
+      dataIndex: "summary",
+      key: "summary",
     },
     {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
-      sorter: (a, b) => a.createdAt - b.createdAt,
       sortDirections: ["descend", "ascend"],
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      sorter: (a, b) => a.updatedAt - b.updatedAt,
       sortDirections: ["descend", "ascend"],
     },
     {
@@ -244,7 +215,7 @@ const ListVocabulary = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/admin/vocabulary/${record._id}/edit`}>
+            <Link to={`/admin/grammar/${record?.dayId}/edit`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -270,14 +241,14 @@ const ListVocabulary = (props: Props) => {
   ];
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý vocabulary" />
+      <AdminPageHeader breadcrumb="Quản lý grammar" />
       <Button type="primary" className="my-6">
-        <Link to={`/admin/vocabulary/add`}>Thêm Từ Vựng</Link>
+        <Link to={`/admin/grammar/add`}>Thêm Ngữ Pháp</Link>
       </Button>
-      <h1>Vocabulary</h1>
+      <h1>Grammar</h1>
       <Table columns={columns} dataSource={dataSources}></Table>
     </div>
   );
 };
 
-export default ListVocabulary;
+export default ListGrammar;

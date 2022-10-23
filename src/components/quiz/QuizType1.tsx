@@ -21,6 +21,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
         onHandleSpeakSelect()
     },[transcript,speechValue])
 
+
     return (
         <div className={`relative flex items-start py-4 
         ${data._id == select?.id

@@ -164,7 +164,7 @@ const CommentItem = ({ item }: any) => {
           {
             author: user.username,
             userId: user._id,
-            avatar: users.img,
+            avatar: user.img,
             content: values.replycomment.content,
             commentId: Newcomment._id
           }
@@ -178,6 +178,8 @@ const CommentItem = ({ item }: any) => {
     }
 
   };
+  console.log(value);
+  
   return (
     <div>
       <div>
@@ -187,6 +189,7 @@ const CommentItem = ({ item }: any) => {
             <div className="flex gap-3 items-center">
               <img src={value?.img}
                 className="object-cover w-12 h-12 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
+                   {/* <Avatar image={String(user.img)} className="text-sm w-10 h-10 text-white" /> */}
               <div>
                 <h3 className='font-bold'>{value?.username}
                   <span className="text-sm text-gray-400 font-normal pl-3">{moment(item.createdAt).local().fromNow()}</span>
@@ -378,7 +381,9 @@ const QuestionAnswer = () => {
   useEffect(() => {
     dispath(getCommentList())
   }, []);
+  console.log(user);
   const onFinish = async (values: any) => {
+
     try {
       setSubmitting(true);
       setTimeout(() => {
@@ -386,7 +391,7 @@ const QuestionAnswer = () => {
         dispath(addCommentSlide(
           {
             author: user.username,
-            avatar: users.img,
+            avatar: user.img,
             content: values.comment.content,
             rating: rating,
             userId: user._id

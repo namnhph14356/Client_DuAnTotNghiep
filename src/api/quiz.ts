@@ -25,3 +25,8 @@ export const removeQuiz = (id: string) => {
     const url = `/quizs/${id}`
     return instance.delete(url)
 }
+
+export const getExerciseQuizByIdPracticeActivity = (id: string) => {
+  const url = `/quizs/exercise/${id}`
+  return instance.get(url)
+}
