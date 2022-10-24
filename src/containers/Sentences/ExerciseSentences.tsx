@@ -197,10 +197,10 @@ const ExerciseSentences = () => {
     increase()
 
     if (checkFlag === 1) {
-      setSelect({ isCorrect: 1, type: 3 })
+      setSelect({ isCorrect: true, type: 3 })
     }
     if (checkFlag === 0 && quizCompound.length !== 0) {
-      setSelect({ isCorrect: 0, type: 3 })
+      setSelect({ isCorrect: false, type: 3 })
     }
 
     if (select !== null && select.type === undefined) {
@@ -221,7 +221,7 @@ const ExerciseSentences = () => {
       }])
     }
 
-    speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+    speak({ text: `${select?.isCorrect === true || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
     // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
   }
 
@@ -237,7 +237,7 @@ const ExerciseSentences = () => {
       point: data.isCorrect ? Math.round(flag2) : 0,
       isCorrect: data.isCorrect
     }])
-    speak({ text: `${data.isCorrect === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+    speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
   }
 
   //---Countinute---
@@ -268,7 +268,7 @@ const ExerciseSentences = () => {
     let pass = 0
     result.forEach((item: any, index: number) => {
       totalPoint = totalPoint + item.point
-      if (item.isCorrect === 1) {
+      if (item.isCorrect === true) {
         totalCorrect = totalCorrect + 1
       }
       if (totalCorrect > quizListHalf) {
@@ -409,7 +409,7 @@ const ExerciseSentences = () => {
               <div className='flex flex-row gap-4'>
                 <div className='md:basis-3/4 '>
 
-                  {check === true && select?.isCorrect === 1 || check === true && check2 === true && select === null
+                  {check === true && select?.isCorrect === true || check === true && check2 === true && select === null
                     ? <section className='w-full mx-auto md:py-[30px]'>
                       <div className="">
                         <div className="bg-[#D6EAF8] border-[#5DADE2]  px-[15px] py-[10px] rounded-md">
@@ -424,7 +424,7 @@ const ExerciseSentences = () => {
 
 
 
-                  {check === true && select?.isCorrect === 0 || check === true && check2 === false && select === null
+                  {check === true && select?.isCorrect === false || check === true && check2 === false && select === null
                     ? <section className='w-full mx-auto md:py-[30px]'>
                       <div className="">
                         <div className="bg-[#F9EBEA]  px-[15px] rounded-md">
@@ -458,7 +458,7 @@ const ExerciseSentences = () => {
                     <button
                       disabled={select === null && quizCompound === null ? true : false}
                       className={`${check === true
-                        ? select?.isCorrect === 1 || check2 === true
+                        ? select?.isCorrect === true || check2 === true
                           ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
                           : "!bg-[#C0392B] !text-white"
                         : "hover:bg-purple-800 "}  

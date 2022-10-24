@@ -29,7 +29,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 : "border-[#CCCCCC]"} 
                 ${check === true
                 ? data._id == select?.id
-                    ? select?.isCorrect === 1
+                    ? select?.isCorrect === true
                         ? "bg-[#D6EAF8] border-[#5DADE2] "
                         : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
                     : ""
@@ -47,7 +47,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 <input type="radio" checked={select?.id === data._id}
                     className={`${check === true
                         ? data._id == select?.id
-                            ? data?.isCorrect === 1
+                            ? data?.isCorrect === true
                                 ? "accent-[#5DADE2] "
                                 : "accent-[#C0392B]"
                             : ""
