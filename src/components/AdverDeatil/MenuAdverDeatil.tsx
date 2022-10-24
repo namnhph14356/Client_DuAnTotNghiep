@@ -14,8 +14,11 @@ type PracticeActivityArr = {
 
 const MenuAdverDeatil = () => {
   const { id, dayId } = useParams();
+  console.log("id",id)
+  console.log("dayId",dayId)
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
+  console.log("practiceActivity",practiceActivity)
   const practiceLearning = [...practiceActivity]
   practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.type - b.type)
   const practiceArr = [
@@ -65,8 +68,8 @@ const MenuAdverDeatil = () => {
 
 
   useEffect(() => {
-    dispatch(getListPracticeActivitySliceByDay(id))
-  }, [id])
+    dispatch(getListPracticeActivitySliceByDay(dayId))
+  }, [dayId])
 
   return (
     <div className='p-4 pb-8 border shadow-lg mb-8'>
@@ -74,7 +77,7 @@ const MenuAdverDeatil = () => {
       <ul className='m-0 p-0 divide-y-2'>
         {practiceLearning.map((item: PracticeActivityType, index: number) => {
           return <li key={index + 1} className='bg-indigo-600 px-2 py-1'>
-            <NavLink to={`/learning/${id}/detailLearning/${item._id}/${onChangeURL(item.type)}`} className='text-white'>
+            <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.type)}`} className='text-white'>
               {/* Luyện nghe nói từ phản xạ */}
               {practiceArr.map((item2: PracticeActivityArr) => {
                 if (item2.id === item.type) {

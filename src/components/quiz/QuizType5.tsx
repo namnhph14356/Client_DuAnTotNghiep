@@ -3,15 +3,16 @@ import { useSpeechSynthesis } from 'react-speech-kit';
 import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType5Props = {
+    question: string,
     data: any,
     check: boolean,
     select: any,
     onHanldeSetSelect: (select: any, check: boolean) => void
 }
 
-const QuizType5 = ({ data, check, select, onHanldeSetSelect }: QuizType5Props) => {
+const QuizType5 = ({question, data, check, select, onHanldeSetSelect }: QuizType5Props) => {
+    const [show,setShow]= useState<boolean>(false)
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const onHandleSpeakSelect = () => {
 
@@ -26,11 +27,27 @@ const QuizType5 = ({ data, check, select, onHanldeSetSelect }: QuizType5Props) =
 
     return (
         <div className="main__content__spaeking">
-            <div className="img__question">
+            {/* <div className="img__question">
+                
+
                 <img src="https://i.pinimg.com/564x/23/6e/ad/236eadcccca3d08761bdf336d328ec43.jpg" alt="" />
+            </div> */}
+
+            <div className="col-span-5 flex flex-col items-center justify-center gap-2">
+                <button className="group " onClick={()=>{setShow(!show)}} >
+                    <h3 className={`${show? "text-base":"text-2xl"} m-0 group-hover:text-indigo-600`}>Click để {show? "ẩn": "hiện"} câu</h3>
+                </button>
+
+                <span className={`text-center text-2xl font-medium m-0 ${show? "": "hidden"}`}>{question}</span>
+
+                <button className='text-xl' onClick={() => speak({ text: question, voice: voices[2] })}>
+                    <span><i className="fa-solid fa-volume-high"></i></span>
+                  </button>
             </div>
 
-            <div className="choose__question">
+
+
+            <div className="col-span-7">
                 <fieldset className="border-t border-b border-gray-200">
                     <legend className="sr-only">Notifications</legend>
                     <div className="divide-y divide-gray-200">

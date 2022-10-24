@@ -32,6 +32,8 @@ import QuizType3 from './QuizType3';
 import QuizType5 from './QuizType5';
 import { SpeechContext } from '../../context/GoogleSpeechContext';
 import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
+import { RootState } from '../../app/store';
+import { UserType } from '../../types/user';
 
 
 
@@ -115,7 +117,7 @@ const CountdownWrapper = ({ time, reset }) => {
 const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizTypeSelect = () => {
-
+    const user = useSelector(((item: RootState) => item.auth.value)) as UserType
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
     const [select, setSelect] = useState<any>(null)
@@ -153,6 +155,7 @@ const QuizTypeSelect = () => {
     console.log("select", select)
     console.log("quizCompound", quizCompound)
     console.log("result", result)
+    console.log("user", user)
     let checkFlag = 0
     let answerType3 = 0
     if (quizList) {
@@ -164,18 +167,11 @@ const QuizTypeSelect = () => {
     }
     let arrSelect: any = []
     const onHanldeSetSelect = (data: any, check: boolean) => {
-        console.log("data", data)
         if (Array.isArray(data)) {
             setQuizCompound(data)
-            console.log("data true", data)
-            console.log("quizCompound true", quizCompound)
         } else if(!Array.isArray(data) && data.type === 3){
-            
             arrSelect = [...arrSelect,data]
             setQuizCompound(arrSelect)
-            console.log("data false", data)
-            console.log("arrSelect", arrSelect)
-            console.log("quizCompound false", quizCompound)
         } else if (data.type === 5) {
             setSelect(data)
             onCheckType5(data)
@@ -275,7 +271,7 @@ const QuizTypeSelect = () => {
         })
 
         const { data: data2 } = await addHistory({
-            user: "62c853c16948a16fbde3b43e",
+            user: user._id,
             learningProgress: "",
             practiceActivity: quiz2.itemPracticeActivity._id,
             totalPoint: totalPoint,
@@ -441,9 +437,7 @@ const QuizTypeSelect = () => {
 
                                         : quizList[quizIndex]?.quiz?.type === 3
                                             ? <QuizType3 data={quizList[quizIndex].answerQuiz} check={check} quizCompound={quizCompound} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                                            : quizList[quizIndex]?.quiz?.type === 5
-                                                ? <QuizType5 data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                                                : ""
+                                            : ""
                                 : ""
                             }
 
