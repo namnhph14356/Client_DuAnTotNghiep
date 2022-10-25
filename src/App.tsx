@@ -86,6 +86,8 @@ import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
 
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
+import OralPage from './pages/OralPage';
+import OralSeven from './pages/OralSeven';
 
 
 function App() {
@@ -97,6 +99,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
+            <Route path='oral'  element={<OralPage/>} />
+            <Route path='oralseven'  element={<OralSeven/>} />
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning /> } />
               <Route path=':id' element={<DetailLearningLayout />}>
