@@ -25,7 +25,7 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
             : "border-[#CCCCCC]"} 
                                                     ${check === true
                 ? data._id == select?.id
-                    ? select?.isCorrect === 1
+                    ? select?.isCorrect === true
                         ? "bg-[#D6EAF8] border-[#5DADE2] "
                         : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
                     : ""
