@@ -34,6 +34,7 @@ import { SpeechContext } from '../../context/GoogleSpeechContext';
 import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
+import { addLearningProgress, detailLearningProgressByUser } from '../../api/learningProgress';
 
 
 
@@ -118,26 +119,18 @@ const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizTypeSelect = () => {
     const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-    const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
     const [select, setSelect] = useState<any>(null)
     const [check, setCheck] = useState(false)
     const [check2, setCheck2] = useState<any>()
     const [done, setDone] = useState<any>()
-    const timeSlice = useAppSelector(item => item.time.value)
-
     const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
     const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
-
-    // const audioCorrect = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3")
-    // const audioWrong = new Audio("../assets/audio/Fail-sound-effect-2.mp3")
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const [quiz2, setQuiz2] = useState<any>([])
     const [quizList, setQuizList] = useState<any>()
     const [percent, setPercent] = useState<number>(0);
-    let input2: any = []
-    let check10: any = []
     const [quizIndex, setQuizIndex] = useState<number>(0)
     const { id, dayId }: any = useParams()
     const ref = useRef(null)
@@ -238,8 +231,6 @@ const QuizTypeSelect = () => {
     // Chuyển câu hỏi
     const onContinute = () => {
         setSelect(null)
-        input2 = []
-        check10 = []
         setCheck2(null)
         setCheck(false)
         setOnReset(!onReset)
@@ -269,29 +260,35 @@ const QuizTypeSelect = () => {
                 pass = 1
             }
         })
-
-        const { data: data2 } = await addHistory({
-            user: user._id,
-            learningProgress: "",
-            practiceActivity: quiz2.itemPracticeActivity._id,
-            totalPoint: totalPoint,
-            totalCorrect: totalCorrect,
-            result: pass,
-            type: 2
-        })
-        for (let index = 0; index < result.length; index++) {
-            const flag = { ...result[index], history: data2._id }
-            const { data } = await addUserQuiz(flag)
+        const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+        console.log("learningProgress",learningProgress)
+        if(learningProgress.length === 0){
+            const {data} = await addLearningProgress({day: dayId, user: user._id})
+            console.log("learningProgress add data",data)
         }
-        const { data } = await detailPracticeActivity(id)
-        setQuiz2(data)
 
-        const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
-            const { data } = await detailHistory(item._id)
+        // const { data: data2 } = await addHistory({
+        //     user: user._id,
+        //     learningProgress: "",
+        //     practiceActivity: quiz2.itemPracticeActivity._id,
+        //     totalPoint: totalPoint,
+        //     totalCorrect: totalCorrect,
+        //     result: pass,
+        //     type: 2
+        // })
+        // for (let index = 0; index < result.length; index++) {
+        //     const flag = { ...result[index], history: data2._id }
+        //     const { data } = await addUserQuiz(flag)
+        // }
+        // const { data } = await detailPracticeActivity(id)
+        // setQuiz2(data)
 
-            return data
-        }))
-        setHistory(test2)
+        // const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
+        //     const { data } = await detailHistory(item._id)
+
+        //     return data
+        // }))
+        // setHistory(test2)
         setIsModalOpen(true);
     }
 
@@ -357,6 +354,9 @@ const QuizTypeSelect = () => {
                 return data
             }))
             setHistory(test2)
+            const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+            console.log("learningProgress",learningProgress)
+
         }
         getQuiz()
     }, [id])
@@ -491,7 +491,7 @@ const QuizTypeSelect = () => {
                                 <div className='mt-8 md:basis-1/4'>
                                     <div className={`answer__question`}>
                                         <button
-                                            disabled={select === null && quizCompound === null ? true : false}
+                                            disabled={select === null && quizCompound.length === 0 ? true : false}
                                             className={`${check === true
                                                 ? select?.isCorrect === true || check2 === true
                                                     ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
