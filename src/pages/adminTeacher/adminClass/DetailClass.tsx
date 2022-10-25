@@ -10,9 +10,6 @@ const DetailClass = props => {
     const {id} = useParams();
       
     const {class: classDeatail} = useSelector((state: any) => state.class)
-    console.log('====================================');
-    console.log(classDeatail);
-    console.log('====================================');
     const dispatch = useDispatch();
     useEffect(() => {
       dispatch(getClassByIdSlide(id))
