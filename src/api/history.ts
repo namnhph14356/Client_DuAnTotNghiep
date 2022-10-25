@@ -11,7 +11,7 @@ export const detailHistory = async (id: string | undefined) => {
     return instance.get(url)
 }
 
-export const addHistory = async (data: HistoryType ) => {
+export const addHistory = async (data: any ) => {
     const url = `/history`
     return instance.post(url,data)
 }

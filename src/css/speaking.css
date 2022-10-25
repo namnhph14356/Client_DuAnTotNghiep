@@ -108,6 +108,9 @@
 }
 
 /* Custom react quill */
-.ql-editor {
-  height: 250px !important;
+.quill_custom {
+  height: 200px !important;
+}
+.quill_custom .ql-editor{
+ background-color: #fff;
 }

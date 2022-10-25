@@ -27,3 +27,9 @@
 .note__attention {
     @apply bg-[#F3FCFF] px-5 py-2
 }
+
+.description_grammar{
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 300px;
+}
