@@ -151,7 +151,7 @@ const QuizTypeSelect = () => {
 
     console.log("speechValue quiz", speechValue);
     console.log("transcript quiz", transcript);
-    // console.log("quizList", quizList);
+    console.log("quizList", quizList);
     console.log("select", select)
     console.log("quizCompound", quizCompound)
     console.log("result", result)
@@ -191,10 +191,10 @@ const QuizTypeSelect = () => {
         increase()
 
         if (checkFlag === 1) {
-            setSelect({ isCorrect: 1, type: 3 })
+            setSelect({ isCorrect: true, type: 3 })
         }
         if (checkFlag === 0 && quizCompound.length !== 0) {
-            setSelect({ isCorrect: 0, type: 3 })
+            setSelect({ isCorrect: false, type: 3 })
         }
 
         if (select !== null && select.type === undefined) {
@@ -215,7 +215,7 @@ const QuizTypeSelect = () => {
             }])
         }
 
-        speak({ text: `${select?.isCorrect === 1 || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+        speak({ text: `${select?.isCorrect === true || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
         // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
     }
 
@@ -231,7 +231,7 @@ const QuizTypeSelect = () => {
             point: data.isCorrect ? Math.round(flag2) : 0,
             isCorrect: data.isCorrect
         }])
-        speak({ text: `${data.isCorrect === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+        speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
     }
 
     //---Countinute---
@@ -408,7 +408,7 @@ const QuizTypeSelect = () => {
 
                         <div className="p-5 mt-5">
                             {quizList ?
-                                quizList[quizIndex]?.quiz?.type === 1
+                                quizList[quizIndex]?.quiz?.type === "selectRadio"
                                     ? <div className="main__content__spaeking">
                                         <div className="img__question">
                                             <img src="https://i.pinimg.com/564x/23/6e/ad/236eadcccca3d08761bdf336d328ec43.jpg" alt="" />
@@ -428,14 +428,14 @@ const QuizTypeSelect = () => {
 
                                     </div>
 
-                                    : quizList[quizIndex]?.quiz?.type === 2
+                                    : quizList[quizIndex]?.quiz?.type === "selectImage"
                                         ? <div className="box__question__quiz__item ">
                                             {quizList[quizIndex].answerQuiz.map((item, index) => {
                                                 return <QuizType2 key={index + 1} data={item} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
                                             })}
                                         </div>
 
-                                        : quizList[quizIndex]?.quiz?.type === 3
+                                        : quizList[quizIndex]?.quiz?.type === "selectCompound"
                                             ? <QuizType3 data={quizList[quizIndex].answerQuiz} check={check} quizCompound={quizCompound} select={select} onHanldeSetSelect={onHanldeSetSelect} />
                                             : ""
                                 : ""
@@ -444,7 +444,7 @@ const QuizTypeSelect = () => {
                             <div className='flex flex-row gap-4'>
                                 <div className='md:basis-3/4 '>
 
-                                    {check === true && select?.isCorrect === 1 || check === true && check2 === true && select === null
+                                    {check === true && select?.isCorrect === true || check === true && check2 === true && select === null
                                         ? <section className='w-full mx-auto md:py-[30px]'>
                                             <div className="">
                                                 <div className="bg-[#D6EAF8] border-[#5DADE2]  px-[15px] py-[10px] rounded-md">
@@ -459,7 +459,7 @@ const QuizTypeSelect = () => {
 
 
 
-                                    {check === true && select?.isCorrect === 0 || check === true && check2 === false && select === null
+                                    {check === true && select?.isCorrect === false || check === true && check2 === false && select === null
                                         ? <section className='w-full mx-auto md:py-[30px]'>
                                             <div className="">
                                                 <div className="bg-[#F9EBEA]  px-[15px] rounded-md">
@@ -493,7 +493,7 @@ const QuizTypeSelect = () => {
                                         <button
                                             disabled={select === null && quizCompound === null ? true : false}
                                             className={`${check === true
-                                                ? select?.isCorrect === 1 || check2 === true
+                                                ? select?.isCorrect === true || check2 === true
                                                     ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
                                                     : "!bg-[#C0392B] !text-white"
                                                 : "hover:bg-purple-800 "}  
