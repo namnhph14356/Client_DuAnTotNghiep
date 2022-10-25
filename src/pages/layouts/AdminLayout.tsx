@@ -113,6 +113,12 @@ const AdminLayout = () => {
                         <Menu.Item key="/admin/listenWrite"><NavLink to='/admin/listenWrite'>List Listen Write</NavLink></Menu.Item>
                         <Menu.Item key="/admin/listenWrite/add"><NavLink to='/admin/listenWrite/add'>Add Listen Write</NavLink></Menu.Item>
                     </SubMenu>
+
+                    <SubMenu key="sub9" icon={<ReadOutlined />} title="Centences">
+                        <Menu.Item key="/admin/sentences"><NavLink to='/admin/sentences'>List Listen Write</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/sentences/add"><NavLink to='/admin/sentences/add'>Add Listen Write</NavLink></Menu.Item>
+                    </SubMenu>
+
                     <SubMenu key="sub6" icon={<FolderFilled />} title="Contact">
                         <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>List Contact</NavLink></Menu.Item>
                     </SubMenu>

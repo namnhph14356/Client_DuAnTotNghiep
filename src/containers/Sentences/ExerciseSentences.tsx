@@ -41,7 +41,23 @@ import { UserType } from '../../types/user';
 import GoogleSpeechSpeaker from '../../components/GoogleSpeech/GoogleSpeechSpeaker';
 import QuizType5 from '../../components/quiz/QuizType5';
 
+const listQuestionWrite = [
+  {id:"1", text: "What are you doing here ?"},
+  {id:"2", text: "Where"},
+]
 
+const listAnswerWrite = [
+  {id:"1", idQues:"1", text: "aaaaaaaaa"},
+  {id:"2", idQues:"1", text: "bbbbbbb"},
+  {id:"3", idQues:"1", text: "ccccccccc"},
+  {id:"4", idQues:"1", text: "dddddddddddddddd"},
+
+  {id:"5", idQues:"2", text: "hhhhhhhhhhhhhhh"},
+  {id:"6", idQues:"2", text: "eeeeeeeeeeee"},
+  {id:"7", idQues:"2", text: "fffffffff"},
+  {id:"8", idQues:"2", text: "ggggggggggggg"},
+
+]
 
 let flag1: string = ""
 let flag2: number = 0
@@ -353,6 +369,8 @@ const ExerciseSentences = () => {
     const getQuiz = async () => {
       const { data } = await detailPracticeActivity(id)
       setQuiz2(data)
+      console.log("datadataaaaaaa", data);
+      
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)
         return data
@@ -366,7 +384,8 @@ const ExerciseSentences = () => {
     }
     getQuiz()
   }, [id])
-
+  console.log(quizList);
+  
 
   return (
     <>
@@ -397,7 +416,7 @@ const ExerciseSentences = () => {
                 
               </div> */}
             </div>
-
+              
             <div className="p-5 mt-5">
               {quizList ?
                 quizList[quizIndex]?.quiz?.type === 5
@@ -455,7 +474,7 @@ const ExerciseSentences = () => {
 
                 <div className='mt-8 md:basis-1/4'>
                   <div className={`answer__question`}>
-                    <button
+                    {/* <button
                       disabled={select === null && quizCompound === null ? true : false}
                       className={`${check === true
                         ? select?.isCorrect === 1 || check2 === true
@@ -466,7 +485,7 @@ const ExerciseSentences = () => {
                       onClick={() => { onCheck() }}
                     >
                       Kiểm tra
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
