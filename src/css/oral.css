@@ -109,11 +109,11 @@
     @apply shadow border px-3 py-2
 }
 .title__nav h2{
-    @apply text-center border-b-2 pb-1
+    @apply text-center border-b-2 pb-4
 }
 
 .nav__list{
-    @apply mt-3 border-b-2
+    @apply mt-6 border-b-2
 }
 .item__list__user{
     @apply grid grid-cols-12 gap-3
