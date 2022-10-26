@@ -71,17 +71,20 @@
     @apply flex justify-between mt-3
 }
 .btn__next__control{
-    @apply bg-[#8EC300] rounded-full px-3 pb-1 text-white
+    @apply bg-[#8EC300] rounded px-3 pb-1 text-white
 }
 
 .list__answered{
     @apply ml-2
 }
 .title__list__answered p{
-    @apply  border-b-2
+    @apply  border-b-2 font-semibold mt-4
 }
 .list__answered__result{
     @apply list-decimal ml-2
+}
+.list__answered__result li{
+    @apply mt-2
 }
 .list__answered__result i {
     @apply px-1 cursor-pointer

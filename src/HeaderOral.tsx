@@ -3,16 +3,16 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 const month = [
-    { id: 1, name: 'thi cau ngay' },
-    { id: 2, name: 'thi cau tuan' },
-    { id: 3, name: 'thi cau thang' },
-    { id: 3, name: 'thi cau quy' },
+    { id: 1, name: 'thi câu ngày' },
+    { id: 2, name: 'thi câu tuần' },
+    { id: 3, name: 'thi câu tháng' },
+    { id: 4, name: 'thi câu quý' },
 ]
 const day = [
-    { id: 1, name: 'ngay 1' },
-    { id: 2, name: 'ngay 2' },
-    { id: 3, name: 'ngay 3' },
-    { id: 3, name: 'ngay 4' },
+    { id: 1, name: 'ngày 1' },
+    { id: 2, name: 'ngày 2' },
+    { id: 3, name: 'ngày 3' },
+    { id: 4, name: 'ngày 4' },
 ]
 
 function classNames(...classes) {
@@ -24,7 +24,7 @@ const HeaderOral = () => {
     return (
         <div>
             <div className="header__oral__page">
-                <p> thi oral ngay <span>5</span></p>
+                <p> thi oral ngày <span>5</span></p>
 
             </div>
             <div className="select__menu__oral">
@@ -147,7 +147,7 @@ const HeaderOral = () => {
                 </div>
                 <div className="btn__select__menu">
                     <button>
-                        chon
+                        chọn
                     </button>
                 </div>
             </div>
@@ -157,10 +157,10 @@ const HeaderOral = () => {
                 </div>
                 <div className="btn__right">
                     <button className='btn__wrap__right__oral'>
-                        <i className="fa-solid fa-book"></i> on thi
+                        <i className="fa-solid fa-book"></i> ôn thi
                     </button>
                     <button>
-                        <i className="fa-solid fa-microphone"></i>  thi oral phan xa 7 giay
+                        <i className="fa-solid fa-microphone"></i>  thi oral phản xạ 7 giây
                     </button>
                 </div>
             </div>
