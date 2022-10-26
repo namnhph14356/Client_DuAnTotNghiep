@@ -12,8 +12,10 @@ import {
   Table,
   Typography,
 } from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getClassById } from "../../../api/class";
 import { getListUser } from "../../../api/user";
 import {
@@ -73,9 +75,10 @@ const AdminClassList = (props) => {
 
   const columns = [
     {
-      title: "nameClass",
+      title: "Name Class",
       dataIndex: "nameClass",
       key: "nameClass",
+      render: (row, item) => <Link to={`detail/${item?._id}`}>{item.nameClass}</Link>,
     },
     {
       title: "Link Join Class",
@@ -92,6 +95,12 @@ const AdminClassList = (props) => {
       title: "Lever",
       dataIndex: "lever",
       key: "lever",
+    },
+    {
+      title: "Create Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (row, item) => `${moment(item?.createdAt).format('DD/MM/YYYY')}`,
     },
     {
       title: "Action",
