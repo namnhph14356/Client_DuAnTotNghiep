@@ -1,0 +1,176 @@
+.oralPage{
+    @apply w-8/12 m-auto grid grid-cols-12 gap-5  mt-4 
+}
+.main__oral__page{
+    @apply  col-span-9 shadow border px-5 py-3
+}
+.nav__oral__page{
+    @apply  col-span-3
+}
+.header__oral__page p{
+    @apply bg-indigo-600 mb-0 w-32 text-center text-white px-3 py-0
+}
+.select__menu__oral{
+    @apply mt-3 flex 
+}
+.select__menu__month{
+    @apply mr-3
+}
+.select__menu__day{
+    @apply mr-3
+}
+.btn__select__menu{
+    @apply bg-orange-400 rounded px-3 py-0 mt-1
+}
+.btn__select__menu button {
+    @apply mt-1 text-white font-semibold	
+}
+.btn__wrap__oral{
+    @apply mt-3 grid grid-cols-12 gap-0 
+}
+.color__left{
+    @apply col-span-8 bg-zinc-700
+}
+.btn__right{
+    @apply col-span-4
+}
+.btn__right button {
+    @apply bg-gray-400 px-2 py-2
+}
+.btn__wrap__right__oral{
+    @apply border-r-2
+}
+
+.table__exam__oral{
+    @apply mt-5 border px-3 py-2 w-full
+}
+.table__exam__oral thead{
+    @apply border 
+}
+.table__exam__oral tr{
+   
+}
+.table__exam__oral td{
+    @apply border pl-2 py-8
+}
+.row__table__exem__oral i {
+    @apply block px-4 mt-2 cursor-pointer text-lg
+}
+.row__body__table__oral i {
+    @apply block px-4 mt-2 cursor-pointer text-lg
+}
+.title__exam__oral__table{ 
+}
+.title__exam__oral__table p{
+    @apply mb-0 text-xl font-semibold mt-2
+}
+.row__body__table__oral td{
+    @apply text-xl font-semibold mt-2
+}
+.btn__control__exam{
+    @apply flex justify-between mt-3
+}
+.btn__next__control{
+    @apply bg-[#8EC300] rounded px-3 pb-1 text-white
+}
+
+.list__answered{
+    @apply ml-2
+}
+.title__list__answered p{
+    @apply  border-b-2 font-semibold mt-4
+}
+.list__answered__result{
+    @apply list-decimal ml-2
+}
+.list__answered__result li{
+    @apply mt-2
+}
+.list__answered__result i {
+    @apply px-1 cursor-pointer
+}
+.list__answered__result p{
+    @apply mb-0
+}
+.question__list__result p{
+    @apply font-bold text-sm
+}
+.transe__answered__list{
+    @apply ml-7
+}
+.result__list__user p{
+@apply  font-semibold text-sm ml-7
+}
+.result__list__user{
+    @apply text-[#8EC300]
+}
+
+.nav__oral__page{
+    @apply shadow border px-3 py-2
+}
+.title__nav h2{
+    @apply text-center border-b-2 pb-4
+}
+
+.nav__list{
+    @apply mt-6 border-b-2
+}
+.item__list__user{
+    @apply grid grid-cols-12 gap-3
+}
+.img__user__item{
+    @apply col-span-3
+}
+.info__user__item{
+    @apply col-span-9
+}
+.img__user__item img{
+    @apply rounded-full
+}
+.info__user__item h3{
+    @apply mb-0 text-blue-600
+}
+.btn__control__nav {
+    @apply mt-2 text-center
+}
+.btn__control__nav button{
+    @apply px-2
+}
+.btn__prew{
+
+}
+
+.transe__answered__list__oral__seven{
+    @apply flex justify-between
+}
+.transe__answered__list__oral__seven i{
+    @apply text-xl text-red-700
+}
+.box__result__open{
+    @apply shadow border px-4 py-2 bg-[#fffbe8] mb-6
+}
+.box__result__open h2 {
+    @apply text-2xl text-red-700 font-semibold
+}
+.box__result__open p{
+    @apply text-base text-red-700
+}
+.list__result__open span{
+    @apply text-base font-semibold
+}
+.btn__control__open{
+    @apply mt-3 mb-5
+}
+.btn__control__open button{
+    @apply px-5 rounded-full pb-1 mr-3 text-white
+}
+.btn__open__prew {
+@apply bg-[#8EC300]
+}
+.btn__open__next{
+    @apply bg-[#8EC300]
+
+}
+.btn__close__open{
+    @apply bg-orange-500 
+}

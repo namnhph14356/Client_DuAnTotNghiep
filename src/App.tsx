@@ -78,16 +78,14 @@ import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
 import DetailSentence from './containers/Sentences/DetailSentence';
-
 import ListGrammar from './pages/admin/grammar/ListGrammar';
 import FormGrammar from './pages/admin/grammar/FormGrammar';
-
 import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
-
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
-
-
+import OralPage from './pages/OralPage';
+import OralSeven from './pages/OralSeven';
+import DetailClass from './pages/adminTeacher/adminClass/DetailClass';
 function App() {
   return (
     <div >
@@ -97,6 +95,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
+            <Route path='oral'  element={<OralPage/>} />
+            <Route path='oralseven'  element={<OralSeven/>} />
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning /> } />
               <Route path=':id' element={<DetailLearningLayout />}>
@@ -160,6 +160,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='class' element={<AdminClassList />} />
+          <Route path='class/detail/:id' element={<DetailClass />} />
           <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
