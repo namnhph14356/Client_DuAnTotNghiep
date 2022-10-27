@@ -20,7 +20,7 @@ const MenuAdverDeatil = () => {
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
   console.log("practiceActivity",practiceActivity)
   const practiceLearning = [...practiceActivity]
-  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.type - b.type)
+  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
   const practiceArr = [
     {
       id: 1,
@@ -55,9 +55,9 @@ const MenuAdverDeatil = () => {
   ]
 
 
-  const onChangeURL = (type: number) => {
+  const onChangeURL = (order: number) => {
     const flag: PracticeActivityArr[] = practiceArr.filter((item2: PracticeActivityArr) => {
-      if (item2.id === type) {
+      if (item2.id === order) {
         return item2.url
       }
     })
@@ -77,10 +77,10 @@ const MenuAdverDeatil = () => {
       <ul className='m-0 p-0 divide-y-2'>
         {practiceLearning.map((item: PracticeActivityType, index: number) => {
           return <li key={index + 1} className='bg-indigo-600 px-2 py-1'>
-            <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.type)}`} className='text-white'>
+            <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.order)}`} className='text-white'>
               {/* Luyện nghe nói từ phản xạ */}
               {practiceArr.map((item2: PracticeActivityArr) => {
-                if (item2.id === item.type) {
+                if (item2.id === item.order) {
                   return item2.name
                 }
               })}

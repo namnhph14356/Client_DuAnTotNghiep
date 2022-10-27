@@ -6,6 +6,13 @@ export const listHistory = async () => {
     return instance.get(url)
 }
 
+
+export const detailHistoryByUserActivity= (acivityId: string, userId: string | undefined) => {
+    const url = `/learningProgress?acivityId=${acivityId}&userId=${userId}`
+    return instance.get(url)
+}
+
+
 export const detailHistory = async (id: string | undefined) => {
     const url = `/history/${id}`
     return instance.get(url)
