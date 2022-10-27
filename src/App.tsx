@@ -87,6 +87,7 @@ import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
 import AddSentencesExercise from './pages/admin/Sentences/Exercise/Add';
+import FormSentencesLesson from './pages/admin/Sentences/Lesson/AddSentencesLesson';
 
 
 function App() {
@@ -225,7 +226,8 @@ function App() {
 
           <Route path="sentences" >
             <Route index element={<ListListenWrite />} />
-            <Route path='add' element={<AddSentencesExercise />} />
+            <Route path='addExercise' element={<AddSentencesExercise />} />
+            <Route path='addLesson' element={<FormSentencesLesson />} />
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 

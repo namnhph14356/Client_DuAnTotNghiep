@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { detailSentence } from '../../api/sentence'
 import { SentenceType } from '../../types/sentence'
-
+import parse from "html-react-parser";
 
 const arraySentences = [
   {
     _id: "1",
     title: 'My friend came and I had to take her out for dinner.',
     phuAm: " /aɪ hæd ə naɪt.mer læst naɪt ænd aɪ lɑːst sliːp/",
-    meaning:"Bạn tôi đến và tôi phải dắt cô ấy đi ăn tối.",
+    meaning: "Bạn tôi đến và tôi phải dắt cô ấy đi ăn tối.",
+    structuralAnalysis: '<p><strong style="color: rgb(111, 111, 111);">I hope</strong><span style="color: rgb(111, 111, 111);">&nbsp;(that): thể hiện sự mong mỏi của bạn về điều gì đó</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;hope&nbsp;you&nbsp;can&nbsp;come&nbsp;to&nbsp;my&nbsp;birthday&nbsp;party&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi hy vọng bạn có thể đến dự tiệc sinh nhật của tôi.</span></p><p><br></p><p><strong style="color: rgb(111, 111, 111);">can&nbsp;</strong><span style="color: rgb(111, 111, 111);">do something = có thể làm gì</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;can&nbsp;speak&nbsp;Japanese&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi có thể nói tiếng Nhật.</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">get a raise</strong><span style="color: rgb(111, 111, 111);">&nbsp;= được tăng lương</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I’ll&nbsp;get&nbsp;a&nbsp;raise&nbsp;this&nbsp;month&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tháng này tôi sẽ được tăng lương.</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">promise</strong><span style="color: rgb(111, 111, 111);">&nbsp;someone (that)&nbsp;= hứa với ai (rằng)</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Promise&nbsp;me&nbsp;you’ll&nbsp;be&nbsp;home&nbsp;before&nbsp;dark&nbsp;.</span></p><ol><li><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hứa với em là anh sẽ về nhà trước khi trời tối.</span></li></ol>',
     vocal: [
       { _id: "aa", text: "didn’t" },
       { _id: "bb", text: "couldn’t" },
@@ -23,7 +24,8 @@ const arraySentences = [
     _id: "2",
     title: 'I intended to call you back but it just slipped my mind afterwards.',
     phuAm: " /aɪ ɪnˈtendɪd tuː kɑːl juː bæk bʌt ɪt dʒʌst slɪpt maɪ maɪnd ˈæf.t ə.wədz/",
-    meaning:"Tôi đã định gọi điện thoại lại cho bạn nhưng sau đó lại quên mất.",
+    meaning: "Tôi đã định gọi điện thoại lại cho bạn nhưng sau đó lại quên mất.",
+    structuralAnalysis: '<p><strong style="color: rgb(111, 111, 111);">I`m Not</strong><span style="color: rgb(111, 111, 111);">&nbsp;(that): thể hiện sự mong mỏi của bạn về điều gì đó</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;hope&nbsp;you&nbsp;can&nbsp;come&nbsp;to&nbsp;my&nbsp;birthday&nbsp;party&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi hy vọng bạn có thể đến dự tiệc sinh nhật của tôi.</span></p><p><br></p><p><strong style="color: rgb(111, 111, 111);">can&nbsp;</strong><span style="color: rgb(111, 111, 111);">do something = có thể làm gì</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;can&nbsp;speak&nbsp;Japanese&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi có thể nói tiếng Nhật.</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">get a raise</strong><span style="color: rgb(111, 111, 111);">&nbsp;= được tăng lương</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I’ll&nbsp;get&nbsp;a&nbsp;raise&nbsp;this&nbsp;month&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Hắn ta đã uống đến nôn ói tại bữa tiệc hồi tuần rồi của tôi..</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">promise</strong><span style="color: rgb(111, 111, 111);">&nbsp;someone (that)&nbsp;= hứa với ai (rằng)</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Promise&nbsp;me&nbsp;you’ll&nbsp;be&nbsp;home&nbsp;before&nbsp;dark&nbsp;.</span></p><ol><li><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tôi tự hào về cha mẹ mình. Cả hai người đều là những nhà khoa học..</span></li></ol>',
     vocal: [
       { _id: "2", text: "/eks/" },
       { _id: "1", text: "text" },
@@ -36,7 +38,8 @@ const arraySentences = [
     _id: "3",
     title: 'I was in a hurry so I couldn t text you.',
     phuAm: "/aɪ wəz ɪn ə ˈhʌ r.i soʊ aɪ ˈkʊd.ənt tekst juː/",
-    meaning:"  Tôi vội nên đã không thể nhắn tin cho bạn.",
+    meaning: "  Tôi vội nên đã không thể nhắn tin cho bạn.",
+    structuralAnalysis: '<p><strong style="color: rgb(111, 111, 111);">supervisor </strong><span style="color: rgb(111, 111, 111);">&nbsp;(that): Người đàn ông mặc áo sơ mi xanh là giám sát mới đó.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;hope&nbsp;you&nbsp;can&nbsp;come&nbsp;to&nbsp;my&nbsp;birthday&nbsp;party&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi hy vọng bạn có thể đến dự tiệc sinh nhật của tôi.</span></p><p><br></p><p><strong style="color: rgb(111, 111, 111);">can&nbsp;</strong><span style="color: rgb(111, 111, 111);">do something = có thể làm gì</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I&nbsp;can&nbsp;speak&nbsp;Japanese&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tôi có thể nói tiếng Nhật.</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">get a raise</strong><span style="color: rgb(111, 111, 111);">&nbsp;= được tăng lương</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I’ll&nbsp;get&nbsp;a&nbsp;raise&nbsp;this&nbsp;month&nbsp;.</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Hắn ta đã uống đến nôn ói tại bữa tiệc hồi tuần rồi của tôi..</span></p><p><br></p><p><span style="color: rgb(111, 111, 111);">to&nbsp;</span><strong style="color: rgb(111, 111, 111);">promise</strong><span style="color: rgb(111, 111, 111);">&nbsp;someone (that)&nbsp;= hứa với ai (rằng)</span></p><p><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Promise&nbsp;me&nbsp;you’ll&nbsp;be&nbsp;home&nbsp;before&nbsp;dark&nbsp;.</span></p><ol><li><span style="color: rgb(111, 111, 111);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tôi tự hào về cha mẹ mình. Cả hai người đều là những nhà khoa học..</span></li></ol>',
     vocal: [
       { _id: "f", text: "/eɪm/" },
       { _id: "2", text: "came" },
@@ -139,29 +142,7 @@ const DetailSentence = () => {
             PHÂN TÍCH CẤU TRÚC
           </h3>
           <div className="content__structural">
-            <div className="item__Content__structural">
-              <p>
-                to <span>have a nightmare</span> = gặp ác mộng, mơ thấy ác mộng
-              </p>
-              <div className="translate__structural">
-                <p>
-                  I'm afraid of having a nightmare.
-                </p>
-                <p>  Tôi sợ mơ thấy ác mộng.</p>
-              </div>
-            </div>
-            <div className="item__Content__structural">
-              <p>
-                to <span>have a nightmare</span> = gặp ác mộng, mơ thấy ác mộng
-              </p>
-              <div className="translate__structural">
-                <p>
-                  I'm afraid of having a nightmare.
-                </p>
-                <p>  Tôi sợ mơ thấy ác mộng.</p>
-              </div>
-            </div>
-
+            {parse(sentences.structuralAnalysis)}
           </div>
         </div>
         <div className="">

@@ -20,6 +20,8 @@ import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
 import { async } from '@firebase/util';
 import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+import { addQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { addAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 
 type Props = {}
 
@@ -70,17 +72,39 @@ const AddSentencesExercise = (props: Props) => {
     form.setFieldsValue({ sights: [] });
   };
 
-  const listCate = async () => {
-    let arr: string[] = []
-    listWrite.map((item: ListenWriteType) => {
-      arr.push(item.category);
-    })
-    setCategoryExist(arr)
-  }
 
   const onFinish = async () => {
-    console.log("vào onSubmit", valueQuestion);
+    console.log("vào onSubmit");
+    const question = arrQuestion.map((item) => item.text).join(" ")
+    console.log("questionQuiz", question, valueQuestion, "listenWrite");
+
+    const { payload } = await dispatch(addQuizSlide({
+      question: question,
+      questionAfter: valueQuestion,
+      type: "listenWrite",
+      practiceActivity: "6346d44a034348adfcfce592"
+    }))
+    if (payload) {
+      arrAnswer.map(async (item) => {
+        if (item.checkAnswer === true) {
+          const { payload: answer } = await dispatch(addAnswerQuizSlide({
+            quiz: payload._id,
+            answer: item.text
+          }))
+          if (answer) {
+              message.success("Thêm thành công !")            
+          }
+        }
+      })
+
+    }
+    console.log("payload question quiz", payload);
+
+
+    console.log(arrAnswer);
     console.log(arrQuestion);
+
+
     setTurnOnListenWrite(true)
     setTurnOnQuiz(true)
   };
@@ -94,9 +118,11 @@ const AddSentencesExercise = (props: Props) => {
     // arr question
     let arrQues = value.target.value.split(' ')
     const arrQ: any = [];
+    let koin = "";
     arrQues.map((element: any, index: number) => {
       if (element !== '') {
         arrQ.push({ id: index + 1, text: element })
+        koin += element
       }
     });
     setArrQuestion(arrQ)

@@ -1,104 +1,121 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { Database } from 'heroicons-react';
 import React, { useContext, useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
 import { useSpeechSynthesis } from 'react-speech-kit';
+import reactStringReplace from 'react-string-replace';
 import { SpeechContext } from '../../context/GoogleSpeechContext';
+import '../../css/writeAndListen.css'
 
 type QuizType5Props = {
-    question: string,
-    data: any,
-    check: boolean,
-    select: any,
-    onHanldeSetSelect: (select: any, check: boolean) => void
+  question: any,
+  answerList: any,
+  check: boolean,
+  select: any,
+  onHanldeSetSelect: (select: any) => void
 }
 
-const ListenWriteType1 = ({question, data, check, select, onHanldeSetSelect }: QuizType5Props) => {
-    const [show,setShow]= useState<boolean>(false)
-    const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
-    const onHandleSpeakSelect = () => {
+const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSelect }: QuizType5Props) => {
 
-        if (data?.answer?.toLowerCase() === transcript.toLowerCase()) {
-            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect, type: 5 }, check)
+  const [show, setShow] = useState<boolean>(false)
+  const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
+  const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+  const [convertValues, setConvertValues] = useState<any>([])
+  const { register, handleSubmit, reset } = useForm();
 
-        }
+  const onSubmit = (value: any) => {
+
+    let convertValue: any = [];
+    for (let key in value) {
+      const keyQuestion = key.split("-")[1];
+      const idQuestion = key.split("-")[2];
+      convertValue = [...convertValue, {
+        keyQuestion,
+        idQuestion,
+        answerUser: value[key],
+        answerCorrect: "",
+        isCorrect: false
+      },]
     }
-    useEffect(() => {
-        onHandleSpeakSelect()
-    }, [transcript])
+
+
+    answerList.map((item: any, key: number) => {
+      if (item.answer === convertValue[key].answerUser && item.idQues == convertValue[key].idQuestion) {
+        convertValue[key].isCorrect = true;
+        convertValue[key].answerCorrect = convertValue[key].answerUser
+      } else {
+        convertValue[key].isCorrect = false;
+        convertValue[key].answerCorrect = item.answer
+      }
+    })
+    setConvertValues(convertValue)
+    onHanldeSetSelect(convertValues)
+  }
+
+  const checkAnswerIscorrect = (id: any, key: any) => {
+    let className = "";
+    convertValues.forEach(e => {
+      if (key == Number(e.keyQuestion)) {
+        if (e.isCorrect === true) {
+          className = "text__result__correct"
+        } else {
+          className = "red text__result__wrong"
+        }
+      }
+    });
+    return className
+  }
+
+  const replaceString = (e: any, b) => {
+    const quesToArr = e.text.split("___")
+    var tempQues: any = [];
+    quesToArr.forEach((item2: any, index2: number) => {
+      if (index2 < quesToArr.length - 1) {
+        tempQues.push(<span key={index2 + 1}>{item2}</span>,
+          <input key={index2 + 1}  {...register(`text-${index2 + 1}-${e._id}`)} className={` ${checkAnswerIscorrect(e._id, index2 + 1)} border-b border-dashed font-bold text-center border-black outline-none focus:border-[#130ff8]`} />)
+      } else {
+        tempQues.push(<span key={index2 + 1}>{item2}</span>)
+      }
+    })
 
     return (
-        <div className="main__content__spaeking">
-            <div className="col-span-5 flex flex-col items-center justify-center gap-2">
-                <button className="group " onClick={()=>{setShow(!show)}} >
-                    <h3 className={`${show? "text-base":"text-2xl"} m-0 group-hover:text-indigo-600`}>Click để {show? "ẩn": "hiện"} câu</h3>
-                </button>
-
-                <span className={`text-center text-2xl font-medium m-0 ${show? "": "hidden"}`}>{question}</span>
-
-                <button className='text-xl' onClick={() => speak({ text: question, voice: voices[2] })}>
-                    <span><i className="fa-solid fa-volume-high"></i></span>
-                  </button>
-            </div>
-
-
-
-            <div className="col-span-7">
-                <fieldset className="border-t border-b border-gray-200">
-                    <legend className="sr-only">Notifications</legend>
-                    <div className="divide-y divide-gray-200">
-
-                        {data.map((item2: any, index) => {
-                            return <div key={index + 1} className={`relative flex items-start py-4 
-                            ${item2._id == select?.id
-                                    ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-                                    : "border-[#CCCCCC]"} 
-                                    ${check === true
-                                    ? item2._id == select?.id
-                                        ? select?.isCorrect === 1
-                                            ? "bg-[#D6EAF8] border-[#5DADE2] "
-                                            : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                                        : ""
-                                    : ""}
-                            `}
-                                onClick={() => {
-                                    if (check !== true) {
-                                        onHanldeSetSelect({ id: item2._id, isCorrect: item2.isCorrect, type: 5 }, check)
-                                    }
-                                }}
-                            >
-                                <div className="flex items-center h-5 ml-3">
-                                    <input type="radio" checked={select?.id === item2._id}
-                                        className={`${check === true
-                                            ? item2._id == select?.id
-                                                ? item2?.isCorrect === 1
-                                                    ? "accent-[#5DADE2] "
-                                                    : "accent-[#C0392B]"
-                                                : ""
-                                            : ""}`}
-                                    />
-
-                                </div>
-                                <div className="flex items-center h-5 ml-3"
-                                    onClick={() => speak({ text: item2.answer, voice: voices[2] })}
-                                >
-                                    <i className="mr-3 fa-solid fa-volume-high"></i>
-
-                                </div>
-                                <div className="flex-1 min-w-0 text-sm">
-                                    <label htmlFor="comments" className="font-medium text-gray-700">
-                                        {item2.answer}
-                                    </label>
-                                </div>
-
-                            </div>
-                        })}
-
-                    </div>
-                </fieldset>
-            </div>
-
-        </div>
-
+      <div key={e._id} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 even:bg-slate-100"  >
+        <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? e.text : tempQues}</span>
+      </div>
     )
+  }
+
+  useEffect(() => {
+    setConvertValues([])
+    reset()
+  }, [question])
+
+  return (
+    <div className="block">
+      <div className=" flex  items-center justify-start mb-8 font-bold gap-4">
+        <div>Click để nghe: </div>
+        <button className='text-xl' onClick={() => speak({ text: question.quesAfter, voice: voices[2] })}>
+          <span><i className="fa-solid fa-volume-high outline-none"></i></span>
+        </button>
+      </div>
+
+      <div className="">
+        <fieldset className="border-t border-b border-gray-200">
+          <legend className="sr-only">Notifications</legend>
+          <div >
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {
+                replaceString(question, answerList)
+              }
+              <div>
+                <button type='submit' className='py-1 px-3 bg-blue-600 hidden'>Kiểm tra</button>
+              </div>
+            </form>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  )
 }
 
 export default ListenWriteType1

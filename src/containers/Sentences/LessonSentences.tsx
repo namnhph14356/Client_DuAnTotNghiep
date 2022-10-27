@@ -36,7 +36,7 @@ const LessonSentences = () => {
 
   return (
     <div className="">
-      <div className='list__sentences border'>
+      <div className='list__sentences '>
         {arraySentences.map((item) => (
           <div className="item__list_sentences ">
             <div className="item__content__list">

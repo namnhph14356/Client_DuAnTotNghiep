@@ -40,23 +40,30 @@ import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import GoogleSpeechSpeaker from '../../components/GoogleSpeech/GoogleSpeechSpeaker';
 import QuizType5 from '../../components/quiz/QuizType5';
+import ListenWriteType1 from '../../components/ListenWrite/ListenWriteType1';
 
-const listQuestionWrite = [
-  {id:"1", text: "What are you doing here ?"},
-  {id:"2", text: "Where"},
-]
 
-const listAnswerWrite = [
-  {id:"1", idQues:"1", text: "aaaaaaaaa"},
-  {id:"2", idQues:"1", text: "bbbbbbb"},
-  {id:"3", idQues:"1", text: "ccccccccc"},
-  {id:"4", idQues:"1", text: "dddddddddddddddd"},
-
-  {id:"5", idQues:"2", text: "hhhhhhhhhhhhhhh"},
-  {id:"6", idQues:"2", text: "eeeeeeeeeeee"},
-  {id:"7", idQues:"2", text: "fffffffff"},
-  {id:"8", idQues:"2", text: "ggggggggggggg"},
-
+const listListenWrite = [
+  {
+    ques: { _id: "1", text: "What ___ you ___ here ?", quesAfter: "What are you doing here ?", type: "selectAuto" },
+    ans: [
+      { _id: "1", idQues: "1", answer: "are" },
+      { _id: "2", idQues: "1", answer: "doing" },
+    ]
+  },
+  {
+    ques: { _id: "2", text: "ques ___ 2  efefefe ", quesAfter: "ques 111111 2  efefefe ", type: "selectAuto" },
+    ans: [
+      { _id: "3", idQues: "2", answer: "111111" },
+    ]
+  },
+  {
+    ques: { _id: "3", text: "ques ___ 123 333333 ___ 333", quesAfter: "ques aaa 123 333333 aaa 333", type: "selectAuto" },
+    ans: [
+      { _id: "7", idQues: "3", answer: "aaa" },
+      { _id: "8", idQues: "3", answer: "aaa" },
+    ]
+  }
 ]
 
 let flag1: string = ""
@@ -161,6 +168,9 @@ const ExerciseSentences = () => {
   let input2: any = []
   let check10: any = []
   const [quizIndex, setQuizIndex] = useState<number>(0)
+  const [listenWriteIndex, setListenWriteIndex] = useState<number>(0)
+  const [questionIndex, setQuestionIndex] = useState<number>(0)
+
   const { id, dayId }: any = useParams()
   const ref = useRef(null)
   const [result, setResult] = useState<any[]>([])
@@ -171,13 +181,13 @@ const ExerciseSentences = () => {
   const [quizCompound, setQuizCompound] = useState<any>([])
 
 
-  console.log("speechValue quiz", speechValue);
-  console.log("transcript quiz", transcript);
+  // console.log("speechValue quiz", speechValue);
+  // console.log("transcript quiz", transcript);
   // console.log("quizList", quizList);
-  console.log("select", select)
-  console.log("quizCompound", quizCompound)
-  console.log("result", result)
-  console.log("user", user)
+  // console.log("select", select)
+  // console.log("quizCompound", quizCompound)
+  // console.log("result", result)
+  // console.log("user", user)
   let checkFlag = 0
   let answerType3 = 0
   if (quizList) {
@@ -203,6 +213,15 @@ const ExerciseSentences = () => {
     } else {
       setSelect(data)
     }
+  }
+
+  const onHanldeSetSelectListenWrite = (data: any) => {
+    // console.log("đã vào đây");
+    // console.log("data đã vào đây", data);
+
+    setTimeout(() => {
+      onContinuteListenWrite()
+    }, 1000)
   }
 
 
@@ -269,10 +288,20 @@ const ExerciseSentences = () => {
     checkFlag = 0
     answerType3 = 0
     if (quizIndex >= quizList.length - 1) {
-      setDone(true)
+      // setDone(true)
     } else {
       setQuizIndex(quizIndex + 1)
     }
+    setQuestionIndex(questionIndex + 1)
+  }
+
+  const onContinuteListenWrite = () => {
+    if (listenWriteIndex >= listListenWrite.length - 1) {
+      setDone(true)
+    } else {
+      setListenWriteIndex(listenWriteIndex + 1)
+    }
+    setQuestionIndex(questionIndex + 1)
   }
 
   //---Finish---
@@ -384,8 +413,6 @@ const ExerciseSentences = () => {
     }
     getQuiz()
   }, [id])
-  console.log(quizList);
-  
 
   return (
     <>
@@ -393,38 +420,26 @@ const ExerciseSentences = () => {
         <div className=''>
           <div className='content__speaking'>
             <div className="flex flex-col qustion__content__speaking">
-
               <div className="">
                 <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
               </div>
-
-              {/* <div className="flex justify-between items-center ">
-                <div className="flex items-center gap-2">
-                  <h3 className="m-0">
-                    {quizList
-                      ? quizList[quizIndex]?.quiz?.type !== 3
-                        ? quizList[quizIndex]?.quiz?.question + "?"
-                        : ""
-                      : ""
-                    }
-
-                  </h3>
-                  <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
-                    <span><i className="fa-solid fa-volume-high"></i></span>
-                  </button>
-                </div>
-                
-              </div> */}
             </div>
-              
-            <div className="p-5 mt-5">
-              {quizList ?
-                quizList[quizIndex]?.quiz?.type === 5
-                  ? <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                  : ""
-                : ""
-              }
 
+            <div className="p-5 mt-5">
+              {
+               quizList && questionIndex <= quizList.length -1 ?
+                  quizList ?
+                    quizList[quizIndex]?.quiz?.type === "selectAuto"
+                      ? <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                      : ""
+                    : ""
+                  :
+                  listListenWrite ?
+                    listListenWrite[listenWriteIndex]?.ques?.type === "listenWrite"
+                      ? <ListenWriteType1 question={listListenWrite[listenWriteIndex].ques} answerList={listListenWrite[listenWriteIndex].ans} check={check} select={select} onHanldeSetSelect={onHanldeSetSelectListenWrite} />
+                      : ""
+                    : ""
+              }
               <div className='flex flex-row gap-4'>
                 <div className='md:basis-3/4 '>
 
@@ -472,9 +487,9 @@ const ExerciseSentences = () => {
 
                 </div>
 
-                <div className='mt-8 md:basis-1/4'>
+                {/* <div className='mt-8 md:basis-1/4'>
                   <div className={`answer__question`}>
-                    {/* <button
+                    <button
                       disabled={select === null && quizCompound === null ? true : false}
                       className={`${check === true
                         ? select?.isCorrect === true || check2 === true
@@ -485,9 +500,9 @@ const ExerciseSentences = () => {
                       onClick={() => { onCheck() }}
                     >
                       Kiểm tra
-                    </button> */}
+                    </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

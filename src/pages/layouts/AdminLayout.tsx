@@ -116,7 +116,8 @@ const AdminLayout = () => {
 
                     <SubMenu key="sub9" icon={<ReadOutlined />} title="Centences">
                         <Menu.Item key="/admin/sentences"><NavLink to='/admin/sentences'>List Listen Write</NavLink></Menu.Item>
-                        <Menu.Item key="/admin/sentences/add"><NavLink to='/admin/sentences/add'>Add Listen Write</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/sentences/addExercise"><NavLink to='/admin/sentences/addExercise'>Add Exercise</NavLink></Menu.Item>
+                        <Menu.Item key="/admin/sentences/addLesson"><NavLink to='/admin/sentences/addLesson'>Add Lesson</NavLink></Menu.Item>
                     </SubMenu>
 
                     <SubMenu key="sub6" icon={<FolderFilled />} title="Contact">
