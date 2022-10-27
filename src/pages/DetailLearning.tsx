@@ -20,7 +20,7 @@ const DetailLearning = () => {
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
   const practiceLearning = [...practiceActivity]
-  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.type - b.type)
+  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
   const practiceArr = [
     {
       id: 1,
@@ -50,9 +50,9 @@ const DetailLearning = () => {
   ]
 
 
-  const onChangeURL = (type: number) => {
+  const onChangeURL = (order: number) => {
     const flag: PracticeActivityArr[] = practiceArr.filter((item2: PracticeActivityArr) => {
-      if (item2.id === type) {
+      if (item2.id === order) {
         return item2.url
       }
     })
@@ -79,12 +79,12 @@ const DetailLearning = () => {
           <div className="list__main__learning">
             {practiceLearning.map((item: PracticeActivityType, index: number) => {
               return <div key={index + 1}>
-                <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.type)}`}>
+                <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.order)}`}>
                   <div className="item__list__learning">
                     <div className="info__item__list">
                       <div>
                         {practiceArr.map((item2: PracticeActivityArr) => {
-                          if (item2.id === item.type) {
+                          if (item2.id === item.order) {
                             return item2.icon
                           }
                         })}
