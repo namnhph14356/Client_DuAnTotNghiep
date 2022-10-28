@@ -1,11 +1,14 @@
 /* eslint-disable no-restricted-globals */
-import React from 'react'
-import { NavLink, Outlet, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Navigate, NavLink, Outlet, useParams, useRoutes } from 'react-router-dom'
 import '../css/grammar.css'
 import '../css/sentence.css'
 
 const Sentences = () => {
   const { dayId, id } = useParams();
+  useEffect(() => {
+
+  }, [])
   return (
     <div className="grammar__page">
       <div className="main__grammar__page">
@@ -22,9 +25,6 @@ const Sentences = () => {
         </div>
         <div className="nav__speaking">
           <div className="count__question">
-            <div>
-              Câu số 1 / <span>10</span>
-            </div>
           </div>
           <div>
 

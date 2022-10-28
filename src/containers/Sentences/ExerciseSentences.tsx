@@ -467,8 +467,6 @@ const ExerciseSentences = () => {
                     </section>
                     : ""}
 
-
-
                   {check === true && select?.isCorrect === false || check === true && check2 === false && select === null
                     ? <section className='w-full mx-auto md:py-[30px]'>
                       <div className="">
