@@ -164,6 +164,7 @@ const ExerciseSentences = () => {
   const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
   const [quiz2, setQuiz2] = useState<any>([])
   const [quizList, setQuizList] = useState<any>()
+  const [listListenWrite, setListListenWrite] = useState<any>()
   const [percent, setPercent] = useState<number>(0);
   let input2: any = []
   let check10: any = []
@@ -183,7 +184,7 @@ const ExerciseSentences = () => {
 
   // console.log("speechValue quiz", speechValue);
   // console.log("transcript quiz", transcript);
-  // console.log("quizList", quizList);
+  console.log("quizList", quizList);
   // console.log("select", select)
   // console.log("quizCompound", quizCompound)
   // console.log("result", result)
@@ -398,13 +399,26 @@ const ExerciseSentences = () => {
     const getQuiz = async () => {
       const { data } = await detailPracticeActivity(id)
       setQuiz2(data)
-      console.log("datadataaaaaaa", data);
-      
+
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)
         return data
       }))
-      setQuizList(shuffleArray(test))
+
+      let arr1: any = [];
+      let arr2: any = [];
+      test.map((item) => {
+        console.log("item", item);
+
+        if (item.quiz.type === "selectAuto") {
+          arr1.push(item)
+        } else {
+          arr2.push(item)
+        }
+      })
+
+      setQuizList(shuffleArray(arr1))
+      setListListenWrite(shuffleArray(arr2))
       const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
         const { data } = await detailHistory(item._id)
         return data
@@ -413,6 +427,10 @@ const ExerciseSentences = () => {
     }
     getQuiz()
   }, [id])
+
+  console.log("quizList", quizList);
+  console.log("listenWriteList", listListenWrite);
+
 
   return (
     <>
@@ -427,18 +445,11 @@ const ExerciseSentences = () => {
 
             <div className="p-5 mt-5">
               {
-               quizList && questionIndex <= quizList.length -1 ?
-                  quizList ?
-                    quizList[quizIndex]?.quiz?.type === "selectAuto"
-                      ? <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                      : ""
-                    : ""
+                quizList && listListenWrite && questionIndex <= quizList.length - 1 ?
+                  <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
                   :
-                  listListenWrite ?
-                    listListenWrite[listenWriteIndex]?.ques?.type === "listenWrite"
-                      ? <ListenWriteType1 question={listListenWrite[listenWriteIndex].ques} answerList={listListenWrite[listenWriteIndex].ans} check={check} select={select} onHanldeSetSelect={onHanldeSetSelectListenWrite} />
-                      : ""
-                    : ""
+                  listListenWrite &&
+                  <ListenWriteType1 question={listListenWrite[listenWriteIndex].quiz} answerList={listListenWrite[listenWriteIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelectListenWrite} />
               }
               <div className='flex flex-row gap-4'>
                 <div className='md:basis-3/4 '>

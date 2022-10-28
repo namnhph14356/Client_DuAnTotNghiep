@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
-import { listSentences } from '../../api/sentence'
+import { listSentencesByIdActivity } from '../../api/sentence'
 import { SentenceType } from '../../types/sentence'
 
 
@@ -25,29 +25,32 @@ const arraySentences = [
 
 const LessonSentences = () => {
   const { dayId, id } = useParams();
-  const [dataSent, setDataSent] = useState<SentenceType[]>([])
-  useEffect(() => {
-    const getSents = async () => {
-      const { data } = await listSentences()
+  const [dataSent, setDataSent] = useState<any>([])
+
+  const getSents = async () => {
+    if (id) {
+      const { data } = await listSentencesByIdActivity(String(id))
       setDataSent(data)
     }
+  }
+  useEffect(() => {
     getSents()
   }, [])
 
   return (
     <div className="">
       <div className='list__sentences '>
-        {arraySentences.map((item) => (
+        {dataSent.map((item) => (
           <div className="item__list_sentences ">
             <div className="item__content__list">
               <h3 className="title__item__content__list">
-                <i className="fa-solid fa-volume-high"></i> ${item.title}
+                <i className="fa-solid fa-volume-high"></i> {item.words}
               </h3>
               <div className="phonetic__content">
-                /aɪ hæd ə naɪt.mer læst naɪt ænd aɪ lɑːst sliːp/
+                {item.phoneticTranscription}
               </div>
               <div className="viet__phonetic__content">
-                Tối qua, tôi gặp ác mộng rồi mất ngủ luôn.
+                {item.meaning}
               </div>
             </div>
             <div className="item__icon__list">

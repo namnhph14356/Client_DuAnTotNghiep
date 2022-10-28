@@ -20,7 +20,7 @@ import '../../css/quiz.css'
 import moment from 'moment';
 
 import { addUserQuiz } from '../../api/userQuiz';
-import { addHistory, detailHistory } from '../../api/history';
+import { addHistory, detailHistory, detailHistoryByUserActivity } from '../../api/history';
 import { HistoryType } from '../../types/history';
 
 import Menu from '../../components/Menu';
@@ -34,6 +34,8 @@ import { SpeechContext } from '../../context/GoogleSpeechContext';
 import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
+import { addLearningProgress, detailLearningProgressByUser, editLearningProgress } from '../../api/learningProgress';
+import { SemicolonPreference } from 'typescript';
 
 
 
@@ -118,26 +120,18 @@ const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizTypeSelect = () => {
     const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-    const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch()
     const [select, setSelect] = useState<any>(null)
     const [check, setCheck] = useState(false)
     const [check2, setCheck2] = useState<any>()
     const [done, setDone] = useState<any>()
-    const timeSlice = useAppSelector(item => item.time.value)
-
     const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
     const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
-
-    // const audioCorrect = new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3")
-    // const audioWrong = new Audio("../assets/audio/Fail-sound-effect-2.mp3")
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const [quiz2, setQuiz2] = useState<any>([])
     const [quizList, setQuizList] = useState<any>()
     const [percent, setPercent] = useState<number>(0);
-    let input2: any = []
-    let check10: any = []
     const [quizIndex, setQuizIndex] = useState<number>(0)
     const { id, dayId }: any = useParams()
     const ref = useRef(null)
@@ -156,11 +150,11 @@ const QuizTypeSelect = () => {
     console.log("quizCompound", quizCompound)
     console.log("result", result)
     console.log("user", user)
-    let checkFlag = 0
+    let checkFlag = false
     let answerType3 = 0
     if (quizList) {
         const flag = quizCompound?.map(u => u.answer).join(' ')
-        const checkFlag2 = quizList[quizIndex].quiz.question.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? 1 : 0
+        const checkFlag2 = quizList[quizIndex].quiz.question.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? true : false
         checkFlag = checkFlag2
         answerType3 = flag
 
@@ -190,10 +184,10 @@ const QuizTypeSelect = () => {
         setCheck(true)
         increase()
 
-        if (checkFlag === 1) {
+        if (checkFlag === true) {
             setSelect({ isCorrect: true, type: 3 })
         }
-        if (checkFlag === 0 && quizCompound.length !== 0) {
+        if (checkFlag === false && quizCompound.length !== 0) {
             setSelect({ isCorrect: false, type: 3 })
         }
 
@@ -209,13 +203,13 @@ const QuizTypeSelect = () => {
             setResult([...result, {
                 quiz: quizList[quizIndex].quiz._id,
                 time: flag1,
-                point: checkFlag === 1 ? Math.round(flag2) : 0,
+                point: checkFlag === true ? Math.round(flag2) : 0,
                 isCorrect: checkFlag,
                 answer: answerType3
             }])
         }
 
-        speak({ text: `${select?.isCorrect === true || checkFlag === 1 ? "Correct" : "Wrong"}`, voice: voices[2] })
+        speak({ text: `${select?.isCorrect === true || checkFlag === true ? "Correct" : "Wrong"}`, voice: voices[2] })
         // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
     }
 
@@ -238,13 +232,11 @@ const QuizTypeSelect = () => {
     // Chuyển câu hỏi
     const onContinute = () => {
         setSelect(null)
-        input2 = []
-        check10 = []
         setCheck2(null)
         setCheck(false)
         setOnReset(!onReset)
         setQuizCompound([])
-        checkFlag = 0
+        checkFlag = false
         answerType3 = 0
         if (quizIndex >= quizList.length - 1) {
             setDone(true)
@@ -256,23 +248,31 @@ const QuizTypeSelect = () => {
     //---Finish---
     // Kết thúc làm bài và đẩy đáp án đã chọn lên server
     const onFinish = async () => {
+        let score = 0
         let totalPoint = 0
         let totalCorrect = 0
         const quizListHalf = quizList.length / 2
         let pass = 0
         result.forEach((item: any, index: number) => {
             totalPoint = totalPoint + item.point
-            if (item.isCorrect === 1) {
+            if (item.isCorrect === true) {
                 totalCorrect = totalCorrect + 1
+                score = score + 10 / quizList.length
             }
             if (totalCorrect > quizListHalf) {
                 pass = 1
             }
         })
+        const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+        if(learningProgress.length === 0){
+            const {data} = await addLearningProgress({day: dayId, user: user._id})
+        }else{
+            const {data} = await editLearningProgress({...learningProgress[0],listeningSpeakingScore: Math.round(score)})
+        }
 
         const { data: data2 } = await addHistory({
             user: user._id,
-            learningProgress: "",
+            learningProgress: learningProgress[0]._id,
             practiceActivity: quiz2.itemPracticeActivity._id,
             totalPoint: totalPoint,
             totalCorrect: totalCorrect,
@@ -283,7 +283,9 @@ const QuizTypeSelect = () => {
             const flag = { ...result[index], history: data2._id }
             const { data } = await addUserQuiz(flag)
         }
-        const { data } = await detailPracticeActivity(id)
+        // const { data } = await detailPracticeActivity(id)
+        const { data } = await detailHistoryByUserActivity(id,user._id)
+        
         setQuiz2(data)
 
         const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
@@ -346,6 +348,7 @@ const QuizTypeSelect = () => {
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
             const { data } = await detailPracticeActivity(id)
+            console.log("data test",data)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
                 const { data } = await detailQuiz(item._id)
@@ -354,9 +357,13 @@ const QuizTypeSelect = () => {
             setQuizList(shuffleArray(test))
             const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
                 const { data } = await detailHistory(item._id)
+                // const { data } = await detailHistoryByUserActivity(id,user._id)
                 return data
             }))
             setHistory(test2)
+            // const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+            // console.log("learningProgress",learningProgress[0])
+
         }
         getQuiz()
     }, [id])
@@ -491,7 +498,7 @@ const QuizTypeSelect = () => {
                                 <div className='mt-8 md:basis-1/4'>
                                     <div className={`answer__question`}>
                                         <button
-                                            disabled={select === null && quizCompound === null ? true : false}
+                                            disabled={select === null && quizCompound.length === 0 ? true : false}
                                             className={`${check === true
                                                 ? select?.isCorrect === true || check2 === true
                                                     ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "

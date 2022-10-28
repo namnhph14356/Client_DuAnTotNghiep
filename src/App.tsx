@@ -78,18 +78,19 @@ import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
 import DetailSentence from './containers/Sentences/DetailSentence';
-
 import ListGrammar from './pages/admin/grammar/ListGrammar';
 import FormGrammar from './pages/admin/grammar/FormGrammar';
-
 import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
-
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
 import AddSentencesExercise from './pages/admin/Sentences/Exercise/Add';
 import FormSentencesLesson from './pages/admin/Sentences/Lesson/AddSentencesLesson';
 
-
+import OralPage from './pages/OralPage';
+import OralSeven from './pages/OralSeven';
+import DetailClass from './pages/adminTeacher/adminClass/DetailClass';
+import ListSentencesLesson from './pages/admin/Sentences/Lesson/ListSentencesLesson';
+import ListSentencesExercise from './pages/admin/Sentences/Exercise/ListSentencesExercise';
 function App() {
   return (
     <div >
@@ -99,6 +100,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path="learning">
             <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
+            <Route path='oral'  element={<OralPage/>} />
+            <Route path='oralseven'  element={<OralSeven/>} />
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning /> } />
               <Route path=':id' element={<DetailLearningLayout />}>
@@ -162,6 +165,7 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='class' element={<AdminClassList />} />
+          <Route path='class/detail/:id' element={<DetailClass />} />
           <Route path="learn" >
             <Route index element={<LessonListTeacher />} />
             <Route path='add' element={<AdminLearnAdd />} />
@@ -180,7 +184,6 @@ function App() {
             <Route path='add' element={<Add />} />
             <Route path='edit/:id' element={<Add />} />
           </Route>
-
 
           <Route path="contact" >
             <Route index element={<ListContact />} />
@@ -224,11 +227,14 @@ function App() {
             <Route path=':id/edit' element={<FormListenWrite />} />
           </Route>
 
-          <Route path="sentences" >
-            <Route index element={<ListListenWrite />} />
+          <Route path="sentences">
             <Route path='addExercise' element={<AddSentencesExercise />} />
+            <Route path='listExercise' element={<ListSentencesExercise />} />
+
+            <Route path='listLesson' element={<ListSentencesLesson />} />
             <Route path='addLesson' element={<FormSentencesLesson />} />
-            <Route path=':id/edit' element={<FormListenWrite />} />
+            <Route path=':id/editLesson' element={<FormSentencesLesson />} />
+
           </Route>
 
           <Route path="grammar" >

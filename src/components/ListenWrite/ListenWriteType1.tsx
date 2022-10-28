@@ -40,7 +40,7 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
 
 
     answerList.map((item: any, key: number) => {
-      if (item.answer === convertValue[key].answerUser && item.idQues == convertValue[key].idQuestion) {
+      if (item.answer.toLowerCase() === convertValue[key].answerUser.toLowerCase() && item.quiz._id === convertValue[key].idQuestion) {
         convertValue[key].isCorrect = true;
         convertValue[key].answerCorrect = convertValue[key].answerUser
       } else {
@@ -67,7 +67,7 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
   }
 
   const replaceString = (e: any, b) => {
-    const quesToArr = e.text.split("___")
+    const quesToArr = e.question.split("......................")
     var tempQues: any = [];
     quesToArr.forEach((item2: any, index2: number) => {
       if (index2 < quesToArr.length - 1) {
@@ -94,7 +94,7 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
     <div className="block">
       <div className=" flex  items-center justify-start mb-8 font-bold gap-4">
         <div>Click để nghe: </div>
-        <button className='text-xl' onClick={() => speak({ text: question.quesAfter, voice: voices[2] })}>
+        <button className='text-xl' onClick={() => speak({ text: question.questionAfter, voice: voices[2] })}>
           <span><i className="fa-solid fa-volume-high outline-none"></i></span>
         </button>
       </div>
