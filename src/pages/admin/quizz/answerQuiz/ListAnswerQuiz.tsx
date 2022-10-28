@@ -24,7 +24,7 @@ interface DataType {
   question: string,
   image: string,
   timeLimit: string,
-  type: number
+  type?: string
   // children?: any
 }
 
@@ -75,7 +75,7 @@ const ListAnswerQuiz = (props: Props) => {
       question: item.question,
       image: item.image,
       timeLimit: item.timeLimit,
-      type: item.type,
+      // type: item.type,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
       // children: answerQuizs.filter((item2: AnswerQuizType, index2) => item2.quiz === item._id ? {
@@ -299,7 +299,7 @@ const ListAnswerQuiz = (props: Props) => {
 
   //------------------REMOVE-CONFIRM-------------------
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
       title: 'STT',
       dataIndex: 'key',
@@ -352,41 +352,41 @@ const ListAnswerQuiz = (props: Props) => {
       key: "timeLimit",
       ...getColumnSearchProps('timeLimit'),
     },
-    {
-      title: 'Type',
-      key: "type",
-      filters: [
-        {
-          text: 'Nghe',
-          value: 1,
-        },
-        {
-          text: 'Chọn',
-          value: 2,
-        },
-        {
-          text: 'Viết',
-          value: 3,
-        }
-      ],
-      onFilter: (value, record) => {
-        return record.type == value
-      },
-      render: (record) => (
-        <div className="">
-          {record.type === 1
-            ? <Tag color="red">Nghe</Tag>
-            : record.type === 2
-              ? <Tag color="geekblue">Chọn</Tag>
-              : record.type === 3
-                ? <Tag color="green">Viết</Tag>
-                : ""
-          }
+    // {
+    //   title: 'Type',
+    //   key: "type",
+    //   filters: [
+    //     {
+    //       text: 'Nghe',
+    //       value: 1,
+    //     },
+    //     {
+    //       text: 'Chọn',
+    //       value: 2,
+    //     },
+    //     {
+    //       text: 'Viết',
+    //       value: 3,
+    //     }
+    //   ],
+    //   onFilter: (value, record) => {
+    //     return record.type == value
+    //   },
+    //   render: (record) => (
+    //     <div className="">
+    //       {record.type === 1
+    //         ? <Tag color="red">Nghe</Tag>
+    //         : record.type === 2
+    //           ? <Tag color="geekblue">Chọn</Tag>
+    //           : record.type === 3
+    //             ? <Tag color="green">Viết</Tag>
+    //             : ""
+    //       }
 
-        </div>
-      )
+    //     </div>
+    //   )
 
-    },
+    // },
     {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',

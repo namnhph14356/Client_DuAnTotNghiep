@@ -83,12 +83,18 @@ import FormGrammar from './pages/admin/grammar/FormGrammar';
 import GoogleSpeech from './components/GoogleSpeech/GoogleSpeech';
 import ListVocabulary from './pages/admin/Vocabulary/ListVocabulary';
 import FormVocabulary from './pages/admin/Vocabulary/Form';
+import AddSentencesExercise from './pages/admin/Sentences/Exercise/Add';
+import FormSentencesLesson from './pages/admin/Sentences/Lesson/AddSentencesLesson';
+
 import OralPage from './pages/OralPage';
 import OralSeven from './pages/OralSeven';
 import DetailClass from './pages/adminTeacher/adminClass/DetailClass';
+import ListSentencesLesson from './pages/admin/Sentences/Lesson/ListSentencesLesson';
+import ListSentencesExercise from './pages/admin/Sentences/Exercise/ListSentencesExercise';
+
 function App() {
   return (
-    <div >
+    <div>
       <Routes>
 
         <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
@@ -180,7 +186,6 @@ function App() {
             <Route path='edit/:id' element={<Add />} />
           </Route>
 
-
           <Route path="contact" >
             <Route index element={<ListContact />} />
             <Route path='edit/:id' element={<EditContact />} />
@@ -221,6 +226,16 @@ function App() {
             <Route index element={<ListListenWrite />} />
             <Route path='add' element={<FormListenWrite />} />
             <Route path=':id/edit' element={<FormListenWrite />} />
+          </Route>
+
+          <Route path="sentences">
+            <Route path='addExercise' element={<AddSentencesExercise />} />
+            <Route path='listExercise' element={<ListSentencesExercise />} />
+
+            <Route path='listLesson' element={<ListSentencesLesson />} />
+            <Route path='addLesson' element={<FormSentencesLesson />} />
+            <Route path=':id/editLesson' element={<FormSentencesLesson />} />
+
           </Route>
 
           <Route path="grammar" >

@@ -1,84 +1,36 @@
 /* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { detailSentence } from '../../api/sentence'
 import { SentenceType } from '../../types/sentence'
-
-
-const arraySentences = [
-  {
-    _id: "1",
-    title: 'My friend came and I had to take her out for dinner.',
-    phuAm: " /aɪ hæd ə naɪt.mer læst naɪt ænd aɪ lɑːst sliːp/",
-    meaning:"Bạn tôi đến và tôi phải dắt cô ấy đi ăn tối.",
-    vocal: [
-      { _id: "aa", text: "didn’t" },
-      { _id: "bb", text: "couldn’t" },
-      { _id: "c", text: "shouldn’t" },
-      { _id: "1", text: "didn’t" },
-    ],
-    order: 1
-  },
-  {
-    _id: "2",
-    title: 'I intended to call you back but it just slipped my mind afterwards.',
-    phuAm: " /aɪ ɪnˈtendɪd tuː kɑːl juː bæk bʌt ɪt dʒʌst slɪpt maɪ maɪnd ˈæf.t ə.wədz/",
-    meaning:"Tôi đã định gọi điện thoại lại cho bạn nhưng sau đó lại quên mất.",
-    vocal: [
-      { _id: "2", text: "/eks/" },
-      { _id: "1", text: "text" },
-      { _id: "3", text: "ex" },
-      { _id: "4", text: "flex" },
-    ],
-    order: 2
-  },
-  {
-    _id: "3",
-    title: 'I was in a hurry so I couldn t text you.',
-    phuAm: "/aɪ wəz ɪn ə ˈhʌ r.i soʊ aɪ ˈkʊd.ənt tekst juː/",
-    meaning:"  Tôi vội nên đã không thể nhắn tin cho bạn.",
-    vocal: [
-      { _id: "f", text: "/eɪm/" },
-      { _id: "2", text: "came" },
-      { _id: "2", text: "aim" },
-      { _id: "3", text: "same" },
-    ],
-    order: 3
-  }
-]
+import parse from "html-react-parser";
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { detailSentences, listSentences } from '../../api/sentences';
 
 const DetailSentence = () => {
   const { dayId, id, idDetailSentence } = useParams();
-  const [sentences, setSenstences] = useState(arraySentences[0])
-  const navigate = useNavigate()
-  // const {_id} = useParams()
+  const { speaking, supported, voices, speak } = useSpeechSynthesis();
+  const [sentence, setSenstence] = useState<SentenceType>()
+  const [listSentence, setListSentence] = useState<SentenceType[]>([])
+  const [order, setOrder] = useState<any>()
+  const [openGrammarAnalysis, setOpenGrammarAnalysis] = useState(false)
 
-  // const [sentence , setSenstence] = useState<SentenceType[]>([])
+  const listLesson = async () => {
+    const { data } = await listSentences();
+    setListSentence(data)
+    if (!sentence) {
+      const find = data.findIndex((e) => e._id === idDetailSentence)
+      setOrder(find)
+    }
+  }
 
-  // const handleGetSentence = async() => {
-  //     const {data} = await detailSentence(_id)
-  //     console.log('detail', data);
-
-  //     setSenstence(data)
-  // }
-
+  const reSetOrder = () => {
+    setSenstence(listSentence[order])
+  }
+  
   useEffect(() => {
-    const itemNext = arraySentences.filter((item) => item._id === idDetailSentence)
-    setSenstences(itemNext[0])
-    // handleGetSentence()
-  }, [idDetailSentence])
-
-
-  const preDetail = (prew: number) => {
-    const itemPre = arraySentences.filter((item) => item.order === prew)
-    setSenstences(itemPre[0])
-  }
-
-  const nextDetail = (next: number) => {
-    const itemNext = arraySentences.filter((item) => item._id === idDetailSentence)
-    setSenstences(itemNext[0])
-  }
-
+    listLesson()
+    reSetOrder()
+  }, [idDetailSentence, order])
 
   return (
     <div className="content__detail__sentences">
@@ -90,85 +42,82 @@ const DetailSentence = () => {
             </button>
           </NavLink>
 
-          <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/lesson/${sentences.order - 1}`}>
-            <button className={`btn__pre__sentences ${sentences.order <= 1 ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={sentences.order <= 1 ? true : false}>
-              Câu sau
-            </button>
-          </NavLink>
-
-          <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/lesson/${sentences.order + 1}`}>
-            <button className={`btn__pre__sentences ${sentences.order >= arraySentences.length ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={sentences.order >= arraySentences.length ? true : false}>
-              Câu sau
-            </button>
-          </NavLink>
+          <button onClick={() => setOrder(order - 1)} className={`btn__pre__sentences ${order <= 0 ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={order <= 0 ? true : false}>
+            Câu trước
+          </button>
+          <button onClick={() => setOrder(order + 1)} className={`btn__pre__sentences ${order >= listSentence.length - 1 ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={order >= listSentence.length - 1 ? true : false}>
+            Câu sau
+          </button>
         </div>
         <div className="content__detail__main">
           <div className="topic__sentence">
             <h3 className="title__topic__sentence">
-              <i className="fa-solid fa-volume-high"></i> {sentences.title}
+              <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: sentence?.words, rate: 1, pitch: 1, voice: voices[1] })}></i> {sentence?.words}
             </h3>
-            <p>
-              <i className="fa-solid fa-volume-high"></i>  {sentences.phuAm}
+            <p className='phonetic__vn__sentence'>
+              {sentence?.phoneticTranscription}
             </p>
             <p className="phonetic__vn__sentence">
-              {sentences.meaning}
+              {sentence?.meaning}
             </p>
           </div>
-          <div className="phonetic__content__detail">
-            <div className="table__spelling">
+          <div className="phonetic__content__detail my-4">
+            <div className="">
               <p>
                 <span>ÂM VÀ TỔ HỢP ÂM CẦN CHÚ Ý LUYỆN TẬP</span>
               </p>
-              <table className='table__item__spelling'>
-                <tbody>
-                  <tr>
-                    {sentences.vocal.map((item) => (
-                      <td>
-                        <i className="fa-solid fa-volume-high"></i> {item.text}
-                      </td>
-                    ))}
-                  </tr>
-                </tbody>
-              </table>
+              <div className='table__item__spelling'>
+                {sentence?.soundCombinations.map((item, index: number) => (
+                  <div className='grid grid-cols-8 gap-4 px-2 py-1 '>
+                    <div className='col-span-1 font-bold'>
+                      <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: item.sound, rate: 1, pitch: 1, voice: voices[1] })}></i> {item.sound}:
+                    </div>
+                    <div className='col-span-7 flex space-x-4'>
+                      {item.combinations.map((e, index: number) => (
+                        <div key={index + 1}>
+                          <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: e, rate: 1, pitch: 1, voice: voices[2] })}></i> {e}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-
         <div className="structural__analysis__detail">
           <h3 className="title__structural">
             PHÂN TÍCH CẤU TRÚC
           </h3>
           <div className="content__structural">
-            <div className="item__Content__structural">
-              <p>
-                to <span>have a nightmare</span> = gặp ác mộng, mơ thấy ác mộng
-              </p>
-              <div className="translate__structural">
-                <p>
-                  I'm afraid of having a nightmare.
-                </p>
-                <p>  Tôi sợ mơ thấy ác mộng.</p>
-              </div>
-            </div>
-            <div className="item__Content__structural">
-              <p>
-                to <span>have a nightmare</span> = gặp ác mộng, mơ thấy ác mộng
-              </p>
-              <div className="translate__structural">
-                <p>
-                  I'm afraid of having a nightmare.
-                </p>
-                <p>  Tôi sợ mơ thấy ác mộng.</p>
-              </div>
-            </div>
-
+            {sentence && parse(sentence?.structuralAnalysis)}
           </div>
         </div>
-        <div className="">
-          <button className='btn__pre__sentences'>
+
+        {openGrammarAnalysis ?
+          <div className="structural__analysis__detail">
+            <h3 className="title__structural">
+              PHÂN TÍCH NGỮ PHÁP
+            </h3>
+            <div className="content__structural">
+              {sentence && parse(sentence?.grammarAnalysis)}
+            </div>
+
+            <div className='my-4'>
+              <button className='hover:text-blue-600' onClick={() => setOpenGrammarAnalysis(false)}>Thu gọn ▲ </button>
+            </div>
+          </div>
+          :
+          <div className='my-4'>
+            <button className='hover:text-blue-600' onClick={() => setOpenGrammarAnalysis(true)}>Phân tích thêm ▼</button>
+          </div>
+        }
+
+        <div>
+          <button onClick={() => setOrder(order - 1)} className={`btn__pre__sentences ${order <= 0 ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={order <= 0 ? true : false}>
             Câu trước
           </button>
-          <button className='btn__next__sentences'>
+          <button onClick={() => setOrder(order + 1)} className={`btn__pre__sentences ${order >= listSentence.length - 1 ? 'bg-blue-400 hover:bg-blue-400' : ''}`} disabled={order >= listSentence.length - 1 ? true : false}>
             Câu sau
           </button>
         </div>
