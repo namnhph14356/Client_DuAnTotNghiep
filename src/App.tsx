@@ -91,9 +91,10 @@ import OralSeven from './pages/OralSeven';
 import DetailClass from './pages/adminTeacher/adminClass/DetailClass';
 import ListSentencesLesson from './pages/admin/Sentences/Lesson/ListSentencesLesson';
 import ListSentencesExercise from './pages/admin/Sentences/Exercise/ListSentencesExercise';
+
 function App() {
   return (
-    <div >
+    <div>
       <Routes>
 
         <Route path='/' element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
