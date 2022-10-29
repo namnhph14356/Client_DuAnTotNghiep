@@ -1,11 +1,31 @@
 /* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import "../css/speaking.css";
 
 
 const SpeakingPage = () => {
   const { dayId, id } = useParams()
+  const [color, setColor] = useState('');
+  const path = useLocation();
+
+  const checkRoute = () => {
+    switch (path.pathname) {
+      case `/learning/${dayId}/detailLearning/${id}/listenSpeak/quiz`:
+        setColor('quiz')
+        break;
+      case `/learning/${dayId}/detailLearning/${id}/listenSpeak/questionAndAnswer`:
+        setColor('questionAndAnswer')
+        break;
+      default:
+        break;
+    }
+  }
+  
+  useEffect(() => {
+    checkRoute()
+  }, [path.pathname])
+
   return (
     <div className="speaking__page">
       <div className="main__speaking">
@@ -28,14 +48,14 @@ const SpeakingPage = () => {
           </div>
           <div>
 
-            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/quiz`} className="text-black" >
-              <button className="btn__comment__speaking ">
+            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/quiz`} className="text-black hover:text-black">
+              <button className={`${color === 'quiz' ? 'bg-blue-600 text-gray-100 ' : 'bg-slate-200 hover:bg-slate-300 '}  btn__comment__speaking`}>
                 <i className="fa-solid fa-book"></i> Khởi động
               </button>
 
             </NavLink>
-            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/questionAndAnswer`} className="text-black" >
-              <button className="btn__comment__speaking ">
+            <NavLink to={`/learning/${dayId}/detailLearning/${id}/listenSpeak/questionAndAnswer`} className="text-black hover:text-black" >
+              <button className={`${color === 'questionAndAnswer' ? 'bg-blue-600 text-gray-100 ' : 'bg-slate-200 hover:bg-slate-300 '}  btn__comment__speaking`}>
                 <i className="fa-solid fa-comments"></i> Hỏi và đáp
               </button>
             </NavLink>
