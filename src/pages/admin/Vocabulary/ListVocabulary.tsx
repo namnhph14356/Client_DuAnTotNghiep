@@ -20,6 +20,9 @@ import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { VocabulatyType } from "../../../types/vocabularyType";
 import AdminPageHeader from "../../../components/AdminPageHeader";
+import { useAppSelector } from "../../../app/hooks";
+import { DayType } from "../../../types/day";
+import { detailDay } from "../../../api/day";
 type Props = {};
 
 interface DataType {
@@ -28,18 +31,21 @@ interface DataType {
   words: string;
   wordForm: string;
   image: string;
+  dayId: string;
   meaning: string;
   createdAt: any;
   updatedAt: any;
 }
 type DataIndex = keyof DataType;
 const ListVocabulary = (props: Props) => {
-  const [vocabulary, setVocabulary] = useState([]);
+  const [vocabulary, setVocabulary] = useState<VocabulatyType[]>([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
+  const [dayTitle, setDayTitle] = useState();
 
+  // const use
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -48,9 +54,9 @@ const ListVocabulary = (props: Props) => {
     };
     getData();
   }, []);
-  const dataSources = vocabulary?.map((items: any, index: any) => {
-    console.log(items.wordForm);
+  console.log("Tim", vocabulary);
 
+  const dataSources = vocabulary?.map((items: any, index: any) => {
     return {
       key: index + 1,
       stt: index + 1,
@@ -59,6 +65,7 @@ const ListVocabulary = (props: Props) => {
       meaning: items.meaning,
       wordForm: items.wordForm,
       image: items.image,
+      dayId: items.dayId?.title,
       createdAt: moment(items.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
@@ -223,6 +230,11 @@ const ListVocabulary = (props: Props) => {
           <Image width={100} height={100} src={record.image} />
         </div>
       ),
+    },
+    {
+      title: "Day",
+      dataIndex: "dayId",
+      key: "dayId",
     },
     {
       title: "Created At",
