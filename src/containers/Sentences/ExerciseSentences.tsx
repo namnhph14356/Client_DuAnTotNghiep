@@ -280,7 +280,7 @@ const ExerciseSentences = () => {
       user: user._id,
       learningProgress: "",
       practiceActivity: quiz2.itemPracticeActivity._id,
-      totalPoint: totalPoint,
+      totalScore: totalPoint,
       totalCorrect: totalCorrect,
       result: pass,
       type: 2
@@ -289,7 +289,7 @@ const ExerciseSentences = () => {
       const flag = { ...result[index], history: data2._id }
       const { data } = await addUserQuiz(flag)
     }
-    const { data } = await detailPracticeActivity(id)
+    const { data } = await detailPracticeActivity(id,user._id)
     setQuiz2(data)
 
     const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
@@ -351,7 +351,7 @@ const ExerciseSentences = () => {
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
     const getQuiz = async () => {
-      const { data } = await detailPracticeActivity(id)
+      const { data } = await detailPracticeActivity(id,user._id)
       setQuiz2(data)
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)

@@ -23,6 +23,8 @@ import CourseSlide from "../features/Slide/course/CourseSlide";
 import WeekSlice from "../features/Slide/week/WeekSlice";
 import DaySlice from "../features/Slide/day/DaySlice";
 import PracticeActivitySlice from "../features/Slide/practiceActivity/PracticeActivitySlice";
+import LearningProgressSlice from '../features/Slide/learningProgress/LearningProgress'
+
 const rootReducer = combineReducers({
     count: CountSlide,
     product: ProductSlide,
@@ -45,7 +47,8 @@ const rootReducer = combineReducers({
     month: MonthSlice,
     week: WeekSlice,
     day: DaySlice,
-    practiceActivity: PracticeActivitySlice
+    practiceActivity: PracticeActivitySlice,
+    learningProgress: LearningProgressSlice
 });
 
 export default rootReducer;
