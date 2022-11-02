@@ -1,7 +1,10 @@
-export type SentenceType ={ 
-    _id? :string,
-    meaning : string,
-    example : string,
-    explain : string,
-    order : number
-}
+export type SentenceType = {
+  _id?: string;
+  practiceActivity?: string;
+  words: string;
+  meaning: string;
+  phoneticTranscription: string;
+  soundCombinations: any;
+  structuralAnalysis: string;
+  grammarAnalysis: string;
+};

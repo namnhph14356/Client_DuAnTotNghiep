@@ -40,8 +40,31 @@ import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import GoogleSpeechSpeaker from '../../components/GoogleSpeech/GoogleSpeechSpeaker';
 import QuizType5 from '../../components/quiz/QuizType5';
+import ListenWriteType1 from '../../components/ListenWrite/ListenWriteType1';
 
 
+const listListenWrite = [
+  {
+    ques: { _id: "1", text: "What ___ you ___ here ?", quesAfter: "What are you doing here ?", type: "selectAuto" },
+    ans: [
+      { _id: "1", idQues: "1", answer: "are" },
+      { _id: "2", idQues: "1", answer: "doing" },
+    ]
+  },
+  {
+    ques: { _id: "2", text: "ques ___ 2  efefefe ", quesAfter: "ques 111111 2  efefefe ", type: "selectAuto" },
+    ans: [
+      { _id: "3", idQues: "2", answer: "111111" },
+    ]
+  },
+  {
+    ques: { _id: "3", text: "ques ___ 123 333333 ___ 333", quesAfter: "ques aaa 123 333333 aaa 333", type: "selectAuto" },
+    ans: [
+      { _id: "7", idQues: "3", answer: "aaa" },
+      { _id: "8", idQues: "3", answer: "aaa" },
+    ]
+  }
+]
 
 let flag1: string = ""
 let flag2: number = 0
@@ -141,10 +164,14 @@ const ExerciseSentences = () => {
   const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
   const [quiz2, setQuiz2] = useState<any>([])
   const [quizList, setQuizList] = useState<any>()
+  const [listListenWrite, setListListenWrite] = useState<any>()
   const [percent, setPercent] = useState<number>(0);
   let input2: any = []
   let check10: any = []
   const [quizIndex, setQuizIndex] = useState<number>(0)
+  const [listenWriteIndex, setListenWriteIndex] = useState<number>(0)
+  const [questionIndex, setQuestionIndex] = useState<number>(0)
+
   const { id, dayId }: any = useParams()
   const ref = useRef(null)
   const [result, setResult] = useState<any[]>([])
@@ -155,13 +182,13 @@ const ExerciseSentences = () => {
   const [quizCompound, setQuizCompound] = useState<any>([])
 
 
-  console.log("speechValue quiz", speechValue);
-  console.log("transcript quiz", transcript);
-  // console.log("quizList", quizList);
-  console.log("select", select)
-  console.log("quizCompound", quizCompound)
-  console.log("result", result)
-  console.log("user", user)
+  // console.log("speechValue quiz", speechValue);
+  // console.log("transcript quiz", transcript);
+  console.log("quizList", quizList);
+  // console.log("select", select)
+  // console.log("quizCompound", quizCompound)
+  // console.log("result", result)
+  // console.log("user", user)
   let checkFlag = 0
   let answerType3 = 0
   if (quizList) {
@@ -187,6 +214,15 @@ const ExerciseSentences = () => {
     } else {
       setSelect(data)
     }
+  }
+
+  const onHanldeSetSelectListenWrite = (data: any) => {
+    // console.log("đã vào đây");
+    // console.log("data đã vào đây", data);
+
+    setTimeout(() => {
+      onContinuteListenWrite()
+    }, 1000)
   }
 
 
@@ -253,10 +289,20 @@ const ExerciseSentences = () => {
     checkFlag = 0
     answerType3 = 0
     if (quizIndex >= quizList.length - 1) {
-      setDone(true)
+      // setDone(true)
     } else {
       setQuizIndex(quizIndex + 1)
     }
+    setQuestionIndex(questionIndex + 1)
+  }
+
+  const onContinuteListenWrite = () => {
+    if (listenWriteIndex >= listListenWrite.length - 1) {
+      setDone(true)
+    } else {
+      setListenWriteIndex(listenWriteIndex + 1)
+    }
+    setQuestionIndex(questionIndex + 1)
   }
 
   //---Finish---
@@ -353,11 +399,26 @@ const ExerciseSentences = () => {
     const getQuiz = async () => {
       const { data } = await detailPracticeActivity(id,user._id)
       setQuiz2(data)
+
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)
         return data
       }))
-      setQuizList(shuffleArray(test))
+
+      let arr1: any = [];
+      let arr2: any = [];
+      test.map((item) => {
+        console.log("item", item);
+
+        if (item.quiz.type === "selectAuto") {
+          arr1.push(item)
+        } else {
+          arr2.push(item)
+        }
+      })
+
+      setQuizList(shuffleArray(arr1))
+      setListListenWrite(shuffleArray(arr2))
       const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
         const { data } = await detailHistory(item._id)
         return data
@@ -367,6 +428,9 @@ const ExerciseSentences = () => {
     getQuiz()
   }, [id])
 
+  console.log("quizList", quizList);
+  console.log("listenWriteList", listListenWrite);
+
 
   return (
     <>
@@ -374,38 +438,19 @@ const ExerciseSentences = () => {
         <div className=''>
           <div className='content__speaking'>
             <div className="flex flex-col qustion__content__speaking">
-
               <div className="">
                 <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
               </div>
-
-              {/* <div className="flex justify-between items-center ">
-                <div className="flex items-center gap-2">
-                  <h3 className="m-0">
-                    {quizList
-                      ? quizList[quizIndex]?.quiz?.type !== 3
-                        ? quizList[quizIndex]?.quiz?.question + "?"
-                        : ""
-                      : ""
-                    }
-
-                  </h3>
-                  <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
-                    <span><i className="fa-solid fa-volume-high"></i></span>
-                  </button>
-                </div>
-                
-              </div> */}
             </div>
 
             <div className="p-5 mt-5">
-              {quizList ?
-                quizList[quizIndex]?.quiz?.type === 5
-                  ? <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                  : ""
-                : ""
+              {
+                quizList && listListenWrite && questionIndex <= quizList.length - 1 ?
+                  <QuizType5 question={quizList[quizIndex].quiz.question} data={quizList[quizIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                  :
+                  listListenWrite &&
+                  <ListenWriteType1 question={listListenWrite[listenWriteIndex].quiz} answerList={listListenWrite[listenWriteIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelectListenWrite} />
               }
-
               <div className='flex flex-row gap-4'>
                 <div className='md:basis-3/4 '>
 
@@ -421,8 +466,6 @@ const ExerciseSentences = () => {
                       </div>
                     </section>
                     : ""}
-
-
 
                   {check === true && select?.isCorrect === false || check === true && check2 === false && select === null
                     ? <section className='w-full mx-auto md:py-[30px]'>
@@ -453,7 +496,7 @@ const ExerciseSentences = () => {
 
                 </div>
 
-                <div className='mt-8 md:basis-1/4'>
+                {/* <div className='mt-8 md:basis-1/4'>
                   <div className={`answer__question`}>
                     <button
                       disabled={select === null && quizCompound === null ? true : false}
@@ -468,7 +511,7 @@ const ExerciseSentences = () => {
                       Kiểm tra
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

@@ -93,7 +93,6 @@
   border: none;
   background: #CCF0A5;
   font-weight: 600;
-  text-decoration: line-through;
 }
 .answer__result {
   @apply text-center mt-[47px] rounded-lg py-[20px];
