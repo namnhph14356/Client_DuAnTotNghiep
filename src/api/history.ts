@@ -7,8 +7,13 @@ export const listHistory = async () => {
 }
 
 
+export const listHistoryByUser = (userId: string | undefined) => {
+    const url = `/learningProgress?userId=${userId}`
+    return instance.get(url)
+}
+
 export const detailHistoryByUserActivity= (acivityId: string, userId: string | undefined) => {
-    const url = `/learningProgress?acivityId=${acivityId}&userId=${userId}`
+    const url = `/learningProgress?activityId=${acivityId}&userId=${userId}`
     return instance.get(url)
 }
 
