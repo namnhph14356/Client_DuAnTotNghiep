@@ -15,6 +15,13 @@ import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/Da
 import { MonthType } from '../types/month'
 import { WeekType } from '../types/week'
 import { DayType } from '../types/day'
+import { LearningProgressType } from '../types/learningProgress'
+import { addLearningProgressSlice, editLearningProgressSlice, getLearningProgressByUserSlice } from '../features/Slide/learningProgress/LearningProgress'
+import { useSelector } from 'react-redux'
+import { RootState } from '../app/store'
+import { UserType } from '../types/user'
+import { detailHistory, listHistoryByUser } from '../api/history'
+import { HistoryType } from '../types/history'
 
 
 
@@ -40,27 +47,55 @@ function classNames(...classes) {
 const Learning = () => {
 
   const dispatch = useAppDispatch()
-  const categories = useAppSelector(item => item.category.value)
-  let months = useAppSelector<MonthType[]>(item => item.month.value)
-  let weeks = useAppSelector<WeekType[]>(item => item.week.value)
-  let days = useAppSelector<DayType[]>(item => item.day.value)
-
+  // const categories = useAppSelector(item => item.category.value)
+  const months = useAppSelector<MonthType[]>(item => item.month.value)
+  const weeks = useAppSelector<WeekType[]>(item => item.week.value)
+  const days = useAppSelector<DayType[]>(item => item.day.value)
+  const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  // console.log("learningProgress", learningProgress);
+  // console.log("months", months);
+  // console.log("weeks", weeks);
+  // console.log("days", days);
+  const [userHistory, setUserHistory] = useState<any>()
+  console.log("userHistory",userHistory)
   const [monthSelect, setMonthSelect] = useState<MonthType | null>()
   const [weekSelect, setWeekSelect] = useState<WeekType | null>()
   const [daySelect, setDaySelect] = useState<DayType | null>()
+  const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
+  // console.log("daySelect", daySelect);
+  // console.log("learningProgressSelect", learningProgressSelect);
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
   const days2 = days.filter((item: DayType) => item.week === weekSelect?._id)
 
   const findSmallestOrder = (data, id) => {
     const temp = data?.filter((item: WeekType) => item.month === id)
     const minPrice = Math.min(...temp.map(({ order }) => order))
-    const cheapeastShirt = temp.find(({ order }: any) => minPrice === order)
-    return cheapeastShirt
+    const smallestOrder = temp.find(({ order }: any) => minPrice === order)
+    return smallestOrder
   }
 
 
   useEffect(() => {
-    dispatch(getCategoryList())
+    dispatch(getLearningProgressByUserSlice(user._id))
+
+    const lastLearningProgress = learningProgress[learningProgress.length - 1]
+    // console.log("lastLearningProgress",lastLearningProgress)
+    const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day)
+    // console.log("lastDay",lastDay)
+    const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+    // console.log("nextDay",nextDay)
+
+    if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
+
+      dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+      dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+      console.log("pass")
+    } else {
+      console.log("fail")
+    }
+
+    // dispatch(getCategoryList())
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
     dispatch(getListDaySlice())
@@ -70,15 +105,30 @@ const Learning = () => {
     const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
       return (prev.order < current.order) ? prev : current
     })
+    const day = days.find((item: DayType) => item.week === temp._id)
     setMonthSelect(months?.reduce(function (prev, current) {
       return (prev.order < current.order) ? prev : current
     }))
     setWeekSelect(temp)
-    setDaySelect(days.find((item: DayType) => item.week === temp._id))
+    setDaySelect(day)
+    setLearningProgressSelect(learningProgress.find((item: LearningProgressType) => item.day === day?._id))
+    const getHistoryUser = async () => {
+      const { data } = await listHistoryByUser(user._id)
+      console.log("data getHistoryUser",data)
+      const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
+        const { data } = await detailHistory(item._id)
 
+        return data
+      }))
+      setUserHistory(test2)
+
+      
+    }
+    getHistoryUser()
 
   }, [])
-  const [selected, setSelected] = useState(item[3])
+
+
   return (
     <div className='learning__page'>
       <div className="box__learning">
@@ -206,7 +256,10 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
-                                onClick={() => { setDaySelect(item) }}
+                                onClick={() => {
+                                  setDaySelect(item)
+                                  setLearningProgressSelect(learningProgress.find((item2: LearningProgressType) => item2.day === item._id))
+                                }}
                               >
 
                                 {item.title}
@@ -233,7 +286,10 @@ const Learning = () => {
                             to="#"
                             aria-current="page"
                             className="relative z-10 inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-indigo-600 border focus:z-20"
-                            onClick={() => { setDaySelect(item) }}
+                            onClick={() => {
+                              setDaySelect(item)
+                              setLearningProgressSelect(learningProgress.find((item2: LearningProgressType) => item2.day === item._id))
+                            }}
                           >
                             {item.order}
                           </NavLink>
@@ -243,7 +299,10 @@ const Learning = () => {
                             to="#"
                             aria-current="page"
                             className="relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 focus:z-20"
-                            onClick={() => { setDaySelect(item) }}
+                            onClick={() => {
+                              setDaySelect(item)
+                              setLearningProgressSelect(learningProgress.find((item2: LearningProgressType) => item2.day === item._id))
+                            }}
                           >
                             {item.order}
                           </NavLink>
@@ -257,41 +316,46 @@ const Learning = () => {
 
               </div>
             </div>
-            <div className="statistical__learning__time">
-              <div className="statistical__topic__learning">
-                <div className='statistical__topic__learning__title'>
-                  <ul>
-                    <li>Từ vựng: </li>
-                    <li>Cấu trúc và câu: </li>
-                    <li>Hội thoại:</li>
-                    <li>Ngữ pháp: </li>
-                  </ul>
+            {learningProgressSelect
+              ? <div className="statistical__learning__time">
+                <div className="statistical__topic__learning">
+                  <div className='statistical__topic__learning__title'>
+                    <ul>
+                      <li>Nghe nói phản xạ: </li>
+                      <li>Từ vựng: </li>
+                      <li>Cấu trúc và câu: </li>
+                      <li>Hội thoại:</li>
+                      <li>Ngữ pháp: </li>
+                    </ul>
+                  </div>
+                  <div className="statistical__topic__learning__point">
+                    <ul>
+                      <li>{learningProgressSelect.listeningSpeakingScore}</li>
+                      <li>{learningProgressSelect.vocabularyScore}</li>
+                      <li>{learningProgressSelect.structureSentencesScore}</li>
+                      <li>{learningProgressSelect.conversationScore}</li>
+                      <li>{learningProgressSelect.grammarScore}</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="statistical__topic__learning__point">
-                  <ul>
-                    <li>2</li>
-                    <li>2</li>
-                    <li>2</li>
-                    <li>2</li>
-                  </ul>
+
+                <div className="btn__learning__statistical">
+                  <button className='btn__start__statistical'>
+                    <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='text-white hover:text-white'>
+                      Bắt đầu học
+                    </NavLink>
+                  </button>
+                  <button className='btn__exam__statistical'>
+                    <NavLink to={`/learning/oral`} className='text-white hover:text-white'>
+
+                      Thi Oral ngày
+                    </NavLink>
+
+                  </button>
                 </div>
               </div>
+              : ""}
 
-              <div className="btn__learning__statistical">
-                <button className='btn__start__statistical'>
-                  <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='text-white hover:text-white'>
-                    Bắt đầu học
-                  </NavLink>
-                </button>
-                <button className='btn__exam__statistical'>
-                <NavLink to={`/learning/oral`} className='text-white hover:text-white'>
-
-                  Thi Oral ngày
-                  </NavLink>
-
-                </button>
-              </div>
-            </div>
           </div>
 
           <div className="total__learning">
