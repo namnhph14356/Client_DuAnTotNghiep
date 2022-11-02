@@ -13,8 +13,8 @@ export const listPracticeActivityByDay = (id: string) => {
     return instance.get(url)
 }
 
-export const detailPracticeActivity = (id: string) => {
-    const url = `/practiceActivity/${id}`
+export const detailPracticeActivity = (id: string, userId:string) => {
+    const url = `/practiceActivity/${id}/userId`
     return instance.get(url)
 }
 
