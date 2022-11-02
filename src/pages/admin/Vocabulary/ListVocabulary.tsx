@@ -256,7 +256,7 @@ const ListVocabulary = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/admin/vocabulary/${record._id}/edit`}>
+            <Link to={`/manageDay/vocabulary/${record._id}/edit`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -284,7 +284,7 @@ const ListVocabulary = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb="Quản lý vocabulary" />
       <Button type="primary" className="my-6">
-        <Link to={`/admin/vocabulary/add`}>Thêm Từ Vựng</Link>
+        <Link to={`/manageDay/vocabulary/add`}>Thêm Từ Vựng</Link>
       </Button>
       <h1>Vocabulary</h1>
       <Table columns={columns} dataSource={dataSources}></Table>

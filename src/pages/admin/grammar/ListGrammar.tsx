@@ -215,7 +215,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/admin/grammar/${record?.dayId}/edit`}>
+            <Link to={`/manageDay/grammar/${record?.dayId}/edit`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -243,7 +243,7 @@ const ListGrammar = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb="Quản lý grammar" />
       <Button type="primary" className="my-6">
-        <Link to={`/admin/grammar/add`}>Thêm Ngữ Pháp</Link>
+        <Link to={`/manageDay/grammar/add`}>Thêm Ngữ Pháp</Link>
       </Button>
       <h1>Grammar</h1>
       <Table columns={columns} dataSource={dataSources}></Table>

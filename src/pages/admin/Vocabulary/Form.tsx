@@ -396,7 +396,7 @@ const FormVocabulary = (props: Props) => {
           >
             <Input />
           </Form.Item>
-
+ 
           <Form.Item
             label="Meaning"
             name="meaning"

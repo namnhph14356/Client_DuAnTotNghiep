@@ -1,102 +1,69 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../../components/AdminPageHeader';
-import { Link } from 'react-router-dom';
-import { QuizType } from '../../../../types/quiz';
-import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
 import { SearchOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { AnswerQuizType } from '../../../../types/answerQuiz';
+import AdminPageHeader from '../../../components/AdminPageHeader';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { DayType } from '../../../types/day';
+import { PracticeActivityType } from '../../../types/practiceActivity';
+import { changeBreadcrumb, getListDaySlice } from '../../../features/Slide/day/DaySlice';
+import { getListPracticeActivitylice } from '../../../features/Slide/practiceActivity/PracticeActivitySlice';
 
 
 interface DataType {
   key: React.Key;
   _id?: string,
-  category: string,
-  question: string,
-  image: string,
-  timeLimit: string,
-  type?: string
   // children?: any
 }
 
 interface ExpandedDataType {
   key: React.Key;
   _id?: string,
-  quiz: string;
-  answer: string;
-  isCorrect: number;
+
 }
 
 
 type DataIndex = keyof ExpandedDataType;
-type DataIndex2 = keyof DataType;
-
 
 type Props = {}
 
-const ListAnswerQuiz = (props: Props) => {
+const ListDay = (props: Props) => {
 
-  const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
-  const quizs = useAppSelector(item => item.quiz.value)
-  const answerQuizs = useAppSelector(item => item.answerQuiz.value)
-  const categories = useAppSelector(item => item.category.value)
+  const breadcrumb = useAppSelector(item => item.day.breadcrumb)
+  const days = useAppSelector(item => item.day.value)
+  const activity = useAppSelector(item => item.practiceActivity.value)
   const dispatch = useAppDispatch();
-  console.log('quizs', quizs);
-  console.log('answerQuizs', answerQuizs);
-  console.log('categories', categories);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selected, setSelected] = useState<{ key: string, id: string | undefined }[]>([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
 
+console.log("activity", activity);
 
   //------------------STATE--------------------
 
 
 
-  const dataTable = quizs.map((item: QuizType, index) => {
+  const dataTable = days.map((item: DayType, index) => {
     return {
       key: index + 1,
       _id: item._id,
-      category: categories.filter((cate: CategoryType) => { return cate._id == item.category }).reduce((result, item: any) => {
-        return `${result}${item.title}`
-      }, ""),
-      question: item.question,
-      image: item.image,
-      timeLimit: item.timeLimit,
-      // type: item.type,
+      title: item.title,
+      week: item.week,  
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
-      // children: answerQuizs.filter((item2: AnswerQuizType, index2) => item2.quiz === item._id ? {
-      //   key: item2._id,
-      //   _id: item2._id,
-      //   quiz: item2.quiz,
-      //   isCorrect: item2.isCorrect
-      // } : null)
     }
   })
-  console.log('dataTable', dataTable);
 
-  const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
+  const childrenTable = activity.map((item: PracticeActivityType, index) => {
     return {
       key: item._id,
       _id: item._id,
-      quiz: item.quiz,
-      answer: item.answer,
-      isCorrect: item.isCorrect
-
-
     }
   })
 
@@ -109,13 +76,13 @@ const ListAnswerQuiz = (props: Props) => {
     dataIndex: DataIndex,
   ) => {
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
+    // setSearchText(selectedKeys[0]);
+    // setSearchedColumn(dataIndex);
   };
 
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
-    setSearchText('');
+    // setSearchText('');
   };
 
   const getColumnSearchProps = (dataIndex: any): ColumnType<DataType> => ({
@@ -151,8 +118,8 @@ const ListAnswerQuiz = (props: Props) => {
             size="small"
             onClick={() => {
               confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
+            //   setSearchText((selectedKeys as string[])[0]);
+            //   setSearchedColumn(dataIndex);
             }}
           >
             Lọc
@@ -202,8 +169,8 @@ const ListAnswerQuiz = (props: Props) => {
             size="small"
             onClick={() => {
               confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
+            //   setSearchText((selectedKeys as string[])[0]);
+            //   setSearchedColumn(dataIndex);
             }}
           >
             Lọc
@@ -229,11 +196,8 @@ const ListAnswerQuiz = (props: Props) => {
     newSelectedRowKeys.map((item) => {
       childrenTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
     })
-    console.log('rowSelected', rowSelected);
-    console.log('newSelectedRowKeys', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys)
     setSelected(rowSelected);
-    // console.log('selectedRowKeys changed: ', selectedRowKeys);
   };
 
   const rowSelection: TableRowSelection<ExpandedDataType> = {
@@ -283,9 +247,9 @@ const ListAnswerQuiz = (props: Props) => {
 
     setTimeout(() => {
       if (Array.isArray(id)) {
-        dispatch(removeAnswerQuizSlide(id))
+        // dispatch(removeAnswerQuizSlide(id))
       } else {
-        dispatch(removeAnswerQuizSlide(id))
+        // dispatch(removeAnswerQuizSlide(id))
       }
       setConfirmLoading(false);
       message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
@@ -319,75 +283,6 @@ const ListAnswerQuiz = (props: Props) => {
 
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: "category",
-      filters: categories.map((item: CategoryType) => { return { text: item.title, value: item.title } }),
-      onFilter: (value, record) => {
-        return record.category == value
-      }
-    },
-    {
-      title: 'Image',
-      key: "image",
-      render: (record) => (
-        <div className="">
-          <Image
-            width={100}
-            height={100}
-            src={record.image}
-          />
-        </div>
-      )
-    },
-    {
-      title: 'Question',
-      dataIndex: 'question',
-      key: "question",
-      ...getColumnSearchProps('question'),
-    },
-    {
-      title: 'TimeLimit',
-      dataIndex: 'timeLimit',
-      key: "timeLimit",
-      ...getColumnSearchProps('timeLimit'),
-    },
-    // {
-    //   title: 'Type',
-    //   key: "type",
-    //   filters: [
-    //     {
-    //       text: 'Nghe',
-    //       value: 1,
-    //     },
-    //     {
-    //       text: 'Chọn',
-    //       value: 2,
-    //     },
-    //     {
-    //       text: 'Viết',
-    //       value: 3,
-    //     }
-    //   ],
-    //   onFilter: (value, record) => {
-    //     return record.type == value
-    //   },
-    //   render: (record) => (
-    //     <div className="">
-    //       {record.type === 1
-    //         ? <Tag color="red">Nghe</Tag>
-    //         : record.type === 2
-    //           ? <Tag color="geekblue">Chọn</Tag>
-    //           : record.type === 3
-    //             ? <Tag color="green">Viết</Tag>
-    //             : ""
-    //       }
-
-    //     </div>
-    //   )
-
-    // },
-    {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
@@ -404,27 +299,11 @@ const ListAnswerQuiz = (props: Props) => {
 
   const expandedRowRender = (row: any) => {
 
-    console.log("expandedRow", row);
-
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
       { title: 'STT', dataIndex: 'stt', key: 'stt' },
       { title: 'ID', dataIndex: '_id', key: '_id' },
 
-      { title: 'Answer', dataIndex: 'answer', key: 'answer' },
-      {
-        title: 'IsCorrect',
-
-        key: 'isCorrect',
-        render: (record) => (
-          <span>
-            {record.isCorrect === 1
-              ? <Badge status="success" text={<CheckCircleOutlined />} />
-              : <Badge status="error" text={<CloseCircleOutlined />} />
-            }
-          </span>
-        ),
-      },
       {
         title: "Hành Động", key: "action", render: (text, record) => (
           <Space align="center" size="middle">
@@ -455,43 +334,23 @@ const ListAnswerQuiz = (props: Props) => {
     ];
 
 
-    // let data: any = answerQuizs.map((item: AnswerQuizType, index) => item.quiz === row._id ? {
-    //   key: index + 1,
-    //   _id: item._id,
-    //   answer: item.answer,
-    //   quiz: item.quiz,
-    //   isCorrect: item.isCorrect
-    // } : null)
-
-    let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
+    let data: any = activity.filter((item: PracticeActivityType) => item.day === row._id).map((item2: PracticeActivityType, index) => {
       return {
         key: item2._id,
         stt: index + 1,
         _id: item2._id,
-        answer: item2.answer,
-        quiz: item2.quiz,
-        isCorrect: item2.isCorrect
       }
     })
 
-
-
-    // console.log("data Children", data);
 
     return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
   }
   //------------------TABLE-COLUMM-------------------
 
-
-
-
-
-
   useEffect(() => {
-    dispatch(changeBreadcrumb("Quản Lý AnswerQuiz"))
-    dispatch(getListQuizSlide())
-    dispatch(getListAnswerQuizSlide())
-    dispatch(getCategoryList())
+    dispatch(changeBreadcrumb("Quản Lý Days"))
+    dispatch(getListDaySlice())
+    dispatch(getListPracticeActivitylice())
 
   }, [])
 
@@ -499,7 +358,7 @@ const ListAnswerQuiz = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Button type="primary" className="my-6" >
-        <Link to={`/admin/answerQuiz/add`}>Thêm AnswerQuiz</Link>
+        <Link to={`/manageDay`}>Thêm ngày</Link>
 
       </Button>
 
@@ -527,7 +386,7 @@ const ListAnswerQuiz = (props: Props) => {
       <Table
         bordered
 
-        footer={() => `Hiển thị 10 trên tổng ${quizs.length}`}
+        footer={() => `Hiển thị 10 trên tổng ${days.length}`}
         expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
 
         columns={columns}
@@ -539,4 +398,4 @@ const ListAnswerQuiz = (props: Props) => {
   )
 }
 
-export default ListAnswerQuiz
+export default ListDay

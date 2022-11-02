@@ -7,7 +7,7 @@ const LessonGrammar = () => {
   const { dayId, id } = useParams();
   useEffect(() => {
     const getData = async () => {
-      const { data } = await detailDayIdGrammmar(id);
+      const { data } = await detailDayIdGrammmar(dayId);
       setGrammar(data);
     };
     getData();

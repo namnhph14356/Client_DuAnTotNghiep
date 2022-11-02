@@ -28,19 +28,19 @@ const value = [
   { id: 5, name: 'Theresa Webb' },
 ]
 const questionQuiz = [
-  { id: 1, name: 'Where are you going ?' },
-  { id: 2, name: 'How are you ?' },
+  { id: 1, name: 'What was Dave suffering from ?' },
+  { id: 2, name: 'What does Eric advise Dave to do ?' },
 ]
 const answerQuiz = [
-  { id: "1", name: 'aaaaaaaaaaaaaa', idQuestion: "1", isCorrect: false },
-  { id: "2", name: 'bbbbbbbbbbbbbb', idQuestion: "1", isCorrect: false },
-  { id: "3", name: 'cccccccccccccc', idQuestion: "1", isCorrect: false },
-  { id: "4", name: 'ddddddddddddddd', idQuestion: "1", isCorrect: true },
+  { id: "1", name: 'He had a headache.', idQuestion: "1", isCorrect: false },
+  { id: "2", name: 'He was ill.', idQuestion: "1", isCorrect: false },
+  { id: "3", name: 'He stayed up late.', idQuestion: "1", isCorrect: false },
+  { id: "4", name: 'He didn’t sleep a wink in 3 days.', idQuestion: "1", isCorrect: true },
 
-  { id: "5", name: '666666666', idQuestion: "2", isCorrect: false },
-  { id: "6", name: '888888888888', idQuestion: "2", isCorrect: true },
-  { id: "7", name: 'vvvvvvvvvvvvvvv', idQuestion: "2", isCorrect: false },
-  { id: "8", name: 'hhhhhhhh', idQuestion: "2", isCorrect: false },
+  { id: "5", name: 'See a doctor', idQuestion: "2", isCorrect: false },
+  { id: "6", name: 'Go to sleep in 3 days', idQuestion: "2", isCorrect: true },
+  { id: "7", name: 'See a friend', idQuestion: "2", isCorrect: false },
+  { id: "8", name: 'Go to the beauty salon', idQuestion: "2", isCorrect: false },
 ]
 
 const people = [
@@ -63,7 +63,6 @@ const ExeWriteAndListen = () => {
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
 
   const onSubmit2 = async (item: any) => {
-    console.log(item);
 
     let num: number = 0;
     for (const key in item.ans) {
@@ -93,6 +92,8 @@ const ExeWriteAndListen = () => {
       })
     }
 
+    console.log("item232333", item);
+    
     // check answer listenWrite
     let convertValues2: any = [];
     for (let key in item.ans) {
@@ -109,6 +110,8 @@ const ExeWriteAndListen = () => {
       //   push vào mảng convertValues với id và answer
     }
 
+    console.log("convertValues2convertValues2convertValues2v",convertValues2);
+    
     let numAnswer = 0;
     await listQuestionAnswer.forEach((element, index) => {
       if (element.answer) {
@@ -242,6 +245,8 @@ const ExeWriteAndListen = () => {
               <div className="content">
                 {
                   listQuestionAnswer?.map((item: any, index: number) => {
+                    console.log("dadadaddd", item);
+                    
                     const quesToArr = item.question.text.split("___")
                     // tách chuỗi thành 1 mảng
                     var tempQues: any = [];
@@ -260,7 +265,7 @@ const ExeWriteAndListen = () => {
                       <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 even:bg-slate-100"  >
                         <div className='col-span-2 flex justify-between gap-4 py-2 '>
                           <strong className='my-auto'>{item.question.name}: </strong>
-                          <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: voices[2] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                          <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: item.question.name == "Cap" ? voices[0] : voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
                         </div>
                         <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
                       </div>
