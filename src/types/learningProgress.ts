@@ -1,6 +1,6 @@
 export type LearningProgressType = {
     _id?: string,
-    day: string,
+    day: any,
     user: string,
     listeningSpeakingScore: number,
     vocabularyScore: number,

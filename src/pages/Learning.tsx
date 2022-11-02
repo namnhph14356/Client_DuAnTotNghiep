@@ -111,7 +111,7 @@ const Learning = () => {
     }))
     setWeekSelect(temp)
     setDaySelect(day)
-    setLearningProgressSelect(learningProgress.find((item: LearningProgressType) => item.day === day?._id))
+    setLearningProgressSelect(learningProgress.find((item: LearningProgressType) => item.day._id === day?._id))
     const getHistoryUser = async () => {
       const { data } = await listHistoryByUser(user._id)
       console.log("data getHistoryUser",data)
@@ -127,7 +127,6 @@ const Learning = () => {
     getHistoryUser()
 
   }, [])
-
 
   return (
     <div className='learning__page'>

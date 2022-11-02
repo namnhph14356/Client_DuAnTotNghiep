@@ -11,7 +11,7 @@
 
 import React, { useEffect, useRef, useState, useMemo, useCallback, useContext } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { Progress, Button, Modal, Collapse } from 'antd';
+import { Progress, Button, Modal, Collapse, message } from 'antd';
 import Countdown, { CountdownApi } from 'react-countdown';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
@@ -41,6 +41,8 @@ import { UserType } from '../../types/user';
 import GoogleSpeechSpeaker from '../../components/GoogleSpeech/GoogleSpeechSpeaker';
 import QuizType5 from '../../components/quiz/QuizType5';
 import ListenWriteType1 from '../../components/ListenWrite/ListenWriteType1';
+import { detailLearningProgressByUser } from '../../api/learningProgress';
+import { LearningProgressType } from '../../types/learningProgress';
 
 
 const listListenWrite = [
@@ -151,7 +153,6 @@ const ExerciseSentences = () => {
   const dispatch = useAppDispatch()
   const [select, setSelect] = useState<any>(null)
   const [check, setCheck] = useState(false)
-  const [check2, setCheck2] = useState<any>()
   const [done, setDone] = useState<any>()
   const timeSlice = useAppSelector(item => item.time.value)
 
@@ -165,6 +166,7 @@ const ExerciseSentences = () => {
   const [quiz2, setQuiz2] = useState<any>([])
   const [quizList, setQuizList] = useState<any>()
   const [numQuizList, setNumQuizList] = useState(0)
+  const [learningProgress, setLearningProgress] = useState<LearningProgressType>()
   // const [listListenWrite, setListListenWrite] = useState<any>()
   const [percent, setPercent] = useState<number>(0);
   let input2: any = []
@@ -266,7 +268,6 @@ const ExerciseSentences = () => {
     setSelect(null)
     input2 = []
     check10 = []
-    setCheck2(null)
     setCheck(false)
     setOnReset(!onReset)
     checkFlag = 0
@@ -296,22 +297,29 @@ const ExerciseSentences = () => {
     console.log("totalCorrect", totalCorrect);
     const score = Math.round(10 / quizList.length * totalCorrect)
     setPoint(score)
-    
+
     const { data: data2 } = await addHistory({
       user: user._id,
-      learningProgress: "",
+      learningProgress: learningProgress?._id,
       practiceActivity: quiz2.itemPracticeActivity._id,
       score: score,
-      totalPoint: totalPoint,
+      totalScore: totalPoint,
       totalCorrect: totalCorrect,
       result: pass,
-      type: 2
+      type: "sentences"
     })
+
+    if (data2) {
+      message.success("Thêm history thành công")
+    }
     for (let index = 0; index < result.length; index++) {
       const flag = { ...result[index], history: data2._id }
       const { data } = await addUserQuiz(flag)
+      if (data) {
+        message.success("Thêm addUserQuiz thành công")
+      }
     }
-    const { data } = await detailPracticeActivity(id,user._id)
+    const { data } = await detailPracticeActivity(id, user._id)
     setQuiz2(data)
 
     // const { data } = await detailPracticeActivity(id)
@@ -370,11 +378,15 @@ const ExerciseSentences = () => {
   const onChange = (key: string | string[]) => {
   };
 
-
+  const getLearningProgressByUser = async () => {
+    const { data } = await detailLearningProgressByUser(dayId, user._id)
+    setLearningProgress(data);
+  }
 
   useEffect(() => {
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
+    getLearningProgressByUser()
     getQuiz()
   }, [id])
 
@@ -424,9 +436,10 @@ const ExerciseSentences = () => {
 
   // console.log("quizList", quizList);
   console.log("resultresultresultresult", result);
-  console.log("questionIndex", questionIndex);
-  console.log("history", history);
-  console.log("quizLisst", quizList);
+  // console.log("questionIndex", questionIndex);
+  // console.log("history", history);
+  // console.log("quizLisst", quizList);
+  console.log("learningProgress", learningProgress);
 
   return (
     <>
