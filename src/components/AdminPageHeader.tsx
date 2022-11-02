@@ -24,7 +24,7 @@ const AdminPageHeader = ({breadcrumb}: AdminPageHeaderProps ) => {
           </div>
           <PageHeader
               className="site-page-header text-indigo-600"
-              title={`${breadcrumb} / NGÀY 1`}
+              title={`NGÀY 1 / ${breadcrumb} `}
             style={{paddingLeft: 0}}
           />
       </div>
