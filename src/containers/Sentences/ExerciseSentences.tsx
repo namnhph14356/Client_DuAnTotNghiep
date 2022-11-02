@@ -311,6 +311,8 @@ const ExerciseSentences = () => {
       const flag = { ...result[index], history: data2._id }
       const { data } = await addUserQuiz(flag)
     }
+    const { data } = await detailPracticeActivity(id,user._id)
+    setQuiz2(data)
 
     // const { data } = await detailPracticeActivity(id)
     // setQuiz2(data)

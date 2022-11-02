@@ -36,6 +36,7 @@ import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import { addLearningProgress, detailLearningProgressByUser, editLearningProgress } from '../../api/learningProgress';
 import { SemicolonPreference } from 'typescript';
+import { addLearningProgressSlice, editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress';
 
 
 
@@ -265,26 +266,29 @@ const QuizTypeSelect = () => {
         })
         const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
         if(learningProgress.length === 0){
-            const {data} = await addLearningProgress({day: dayId, user: user._id})
+            // const {data} = await addLearningProgress({day: dayId, user: user._id})
+            dispatch(addLearningProgressSlice({day: dayId, user: user._id}))
         }else{
-            const {data} = await editLearningProgress({...learningProgress[0],listeningSpeakingScore: Math.round(score)})
+            // const {data} = await editLearningProgress({...learningProgress[0],listeningSpeakingScore: Math.round(score)})
+            dispatch(editLearningProgressSlice({...learningProgress[0],listeningSpeakingScore: Math.round(score)}))
         }
 
         const { data: data2 } = await addHistory({
             user: user._id,
             learningProgress: learningProgress[0]._id,
             practiceActivity: quiz2.itemPracticeActivity._id,
-            totalPoint: totalPoint,
+            score: Math.round(score),
+            totalScore: totalPoint,
             totalCorrect: totalCorrect,
             result: pass,
-            type: 2
+            type: "listenSpeaking"
         })
         for (let index = 0; index < result.length; index++) {
             const flag = { ...result[index], history: data2._id }
             const { data } = await addUserQuiz(flag)
         }
-        // const { data } = await detailPracticeActivity(id)
-        const { data } = await detailHistoryByUserActivity(id,user._id)
+        const { data } = await detailPracticeActivity(id,user._id)
+        // const { data } = await detailHistoryByUserActivity(id,user._id)
         
         setQuiz2(data)
 
@@ -294,6 +298,7 @@ const QuizTypeSelect = () => {
             return data
         }))
         setHistory(test2)
+        console.log("test2",test2)
         setIsModalOpen(true);
     }
 
@@ -347,7 +352,7 @@ const QuizTypeSelect = () => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
         const getQuiz = async () => {
-            const { data } = await detailPracticeActivity(id)
+            const { data } = await detailPracticeActivity(id,user._id)
             console.log("data test",data)
             setQuiz2(data)
             const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
@@ -360,9 +365,10 @@ const QuizTypeSelect = () => {
                 // const { data } = await detailHistoryByUserActivity(id,user._id)
                 return data
             }))
+            console.log("test2",test2)
             setHistory(test2)
-            // const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
-            // console.log("learningProgress",learningProgress[0])
+            const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+            console.log("learningProgress",learningProgress[0])
 
         }
         getQuiz()
