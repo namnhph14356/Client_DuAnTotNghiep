@@ -287,7 +287,7 @@ const ListVocabulary = (props: Props) => {
         <Link to={`/manageDay/vocabulary/add`}>Thêm Từ Vựng</Link>
       </Button>
       <h1>Vocabulary</h1>
-      <Table columns={columns} dataSource={dataSources}></Table>
+      <Table columns={columns} dataSource={dataSources} className="overflow-auto"></Table>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space, Select } from "antd";
+import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space, Select, Button } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
@@ -223,24 +223,40 @@ const DayLayout = () => {
           </div>
         </Header>
 
-        <Content className=" main__content__admin  p-8">
+        <Content className=" main__content__admin  px-20 py-4">
           <NavLink to={"/admin/day"} className="p-1 bg-blue-500 rounded px-6 text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600">Back</NavLink>
           <Outlet />
         </Content>
       </Layout>
 
 
-      <Layout className="w-[100px]">
-          <div >
-              <Select value={"Tháng 1"}>
-                 <Option value="">
-
-                 </Option>
+      {/* <Layout className="w-[100%]"> */}
+          <div className="w-[10%] mt-[5%]">
+            <label htmlFor="" className="text-xl font-bold">Tháng</label>
+            <div className="mt-2 mb-4">
+              <Select value={"Tuần 1"} className="w-full h-[30px]">
+                 <Option value="">Tuần 2</Option>
+                 <Option value="">Tuần 3</Option>
+                 <Option value="">Tuần 4</Option>
               </Select>
-          </div>
-      </Layout>
+            </div>
 
-    </Layout>
+              <label htmlFor="" className="text-xl font-bold">Tuần</label>
+              <div className="mt-2">
+              <Select value={"Ngày 1"} className="w-full h-[40px]">
+                 <Option value="">Ngày 2</Option>
+                 <Option value="">Ngày 3</Option>
+                 <Option value="">Ngày 4</Option>
+                 <Option value="">Ngày 5</Option>
+                 <Option value="">Ngày 6</Option>
+              </Select>
+              </div>
+
+              <button className="text-blue-600 border-double border-4 border-indigo-600 w-full text-xl font-bold mt-16 hover:text-white hover:bg-blue-600 hover:border-white">Thêm</button>
+          </div>
+      {/* </Layout> */}
+
+    </Layout> 
   );
 };
 
