@@ -44,11 +44,11 @@ const DayLayout = () => {
         {
           key: "1",
           icon: <BellOutlined />,
-          label: <span>Profile</span>,
+          label: <span>Hồ sơ của bạn</span>,
         },
         {
           key: "2",
-          label: <span>Log Out</span>,
+          label: <span>Đăng xuất</span>,
           icon: <BellOutlined />,
           danger: true,
         },
@@ -184,10 +184,10 @@ const DayLayout = () => {
 
             <SubMenu key="sub9_2" icon={<ReadOutlined />} title="Exercise">
               <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Danh sách bài tập</NavLink>
+                <NavLink to="/manageDay/grammar/listexercise">Danh sách bài tập</NavLink>
               </Menu.Item>
               <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Thêm bài tập</NavLink>
+                <NavLink to="/manageDay/grammar/addexercise">Thêm bài tập</NavLink>
               </Menu.Item>
             </SubMenu>
           </SubMenu>
