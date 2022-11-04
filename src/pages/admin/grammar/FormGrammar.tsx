@@ -49,9 +49,9 @@ const FormGrammar = (props: Props) => {
   const { id } = useParams();
   var titlePage: string = "";
   if (id) {
-    titlePage = "Update Vocablulary";
+    titlePage = "Update Grammar";
   } else {
-    titlePage = "Add New Vocabulary";
+    titlePage = "Add New Grammar";
   }
   const onFinish = async (value: GammarType) => {
     const key = "updatable";
@@ -61,7 +61,7 @@ const FormGrammar = (props: Props) => {
       try {
         updateGrammar(value);
         message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-        navigate("/admin/grammar");
+        navigate("/manageDay/grammar");
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
@@ -69,7 +69,7 @@ const FormGrammar = (props: Props) => {
       try {
         addGrammar(value);
         message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-        navigate("/admin/grammar");
+        navigate("/manageDay/grammar");
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
