@@ -13,7 +13,7 @@ export const listLearningProgressByUser= (userId: string | undefined) => {
 }
 
 export const detailLearningProgressByUser= (dayId: string, userId: string | undefined) => {
-    const url = `/learningProgress?dayId=${dayId}&userId=${userId}`
+    const url = `/learningProgress/${dayId}/${userId}`
     return instance.get(url)
 }
 

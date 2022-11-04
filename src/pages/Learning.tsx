@@ -115,7 +115,6 @@ const Learning = () => {
     setWeekSelect(temp)
     setDaySelect(day)
 
-
     if (learningProgress.length === 0) {
       setLearningProgressSelect(null)
     } else {
@@ -144,7 +143,6 @@ const Learning = () => {
     }
     getHistoryUser()
   }, [])
-
 
   return (
     <div className='learning__page'>
@@ -398,7 +396,7 @@ const Learning = () => {
             <p className='font-semibold text-cyan-700'>
               Lịch sử các nội dung bạn đã làm:
             </p>
-            <Collapse defaultActiveKey={1} onChange={onChange}>
+            {/* <Collapse defaultActiveKey={1} onChange={onChange}>
               {userHistory?.map((item: any, index: number) => {
                 return <Panel
                   key={index + 1}
@@ -450,7 +448,7 @@ const Learning = () => {
                   </table>
                 </Panel>
               })}
-            </Collapse>
+            </Collapse> */}
           </div>
         </div>
       </div>

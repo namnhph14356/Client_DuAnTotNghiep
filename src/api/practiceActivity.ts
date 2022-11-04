@@ -18,8 +18,6 @@ export const listPracticeActivityByDay = (id: string) => {
     return instance.get(url)
 }
 
-
-
 export const addPracticeActivity = (data: PracticeActivityType) => {
     const url = `/practiceActivity`
     return instance.post(url,data)
