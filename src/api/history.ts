@@ -8,7 +8,7 @@ export const listHistory = async () => {
 
 
 export const listHistoryByUser = (userId: string | undefined) => {
-    const url = `/learningProgress?userId=${userId}`
+    const url = `/history/user/${userId}`
     return instance.get(url)
 }
 

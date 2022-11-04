@@ -272,7 +272,7 @@ const QuizTypeSelect = () => {
             // const {data} = await editLearningProgress({...learningProgress[0],listeningSpeakingScore: Math.round(score)})
             dispatch(editLearningProgressSlice({...learningProgress[0],listeningSpeakingScore: Math.round(score)}))
         }
-
+       
         const { data: data2 } = await addHistory({
             user: user._id,
             learningProgress: learningProgress[0]._id,
@@ -365,6 +365,7 @@ const QuizTypeSelect = () => {
                 // const { data } = await detailHistoryByUserActivity(id,user._id)
                 return data
             }))
+            console.log("data",data)
             console.log("test2",test2)
             setHistory(test2)
             const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)

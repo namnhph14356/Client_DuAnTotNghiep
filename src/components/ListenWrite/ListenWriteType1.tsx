@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Database } from 'heroicons-react';
 import React, { useContext, useEffect, useState } from 'react'
@@ -39,7 +40,6 @@ const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, 
       },]
     }
 
-
     answerList.map((item: any, key: number) => {
       if (item.answer.toLowerCase() === convertValue[key].answerUser.toLowerCase() && item.quiz._id === convertValue[key].idQuestion) {
         convertValue[key].isCorrect = true;
@@ -49,21 +49,31 @@ const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, 
         convertValue[key].answerCorrect = item.answer
       }
     })
+
     setConvertValues(convertValue)
 
+    let str = question.question.split(" ");
+      convertValue.map((item) => {
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === "......................") {
+              str[i] = item.answerUser
+              return
+            }          
+        }
+      })
     const findIndex = convertValue.findIndex((item) => item.isCorrect === false)
 
     if (findIndex !== -1) {
       return onHanldeSetSelect({
         quiz: question._id,
-        answerQuiz: answerList,
-        isCorrect: false
+        isCorrect: false,
+        answer: str.join(' ')
       })
     }
     onHanldeSetSelect({
       quiz: question._id,
-      answerQuiz: answerList,
-      isCorrect: true
+      isCorrect: true,
+      answer: str.join(' ')
     })
 
   }
@@ -108,7 +118,7 @@ const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, 
   }, [question])
 
   return (
-    <div className="block">   
+    <div className="block">
       <div className=" flex  items-center justify-start mb-8 font-bold gap-4">
         <div>Click để nghe: </div>
         <button className='text-xl' onClick={() => speak({ text: question.questionAfter, voice: voices[2] })}>

@@ -1,6 +1,8 @@
+import { DayType } from "./day"
+
 export type LearningProgressType = {
     _id?: string,
-    day: any,
+    day: string | DayType,
     user: string,
     listeningSpeakingScore: number,
     vocabularyScore: number,
@@ -14,7 +16,7 @@ export type LearningProgressType = {
 }
 
 export type AddLearningProgressType = {
-    day: string,
+    day: string | undefined,
     user: string | undefined,
  
 }

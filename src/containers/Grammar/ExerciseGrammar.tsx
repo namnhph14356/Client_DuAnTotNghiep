@@ -1,64 +1,49 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { async } from '@firebase/util'
 import { Modal } from 'antd'
-import Item from 'antd/lib/list/Item'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getAnswerByIdQuiz } from '../../api/answerQuiz'
 import { addHistory } from '../../api/history'
-import { getExerciseQuizByIdPracticeActivity } from '../../api/quiz'
+import { detailLearningProgressByUser } from '../../api/learningProgress'
+import { addUserQuiz } from '../../api/userQuiz'
 import { RootState } from '../../app/store'
 import { AnswerQuizType, AnswerType } from '../../types/answerQuiz'
+import { LearningProgressType } from '../../types/learningProgress'
 import { UserType } from '../../types/user'
+import { message } from 'antd';
+import { editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress'
+import { useAppDispatch } from '../../app/hooks'
+import { detailPracticeActivity } from '../../api/practiceActivity'
+import { QuizType } from '../../types/quiz'
+import { UserQuizType } from '../../types/userQuiz'
 
-// const questionQuiz = [
-//   { id: 1, name: 'Where are you going ?', nghiaTV: "Không có nội dung cho mục này", goiY: "Đọc lại đi" },
-//   { id: 2, name: 'How are you ?', nghiaTV: "Có nghĩa ", goiY: "Các đồ vật trong gia đình" },
-// ]
-// const answerQuiz = [
-//   { id: "1", name: 'aaaaaaaaaaaaaa', idQuestion: "1", isCorrect: false, wordMeaning: "chữ a" },
-//   { id: "2", name: 'bbbbbbbbbbbbbb', idQuestion: "1", isCorrect: false, wordMeaning: "chữ b" },
-//   { id: "3", name: 'cccccccccccccc', idQuestion: "1", isCorrect: false, wordMeaning: "chữ c" },
-//   { id: "4", name: 'ddddddddddddddd', idQuestion: "1", isCorrect: true, wordMeaning: "chữ d" },
-
-//   { id: "5", name: '666666666', idQuestion: "2", isCorrect: false, wordMeaning: "so 6" },
-//   { id: "6", name: '888888888888', idQuestion: "2", isCorrect: true, wordMeaning: "số 8" },
-//   { id: "7", name: 'vvvvvvvvvvvvvvv', idQuestion: "2", isCorrect: false, wordMeaning: "chữ v" },
-//   { id: "8", name: 'hhhhhhhh', idQuestion: "2", isCorrect: false, wordMeaning: "chữ h" },
-// ]
-
-type FormInputs = {
-  username: string,
-  email: string,
+type OpenSuggestions = {
+  id: string,
+  open: boolean
 }
 
 const ExerciseGrammar = () => {
-  const [convertQuizz, setConvertQuizz] = useState<any>([])
-  const [questionQuiz, setQuestionQuiz] = useState<any>([])
-  const [answerQuiz, setAnswerQuiz] = useState<AnswerType[]>([])
+  const [convertQuizz, setConvertQuizz] = useState<AnswerQuizType[]>([])
+  const [questionQuiz, setQuestionQuiz] = useState<QuizType[]>([])
+  const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType[]>([])
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
-
+  const [learningProgress, setLearningProgress] = useState<LearningProgressType>()
   const [check, setCheck] = useState(false)
   const { register, handleSubmit, formState } = useForm();
-  const [openVietnameseMeaning, setOpenVietnameseMeaning] = useState<{ id: string, open: boolean }[]>([])
-  const [openSuggest, setOpenSuggest] = useState<{ id: string, open: boolean }[]>([])
-  const [openWordMeaning, setOpenWordMeaning] = useState<{ id: string, open: boolean }[]>([])
-  const [openExplainAnswer, setOpenExplainAnswer] = useState<{ id: string, open: boolean }[]>([])
+  const [openVietnameseMeaning, setOpenVietnameseMeaning] = useState<OpenSuggestions[]>([])
+  const [openSuggest, setOpenSuggest] = useState<OpenSuggestions[]>([])
+  const [openWordMeaning, setOpenWordMeaning] = useState<OpenSuggestions[]>([])
+  const [openExplainAnswer, setOpenExplainAnswer] = useState<OpenSuggestions[]>([])
   const [point, setPoint] = useState(0)
-
+  const dispatch = useAppDispatch()
   const { dayId, id } = useParams();
 
-  const onSubmit = async (item: any) => {
-    let num: number = 0;
-    for (const key in item.ans) {
-      if (item.ans[key] != "") {
-        num++
-      }
-    }
+  const onSubmit = async () => {
+
     let countAnswer: number = questionQuiz.length;
-    let countAnswerUser = num + convertQuizz.length
+    let countAnswerUser = convertQuizz.length
 
     if (countAnswerUser < countAnswer) {
       return Modal.warning({
@@ -73,59 +58,84 @@ const ExerciseGrammar = () => {
       })
     }
 
-    // lưu thông tin làm bài vào bảng userQuizz
-    const arr: any = []
-    arr.push()
-
     const { totalCorrect, score } = calculatePoints(convertQuizz)
     setCheck(true)
-    // console.log("convertQuizz", convertQuizz);
-    // console.log(auth, id);
-    // console.log("dayId", dayId, totalCorrect);
+
     const { data: history } = await addHistory({
-      user: auth,
-      learningProgress: '6346d455034348adfcfce594',
+      user: auth._id,
+      learningProgress: learningProgress?._id,
       practiceActivity: id,
-      score: point,
+      score: score,
       totalScore: 0,
       totalCorrect: totalCorrect,
       result: score >= questionQuiz.length ? 1 : 0,
-      type: 5
+      type: "grammar"
     })
 
-    console.log("history", history);
-    
+    for (let index = 0; index < convertQuizz.length; index++) {
+      const flag: UserQuizType = {
+        quiz: convertQuizz[index].quiz as string,
+        answer: convertQuizz[index].answer as string,
+        history: history._id,
+        time: "0",
+        point: 0
+      }
+      const { data } = await addUserQuiz(flag)
+    }
+
+    const { payload } = await dispatch(editLearningProgressSlice({
+      _id: learningProgress?._id,
+      listeningSpeakingScore: learningProgress?.listeningSpeakingScore as number,
+      vocabularyScore: learningProgress?.vocabularyScore as number,
+      structureSentencesScore: learningProgress?.structureSentencesScore as number,
+      conversationScore: learningProgress?.conversationScore as number,
+      grammarScore: score,
+      oralScore: learningProgress?.oralScore as number,
+      isPass: false,
+      day: dayId as string,
+      user: auth._id as string
+    }))
+    if (payload) {
+      message.success("Chúc mừng bạn đã hoàn thành bài thi !")
+    }
 
   }
 
-  const calculatePoints = (array: any) => {
+  const calculatePoints = (array: AnswerQuizType[]) => {
     const soDiem1cau = 10 / questionQuiz.length
-    let index = array.filter((val) => val.isCorrect === 1);
+    let index = array.filter((val) => val.isCorrect === true);
     const point = soDiem1cau * index.length
     setPoint(point)
     return { totalCorrect: index.length, score: point }
   }
 
-  const changeValueQuiz = (e: any, answer: any) => {
-    const exist = convertQuizz.find((item) => item.quiz == answer.quiz)
-    if (exist) {
-      return
+  const changeValueQuiz = (e: any, answer: AnswerQuizType) => {
+    if (convertQuizz.length > 0) {
+      const exist = convertQuizz.find((item) => String(item.quiz) == answer.quiz)
+      if (exist) {
+        convertQuizz.map((element) => {
+          if (element.quiz == answer.quiz && element.answer !== answer.answer) {
+            setConvertQuizz(convertQuizz.map((a) => a.quiz === answer.quiz ? answer : a))
+          }
+        })
+        return
+      }
+      setConvertQuizz([...convertQuizz, answer])
+    } else {
+      setConvertQuizz([...convertQuizz, answer])
     }
-    console.log(answer);
-    console.log(convertQuizz);
-    setConvertQuizz([...convertQuizz, answer])
 
   }
 
   const checkOpen = (open: boolean, nameTask: string, statusId: string) => {
     if (nameTask === "openVietnameseMeaning") {
-      setOpenVietnameseMeaning(openVietnameseMeaning.map((item: any) => String(item.id) === statusId ? { open: open, id: item.id } : item))
+      setOpenVietnameseMeaning(openVietnameseMeaning.map((item: OpenSuggestions) => String(item.id) === statusId ? { open: open, id: item.id } : item))
     }
     if (nameTask === "openSuggest") {
-      setOpenSuggest(openSuggest.map((item: any) => String(item.id) === statusId ? { id: item.id, open: open } : item))
+      setOpenSuggest(openSuggest.map((item: OpenSuggestions) => String(item.id) === statusId ? { id: item.id, open: open } : item))
     }
     if (nameTask === "openWordMeaning") {
-      setOpenWordMeaning(openWordMeaning.map((item: any) => String(item.id) === statusId ? { open: open, id: item.id } : item))
+      setOpenWordMeaning(openWordMeaning.map((item: OpenSuggestions) => String(item.id) === statusId ? { open: open, id: item.id } : item))
     }
     if (nameTask === "openExplainAnswer") {
       if (!check) {
@@ -143,14 +153,14 @@ const ExerciseGrammar = () => {
           }
         })
       }
-      setOpenExplainAnswer(openExplainAnswer.map((item: any) => String(item.id) === statusId ? { open: open, id: item.id } : item))
+      setOpenExplainAnswer(openExplainAnswer.map((item: OpenSuggestions) => String(item.id) === statusId ? { open: open, id: item.id } : item))
     }
   }
 
-  const arrayVietNamMeaning = (question: any) => {
-    let arr: any = [];
-    question.forEach((e: any) => {
-      arr.push({ id: e._id, open: false })
+  const arrayVietNamMeaning = (question: QuizType[]) => {
+    let arr: OpenSuggestions[] = [];
+    question.forEach((e: QuizType) => {
+      arr.push({ id: String(e._id), open: false })
     })
     setOpenVietnameseMeaning(arr)
     setOpenSuggest(arr)
@@ -168,21 +178,19 @@ const ExerciseGrammar = () => {
         input.forEach((e: any) => {
           e.checked = false
         });
-        // dispatch(logout(auth))
-        // message.success("Đăng xuất thành công")
       }
     })
   }
 
   const getListQuestion = async () => {
     if (id) {
-      const { data } = await getExerciseQuizByIdPracticeActivity(id)
-      arrayVietNamMeaning(data)
-      setQuestionQuiz(data)
+      const { data } = await detailPracticeActivity(String(id), String(auth._id))
+      arrayVietNamMeaning(data.quizs)
+      setQuestionQuiz(data.quizs)
 
-      let arr: any = []
-      data.map(async (item: any, index) => {
-        const { data: answer } = await getAnswerByIdQuiz(item._id)
+      let arr: AnswerQuizType[] = []
+      data.quizs.map(async (item: QuizType, index) => {
+        const { data: answer } = await getAnswerByIdQuiz(String(item._id))
         answer.map((e) => {
           const findIndex = answerQuiz.findIndex((elem) => elem._id === e._id)
           if (findIndex === -1) {
@@ -193,9 +201,14 @@ const ExerciseGrammar = () => {
       })
     }
   }
+  const getLearningProgressByUser = async () => {
+    const { data } = await detailLearningProgressByUser(String(dayId), auth._id)
+    setLearningProgress(data);
+  }
 
   useEffect(() => {
     getListQuestion();
+    getLearningProgressByUser();
   }, [id, dayId])
 
   return (
@@ -244,7 +257,7 @@ const ExerciseGrammar = () => {
                           <div className='text-xs'>{item.meaning}</div>
                         </div>
                         <div className='absolute top-2 right-4 '>
-                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenVietnameseMeaning(openVietnameseMeaning?.map((e: any) => e.id === item._id ? { open: false, id: e.id } : e))}></i>
+                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenVietnameseMeaning(openVietnameseMeaning?.map((e: OpenSuggestions) => e.id === item._id ? { open: false, id: e.id } : e))}></i>
                         </div>
                       </div>
                     }
@@ -258,7 +271,7 @@ const ExerciseGrammar = () => {
                           <div className='text-xs'>{item.suggestions}</div>
                         </div>
                         <div className='absolute top-2 right-4 '>
-                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenSuggest(openSuggest.map((e: any) => e.id === item._id ? { id: e.id, open: false } : e))}></i>
+                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenSuggest(openSuggest.map((e: OpenSuggestions) => e.id === item._id ? { id: e.id, open: false } : e))}></i>
                         </div>
                       </div>
                     }
@@ -269,14 +282,14 @@ const ExerciseGrammar = () => {
                     {
                       answerQuiz.map((e, index) => {
 
-                        let answer: any = []
+                        let answer: AnswerQuizType[] = []
                         if (check == true) {
                           const find = convertQuizz.filter((ans) => ans._id == e._id)
                           answer.push(...find)
                         }
                         if (e.quiz == item._id) {
                           return (
-                            <div className='even:bg-slate-100 '>
+                            <div key={e._id} className='even:bg-slate-100 '>
                               <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer  font-sans   `} >
                                 <div className='grid grid-cols-3 gap-4 divide-x-8 divide-gray-400'>
                                   <div className='flex gap-2  py-2 px-5'>
