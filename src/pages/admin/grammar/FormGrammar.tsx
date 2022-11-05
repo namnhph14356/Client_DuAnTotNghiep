@@ -49,9 +49,9 @@ const FormGrammar = (props: Props) => {
   const { id } = useParams();
   var titlePage: string = "";
   if (id) {
-    titlePage = "Update Grammar";
+    titlePage = "Cập Nhật Ngữ Pháp Bài Học";
   } else {
-    titlePage = "Add New Grammar";
+    titlePage = "Thêm Ngữ Pháp Bài Học";
   }
   const onFinish = async (value: GammarType) => {
     const key = "updatable";
@@ -119,7 +119,7 @@ const FormGrammar = (props: Props) => {
           )}
 
           <Form.Item
-            label="Name"
+            label="Tiêu đề"
             name="name"
             tooltip="Tên đề mục"
             rules={[{ required: true, message: "Không để Trống!" }]}
@@ -128,7 +128,7 @@ const FormGrammar = (props: Props) => {
           </Form.Item>
 
           <Form.Item
-            label="Description"
+            label="Mô tả"
             name="description"
             tooltip="Chi tiết"
             rules={[{ required: true, message: "Không để Trống!" }]}
@@ -136,7 +136,7 @@ const FormGrammar = (props: Props) => {
             <JoditEditor value={grammar} config={config} />
           </Form.Item>
 
-          <Form.Item label="Summary" name="summary" tooltip="Tóm tắt">
+          <Form.Item label="Tóm tắt" name="summary" tooltip="Tóm tắt">
             <Input />
           </Form.Item>
 
@@ -156,7 +156,7 @@ const FormGrammar = (props: Props) => {
                 onReset();
               }}
             >
-              Reset
+              Xóa Hết
             </Button>
           </Form.Item>
         </Form>
