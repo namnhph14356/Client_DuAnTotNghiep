@@ -95,6 +95,8 @@ import ListSentencesLesson from "./pages/admin/Sentences/Lesson/ListSentencesLes
 import ListSentencesExercise from "./pages/admin/Sentences/Exercise/ListSentencesExercise";
 import DayLayout from "./pages/layouts/DayLayout";
 import ListDay from "./pages/admin/Day/ListDay";
+import ListExercise from "./pages/admin/grammar/ListExercise";
+import FormExercise from "./pages/admin/grammar/FormExercise";
 
 function App() {
   return (
@@ -297,6 +299,8 @@ function App() {
             <Route index element={<ListGrammar />} />
             <Route path="add" element={<FormGrammar />} />
             <Route path=":id/edit" element={<FormGrammar />} />
+            <Route path="listexercise" element={<ListExercise />} />
+            <Route path="addexercise" element={<FormExercise />} />
           </Route>
         </Route>
 

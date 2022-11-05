@@ -8,6 +8,7 @@ const LessonGrammar = () => {
   useEffect(() => {
     const getData = async () => {
       const { data } = await detailDayIdGrammmar(dayId);
+      console.log('data', data);
       setGrammar(data);
     };
     getData();

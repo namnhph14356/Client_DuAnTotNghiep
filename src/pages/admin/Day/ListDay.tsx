@@ -18,13 +18,15 @@ import { getListPracticeActivitylice } from '../../../features/Slide/practiceAct
 interface DataType {
   key: React.Key;
   _id?: string,
-  // children?: any
+  title:string
 }
 
 interface ExpandedDataType {
   key: React.Key;
   _id?: string,
-
+  day?:DayType,
+  title: string,
+  type: string
 }
 
 
@@ -76,13 +78,12 @@ console.log("activity", activity);
     dataIndex: DataIndex,
   ) => {
     confirm();
-    // setSearchText(selectedKeys[0]);
-    // setSearchedColumn(dataIndex);
+
   };
 
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
-    // setSearchText('');
+
   };
 
   const getColumnSearchProps = (dataIndex: any): ColumnType<DataType> => ({
@@ -118,8 +119,7 @@ console.log("activity", activity);
             size="small"
             onClick={() => {
               confirm({ closeDropdown: false });
-            //   setSearchText((selectedKeys as string[])[0]);
-            //   setSearchedColumn(dataIndex);
+          
             }}
           >
             Lọc
@@ -169,8 +169,7 @@ console.log("activity", activity);
             size="small"
             onClick={() => {
               confirm({ closeDropdown: false });
-            //   setSearchText((selectedKeys as string[])[0]);
-            //   setSearchedColumn(dataIndex);
+          
             }}
           >
             Lọc
@@ -242,7 +241,6 @@ console.log("activity", activity);
   const handleOk = (id) => {
     const key = 'updatable';
     setConfirmLoading(true);
-    console.log(id);
     message.loading({ content: 'Loading...', key });
 
     setTimeout(() => {
@@ -283,6 +281,12 @@ console.log("activity", activity);
 
     },
     {
+      title: 'Tiêu đề',
+      dataIndex: 'title',
+      key: "title",
+
+    },
+    {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
@@ -298,12 +302,14 @@ console.log("activity", activity);
   ];
 
   const expandedRowRender = (row: any) => {
-
+    
+    
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
       { title: 'STT', dataIndex: 'stt', key: 'stt' },
       { title: 'ID', dataIndex: '_id', key: '_id' },
-
+      { title: 'Title', dataIndex: 'title', key: 'title' },
+      { title: 'Type', dataIndex: 'type', key: 'type' },
       {
         title: "Hành Động", key: "action", render: (text, record) => (
           <Space align="center" size="middle">
@@ -332,17 +338,23 @@ console.log("activity", activity);
         ),
       }
     ];
-
-
-    let data: any = activity.filter((item: PracticeActivityType) => item.day === row._id).map((item2: PracticeActivityType, index) => {
+    console.log("activityas", activity);
+    
+    let dayId = "6346cf1741f714cfb435594b";
+    let data:any = activity.filter((item: PracticeActivityType) => dayId === row._id).map((item2: PracticeActivityType, index) => {
+      console.log("item",item2);
+      
       return {
         key: item2._id,
         stt: index + 1,
         _id: item2._id,
+        title: item2.title,
+        type: item2.type
       }
     })
 
-
+    console.log("dataActivi",data);
+    
     return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
   }
   //------------------TABLE-COLUMM-------------------
