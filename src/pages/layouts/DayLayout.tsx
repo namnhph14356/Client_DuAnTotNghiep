@@ -96,12 +96,12 @@ const DayLayout = () => {
         
         <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ">
             <SubMenu key="sub5_1" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Danh sách bài tập</NavLink>
+              <Menu.Item key="/listenspeak">
+                <NavLink to="/manageDay/listenspeak">Danh sách</NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay">
+              {/* <Menu.Item key="/manageDay">
                 <NavLink to="/manageDay">Thêm bài tập</NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
             </SubMenu>
           </SubMenu>
 

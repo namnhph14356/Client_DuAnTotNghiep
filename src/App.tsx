@@ -95,6 +95,9 @@ import ListSentencesLesson from "./pages/admin/Sentences/Lesson/ListSentencesLes
 import ListSentencesExercise from "./pages/admin/Sentences/Exercise/ListSentencesExercise";
 import DayLayout from "./pages/layouts/DayLayout";
 import ListDay from "./pages/admin/Day/ListDay";
+import ListListenSpeak from "./pages/admin/listenspeak/ListListenSpeak";
+import FormQuestionListenSpeak from "./pages/admin/listenspeak/Question/FormQuestion";
+import FormAnswerListenSpeak from "./pages/admin/listenspeak/Answer/FormAnswer";
 
 function App() {
   return (
@@ -279,14 +282,27 @@ function App() {
             <Route path=":id/edit" element={<FormVocabulary />} />
           </Route>
 
-          <Route  path="day">
-              <Route index element={<ListDay />} />
+          <Route path="day">
+            <Route index element={<ListDay />} />
           </Route>
         </Route>
 
         {/* ---Day Manage */}
         <Route path="manageDay" element={<DayLayout />}>
           <Route index element={<Navigate to="vocabulary" />} />
+
+          <Route path='listenspeak' >
+            <Route index element={<ListListenSpeak />} />
+            <Route path="question">
+              <Route path="add" element={<FormQuestionListenSpeak />} />
+              <Route path=":id/edit" element={<FormQuestionListenSpeak />} />
+            </Route>
+            <Route path="answer">
+              <Route path=":id/add" element={<FormAnswerListenSpeak />} />
+              <Route path=":id/edit" element={<FormAnswerListenSpeak />} />
+            </Route>
+          </Route>
+
           <Route path="vocabulary">
             <Route index element={<ListVocabulary />} />
             <Route path="add" element={<FormVocabulary />} />
