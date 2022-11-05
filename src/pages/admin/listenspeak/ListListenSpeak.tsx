@@ -49,7 +49,6 @@ const ListListenSpeak = (props: Props) => {
     const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
     const quizs = useAppSelector(item => item.quiz.value)
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
-    const categories = useAppSelector(item => item.category.value)
     const dispatch = useAppDispatch();
     console.log('quizs', quizs);
     // console.log('answerQuizs', answerQuizs);
@@ -64,8 +63,8 @@ const ListListenSpeak = (props: Props) => {
 
 
     //------------------STATE--------------------
-    const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio' || item.type === 'selectImage' ||  item.type === 'selectCompound')
-    
+    const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
+
     const changeTable = (e) => {
         console.log(e);
         const news = tableWithType.filter((item: any) => item.type === e)
@@ -81,9 +80,6 @@ const ListListenSpeak = (props: Props) => {
         return {
             key: index + 1,
             _id: item._id,
-            category: categories.filter((cate: CategoryType) => { return cate._id == item.category }).reduce((result, item: any) => {
-                return `${result}${item.title}`
-            }, ""),
             question: item.question,
             image: item.image,
             timeLimit: item.timeLimit,
@@ -380,13 +376,11 @@ const ListListenSpeak = (props: Props) => {
                 ),
             },
             {
-                title: <Button type="ghost" >
-                    <Link to={`/admin/answerQuiz/add`}>Thêm AnswerQuiz</Link>
-                </Button>,
+                title: 'Hành động',
                 key: "action", render: (text, record) => (
                     <Space align="center" size="middle">
                         <Button style={{ background: "#198754" }} >
-                            <Link to={`/admin/answerQuiz/${record._id}/edit`} >
+                            <Link to={`/manageDay/listenspeak/answer/${record._id}/edit`} >
                                 <span className="text-white">Sửa</span>
                             </Link>
 
@@ -408,7 +402,21 @@ const ListListenSpeak = (props: Props) => {
 
                     </Space>
                 ),
-            }
+
+            },
+            {
+                title: 'Thêm đáp án',
+
+                key: 'quiz',
+                render: (record) => (
+                    <Button style={{ background: "blue" }} >
+                        <Link to={`/manageDay/listenspeak/answer/${record.quiz}/add`} >
+                            <span className="text-white">Thêm</span>
+                        </Link>
+
+                    </Button>
+                ),
+            },
         ];
 
         let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
@@ -453,7 +461,7 @@ const ListListenSpeak = (props: Props) => {
                     Select Compound
                 </Button>
             </div>
-            
+
             {selectedRowKeys.length > 1
                 ? <Popconfirm
                     title="Bạn Có Muốn Xóa Hết?"

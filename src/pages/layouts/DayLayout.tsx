@@ -135,7 +135,7 @@ const DayLayout = () => {
           >
             <SubMenu key="sub7_1" icon={<ReadOutlined />} title="Lesson">
               <Menu.Item key="/manageDay/sentences">
-                <NavLink to="/manageDay/sentences/listLesson">
+                <NavLink to="/manageDay/sentences/listExercise">
                   Danh sách bài học
                 </NavLink>
               </Menu.Item>

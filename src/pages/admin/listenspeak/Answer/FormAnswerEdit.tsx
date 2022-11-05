@@ -15,7 +15,7 @@ import AdminPageHeader from '../../../../components/AdminPageHeader';
 
 type Props = {}
 
-const FormAnswerListenSpeak = (props: Props) => {
+const FormAnswerListenSpeakEdit = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
@@ -103,7 +103,7 @@ const FormAnswerListenSpeak = (props: Props) => {
           </Form.Item>
 
 
-          <Form.Item
+          {/* <Form.Item
             label="Câu Hỏi"
             name="quiz"
             tooltip="Chọn Câu Hỏi"
@@ -136,7 +136,7 @@ const FormAnswerListenSpeak = (props: Props) => {
             }
 
 
-          </Form.Item>
+          </Form.Item> */}
 
 
           <Form.Item
@@ -188,4 +188,4 @@ const FormAnswerListenSpeak = (props: Props) => {
   )
 }
 
-export default FormAnswerListenSpeak
+export default FormAnswerListenSpeakEdit
