@@ -98,7 +98,7 @@ const ListGrammar = (props: Props) => {
 
   const onDelete = (_id: any) => {
     Modal.confirm({
-      title: "You want to delete this Contact ?",
+      title: "Bạn có chắc chắn xóa không?",
       onOk: async () => {
         await deleteGrammar(_id);
         setGrammar(grammar.filter((item: GammarType) => item._id !== _id));
@@ -182,35 +182,35 @@ const ListGrammar = (props: Props) => {
       sortDirections: ["descend"],
     },
     {
-      title: "Name",
+      title: "Tiêu đề",
       dataIndex: "name",
       key: "Name",
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       key: "description",
       className: "description_grammar",
     },
     {
-      title: "Summary",
+      title: "Tóm tắt",
       dataIndex: "summary",
       key: "summary",
     },
     {
-      title: "Created At",
+      title: "Thời gian tạo",
       dataIndex: "createdAt",
       key: "createdAt",
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Updated At",
+      title: "Thời gian chỉnh sửa",
       dataIndex: "updatedAt",
       key: "updatedAt",
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Actions",
+      title: "Hành động",
       key: "action",
       render: (text, record) => (
         <Space align="center" size="middle">
@@ -241,11 +241,11 @@ const ListGrammar = (props: Props) => {
   ];
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý grammar" />
+      <AdminPageHeader breadcrumb="Quản lý Ngữ Pháp Bài Học" />
       <Button type="primary" className="my-6">
         <Link to={`/manageDay/grammar/add`}>Thêm Ngữ Pháp</Link>
       </Button>
-      <h1>Grammar</h1>
+      <h1>Ngữ pháp</h1>
       <Table columns={columns} dataSource={dataSources}></Table>
     </div>
   );
