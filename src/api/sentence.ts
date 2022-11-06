@@ -1,5 +1,9 @@
 import instance from "./instance";
 
+export const listSentencesByIdDay = (dayId:string) => {
+    const url = `/sentences/day/${dayId}`;
+    return instance.get(url);
+}
 
 export const listSentencesByIdActivity = (id:string) => {
     const url = `/sentences/activity/${id}`;
