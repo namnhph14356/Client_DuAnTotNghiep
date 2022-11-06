@@ -4,6 +4,8 @@ export type QuizType = {
   question: string;
   questionAfter?: string;
   image?: string;
+  meaning?:string,
+  suggestions?:string,
   timeLimit?: string;
   type?: string;
   practiceActivity?: string;

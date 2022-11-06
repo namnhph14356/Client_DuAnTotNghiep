@@ -1,9 +1,17 @@
-import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space } from 'antd'
-import SubMenu from 'antd/lib/menu/SubMenu'
-import React, { useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { UserOutlined, CommentOutlined, DollarOutlined, LaptopOutlined, FolderFilled, BellOutlined, ReadOutlined } from '@ant-design/icons';
-import '../../css/admin.css'
+import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space } from "antd";
+import SubMenu from "antd/lib/menu/SubMenu";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  UserOutlined,
+  CommentOutlined,
+  DollarOutlined,
+  LaptopOutlined,
+  FolderFilled,
+  BellOutlined,
+  ReadOutlined,
+} from "@ant-design/icons";
+import "../../css/admin.css";
 
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -92,8 +100,12 @@ const AdminLayout = () => {
           onClick={handleClick}
           selectedKeys={[current]}
         >
-          <SubMenu key="sub1" icon={<FolderFilled />} title="Category">
-            <Menu.Item key="/admin/category"><NavLink to='/admin/category'>List Category</NavLink></Menu.Item>
+          <SubMenu key="sub11" icon={<FolderFilled />} title="Days">
+            <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>
+          </SubMenu>
+
+          <SubMenu key="sub1" icon={<FolderFilled />} title="Categories">
+            <Menu.Item key="/admin/category"><NavLink to='/admin/category'>List Categories</NavLink></Menu.Item>
             <Menu.Item key="/admin/category/add"><NavLink to='/admin/category/add'>Add Category</NavLink></Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<ReadOutlined />} title="Quiz">
@@ -109,42 +121,12 @@ const AdminLayout = () => {
             <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
           </SubMenu>
 
-          <SubMenu key="sub5" icon={<ReadOutlined />} title="ListenWrite">
-            <Menu.Item key="/admin/listenWrite"><NavLink to='/admin/listenWrite'>List Listen Write</NavLink></Menu.Item>
-            <Menu.Item key="/admin/listenWrite/add"><NavLink to='/admin/listenWrite/add'>Add Listen Write</NavLink></Menu.Item>
-          </SubMenu>
-
-          <SubMenu key="sub9" icon={<ReadOutlined />} title="Centences">
-            <SubMenu key="sub9_1" icon={<ReadOutlined />} title="Lesson">
-              <Menu.Item key="/admin/sentences"><NavLink to='/admin/sentences/listLesson'>Danh sách bài học</NavLink></Menu.Item>
-              <Menu.Item key="/admin/sentences/addLesson"><NavLink to='/admin/sentences/addLesson'>Thêm bài học</NavLink></Menu.Item>
-            </SubMenu>
-            <SubMenu key="sub9_2" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/admin/sentences"><NavLink to='/admin/sentences/listExercise'>Danh sách bài tập</NavLink></Menu.Item>
-              <Menu.Item key="/admin/sentences/addExercise"><NavLink to='/admin/sentences/addExercise'>Thêm bài tập</NavLink></Menu.Item>
-            </SubMenu>
-          </SubMenu>
-
           <SubMenu key="sub6" icon={<FolderFilled />} title="Contact">
             <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>List Contact</NavLink></Menu.Item>
           </SubMenu>
 
-          <SubMenu key="sub7" icon={<FolderFilled />} title="Vocabulary">
-            <Menu.Item key="/admin/vocabulary"><NavLink to='/admin/vocabulary'>List Vocabulary</NavLink></Menu.Item>
-            <Menu.Item key="/admin/vocabulary/add"><NavLink to='/admin/vocabulary/add'>Add Vocabulary</NavLink></Menu.Item>
-
-          </SubMenu>
-
-          <SubMenu key="sub8" icon={<FolderFilled />} title="Grammar">
-            <Menu.Item key="/admin/grammar"><NavLink to='/admin/grammar'>List Grammar</NavLink></Menu.Item>
-            <Menu.Item key="/admin/grammar/add"><NavLink to='/admin/grammar/add'>Add Grammar</NavLink></Menu.Item>
-          </SubMenu>
-
-
         </Menu>
       </Sider>
-
-
 
       <Layout className="site-layout" >
         <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Database } from 'heroicons-react';
 import React, { useContext, useEffect, useState } from 'react'
@@ -12,10 +13,11 @@ type QuizType5Props = {
   answerList: any,
   check: boolean,
   select: any,
-  onHanldeSetSelect: (select: any) => void
+  questionIndex?: boolean
+  onHanldeSetSelect: (select: any, check?: boolean) => void
 }
 
-const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSelect }: QuizType5Props) => {
+const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, onHanldeSetSelect }: QuizType5Props) => {
 
   const [show, setShow] = useState<boolean>(false)
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
@@ -38,7 +40,6 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
       },]
     }
 
-
     answerList.map((item: any, key: number) => {
       if (item.answer.toLowerCase() === convertValue[key].answerUser.toLowerCase() && item.quiz._id === convertValue[key].idQuestion) {
         convertValue[key].isCorrect = true;
@@ -48,8 +49,33 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
         convertValue[key].answerCorrect = item.answer
       }
     })
+
     setConvertValues(convertValue)
-    onHanldeSetSelect(convertValues)
+
+    let str = question.question.split(" ");
+      convertValue.map((item) => {
+        for (let i = 0; i < str.length; i++) {
+            if (str[i] === "......................") {
+              str[i] = item.answerUser
+              return
+            }          
+        }
+      })
+    const findIndex = convertValue.findIndex((item) => item.isCorrect === false)
+
+    if (findIndex !== -1) {
+      return onHanldeSetSelect({
+        quiz: question._id,
+        isCorrect: false,
+        answer: str.join(' ')
+      })
+    }
+    onHanldeSetSelect({
+      quiz: question._id,
+      isCorrect: true,
+      answer: str.join(' ')
+    })
+
   }
 
   const checkAnswerIscorrect = (id: any, key: any) => {
@@ -70,16 +96,17 @@ const ListenWriteType1 = ({ question, answerList, check, select, onHanldeSetSele
     const quesToArr = e.question.split("......................")
     var tempQues: any = [];
     quesToArr.forEach((item2: any, index2: number) => {
+
       if (index2 < quesToArr.length - 1) {
         tempQues.push(<span key={index2 + 1}>{item2}</span>,
-          <input key={index2 + 1}  {...register(`text-${index2 + 1}-${e._id}`)} className={` ${checkAnswerIscorrect(e._id, index2 + 1)} border-b border-dashed font-bold text-center border-black outline-none focus:border-[#130ff8]`} />)
+          <input key={index2 + 1}  {...register(`text-${index2 + 1}-${e._id}`)} disabled={questionIndex} className={` ${checkAnswerIscorrect(e._id, index2 + 1)} border-b border-dashed font-bold text-center border-black outline-none focus:border-[#130ff8]`} />)
       } else {
         tempQues.push(<span key={index2 + 1}>{item2}</span>)
       }
     })
 
     return (
-      <div key={e._id} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 even:bg-slate-100"  >
+      <div key={e._id} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full py-4 my-4 even:bg-slate-100"  >
         <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? e.text : tempQues}</span>
       </div>
     )

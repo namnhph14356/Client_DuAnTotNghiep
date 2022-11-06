@@ -56,7 +56,7 @@ const DetailLearning = () => {
         return item2.url
       }
     })
-    return flag[0].url
+    return flag[0]?.url
   }
 
   const flag = onChangeURL(2)

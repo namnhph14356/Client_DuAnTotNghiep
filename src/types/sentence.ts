@@ -8,3 +8,12 @@ export type SentenceType = {
   structuralAnalysis: string;
   grammarAnalysis: string;
 };
+
+export type SentenceResult = {
+  quiz: string,
+  answerQuiz?: string,
+  isCorrect: boolean,
+  point: number,
+  time: string,
+  answer?: string
+};
