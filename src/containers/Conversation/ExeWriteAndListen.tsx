@@ -19,6 +19,7 @@ import { getListQuestionListenWriteById } from '../../api/questionListenWrite';
 import { listAnswerListenWriteById } from '../../api/answerListenWrite';
 import { ListenWriteType, QuestionAnswerListenWriteType } from '../../types/listenWrite';
 import { Collapse, Modal } from 'antd';
+import Loading from '../../components/Loading';
 
 const value = [
   { id: 1, name: 'Annette Black' },
@@ -93,7 +94,7 @@ const ExeWriteAndListen = () => {
     }
 
     console.log("item232333", item);
-    
+
     // check answer listenWrite
     let convertValues2: any = [];
     for (let key in item.ans) {
@@ -110,8 +111,6 @@ const ExeWriteAndListen = () => {
       //   push vào mảng convertValues với id và answer
     }
 
-    console.log("convertValues2convertValues2convertValues2v",convertValues2);
-    
     let numAnswer = 0;
     await listQuestionAnswer.forEach((element, index) => {
       if (element.answer) {
@@ -178,109 +177,114 @@ const ExeWriteAndListen = () => {
 
   return (
     <div className='conversation__page'>
-      <div className="main__conversation">
-        <form className="content__conversation" onSubmit={handleSubmit(onSubmit2)} >
-          <div className='mx-4 '>
-            <audio
-              className='w-full rounded-none'
-              controls
-              src={listenWrite?.audio}>
-              Your browser does not support the
-              <code>audio</code> element.
-            </audio>
-          </div>
-
-          <div className='mx-4 my-8 '>
-            <div className=' text-lg border-b'>
-              <div><i className="fa-solid fa-pen"></i> Nghe và trả lời câu hỏi.</div>
+      {listQuestionAnswer.length > 0 ?
+        <div className="main__conversation">
+          <form className="content__conversation" onSubmit={handleSubmit(onSubmit2)} >
+            <div className='mx-4 '>
+              <audio
+                className='w-full rounded-none'
+                controls
+                src={listenWrite?.audio}>
+                Your browser does not support the
+                <code>audio</code> element.
+              </audio>
             </div>
-            <div>
-              {questionQuiz.map((item, index) => {
-                return (
-                  <div className='py-4' key={item.id}>
-                    <div className='text-base flex font-medium space-x-4 mx-auto'>
-                      <div >{index + 1}. {item.name}</div>
-                      <span >{convertQuizz.length > 0 && check == true ?
-                        convertQuizz[index].isCorrect == true ?
-                          <i className="fa-solid fa-check text-green-500 text-xl rounded font-bold"></i>
-                          :
-                          <i className="fa-solid fa-xmark text-red-500  text-xl my-auto "></i>
-                        : ""
-                      }
-                      </span>
-                    </div>
-                    <ul className='mb-0 '>
-                      {
-                        answerQuiz.map((e, index) => {
-                          const answer: any = []
-                          if (check == true) {
-                            const find = convertQuizz.filter((ans) => ans.id == e.id)
-                            answer.push(...find)
-                          }
-                          if (Number(e.idQuestion) == item.id) {
-                            return (
-                              // even:bg-slate-100
-                              <div className='even:bg-slate-100 '>
-                                <li key={e.id} className={` ${answer.length > 0 && answer[0].idQuestion == e.idQuestion ? answer[0].id == e.id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer py-2 px-4  font-sans flex gap-2  `} >
-                                  <input type="radio" id={e.name} name={String(item.id)} onChange={(em) => changeValueQuiz(em, e)} value={e.name} />
-                                  <label className='align-middle mt-[-2px]' htmlFor={e.name}>{e.name}</label>
-                                </li>
-                              </div>
-                            )
-                          }
-                        })
-                      }
-                    </ul>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
 
-          <div className='mx-4 py-8 '>
-            <div className='mb-8 text-lg border-b'>
-              <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
-            </div>
-            <div  >
-              <div className="content">
-                {
-                  listQuestionAnswer?.map((item: any, index: number) => {
-                    console.log("dadadaddd", item);
-                    
-                    const quesToArr = item.question.text.split("___")
-                    // tách chuỗi thành 1 mảng
-                    var tempQues: any = [];
-                    quesToArr.forEach((item2: any, index2: number) => {
-                      if (index2 < quesToArr.length - 1) {
-                        tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
-                          <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item.question._id, index2 + 1)}`} {...register(`ans.inputAnswer-${item.question._id}-${index2 + 1}`)} disabled />
-                          : <input key={index2 + 1} className="inp__text" {...register(`ans.inputAnswer-${item.question._id}-${index2 + 1}`)} />)
-                      } else {
-                        tempQues.push(<span key={index2 + 1}>{item2}</span>)
-                      }
-                      // lọc mảng thêm phần tử vào mảng mới (tempQues)
-                    })
-
-                    return (
-                      <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 even:bg-slate-100"  >
-                        <div className='col-span-2 flex justify-between gap-4 py-2 '>
-                          <strong className='my-auto'>{item.question.name}: </strong>
-                          <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: item.question.name == "Cap" ? voices[0] : voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
-                        </div>
-                        <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
+            <div className='mx-4 my-8 '>
+              <div className=' text-lg border-b'>
+                <div><i className="fa-solid fa-pen"></i> Nghe và trả lời câu hỏi.</div>
+              </div>
+              <div>
+                {questionQuiz.map((item, index) => {
+                  return (
+                    <div className='py-4' key={item.id}>
+                      <div className='text-base flex font-medium space-x-4 mx-auto'>
+                        <div >{index + 1}. {item.name}</div>
+                        <span >{convertQuizz.length > 0 && check == true ?
+                          convertQuizz[index].isCorrect == true ?
+                            <i className="fa-solid fa-check text-green-500 text-xl rounded font-bold"></i>
+                            :
+                            <i className="fa-solid fa-xmark text-red-500  text-xl my-auto "></i>
+                          : ""
+                        }
+                        </span>
                       </div>
-                    )
-                  })
-                }
+                      <ul className='mb-0 '>
+                        {
+                          answerQuiz.map((e, index) => {
+                            const answer: any = []
+                            if (check == true) {
+                              const find = convertQuizz.filter((ans) => ans.id == e.id)
+                              answer.push(...find)
+                            }
+                            if (Number(e.idQuestion) == item.id) {
+                              return (
+                                // even:bg-slate-100
+                                <div className='even:bg-slate-100 '>
+                                  <li key={e.id} className={` ${answer.length > 0 && answer[0].idQuestion == e.idQuestion ? answer[0].id == e.id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer py-2 px-4  font-sans flex gap-2  `} >
+                                    <input type="radio" id={e.name} name={String(item.id)} onChange={(em) => changeValueQuiz(em, e)} value={e.name} />
+                                    <label className='align-middle mt-[-2px]' htmlFor={e.name}>{e.name}</label>
+                                  </li>
+                                </div>
+                              )
+                            }
+                          })
+                        }
+                      </ul>
+                    </div>
+                  )
+                })}
               </div>
             </div>
-          </div>
-          <div className="btn__Check__answer" >
-            <button>Làm lại </button>
-            <button>Nộp bài</button>
-          </div>
-        </form>
-      </div>
+
+            <div className='mx-4 py-8 '>
+              <div className='mb-8 text-lg border-b'>
+                <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
+              </div>
+              <div  >
+                <div className="content">
+                  {
+                    listQuestionAnswer?.map((item: any, index: number) => {
+                      console.log("dadadaddd", item);
+
+                      const quesToArr = item.question.text.split("___")
+                      // tách chuỗi thành 1 mảng
+                      var tempQues: any = [];
+                      quesToArr.forEach((item2: any, index2: number) => {
+                        if (index2 < quesToArr.length - 1) {
+                          tempQues.push(<span key={index2 + 1}>{item2}</span>, check == true ?
+                            <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(item.question._id, index2 + 1)}`} {...register(`ans.inputAnswer-${item.question._id}-${index2 + 1}`)} disabled />
+                            : <input key={index2 + 1} className="inp__text" {...register(`ans.inputAnswer-${item.question._id}-${index2 + 1}`)} />)
+                        } else {
+                          tempQues.push(<span key={index2 + 1}>{item2}</span>)
+                        }
+                        // lọc mảng thêm phần tử vào mảng mới (tempQues)
+                      })
+
+                      return (
+                        <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 even:bg-slate-100"  >
+                          <div className='col-span-2 flex justify-between gap-4 py-2 '>
+                            <strong className='my-auto'>{item.question.name}: </strong>
+                            <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: item.question.name == "Cap" ? voices[0] : voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                          </div>
+                          <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+            </div>
+            <div className="btn__Check__answer" >
+              <button>Làm lại </button>
+              <button>Nộp bài</button>
+            </div>
+          </form>
+        </div>
+        :
+        <Loading />
+
+      }
     </div>
   )
 }

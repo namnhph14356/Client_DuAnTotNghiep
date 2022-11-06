@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getListQuizSlide } from '../../features/Slide/quiz/QuizSlide';
 import { getListAnswerQuizSlide } from '../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { useParams, NavLink } from 'react-router-dom';
-import { detailQuiz } from '../../api/quiz';
+import { detailQuiz, listQuiz } from '../../api/quiz';
 import '../../css/quiz.css'
 import moment from 'moment';
 import { addUserQuiz } from '../../api/userQuiz';
@@ -26,6 +26,7 @@ import { QuizType } from '../../types/quiz';
 import { AnswerQuizType } from '../../types/answerQuiz';
 import { PracticeActivityType } from '../../types/practiceActivity';
 import { SentenceResult } from '../../types/sentence';
+import Loading from '../../components/Loading';
 
 let flag1: string = ""
 let flag2: number = 0
@@ -120,10 +121,11 @@ const ExerciseSentences = () => {
   const [learningProgress, setLearningProgress] = useState<LearningProgressType>()
   const [percent, setPercent] = useState<number>(0);
   const [questionIndex, setQuestionIndex] = useState<number>(0)
-  const [point, setPoint] = useState<any>(null)
+  const [point, setPoint] = useState<number>(0)
   const { id, dayId } = useParams()
   const [result, setResult] = useState<SentenceResult[]>([])
   const [onReset, setOnReset] = useState<boolean>(false)
+  const [finish, setFinish] = useState<boolean>(false)
 
   const onHanldeSetSelect = (data: { answer?: String, quiz: String, id?: String, isCorrect: Boolean, type?: String }, check?: boolean) => {
     if (data.type === "selectAuto") {
@@ -200,7 +202,7 @@ const ExerciseSentences = () => {
     })
     const score = Math.round(10 / quizList.length * totalCorrect)
     setPoint(score)
-
+    setFinish(true)
     const { data: data2 } = await addHistory({
       user: user._id,
       learningProgress: learningProgress?._id,
@@ -213,7 +215,7 @@ const ExerciseSentences = () => {
     })
 
     for (let index = 0; index < result.length; index++) {
-      const flag:any = { ...result[index], history: data2._id }
+      const flag: any = { ...result[index], history: data2._id }
       await addUserQuiz(flag)
     }
 
@@ -258,8 +260,7 @@ const ExerciseSentences = () => {
 
   const getQuiz = async () => {
     const { data } = await detailPracticeActivity(String(id), String(user._id))
-    console.log("data", data);
-    
+
     const test = await Promise.all(data?.quizs.map(async (item: QuizType, index) => {
       const { data } = await detailQuiz(String(item._id))
       return data
@@ -288,6 +289,7 @@ const ExerciseSentences = () => {
       title: "Bạn có thật sự muốn làm lại ?",
       onOk: () => {
         setQuestionIndex(0)
+        setFinish(false)
         setResult([])
         setDone(false)
       }
@@ -295,50 +297,54 @@ const ExerciseSentences = () => {
   }
   return (
     <>
-      <div className=''>
-        <div className=''>
-          <div className='content__speaking'>
-            <div className="flex flex-col qustion__content__speaking">
-              <div className="">
-                <MemoCountdown time={quizList ? quizList[questionIndex].quiz.timeLimit : 40000} reset={onReset} />
+      <div>
+        <div>
+          {quizList ?
+            <div className='content__speaking'>
+              <div className="flex flex-col qustion__content__speaking">
+                <div className="">
+                  <MemoCountdown time={quizList ? quizList[questionIndex].quiz.timeLimit : 40000} reset={onReset} />
+                </div>
               </div>
-            </div>
 
-            {point &&
-              <div className='text-center font-bold mt-5'>
-                Kết quả của bạn: <span className='px-2 py-1 bg-red-500 text-white rounded ml-2'>{point} / 10</span>
-              </div>
-            }
-
-            <div className="p-5 ">
-              {
-                quizList && numQuizList && questionIndex <= numQuizList - 1 ?
-                  <QuizType5 question={quizList[questionIndex].quiz.question} data={quizList[questionIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
-                  :
-                  quizList && questionIndex <= quizList.length - 1 &&
-                  <ListenWriteType1 question={quizList[questionIndex].quiz} answerList={quizList[questionIndex].answerQuiz} questionIndex={done ? true : false} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+              {finish &&
+                <div className='text-center font-bold mt-5'>
+                  Kết quả của bạn: <span className={`px-2 py-1 text-white rounded ml-2 ${point >= 8 ? 'bg-green-500' : 'bg-red-500'}`}>{point} / 10</span>
+                </div>
               }
 
-              <div className="flex my-4 justify-center space-x-4 w-full" >
-                <div className='px-4 py-1 bg-[#4F46E5] cursor-pointer text-white rounded ' onClick={remake}>Làm lại </div>
-                <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#4F46E5]' : 'bg-[#7873d7]'}`} onClick={onFinish} disabled={done ? false : true}>Nộp bài</button>
-              </div>
+              <div className="p-5 ">
+                {
+                  quizList && numQuizList && questionIndex <= numQuizList - 1 ?
+                    <QuizType5 questionQuiz={quizList[questionIndex].quiz} data={quizList[questionIndex].answerQuiz} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                    :
+                    quizList && questionIndex <= quizList.length - 1 &&
+                    <ListenWriteType1 question={quizList[questionIndex].quiz} answerList={quizList[questionIndex].answerQuiz} questionIndex={done ? true : false} check={check} select={select} onHanldeSetSelect={onHanldeSetSelect} />
+                }
 
-              <div className='flex flex-row gap-4'>
-                <div className='md:basis-3/4 '>
-                  {done === true
-                    ? <section className='w-full mx-auto md:py-[30px]'>
-                      <div className="">
-                        <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
-                          <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc mừng bạn đã hoàn thành !</p>
+                <div className="flex my-4 justify-center space-x-4 w-full" >
+                  <div className='px-4 py-1 bg-[#4F46E5] cursor-pointer text-white rounded ' onClick={remake}>Làm lại </div>
+                  <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#4F46E5]' : 'bg-[#7873d7]'}`} onClick={onFinish} disabled={done ? false : true}>Nộp bài</button>
+                </div>
+
+                <div className='flex flex-row gap-4'>
+                  <div className='md:basis-3/4 '>
+                    {done === true
+                      ? <section className='w-full mx-auto md:py-[30px]'>
+                        <div className="">
+                          <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
+                            <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc mừng bạn đã hoàn thành !</p>
+                          </div>
                         </div>
-                      </div>
-                    </section>
-                    : ""}
+                      </section>
+                      : ""}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            :
+            <Loading />
+          }
         </div>
       </div>
     </>

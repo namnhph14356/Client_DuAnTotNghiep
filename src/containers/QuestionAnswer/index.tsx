@@ -18,6 +18,7 @@ import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import { getUser, getUserList } from '../../features/Slide/user/userSlide';
 import { getListUser, getUserById } from '../../api/user';
+import Loading from '../../components/Loading';
 
 const { TextArea } = Input;
 interface CommentItem {
@@ -32,23 +33,31 @@ const CommentList = ({ comments }: { comments: CommentType[] }) => {
   useEffect(() => {
     dispath(getReplyCommentList())
   }, []);
+  console.log("comments", comments);
 
   return (
-    <div className="w-fullbg-white border rounded-md">
-      <h3 className="font-semibold p-1">{`${comments.length + replyy.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
-      <div className="flex flex-col gap-5 m-3">
-        <List
-          dataSource={comments}
-          itemLayout="horizontal"
-          renderItem={(item: CommentType) => {
-            return (
-              <CommentItem item={item} />
-            )
-          }
-          }
-        />
-      </div>
-    </div>
+    <>
+      {comments.length > 0
+        ?
+        <div className="w-fullbg-white border rounded-md">
+          <h3 className="font-semibold p-1">{`${comments.length + replyy.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
+          <div className="flex flex-col gap-5 m-3">
+            <List
+              dataSource={comments}
+              itemLayout="horizontal"
+              renderItem={(item: CommentType) => {
+                return (
+                  <CommentItem item={item} />
+                )
+              }
+              }
+            />
+          </div>
+        </div>
+        :
+        <Loading />
+      }
+    </>
 
   )
 }
@@ -68,7 +77,7 @@ const CommentItem = ({ item }: any) => {
     setCmt(item)
   })
   const id = item._id
-  const userId = item.userId 
+  const userId = item.userId
   useEffect(() => {
     const getText = async () => {
       const { payload } = await dispath(getUser(userId));
@@ -76,11 +85,11 @@ const CommentItem = ({ item }: any) => {
     };
     getText();
   }, [userId]);
-  
+
   const fil = replyy.filter(item => item.commentId === id)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const users = useSelector<any, any>(data => data.user.value);
-  
+
   const like = (e) => {
     const NewUser = { ...item }
 
@@ -179,7 +188,7 @@ const CommentItem = ({ item }: any) => {
 
   };
   console.log(value);
-  
+
   return (
     <div>
       <div>
@@ -189,7 +198,7 @@ const CommentItem = ({ item }: any) => {
             <div className="flex gap-3 items-center">
               <img src={value?.img}
                 className="object-cover w-12 h-12 rounded-full border-2 border-emerald-400  shadow-emerald-400" />
-                   {/* <Avatar image={String(user.img)} className="text-sm w-10 h-10 text-white" /> */}
+              {/* <Avatar image={String(user.img)} className="text-sm w-10 h-10 text-white" /> */}
               <div>
                 <h3 className='font-bold'>{value?.username}
                   <span className="text-sm text-gray-400 font-normal pl-3">{moment(item.createdAt).local().fromNow()}</span>
@@ -255,7 +264,7 @@ const ReplyComment = ({ reply, cmt, _id }: any) => {
   const [value, setValue] = useState<any>();
   const dispath = useDispatch();
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
-  const userId = reply.userId 
+  const userId = reply.userId
   useEffect(() => {
     const getText = async () => {
       const { payload } = await dispath(getUser(userId));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useParams } from 'react-router-dom'
 import { listSentencesByIdActivity } from '../../api/sentence'
+import Loading from '../../components/Loading'
 import { SentenceType } from '../../types/sentence'
 
 
@@ -36,32 +37,38 @@ const LessonSentences = () => {
   useEffect(() => {
     getSents()
   }, [])
-
+  console.log("dataSent",dataSent);
+  
   return (
     <div className="">
       <div className='list__sentences '>
-        {dataSent.map((item) => (
-          <div className="item__list_sentences ">
-            <div className="item__content__list">
-              <h3 className="title__item__content__list">
-                <i className="fa-solid fa-volume-high"></i> {item.words}
-              </h3>
-              <div className="phonetic__content">
-                {item.phoneticTranscription}
+        {
+          dataSent.length > 0 ?
+            dataSent.map((item) => (
+              <div className="item__list_sentences ">
+                <div className="item__content__list">
+                  <h3 className="title__item__content__list">
+                    <i className="fa-solid fa-volume-high"></i> {item.words}
+                  </h3>
+                  <div className="phonetic__content">
+                    {item.phoneticTranscription}
+                  </div>
+                  <div className="viet__phonetic__content">
+                    {item.meaning}
+                  </div>
+                </div>
+                <div className="item__icon__list">
+                  <button >
+                    <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/lesson/${item._id}`} className="text-black" >
+                      <i className="fa-solid fa-chevron-right"></i>
+                    </NavLink>
+                  </button>
+                </div>
               </div>
-              <div className="viet__phonetic__content">
-                {item.meaning}
-              </div>
-            </div>
-            <div className="item__icon__list">
-              <button >
-                <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/lesson/${item._id}`} className="text-black" >
-                  <i className="fa-solid fa-chevron-right"></i>
-                </NavLink>
-              </button>
-            </div>
-          </div>
-        ))}
+            ))
+            :
+            <Loading />
+        }
       </div>
     </div>
   )

@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { SpeechContext } from '../../context/GoogleSpeechContext';
+import { QuizType } from '../../types/quiz';
 
 type QuizType5Props = {
-  question: string,
+  questionQuiz: QuizType,
   data: any,
   check: boolean,
   select: any,
   onHanldeSetSelect: (select: any, check: boolean) => void
 }
 
-const QuizType5 = ({ question, data, check, select, onHanldeSetSelect }: QuizType5Props) => {
+const QuizType5 = ({ questionQuiz, data, check, select, onHanldeSetSelect }: QuizType5Props) => {
   const [show, setShow] = useState<boolean>(false)
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
   const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
@@ -31,9 +32,12 @@ const QuizType5 = ({ question, data, check, select, onHanldeSetSelect }: QuizTyp
           <h3 className={`${show ? "text-base" : "text-2xl"} m-0 group-hover:text-indigo-600`}>Click để {show ? "ẩn" : "hiện"} câu</h3>
         </button>
 
-        <span className={`text-center text-2xl font-medium m-0 ${show ? "" : "hidden"}`}>{question}</span>
+        <div className={`${show ? "" : "hidden"} `}>
+          <span className={`text-center text-2xl font-medium m-0 `}>{questionQuiz.question}</span>
+          <img className='text-center mx-auto mt-2' src={questionQuiz.image} width={120} alt="" />
+        </div>
 
-        <button className='text-xl' onClick={() => speak({ text: question, voice: voices[2] })}>
+        <button className='text-xl' onClick={() => speak({ text: questionQuiz.question, voice: voices[2] })}>
           <span><i className="fa-solid fa-volume-high"></i></span>
         </button>
       </div>
