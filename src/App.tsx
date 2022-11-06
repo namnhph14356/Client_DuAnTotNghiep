@@ -95,6 +95,10 @@ import ListSentencesLesson from "./pages/admin/Sentences/Lesson/ListSentencesLes
 import ListSentencesExercise from "./pages/admin/Sentences/Exercise/ListSentencesExercise";
 import DayLayout from "./pages/layouts/DayLayout";
 import ListDay from "./pages/admin/Day/ListDay";
+import ListListenSpeak from "./pages/admin/listenspeak/ListListenSpeak";
+import FormQuestionListenSpeak from "./pages/admin/listenspeak/Question/FormQuestion";
+import FormAnswerListenSpeak from "./pages/admin/listenspeak/Answer/FormAnswerAdd";
+import FormAnswerListenSpeakEdit from "./pages/admin/listenspeak/Answer/FormAnswerEdit";
 import ListExercise from "./pages/admin/grammar/ListExercise";
 import FormExercise from "./pages/admin/grammar/FormExercise";
 
@@ -281,18 +285,40 @@ function App() {
             <Route path=":id/edit" element={<FormVocabulary />} />
           </Route>
 
-          <Route  path="day">
-              <Route index element={<ListDay />} />
+          <Route path="day">
+            <Route index element={<ListDay />} />
           </Route>
         </Route>
 
         {/* ---Day Manage */}
         <Route path="manageDay" element={<DayLayout />}>
           <Route index element={<Navigate to="vocabulary" />} />
+
+          <Route path='listenspeak' >
+            <Route index element={<ListListenSpeak />} />
+            <Route path="question">
+              <Route path="add" element={<FormQuestionListenSpeak />} />
+              <Route path=":id/edit" element={<FormQuestionListenSpeak />} />
+            </Route>
+            <Route path="answer">
+              <Route path=":id/add" element={<FormAnswerListenSpeak />} />
+              <Route path=":id/edit" element={<FormAnswerListenSpeakEdit />} />
+            </Route>
+          </Route>
+
           <Route path="vocabulary">
             <Route index element={<ListVocabulary />} />
             <Route path="add" element={<FormVocabulary />} />
             <Route path=":id/edit" element={<FormVocabulary />} />
+          </Route>
+
+          <Route path="sentences">
+            <Route path="addExercise" element={<AddSentencesExercise />} />
+            <Route path="listExercise" element={<ListSentencesExercise />} />
+
+            <Route path="listLesson" element={<ListSentencesLesson />} />
+            <Route path="addLesson" element={<FormSentencesLesson />} />
+            <Route path=":id/editLesson" element={<FormSentencesLesson />} />
           </Route>
 
           <Route path="grammar">
