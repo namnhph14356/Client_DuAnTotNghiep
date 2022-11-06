@@ -24,6 +24,7 @@ import WeekSlice from "../features/Slide/week/WeekSlice";
 import DaySlice from "../features/Slide/day/DaySlice";
 import PracticeActivitySlice from "../features/Slide/practiceActivity/PracticeActivitySlice";
 import LearningProgressSlice from '../features/Slide/learningProgress/LearningProgress'
+import GoogleSpeechSlice from "../features/Slide/googleSpeech/GoogleSpeechSlice";
 
 const rootReducer = combineReducers({
     count: CountSlide,
@@ -48,7 +49,8 @@ const rootReducer = combineReducers({
     week: WeekSlice,
     day: DaySlice,
     practiceActivity: PracticeActivitySlice,
-    learningProgress: LearningProgressSlice
+    learningProgress: LearningProgressSlice,
+    googleSpeech: GoogleSpeechSlice
 });
 
 export default rootReducer;
