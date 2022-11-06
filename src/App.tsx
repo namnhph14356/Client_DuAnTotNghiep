@@ -101,7 +101,7 @@ import FormExercise from "./pages/admin/grammar/FormExercise";
 function App() {
   return (
     <div>
-      <Route>
+      <Routes>
         <Route
           path="/"
           element={
@@ -271,7 +271,7 @@ function App() {
             <Route path=":id/edit" element={<FormGrammar />} />
           </Route>
 
-          </Route>
+
 
           <Route path='vocabulary'>
             <Route index element={<ListVocabulary />} />
@@ -279,10 +279,10 @@ function App() {
             <Route path=":id/edit" element={<FormVocabulary />} />
           </Route>
 
-          <Route  path="day">
-              <Route index element={<ListDay />} />
+          <Route path="day">
+            <Route index element={<ListDay />} />
           </Route>
-      
+        </Route>
 
         {/* ---Day Manage */}
         <Route path="manageDay" element={<DayLayout />}>
@@ -318,8 +318,8 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
-      </Route>
-      
+      </Routes>
+
     </div>
   );
 }
