@@ -116,27 +116,23 @@ function App() {
         >
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route
-              index
-              element={
-                <PrivateRouteLearning>
-                  <Learning />
-                </PrivateRouteLearning>
-              }
-            />
-            <Route path="oral" element={<OralPage />} />
-            <Route path="oralseven" element={<OralSeven />} />
+
+            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
+
+            <Route path='oral'>
+              <Route path=':dayId' element={<OralPage />} />
+              <Route path='oralseven' element={<OralSeven />} />
+            </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
-              <Route path=":id" element={<DetailLearningLayout />}>
-                <Route path="listenSpeak" element={<SpeakingPage />}>
-                  <Route path="startUp" element={<StartUp />} />
-                  <Route path="quiz2" element={<QuizPage />} />
-                  <Route path="quiz" element={<QuizTypeSelect />} />
-                  <Route
-                    path="questionAndAnswer"
-                    element={<QuestionAnswer />}
-                  />
+              <Route path=':id' element={<DetailLearningLayout />}>
+
+                <Route path='listenSpeak' element={<SpeakingPage />}>
+                  <Route path='startUp' element={<StartUp />} />
+                  <Route path='quiz2' element={<QuizPage />} />
+                  <Route path='quiz' element={<QuizTypeSelect />} />
+                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
+
                 </Route>
 
                 <Route path="vocabulary" element={<Vocabulary />}>
@@ -279,7 +275,9 @@ function App() {
             <Route path=":id/edit" element={<FormGrammar />} />
           </Route>
 
-          <Route path="vocabulary">
+
+
+          <Route path='vocabulary'>
             <Route index element={<ListVocabulary />} />
             <Route path="add" element={<FormVocabulary />} />
             <Route path=":id/edit" element={<FormVocabulary />} />
@@ -347,6 +345,7 @@ function App() {
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
       </Routes>
+
     </div>
   );
 }

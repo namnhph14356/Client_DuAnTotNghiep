@@ -384,7 +384,7 @@ const Learning = () => {
                   </button>
                 }
                 <button className='btn__exam__statistical'>
-                  <NavLink to={`/learning/oral`} className='text-white hover:text-white'>
+                  <NavLink to={`/learning/oral/${daySelect?._id}`} className='text-white hover:text-white'>
                     Thi Oral ngày
                   </NavLink>
                 </button>
