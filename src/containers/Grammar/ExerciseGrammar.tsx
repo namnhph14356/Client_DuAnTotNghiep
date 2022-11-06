@@ -18,6 +18,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { detailPracticeActivity } from '../../api/practiceActivity'
 import { QuizType } from '../../types/quiz'
 import { UserQuizType } from '../../types/userQuiz'
+import Loading from '../../components/Loading'
 
 type OpenSuggestions = {
   id: string,
@@ -213,137 +214,141 @@ const ExerciseGrammar = () => {
 
   return (
     <div>
-      <form className="content__conversation" onSubmit={handleSubmit(onSubmit)} >
-        <div className=''>
-          {
-            check &&
-            <p className='font-bold text-center text-lg'>Kết quả của bạn: <span className={`ml-2 rounded py-1 px-3 ${point >= 5 ? 'bg-green-600' : 'bg-red-600'}  text-white`}>{point} / 10 điểm</span></p>
-          }
-        </div>
-        <div className='mx-4 my-8 '>
-          <div className='divide-y-2 divide-gray-400 space-y-4'>
-            {questionQuiz.map((item, index) => {
-              const findVietnameseMeaning = openVietnameseMeaning.filter((e) => String(e.id) === String(item._id))
-              const findSuggest = openSuggest.filter((e) => String(e.id) === String(item._id))
-              const findWordMeaning = openWordMeaning.filter((e) => String(e.id) === String(item._id))
-              const findExplainAnswer = openExplainAnswer.filter((e) => String(e.id) === String(item._id))
-              return (
-                <div className='py-4' key={item._id}>
-
-                  {/* question */}
-                  <div className='text-base flex font-medium space-x-4 mx-auto'>
-                    <div >
-                      <span className='bg-gray-400 px-2 mr-3 rounded'> {index + 1}</span>
-                      <span> {item.question}</span>
-                    </div>
-                    <span >{convertQuizz.length > 0 && check == true ?
-                      convertQuizz[index].isCorrect == 1 ?
-                        <i className="fa-solid fa-check text-green-500 text-xl rounded font-bold"></i>
-                        :
-                        <i className="fa-solid fa-xmark text-red-500  text-xl my-auto "></i>
-                      : ""
-                    }
-                    </span>
-                  </div>
-
-                  {/* gợi ý */}
-                  <div className='space-y-4 ml-10 my-2'>
-                    {
-                      openVietnameseMeaning.length > 0 &&
-                      findVietnameseMeaning[0].open &&
-                      <div className='border-l-8 border-l-orange-500 border-y border-r px-4 pt-3 pb-2 relative'>
-                        <div>
-                          <div className='text-orange-500 font-semibold'>Nghĩa tiếng việt</div>
-                          <div className='text-xs'>{item.meaning}</div>
-                        </div>
-                        <div className='absolute top-2 right-4 '>
-                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenVietnameseMeaning(openVietnameseMeaning?.map((e: OpenSuggestions) => e.id === item._id ? { open: false, id: e.id } : e))}></i>
-                        </div>
-                      </div>
-                    }
-
-                    {
-                      openSuggest.length > 0 &&
-                      findSuggest[0].open &&
-                      <div className='border-l-8 border-l-orange-500 border-y border-r px-4 pt-3 pb-2 relative'>
-                        <div>
-                          <div className='text-orange-500 font-semibold'>Gợi í cách làm</div>
-                          <div className='text-xs'>{item.suggestions}</div>
-                        </div>
-                        <div className='absolute top-2 right-4 '>
-                          <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenSuggest(openSuggest.map((e: OpenSuggestions) => e.id === item._id ? { id: e.id, open: false } : e))}></i>
-                        </div>
-                      </div>
-                    }
-                  </div>
-
-                  {/* answer */}
-                  <ul className='mb-0 ml-10'>
-                    {
-                      answerQuiz.map((e, index) => {
-
-                        let answer: AnswerQuizType[] = []
-                        if (check == true) {
-                          const find = convertQuizz.filter((ans) => ans._id == e._id)
-                          answer.push(...find)
-                        }
-                        if (e.quiz == item._id) {
-                          return (
-                            <div key={e._id} className='even:bg-slate-100 '>
-                              <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer  font-sans   `} >
-                                <div className='grid grid-cols-3 gap-4 divide-x-8 divide-gray-400'>
-                                  <div className='flex gap-2  py-2 px-5'>
-                                    <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" />
-                                    <label className='align-middle mt-[-2px]' htmlFor={e.answer}>{e.answer}</label>
-                                  </div>
-
-                                  {
-                                    openWordMeaning.length > 0 &&
-                                    findWordMeaning[0].open &&
-                                    <div className='flex gap-2  py-2 px-5'>
-                                      <span className='align-middle mt-[-2px] font-semibold'>{e.wordMeaning}</span>
-                                    </div>
-                                  }
-                                  {
-                                    openExplainAnswer.length > 0 &&
-                                    check &&
-                                    findExplainAnswer[0].open &&
-                                    <div className='flex gap-2  py-2 px-5'>
-                                      <span className='align-middle mt-[-2px] font-semibold'>{e.explainAnswer}</span>
-                                    </div>
-                                  }
-                                </div>
-                              </li>
-                            </div>
-                          )
-                        }
-                      })
-                    }
-                  </ul>
-
-                  {/* view */}
-                  <div className='flex justify-end space-x-2 my-4'>
-                    <div><span><i className="fa-solid fa-eye font-medium"></i> </span> Xem: </div>
-                    <div>
-                      <ul className='p-0  divide-x'>
-                        <li className={`${findVietnameseMeaning[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findVietnameseMeaning[0]?.open, "openVietnameseMeaning", String(item._id))}><span> Nghĩa Tiếng Việt</span></li>
-                        <li className={`${findSuggest[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findSuggest[0]?.open, "openSuggest", String(item._id))} ><span>Gợi í cách làm</span></li>
-                        <li className={`${findWordMeaning[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findWordMeaning[0]?.open, "openWordMeaning", String(item._id))}><span>Ngữ nghĩa / Từ loại</span></li>
-                        <li className={`${findExplainAnswer[0]?.open && check ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findExplainAnswer[0]?.open, "openExplainAnswer", String(item._id))}><span>Giải thích đáp án</span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
+      {questionQuiz && answerQuiz.length > 0 ?
+        <form className="content__conversation" onSubmit={handleSubmit(onSubmit)} >
+          <div className=''>
+            {
+              check &&
+              <p className='font-bold text-center text-lg'>Kết quả của bạn: <span className={`ml-2 rounded py-1 px-3 ${point >= 8 ? 'bg-green-600' : 'bg-red-600'}  text-white`}>{point} / 10 điểm</span></p>
+            }
           </div>
-        </div>
+          <div className='mx-4 my-8 '>
+            <div className='divide-y-2 divide-gray-400 space-y-4'>
+              {questionQuiz.map((item, index) => {
+                const findVietnameseMeaning = openVietnameseMeaning.filter((e) => String(e.id) === String(item._id))
+                const findSuggest = openSuggest.filter((e) => String(e.id) === String(item._id))
+                const findWordMeaning = openWordMeaning.filter((e) => String(e.id) === String(item._id))
+                const findExplainAnswer = openExplainAnswer.filter((e) => String(e.id) === String(item._id))
+                return (
+                  <div className='py-4' key={item._id}>
 
-        <div className="flex px-8 space-x-4" >
-          <button className='px-4 py-1 bg-[#4F46E5] text-white rounded'>Nộp bài</button>
-          <div className='px-4 py-1 bg-[#4F46E5] text-white rounded cursor-pointer' onClick={remake}>Làm lại </div>
-        </div>
-      </form>
+                    {/* question */}
+                    <div className='text-base flex font-medium space-x-4 mx-auto'>
+                      <div >
+                        <span className='bg-gray-400 px-2 mr-3 rounded'> {index + 1}</span>
+                        <span> {item.question}</span>
+                      </div>
+                      <span >{convertQuizz.length > 0 && check == true ?
+                        convertQuizz[index].isCorrect == 1 ?
+                          <i className="fa-solid fa-check text-green-500 text-xl rounded font-bold"></i>
+                          :
+                          <i className="fa-solid fa-xmark text-red-500  text-xl my-auto "></i>
+                        : ""
+                      }
+                      </span>
+                    </div>
+
+                    {/* gợi ý */}
+                    <div className='space-y-4 ml-10 my-2'>
+                      {
+                        openVietnameseMeaning.length > 0 &&
+                        findVietnameseMeaning[0].open &&
+                        <div className='border-l-8 border-l-orange-500 border-y border-r px-4 pt-3 pb-2 relative'>
+                          <div>
+                            <div className='text-orange-500 font-semibold'>Nghĩa tiếng việt</div>
+                            <div className='text-xs'>{item.meaning}</div>
+                          </div>
+                          <div className='absolute top-2 right-4 '>
+                            <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenVietnameseMeaning(openVietnameseMeaning?.map((e: OpenSuggestions) => e.id === item._id ? { open: false, id: e.id } : e))}></i>
+                          </div>
+                        </div>
+                      }
+
+                      {
+                        openSuggest.length > 0 &&
+                        findSuggest[0].open &&
+                        <div className='border-l-8 border-l-orange-500 border-y border-r px-4 pt-3 pb-2 relative'>
+                          <div>
+                            <div className='text-orange-500 font-semibold'>Gợi í cách làm</div>
+                            <div className='text-xs'>{item.suggestions}</div>
+                          </div>
+                          <div className='absolute top-2 right-4 '>
+                            <i className="fa-solid fa-xmark hover:text-orange-500" onClick={() => setOpenSuggest(openSuggest.map((e: OpenSuggestions) => e.id === item._id ? { id: e.id, open: false } : e))}></i>
+                          </div>
+                        </div>
+                      }
+                    </div>
+
+                    {/* answer */}
+                    <ul className='mb-0 ml-10'>
+                      {
+                        answerQuiz.map((e, index) => {
+
+                          let answer: AnswerQuizType[] = []
+                          if (check == true) {
+                            const find = convertQuizz.filter((ans) => ans._id == e._id)
+                            answer.push(...find)
+                          }
+                          if (e.quiz == item._id) {
+                            return (
+                              <div key={e._id} className='even:bg-slate-100 '>
+                                <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer  font-sans   `} >
+                                  <div className='grid grid-cols-3 gap-4 divide-x-8 divide-gray-400'>
+                                    <div className='flex gap-2  py-2 px-5'>
+                                      <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" />
+                                      <label className='align-middle mt-[-2px]' htmlFor={e.answer}>{e.answer}</label>
+                                    </div>
+
+                                    {
+                                      openWordMeaning.length > 0 &&
+                                      findWordMeaning[0].open &&
+                                      <div className='flex gap-2  py-2 px-5'>
+                                        <span className='align-middle mt-[-2px] font-semibold'>{e.wordMeaning}</span>
+                                      </div>
+                                    }
+                                    {
+                                      openExplainAnswer.length > 0 &&
+                                      check &&
+                                      findExplainAnswer[0].open &&
+                                      <div className='flex gap-2  py-2 px-5'>
+                                        <span className='align-middle mt-[-2px] font-semibold'>{e.explainAnswer}</span>
+                                      </div>
+                                    }
+                                  </div>
+                                </li>
+                              </div>
+                            )
+                          }
+                        })
+                      }
+                    </ul>
+
+                    {/* view */}
+                    <div className='flex justify-end space-x-2 my-4'>
+                      <div><span><i className="fa-solid fa-eye font-medium"></i> </span> Xem: </div>
+                      <div>
+                        <ul className='p-0  divide-x'>
+                          <li className={`${findVietnameseMeaning[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findVietnameseMeaning[0]?.open, "openVietnameseMeaning", String(item._id))}><span> Nghĩa Tiếng Việt</span></li>
+                          <li className={`${findSuggest[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findSuggest[0]?.open, "openSuggest", String(item._id))} ><span>Gợi í cách làm</span></li>
+                          <li className={`${findWordMeaning[0]?.open ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findWordMeaning[0]?.open, "openWordMeaning", String(item._id))}><span>Ngữ nghĩa / Từ loại</span></li>
+                          <li className={`${findExplainAnswer[0]?.open && check ? 'bg-orange-500 hover:bg-orange-600 text-white' : "text-blue-500 hover:bg-gray-200"} inline-block px-2  cursor-pointer `} onClick={() => checkOpen(!findExplainAnswer[0]?.open, "openExplainAnswer", String(item._id))}><span>Giải thích đáp án</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="flex px-8 space-x-4" >
+            <button className='px-4 py-1 bg-[#4F46E5] text-white rounded'>Nộp bài</button>
+            <div className='px-4 py-1 bg-[#4F46E5] text-white rounded cursor-pointer' onClick={remake}>Làm lại </div>
+          </div>
+        </form>
+        :
+        <Loading />
+      }
     </div>
   )
 }
