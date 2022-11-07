@@ -99,6 +99,8 @@ import ListListenSpeak from "./pages/admin/listenspeak/ListListenSpeak";
 import FormQuestionListenSpeak from "./pages/admin/listenspeak/Question/FormQuestion";
 import FormAnswerListenSpeak from "./pages/admin/listenspeak/Answer/FormAnswerAdd";
 import FormAnswerListenSpeakEdit from "./pages/admin/listenspeak/Answer/FormAnswerEdit";
+import ListExercise from "./pages/admin/grammar/ListExercise";
+import FormExercise from "./pages/admin/grammar/FormExercise";
 
 function App() {
   return (
@@ -323,6 +325,8 @@ function App() {
             <Route index element={<ListGrammar />} />
             <Route path="add" element={<FormGrammar />} />
             <Route path=":id/edit" element={<FormGrammar />} />
+            <Route path="listexercise" element={<ListExercise />} />
+            <Route path="addexercise" element={<FormExercise />} />
           </Route>
         </Route>
 
