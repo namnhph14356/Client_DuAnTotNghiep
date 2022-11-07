@@ -71,7 +71,7 @@ const DayLayout = () => {
   return (
     <Layout className="h-full" style={{ width: "100%" }}>
       <Sider
-        className="sider__bar__admin h-[100%]  "
+        className="sider__bar__admin h-auto  "
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -94,7 +94,7 @@ const DayLayout = () => {
           selectedKeys={[current]}
         >
         
-        <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ">
+        <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ" className="title_antd_custom">
             <SubMenu key="sub5_1" icon={<ReadOutlined />} title="Exercise">
               <Menu.Item key="/listenspeak">
                 <NavLink to="/manageDay/listenspeak">Danh sách</NavLink>
@@ -191,8 +191,9 @@ const DayLayout = () => {
               </Menu.Item>
             </SubMenu>
           </SubMenu>
-
-
+          <div className="mt-8 mx-auto text-center">
+          <NavLink to={"/admin/day"} className="p-1 bg-blue-500 rounded px-6 text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600">Back</NavLink>
+          </div>
         </Menu>
       </Sider>
 
@@ -223,15 +224,14 @@ const DayLayout = () => {
           </div>
         </Header>
 
-        <Content className=" main__content__admin  px-20 py-4">
-          <NavLink to={"/admin/day"} className="p-1 bg-blue-500 rounded px-6 text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600">Back</NavLink>
+        <Content className=" main__content__admin  px-20 py-4 ">
           <Outlet />
         </Content>
       </Layout>
 
 
       {/* <Layout className="w-[100%]"> */}
-          <div className="w-[10%] mt-[5%]">
+          {/* <div className="w-[10%] mt-[5%]">
             <label htmlFor="" className="text-xl font-bold">Tháng</label>
             <div className="mt-2 mb-4">
               <Select value={"Tuần 1"} className="w-full h-[30px]">
@@ -253,7 +253,7 @@ const DayLayout = () => {
               </div>
 
               <button className="text-blue-600 border-double border-4 border-indigo-600 w-full text-xl font-bold mt-16 hover:text-white hover:bg-blue-600 hover:border-white">Thêm</button>
-          </div>
+          </div> */}
       {/* </Layout> */}
 
     </Layout> 

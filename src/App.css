@@ -140,3 +140,13 @@
 .footer .container .row .col ul li {
     @apply block py-2
 }
+
+
+/* Day admin */
+
+.title_antd_custom{
+   white-space: nowrap !important;
+   width: 115px !important;
+   overflow: hidden !important;
+   text-overflow: ellipsis !important;
+}
