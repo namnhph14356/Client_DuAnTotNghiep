@@ -75,7 +75,6 @@ const DayLayout = () => {
   return (
     <Layout style={{ width: "100%" }}>
       <Sider
-        className=""
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -201,8 +200,6 @@ const DayLayout = () => {
 
         </Menu>
       </Sider>
-
-
 
       <Layout className="site-layout w-[100%]">
         <Header

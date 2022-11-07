@@ -229,11 +229,6 @@ function App() {
             <Route path="edit/:id" element={<EditContact />} />
           </Route>
 
-          <Route path="contact">
-            <Route index element={<ListContact />} />
-            <Route path="edit/:id" element={<EditContact />} />
-          </Route>
-
           <Route path="user">
             <Route index element={<ListUser />} />
             <Route path="add" element={<AddUser />} />
@@ -257,15 +252,6 @@ function App() {
             <Route path="add" element={<FormUserQuiz />} />
             <Route path=":id/edit" element={<FormUserQuiz />} />
           </Route>
-
-
-
-          <Route path="grammar">
-            <Route index element={<ListGrammar />} />
-            <Route path="add" element={<FormGrammar />} />
-            <Route path=":id/edit" element={<FormGrammar />} />
-          </Route>
-
 
           <Route path="day">
             <Route index element={<ListDay />} />
