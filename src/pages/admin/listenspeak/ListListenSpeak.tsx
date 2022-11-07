@@ -286,7 +286,11 @@ const ListListenSpeak = (props: Props) => {
             sorter: (a: any, b: any) => a._id - b._id,
             // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
-
+            render: (record) => (
+              <div className="w-28 max-w-md truncate">
+                  {record}
+              </div>
+          )
         },
         {
             title: 'Hình ảnh',
@@ -294,8 +298,8 @@ const ListListenSpeak = (props: Props) => {
             render: (record) => (
                 <div className="">
                     <Image
-                        width={100}
-                        height={100}
+                        width={60}
+                        height={60}
                         src={record.image}
                     />
                 </div>
@@ -480,14 +484,10 @@ const ListListenSpeak = (props: Props) => {
                 {selectedRowKeys.length > 0 ? `Đã chọn ${selectedRowKeys.length} hàng` : ''}
             </span>
 
-
-
             <Table
                 bordered
-
                 footer={() => `Hiển thị 10 trên tổng ${tableWithType.length}`}
                 expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
-
                 columns={columns}
                 dataSource={dataTable}
 

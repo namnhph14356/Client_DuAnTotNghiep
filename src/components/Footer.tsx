@@ -103,7 +103,7 @@ const Footer = () => {
             <img
               src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png"
               alt="VianEnglish"
-              width={150}
+              width={130}
             />
             <p className="text-base text-white">
               Making the world a better place through constructing elegant hierarchies.

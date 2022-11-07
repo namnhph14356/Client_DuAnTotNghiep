@@ -13,10 +13,14 @@ import {
 } from "@ant-design/icons";
 import "../../css/admin.css";
 import { Option } from "antd/lib/mentions";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { UserType } from "../../types/user";
 
 const DayLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
+  const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   let location = useLocation();
   const [current, setCurrent] = useState(location.pathname);
 
@@ -67,7 +71,7 @@ const DayLayout = () => {
       }
     }
   }, [location, current]);
-
+  
   return (
     <Layout style={{ width: "100%" }}>
       <Sider
@@ -76,14 +80,13 @@ const DayLayout = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
-        <div className="logo flex justify-center py-2 bg-[#001529]">
+        <div className="logo  bg-[#001529]">
           <NavLink
             aria-current="page"
-            className="logo active text-[#fff]"
+            className="active text-[#fff] "
             to="/"
           >
-            {" "}
-            VianEnglish{" "}
+            <img  src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png" width={70} alt="" />
           </NavLink>
         </div>
         <Menu
@@ -92,7 +95,7 @@ const DayLayout = () => {
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
-          style={{ background: "#001529", height:"100%" }}
+          style={{ background: "#001529", height: "100%" }}
         >
 
           <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ">
@@ -109,7 +112,7 @@ const DayLayout = () => {
           <SubMenu key="sub6" icon={<FolderFilled />} title="Luyện từ vựng">
             <SubMenu key="sub6_1" title="Bài học">
               <Menu.Item key="sub6_1_1">
-                <NavLink to="/manageDay/vocabulary/listLesson">Danh sách từ vựng</NavLink>
+                <NavLink to="/manageDay/vocabulary/listLesson">Danh sách</NavLink>
               </Menu.Item>
               <Menu.Item key="sub6_1_2">
                 <NavLink to="/manageDay/vocabulary/addLesson">Thêm từ vựng</NavLink>
@@ -176,7 +179,7 @@ const DayLayout = () => {
 
 
           <SubMenu key="sub9" icon={<FolderFilled />} title="Luyện ngữ pháp ">
-            <SubMenu key="sub9_1"  title="Bài học">
+            <SubMenu key="sub9_1" title="Bài học">
               <Menu.Item key="sub9_1_1">
                 <NavLink to="/manageDay/grammar/listLesson">Danh sách</NavLink>
               </Menu.Item>
@@ -207,26 +210,26 @@ const DayLayout = () => {
           style={{ padding: 0 }}
         >
           <div className="flex justify-end">
-            <div className="px-4">
+            <div className="px-4 ">
               <Dropdown
                 overlay={notification}
                 trigger={["click"]}
                 placement="bottomRight"
               >
                 <Badge dot>
-                  <BellOutlined style={{ fontSize: 24, color: "white" }} />
+                  <BellOutlined style={{ fontSize: 24, color: "white" }} className="cursor-pointer" />
                 </Badge>
               </Dropdown>
             </div>
-            <div className="px-4">
+            <div className="px-4 my-auto">
               <Dropdown overlay={menu} trigger={["click"]}>
-                <Avatar size="large" icon={<UserOutlined />} />
+                <img src={auth.img} width={'40'} alt="" className="rounded-full cursor-pointer" />
               </Dropdown>
             </div>
           </div>
         </Header>
 
-        <Content className=" main__content__admin  px-20 py-4">
+        <Content className=" main__content__admin p-8">
           <NavLink to={"/admin/day"} className="p-1 bg-blue-500 rounded px-6 text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600">Back</NavLink>
           <Outlet />
         </Content>

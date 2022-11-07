@@ -8,7 +8,9 @@ import { UserType } from '../types/user';
 import { Avatar } from './Avatar';
 const navigation = [
   { name: 'Học thử', to: '/learning' },
-  { name: 'Liên hệ chúng tôi', to: 'contact' },
+  { name: 'Giới thiệu', to: 'aboutUs' },
+  { name: 'Liên hệ', to: '/contact' },
+  { name: 'Khóa học', to: '/course' },
 
 ]
 
@@ -34,7 +36,7 @@ const HeaderComponent = () => {
           <div className="flex w-full items-center justify-between border-b border-indigo-500 py-4 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">
-               <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={110} alt="" />
+               <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={100} alt="" />
               </NavLink>
               <div className=" ml-10 space-x-8 lg:block">
                 {navigation.map((link) => (
