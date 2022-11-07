@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType1Props = {
     data: any,

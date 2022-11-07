@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { SpeechContext } from '../../context/GoogleSpeechContext'
 
 type QuizType2Props = {
     data: any,
