@@ -37,6 +37,12 @@ interface ExpandedDataType {
     isCorrect: number;
 }
 
+const typeQuiz = [
+    { id: 1, type: "selectRadio" },
+    { id: 2, type: "selectImage" },
+    { id: 3, type: "selectCompound" }
+]
+
 
 type DataIndex = keyof ExpandedDataType;
 type DataIndex2 = keyof DataType;
@@ -76,14 +82,14 @@ const ListListenSpeak = (props: Props) => {
     }
 
 
-    const dataTable = listTable.map((item: QuizType, index) => {
+    const dataTable = tableWithType.map((item: QuizType, index) => {
         return {
             key: index + 1,
             _id: item._id,
             question: item.question,
             image: item.image,
             timeLimit: item.timeLimit,
-            // type: item.type,
+            type: item.type,
             createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
             updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
 
@@ -302,6 +308,15 @@ const ListListenSpeak = (props: Props) => {
             ...getColumnSearchProps('question'),
         },
         {
+            title: 'Loại Câu Hỏi',
+            dataIndex: 'type',
+            key: "type",
+            filters: typeQuiz.map((item: any) => { return { text: item.type, value: item.type } }),
+            onFilter: (value, record) => {
+                return record.type == value
+            }
+        },
+        {
             title: 'Thời gian làm bài',
             dataIndex: 'timeLimit',
             key: "timeLimit",
@@ -438,8 +453,6 @@ const ListListenSpeak = (props: Props) => {
         dispatch(changeBreadcrumb("Quản Lý AnswerQuiz"))
         dispatch(getListAnswerQuizSlide())
         dispatch(getCategoryList())
-    }, [quizs])
-    useEffect(() => {
         dispatch(getListQuizSlide())
         setListTable(tableWithType)
     }, [])
@@ -447,20 +460,6 @@ const ListListenSpeak = (props: Props) => {
     return (
         <div>
             {/* <AdminPageHeader breadcrumb={breadcrumb} /> */}
-            <div>
-                <Button type="default" className="my-2" onClick={() => resetTable()}>
-                    All
-                </Button>
-                <Button type="default" className="my-2 ml-6" onClick={() => changeTable('selectRadio')}>
-                    Select Radio
-                </Button>
-                <Button type="default" className="my-6 ml-6" onClick={() => changeTable('selectImage')}>
-                    Select Image
-                </Button>
-                <Button type="default" className="my-6 ml-6" onClick={() => changeTable('selectCompound')}>
-                    Select Compound
-                </Button>
-            </div>
 
             {selectedRowKeys.length > 1
                 ? <Popconfirm
