@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType5Props = {
@@ -11,9 +12,11 @@ type QuizType5Props = {
 }
 
 const QuizType5 = ({ question, data, check, select, onHanldeSetSelect }: QuizType5Props) => {
+  const transcript = useAppSelector(item => item.googleSpeech.transcript)
+  const dispatch = useAppDispatch()
   const [show, setShow] = useState<boolean>(false)
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-  const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+  
   const onHandleSpeakSelect = () => {
     if (data?.answer?.toLowerCase() === transcript.toLowerCase()) {
       onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect, type: "selectAuto" }, check)

@@ -9,10 +9,9 @@ import { useParams } from 'react-router-dom'
 import { listSentencesByIdActivity, listSentencesByIdDay } from '../api/sentence'
 import { SentenceType } from '../types/sentence'
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { SpeechContext } from '../context/GoogleSpeechContext'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import GoogleSpeechOral from '../components/GoogleSpeech/GoogleSpeechOral'
-import { changeSpeechValue } from '../features/Slide/googleSpeech/GoogleSpeechSlice'
+import { changeSpeechValue, resetSpeechValue } from '../features/Slide/googleSpeech/GoogleSpeechSlice'
 
 import { XOutline, CheckOutline } from "heroicons-react"
 import { detailDay } from '../api/day'
@@ -66,11 +65,13 @@ const OralPage = () => {
 
     useEffect(() => {
         const getSentences = async () => {
+            dispatch(resetSpeechValue(""))
             const { data } = await listSentencesByIdDay(String(dayId))
             const { data: dataDay } = await detailDay(String(dayId))
             setDataSentSentences(data)
             setDay(dataDay)
             setSentencesSplit(data[sentencesIndex].words.split(" "))
+            
         }
         getSentences()
     }, [dayId])

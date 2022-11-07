@@ -17,10 +17,14 @@ const googleSpeechSlice = createSlice({
                 state.speechValue = action.payload
                 state.transcript = action.payload.results[0].alternatives[0].transcript.toLowerCase()
             }
+        },
+        resetSpeechValue(state, action){
+            state.speechValue = {}
+            state.transcript = ""
         }
     }
 })
 
-export const { changeSpeechValue } = googleSpeechSlice.actions
+export const { changeSpeechValue, resetSpeechValue } = googleSpeechSlice.actions
 
 export default googleSpeechSlice.reducer

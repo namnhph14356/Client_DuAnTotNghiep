@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useRef } from 'react'
 // import io from 'socket.io'
 import io from 'socket.io-client'
-import { SpeechContext } from '../../context/GoogleSpeechContext';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { changeSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
 
 // import {} from './recorderWorkletProcessor'
 
@@ -9,8 +10,10 @@ type Props = {}
 const socket = io("http://localhost:8000", { transports: ['websocket'] });
 
 const GoogleSpeechSpeaker = (props: Props) => {
-
-    const { speechValue, onHandleUpdateSpeech, onHandleUpdateTranscript } = useContext(SpeechContext)
+    const transcript = useAppSelector(item => item.googleSpeech.transcript)
+    console.log("transcript", transcript)
+    const dispatch = useAppDispatch()
+    // const { speechValue, onHandleUpdateSpeech, onHandleUpdateTranscript } = useContext(SpeechContext)
     // console.log("speechValue ggspeaker", speechValue);
 
 
@@ -146,16 +149,14 @@ const GoogleSpeechSpeaker = (props: Props) => {
  
                 // console.log("dataFinal true", dataFinal);
                 // console.log("data final", data);
-                onHandleUpdateSpeech(data)
-                onHandleUpdateTranscript(data.results[0].alternatives[0].transcript.toLowerCase())
+                // onHandleUpdateSpeech(data)
+                // onHandleUpdateTranscript(data.results[0].alternatives[0].transcript.toLowerCase())
                 // console.log("Google Speech sent 'final' Sentence.");
-
+                dispatch(changeSpeechValue(data))
                 finalWord = true;
                 // endButton.disabled = false;
-
                 removeLastSentence = false;
             }
-            console.log("speechValue ggspeaker", speechValue);
         });
 
 

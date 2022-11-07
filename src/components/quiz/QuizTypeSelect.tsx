@@ -30,13 +30,13 @@ import { detailDay } from '../../api/day';
 import { detailPracticeActivity } from '../../api/practiceActivity';
 import QuizType3 from './QuizType3';
 import QuizType5 from './QuizType5';
-import { SpeechContext } from '../../context/GoogleSpeechContext';
 import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import { addLearningProgress, detailLearningProgressByUser, editLearningProgress } from '../../api/learningProgress';
 import { SemicolonPreference } from 'typescript';
 import { addLearningProgressSlice, editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress';
+import { resetSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
 
 
 
@@ -120,6 +120,7 @@ const CountdownWrapper = ({ time, reset }) => {
 const MemoCountdown = React.memo(CountdownWrapper);
 
 const QuizTypeSelect = () => {
+    const transcript = useAppSelector(item => item.googleSpeech.transcript)
     const user = useSelector(((item: RootState) => item.auth.value)) as UserType
     const dispatch = useAppDispatch()
     const [select, setSelect] = useState<any>(null)
@@ -129,7 +130,6 @@ const QuizTypeSelect = () => {
     const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
     const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
     const [quiz2, setQuiz2] = useState<any>([])
     const [quizList, setQuizList] = useState<any>()
     const [percent, setPercent] = useState<number>(0);
@@ -144,7 +144,6 @@ const QuizTypeSelect = () => {
     const [quizCompound, setQuizCompound] = useState<any>([])
 
 
-    console.log("speechValue quiz", speechValue);
     console.log("transcript quiz", transcript);
     console.log("quizList", quizList);
     console.log("select", select)
@@ -351,6 +350,7 @@ const QuizTypeSelect = () => {
     useEffect(() => {
         dispatch(getListQuizSlide())
         dispatch(getListAnswerQuizSlide())
+        dispatch(resetSpeechValue(""))
         const getQuiz = async () => {
             const { data } = await detailPracticeActivity(id,user._id)
             console.log("data test",data)
