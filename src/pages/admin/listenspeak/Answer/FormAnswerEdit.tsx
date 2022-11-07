@@ -32,8 +32,6 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
 
   const onFinish = async (value) => {
 
-    console.log("value", value);
-
     const key = 'updatable';
 
     message.loading({ content: 'Loading...', key });
@@ -67,7 +65,6 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
     if (id) {
       const getQuiz = async () => {
         const { data } = await detailAnswerQuiz(id)
-        // console.log("data edit", data);
         setAnswerQuiz(data)
         form.setFieldsValue(data);
         dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
