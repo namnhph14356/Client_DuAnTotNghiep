@@ -78,7 +78,6 @@ const FormAnswerListenSpeak = (props: Props) => {
     if (id) {
       const getQuiz = async () => {
         const { data } = await detailAnswerQuiz(id)
-        // console.log("data edit", data);
         setAnswerQuiz(data)
         dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
       }
@@ -96,7 +95,6 @@ const FormAnswerListenSpeak = (props: Props) => {
 
 
   }, [])
-  // console.log(listAnswer);
 
 
 
