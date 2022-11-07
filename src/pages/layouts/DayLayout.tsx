@@ -69,9 +69,9 @@ const DayLayout = () => {
   }, [location, current]);
 
   return (
-    <Layout className="h-full" style={{ width: "100%" }}>
+    <Layout style={{ width: "100%" }}>
       <Sider
-        className="sider__bar__admin h-[100%]  "
+        className=""
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
@@ -87,16 +87,17 @@ const DayLayout = () => {
           </NavLink>
         </div>
         <Menu
-          className="menu__bar__admin"
+          className="bg-[#001529]"
           theme="dark"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
+          style={{ background: "#001529", height:"100%" }}
         >
-        
-        <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ">
-            <SubMenu key="sub5_1" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/listenspeak">
+
+          <SubMenu key="sub5" icon={<FolderFilled />} title="Luyện nghe nói phản xạ">
+            <SubMenu key="sub5_1" title="Khởi động">
+              <Menu.Item key="/sub5_1_1">
                 <NavLink to="/manageDay/listenspeak">Danh sách</NavLink>
               </Menu.Item>
               {/* <Menu.Item key="/manageDay">
@@ -105,53 +106,47 @@ const DayLayout = () => {
             </SubMenu>
           </SubMenu>
 
-
-
           <SubMenu key="sub6" icon={<FolderFilled />} title="Luyện từ vựng">
-            <SubMenu key="sub6_1" icon={<ReadOutlined />} title="Lessons">
-              <Menu.Item key="/manageDay/vocabulary">
-                <NavLink to="/manageDay/vocabulary">Danh sách từ vựng</NavLink>
+            <SubMenu key="sub6_1" title="Bài học">
+              <Menu.Item key="sub6_1_1">
+                <NavLink to="/manageDay/vocabulary/listLesson">Danh sách từ vựng</NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay/vocabulary/add">
-                <NavLink to="/manageDay/vocabulary/add">Thêm từ vựng</NavLink>
+              <Menu.Item key="sub6_1_2">
+                <NavLink to="/manageDay/vocabulary/addLesson">Thêm từ vựng</NavLink>
               </Menu.Item>
             </SubMenu>
 
-            <SubMenu key="sub6_2" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Danh sách bài tập</NavLink>
+            <SubMenu key="sub6_2" title="Bài tập">
+              <Menu.Item key="sub6_2_1">
+                <NavLink to="/manageDay/vocabulary/listExercise">Danh sách bài tập</NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Thêm bài tập</NavLink>
+              <Menu.Item key="sub6_2_2">
+                <NavLink to="/manageDay/vocabulary/addExercise">Thêm bài tập</NavLink>
               </Menu.Item>
             </SubMenu>
           </SubMenu>
 
 
-          <SubMenu
-            key="sub7"
-            icon={<ReadOutlined />}
-            title="Luyện cấu trúc và câu"
-          >
-            <SubMenu key="sub7_1" icon={<ReadOutlined />} title="Lesson">
-              <Menu.Item key="/manageDay/sentences">
-                <NavLink to="/manageDay/sentences/listExercise">
-                  Danh sách bài học
+          <SubMenu key="sub7" icon={<ReadOutlined />} title="Luyện cấu trúc và câu">
+            <SubMenu key="sub7_1" title="Bài học">
+              <Menu.Item key="sub7_1_1">
+                <NavLink to="/manageDay/sentences/listLesson">
+                  Danh sách
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay/sentences/addLesson">
+              <Menu.Item key="sub7_1_2">
                 <NavLink to="/manageDay/sentences/addLesson">
                   Thêm bài học
                 </NavLink>
               </Menu.Item>
             </SubMenu>
-            <SubMenu key="sub7_2" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/manageDay/sentences">
+            <SubMenu key="sub7_2" title="Bài tập">
+              <Menu.Item key="sub7_2_1">
                 <NavLink to="/manageDay/sentences/listExercise">
-                  Danh sách bài tập
+                  Danh sách
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay/sentences/addExercise">
+              <Menu.Item key="sub7_2_2">
                 <NavLink to="/manageDay/sentences/addExercise">
                   Thêm bài tập
                 </NavLink>
@@ -161,33 +156,41 @@ const DayLayout = () => {
 
 
           <SubMenu key="sub8" icon={<FolderFilled />} title="Luyện hội thoại">
-            <SubMenu key="sub8_1" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Danh sách bài tập</NavLink>
+            <SubMenu key="sub8_1" title="Bài tập">
+              <Menu.Item key="/sub8_1_1">
+                <NavLink to="/manageDay/listenWrite/listExercise">Danh sách</NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay">Thêm bài tập</NavLink>
+              <Menu.Item key="/sub8_1_2">
+                <NavLink to="/manageDay/listenWrite/addExercise">Thêm bài tập</NavLink>
+              </Menu.Item>
+            </SubMenu>
+            <SubMenu key="sub8_2" title="Nghe và đọc">
+              <Menu.Item key="/sub8_2_1">
+                <NavLink to="/manageDay/listenWrite/listListenRead">Danh sách</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/sub8_2_2">
+                <NavLink to="/manageDay/listenWrite/addListenRead">Thêm bài tập</NavLink>
               </Menu.Item>
             </SubMenu>
           </SubMenu>
 
 
           <SubMenu key="sub9" icon={<FolderFilled />} title="Luyện ngữ pháp ">
-            <SubMenu key="sub9_1" icon={<ReadOutlined />} title="Lessons">
-              <Menu.Item key="/manageDay/grammar">
-                <NavLink to="/manageDay/grammar">Danh sách ngữ pháp</NavLink>
+            <SubMenu key="sub9_1"  title="Bài học">
+              <Menu.Item key="sub9_1_1">
+                <NavLink to="/manageDay/grammar/listLesson">Danh sách</NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay/grammar/add">
-                <NavLink to="/manageDay/grammar/add">Thêm ngữ pháp</NavLink>
+              <Menu.Item key="sub9_1_2">
+                <NavLink to="/manageDay/grammar/addLesson">Thêm ngữ pháp</NavLink>
               </Menu.Item>
             </SubMenu>
 
-            <SubMenu key="sub9_2" icon={<ReadOutlined />} title="Exercise">
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay/grammar/listexercise">Danh sách bài tập</NavLink>
+            <SubMenu key="sub9_2" title="Bài tập">
+              <Menu.Item key="sub9_2_1">
+                <NavLink to="/manageDay/grammar/listExercise">Danh sách </NavLink>
               </Menu.Item>
-              <Menu.Item key="/manageDay">
-                <NavLink to="/manageDay/grammar/addexercise">Thêm bài tập</NavLink>
+              <Menu.Item key="sub9_2_2">
+                <NavLink to="/manageDay/grammar/addExercise">Thêm bài tập</NavLink>
               </Menu.Item>
             </SubMenu>
           </SubMenu>
@@ -231,32 +234,32 @@ const DayLayout = () => {
 
 
       {/* <Layout className="w-[100%]"> */}
-          <div className="w-[10%] mt-[5%]">
-            <label htmlFor="" className="text-xl font-bold">Tháng</label>
-            <div className="mt-2 mb-4">
-              <Select value={"Tuần 1"} className="w-full h-[30px]">
-                 <Option value="">Tuần 2</Option>
-                 <Option value="">Tuần 3</Option>
-                 <Option value="">Tuần 4</Option>
-              </Select>
-            </div>
+      <div className="w-[10%] mt-[5%]">
+        <label htmlFor="" className="text-xl font-bold">Tháng</label>
+        <div className="mt-2 mb-4">
+          <Select value={"Tuần 1"} className="w-full h-[30px]">
+            <Option value="">Tuần 2</Option>
+            <Option value="">Tuần 3</Option>
+            <Option value="">Tuần 4</Option>
+          </Select>
+        </div>
 
-              <label htmlFor="" className="text-xl font-bold">Tuần</label>
-              <div className="mt-2">
-              <Select value={"Ngày 1"} className="w-full h-[40px]">
-                 <Option value="">Ngày 2</Option>
-                 <Option value="">Ngày 3</Option>
-                 <Option value="">Ngày 4</Option>
-                 <Option value="">Ngày 5</Option>
-                 <Option value="">Ngày 6</Option>
-              </Select>
-              </div>
+        <label htmlFor="" className="text-xl font-bold">Tuần</label>
+        <div className="mt-2">
+          <Select value={"Ngày 1"} className="w-full h-[40px]">
+            <Option value="">Ngày 2</Option>
+            <Option value="">Ngày 3</Option>
+            <Option value="">Ngày 4</Option>
+            <Option value="">Ngày 5</Option>
+            <Option value="">Ngày 6</Option>
+          </Select>
+        </div>
 
-              <button className="text-blue-600 border-double border-4 border-indigo-600 w-full text-xl font-bold mt-16 hover:text-white hover:bg-blue-600 hover:border-white">Thêm</button>
-          </div>
+        <button className="text-blue-600 border-double border-4 border-indigo-600 w-full text-xl font-bold mt-16 hover:text-white hover:bg-blue-600 hover:border-white">Thêm</button>
+      </div>
       {/* </Layout> */}
 
-    </Layout> 
+    </Layout>
   );
 };
 
