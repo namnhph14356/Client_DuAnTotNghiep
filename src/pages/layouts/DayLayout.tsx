@@ -49,11 +49,11 @@ const DayLayout = () => {
         {
           key: "1",
           icon: <BellOutlined />,
-          label: <span>Profile</span>,
+          label: <span>Hồ sơ của bạn</span>,
         },
         {
           key: "2",
-          label: <span>Log Out</span>,
+          label: <span>Đăng xuất</span>,
           icon: <BellOutlined />,
           danger: true,
         },
@@ -243,7 +243,7 @@ const DayLayout = () => {
             </SubMenu>
           </SubMenu>
           <div className="text-center">
-            <button className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600" onClick={()=>handlonClick()}>Change Day</button>
+            <button className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600" onClick={() => handlonClick()}>Change Day</button>
           </div>
           <div>
             {isModal && <PopupChange closeModal={setIsModal} />}
@@ -299,7 +299,7 @@ const DayLayout = () => {
           </div>
         </Header>
 
-        <Content className=" main__content__admin  px-20 py-4 ">
+        <Content className=" main__content__admin p-8 ">
           <Outlet />
         </Content>
       </Layout>

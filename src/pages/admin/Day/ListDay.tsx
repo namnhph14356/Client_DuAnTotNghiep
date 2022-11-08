@@ -346,7 +346,7 @@ const ListDay = (props: Props) => {
   //------------------TABLE-COLUMM-------------------
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Quản Lý Days"))
+    dispatch(changeBreadcrumb("Quản Lý Ngày Học"))
     dispatch(getListDaySlice())
     dispatch(getListPracticeActivitylice())
 
@@ -357,7 +357,6 @@ const ListDay = (props: Props) => {
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Button type="primary" className="my-6" >
         <Link to={`/manageDay`}>Thêm ngày</Link>
-
       </Button>
 
       {selectedRowKeys.length > 1

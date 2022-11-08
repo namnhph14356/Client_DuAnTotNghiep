@@ -454,7 +454,7 @@ const ListListenSpeak = (props: Props) => {
     //------------------TABLE-COLUMM-------------------
 
     useEffect(() => {
-        dispatch(changeBreadcrumb("Quản Lý AnswerQuiz"))
+        dispatch(changeBreadcrumb("Luyện nghe nói phản xạ"))
         dispatch(getListAnswerQuizSlide())
         dispatch(getCategoryList())
         dispatch(getListQuizSlide())
@@ -463,7 +463,7 @@ const ListListenSpeak = (props: Props) => {
 
     return (
         <div>
-            {/* <AdminPageHeader breadcrumb={breadcrumb} /> */}
+            <AdminPageHeader breadcrumb={breadcrumb} />
 
             {selectedRowKeys.length > 1
                 ? <Popconfirm
