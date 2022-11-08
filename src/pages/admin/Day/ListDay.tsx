@@ -44,19 +44,15 @@ const ListDay = (props: Props) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selected, setSelected] = useState<{ key: string, id: string | undefined }[]>([]);
   const searchInput = useRef<InputRef>(null);
-
-console.log("activity", activity);
+  const weeks = useAppSelector(item => item.week.value);
 
   //------------------STATE--------------------
-
-
 
   const dataTable = days.map((item: DayType, index) => {
     return {
       key: index + 1,
       _id: item._id,
-      title: item.title,
-      week: item.week,  
+      title: item.title,  
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     }
@@ -269,16 +265,6 @@ console.log("activity", activity);
       sorter: (a: any, b: any) => a.key - b.key,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ['descend'],
-    },
-    {
-      title: 'ID',
-      dataIndex: '_id',
-      key: "_id",
-      ...getColumnSearchProps('_id'),
-      sorter: (a: any, b: any) => a._id - b._id,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
-      sortDirections: ['descend'],
-
     },
     {
       title: 'Tiêu đề',

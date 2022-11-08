@@ -12,7 +12,6 @@ import {
   ReadOutlined,
 } from "@ant-design/icons";
 import "../../css/admin.css";
-
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
@@ -90,7 +89,7 @@ const AdminLayout = () => {
 
   return (
     <Layout className='h-full' style={{ width: "100%" }}>
-      <Sider className='sider__bar__admin h-[100%]  ' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+      <Sider className='sider__bar__admin' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}  style={{ background: "#001529", height: "unset" }}>
         <div className="logo flex justify-center py-2 bg-[#001529]" >
           <NavLink aria-current="page" className="logo active text-[#fff]" to="/"> VianEnglish </NavLink>
         </div>
@@ -99,6 +98,7 @@ const AdminLayout = () => {
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
+          style={{ background: "#001529", height: "unset" }}
         >
           <SubMenu key="sub11" icon={<FolderFilled />} title="Days">
             <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>
