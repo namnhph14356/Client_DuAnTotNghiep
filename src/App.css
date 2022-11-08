@@ -144,9 +144,16 @@
 
 /* Day admin */
 
-.title_antd_custom{
+.ant-menu-submenu-title{
    white-space: nowrap !important;
    width: 115px !important;
    overflow: hidden !important;
-   text-overflow: ellipsis !important;
+}
+.ant-menu-submenu-title span{
+    text-overflow: ellipsis !important;
+}
+
+/* Admin */
+.ant-layout-sider{
+    height: auto;
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { listVocabulary, deleteVocabulary } from "../../../api/vocabulary";
 import {
   Table,
   Breadcrumb,
@@ -18,11 +17,10 @@ import type { InputRef } from "antd";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { VocabulatyType } from "../../../types/vocabularyType";
-import AdminPageHeader from "../../../components/AdminPageHeader";
-import { useAppSelector } from "../../../app/hooks";
-import { DayType } from "../../../types/day";
-import { detailDay } from "../../../api/day";
+import { VocabulatyType } from "../../../../types/vocabularyType";
+import { deleteVocabulary, listVocabulary } from "../../../../api/vocabulary";
+import AdminPageHeader from "../../../../components/AdminPageHeader";
+
 type Props = {};
 
 interface DataType {

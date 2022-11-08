@@ -101,9 +101,9 @@ const Footer = () => {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8 xl:col-span-1">
             <img
-              className="h-10"
-              src="https://tailwindui.com/img/logos/mark.svg?color=gray&shade=300"
-              alt="Company name"
+              src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png"
+              alt="VianEnglish"
+              width={130}
             />
             <p className="text-base text-white">
               Making the world a better place through constructing elegant hierarchies.

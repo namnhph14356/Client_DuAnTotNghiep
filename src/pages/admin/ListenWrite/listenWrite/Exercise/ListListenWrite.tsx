@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import { getListAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { ListenWriteType } from '../../../../types/listenWrite';
-import { changeBreadcrumb, getListListenWrite, removeListenSlide } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
 import ReactAudioPlayer from 'react-audio-player';
-import { getListQuestionListenWriteById } from '../../../../api/questionListenWrite';
-import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
-import { removeQuestionListenSlide } from '../../../../features/Slide/questionListenWrite/questionListenWrite';
-import { removeAnswerListenWriteSlide } from '../../../../features/Slide/answerListenWrite/answerListenWrite';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { ListenWriteType } from '../../../../../types/listenWrite';
+import { CategoryType } from '../../../../../types/category';
+import { changeBreadcrumb, getListListenWrite, removeListenSlide } from '../../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { getListQuestionListenWriteById } from '../../../../../api/questionListenWrite';
+import { removeQuestionListenSlide } from '../../../../../features/Slide/questionListenWrite/questionListenWrite';
+import { listAnswerListenWriteById } from '../../../../../api/answerListenWrite';
+import { removeAnswerListenWriteSlide } from '../../../../../features/Slide/answerListenWrite/answerListenWrite';
+import { getListAnswerQuizSlide } from '../../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { getCategoryList } from '../../../../../features/Slide/category/CategorySlide';
+import AdminPageHeader from '../../../../../components/AdminPageHeader';
+
 
 interface DataType {
     key: React.Key;
