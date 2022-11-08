@@ -76,14 +76,14 @@ const LayoutTeacher = () => {
             </Typography.Title>
           </div>
           <Menu
-            style={{ backgroundColor: 'white' }}
+            style={{ backgroundColor: 'white' , height:"unset"}}
             mode="inline"
             defaultSelectedKeys={['0']}
             items={items2}
           />
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 15, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Header className="site-layout-background " style={{ padding: 15, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
               onClick: () => setCollapsed(!collapsed),

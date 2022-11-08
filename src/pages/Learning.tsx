@@ -115,7 +115,6 @@ const Learning = () => {
     setWeekSelect(temp)
     setDaySelect(day)
 
-
     if (learningProgress.length === 0) {
       setLearningProgressSelect(null)
     } else {
@@ -144,7 +143,6 @@ const Learning = () => {
     }
     getHistoryUser()
   }, [])
-
 
   return (
     <div className='learning__page'>
@@ -177,7 +175,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {months.map((item: MonthType, index: number) => (
                           <Menu.Item >
@@ -220,7 +218,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {weeks2.map((item: WeekType) => (
 
@@ -262,7 +260,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {days2.map((item: DayType, index: number) => (
 
                           <Menu.Item >
@@ -360,11 +358,11 @@ const Learning = () => {
                 <div className="statistical__topic__learning__point">
                   {learningProgressSelect
                     ? <ul>
-                      <li>{learningProgressSelect.listeningSpeakingScore}</li>
-                      <li>{learningProgressSelect.vocabularyScore}</li>
-                      <li>{learningProgressSelect.structureSentencesScore}</li>
-                      <li>{learningProgressSelect.conversationScore}</li>
-                      <li>{learningProgressSelect.grammarScore}</li>
+                      <li className={`${learningProgressSelect.listeningSpeakingScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.listeningSpeakingScore}</li>
+                      <li className={`${learningProgressSelect.vocabularyScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.vocabularyScore}</li>
+                      <li className={`${learningProgressSelect.structureSentencesScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.structureSentencesScore}</li>
+                      <li className={`${learningProgressSelect.conversationScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.conversationScore}</li>
+                      <li className={`${learningProgressSelect.grammarScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.grammarScore}</li>
                     </ul>
                     : <ul>
                       <li>0</li>
@@ -386,7 +384,7 @@ const Learning = () => {
                   </button>
                 }
                 <button className='btn__exam__statistical'>
-                  <NavLink to={`/learning/oral`} className='text-white hover:text-white'>
+                  <NavLink to={`/learning/oral/${daySelect?._id}`} className='text-white hover:text-white'>
                     Thi Oral ngày
                   </NavLink>
                 </button>
@@ -398,7 +396,7 @@ const Learning = () => {
             <p className='font-semibold text-cyan-700'>
               Lịch sử các nội dung bạn đã làm:
             </p>
-            <Collapse defaultActiveKey={1} onChange={onChange}>
+            {/* <Collapse defaultActiveKey={1} onChange={onChange}>
               {userHistory?.map((item: any, index: number) => {
                 return <Panel
                   key={index + 1}
@@ -450,7 +448,7 @@ const Learning = () => {
                   </table>
                 </Panel>
               })}
-            </Collapse>
+            </Collapse> */}
           </div>
         </div>
       </div>

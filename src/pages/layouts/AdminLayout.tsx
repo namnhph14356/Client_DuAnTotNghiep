@@ -12,10 +12,13 @@ import {
   ReadOutlined,
 } from "@ant-design/icons";
 import "../../css/admin.css";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { UserType } from "../../types/user";
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
+  const auth = useSelector((item: RootState) => item.auth.value) as UserType;
   let location = useLocation();
   const [current, setCurrent] = useState(location.pathname)
 
@@ -35,13 +38,11 @@ const AdminLayout = () => {
           key: '2',
           label: (
             <span>
-              Log Out
+              Log out
             </span>
           ),
           icon: <BellOutlined />,
           danger: true,
-
-
         }
       ]}
     />
@@ -55,7 +56,7 @@ const AdminLayout = () => {
           icon: <BellOutlined />,
           label: (
             <span>
-              Profile
+              Hồ sơ của bạn
             </span>
           ),
         },
@@ -63,7 +64,7 @@ const AdminLayout = () => {
           key: '2',
           label: (
             <span>
-              Log Out
+              Đăng xuất
             </span>
           ),
           icon: <BellOutlined />,
@@ -90,17 +91,24 @@ const AdminLayout = () => {
 
   return (
     <Layout className='h-full' style={{ width: "100%" }}>
-      <Sider className='sider__bar__admin h-[100%]  ' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
-        <div className="logo flex justify-center py-2 bg-[#001529]" >
-          <NavLink aria-current="page" className="logo active text-[#fff]" to="/"> VianEnglish </NavLink>
+      <Sider className='sider__bar__admin' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} style={{ background: "#001529", height: "unset" }}>
+        <div className="logo  bg-[#001529]">
+          <NavLink aria-current="page" className="active text-[#fff] " to="/">
+            <img
+              src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png"
+              width={70}
+              alt=""
+            />
+          </NavLink>
         </div>
         <Menu className='menu__bar__admin'
           theme="dark"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
+          style={{ background: "#001529", height: "unset" }}
         >
-          <SubMenu key="sub11" icon={<FolderFilled />} title="Days">
+          <SubMenu key="sub11" icon={<FolderFilled />} title="Quản lí ngày học">
             <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>
           </SubMenu>
 
@@ -121,8 +129,8 @@ const AdminLayout = () => {
             <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
           </SubMenu>
 
-          <SubMenu key="sub6" icon={<FolderFilled />} title="Contact">
-            <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>List Contact</NavLink></Menu.Item>
+          <SubMenu key="sub6" icon={<FolderFilled />} title="Liên hệ">
+            <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>Danh sách</NavLink></Menu.Item>
           </SubMenu>
 
         </Menu>
@@ -132,17 +140,28 @@ const AdminLayout = () => {
         <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >
 
           <div className="flex justify-end">
-            <div className="px-4">
-              <Dropdown overlay={notification} trigger={['click']} placement="bottomRight">
+            <div className="px-4 ">
+              <Dropdown
+                overlay={notification}
+                trigger={["click"]}
+                placement="bottomRight"
+              >
                 <Badge dot>
-                  <BellOutlined style={{ fontSize: 24, color: 'white' }} />
+                  <BellOutlined
+                    style={{ fontSize: 24, color: "white" }}
+                    className="cursor-pointer"
+                  />
                 </Badge>
               </Dropdown>
             </div>
-            <div className="px-4">
-
-              <Dropdown overlay={menu} trigger={['click']}>
-                <Avatar size="large" icon={<UserOutlined />} />
+            <div className="px-4 my-auto">
+              <Dropdown overlay={menu} trigger={["click"]}>
+                <img
+                  src={auth.img}
+                  width={"40"}
+                  alt=""
+                  className="rounded-full cursor-pointer"
+                />
               </Dropdown>
             </div>
           </div>

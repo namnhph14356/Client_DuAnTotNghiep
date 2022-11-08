@@ -21,17 +21,17 @@ import {
   addVocabulary,
   detailVocabulary,
   editVocabulary,
-} from "../../../api/vocabulary";
+} from "../../../../api/vocabulary";
 import ReactQuill from "react-quill";
-import AdminPageHeader from "../../../components/AdminPageHeader";
-import { getCategoryList } from "../../../features/Slide/category/CategorySlide";
-import { getListMonthSlice } from "../../../features/Slide/month/MonthSlice";
-import { getListWeekSlice } from "../../../features/Slide/week/WeekSlice";
-import { getListDaySlice } from "../../../features/Slide/day/DaySlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { MonthType } from "../../../types/month";
-import { WeekType } from "../../../types/week";
-import { DayType } from "../../../types/day";
+import AdminPageHeader from "../../../../components/AdminPageHeader";
+import { getCategoryList } from "../../../../features/Slide/category/CategorySlide";
+import { getListMonthSlice } from "../../../../features/Slide/month/MonthSlice";
+import { getListWeekSlice } from "../../../../features/Slide/week/WeekSlice";
+import { getListDaySlice } from "../../../../features/Slide/day/DaySlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { MonthType } from "../../../../types/month";
+import { WeekType } from "../../../../types/week";
+import { DayType } from "../../../../types/day";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
