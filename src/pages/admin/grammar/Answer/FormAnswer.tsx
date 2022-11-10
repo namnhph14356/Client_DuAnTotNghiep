@@ -24,17 +24,11 @@ const FormAnswer = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
-
   const { id } = useParams();
-  console.log(id);
-  const filterAnswer = listAnswer.filter((item) => item.quiz === id )
+  const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
-  console.log(filterIsCorrect);
-  
 
   const onFinish = async (value) => {
-
-    console.log("value", value);
 
     const key = 'updatable';
 
@@ -61,15 +55,12 @@ const FormAnswer = () => {
   };
 
   const handleChange = (e) => {
-    if( filterIsCorrect.isCorrect === e){
+    if (filterIsCorrect.isCorrect === e) {
       console.log('Đã có đáp án đúng');
-    }else{
+    } else {
       console.log('CHưa có');
-      
     }
-
   }
-
 
   useEffect(() => {
     if (id) {
@@ -99,7 +90,7 @@ const FormAnswer = () => {
   return (
     <div className="container">
       <div className='mx-6 my-6'>
-        <h1>Thêm câu hỏi</h1>
+        <h1>Thêm đáp án bài tập</h1>
       </div>
       <div className="pb-6 mx-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -107,6 +98,22 @@ const FormAnswer = () => {
           <Form.Item
             label="Đáp Án"
             name="answer"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Ngữ nghĩa / loại từ"
+            name="wordMeaning"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Giải thích đáp án"
+            name="explainAnswer"
             tooltip="Đáp án dành cho Quiz"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >

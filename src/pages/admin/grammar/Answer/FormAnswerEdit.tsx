@@ -24,7 +24,6 @@ const FormAnswerEdit = () => {
   const navigate = useNavigate()
 
   const { id } = useParams();
-  console.log(id);
 
   const onFinish = async (value) => {
 
@@ -55,8 +54,6 @@ const FormAnswerEdit = () => {
     form.resetFields();
   };
 
-
-
   useEffect(() => {
     if (id) {
       const getQuiz = async () => {
@@ -73,9 +70,6 @@ const FormAnswerEdit = () => {
     dispatch(getListQuizSlide())
 
   }, [])
-
-
-
 
   return (
     <div className="container">
@@ -94,6 +88,25 @@ const FormAnswerEdit = () => {
           >
             <Input />
           </Form.Item>
+
+          <Form.Item
+            label="Ngữ nghĩa / loại từ"
+            name="wordMeaning"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Giải thích đáp án"
+            name="explainAnswer"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+
           <Form.Item
             label="Trạng Thái"
             name="isCorrect"
@@ -121,8 +134,6 @@ const FormAnswerEdit = () => {
             }
           </Form.Item>
 
-
-
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               {id ? "Sửa" : "Thêm"}
@@ -131,7 +142,6 @@ const FormAnswerEdit = () => {
               Reset
             </Button>
           </Form.Item>
-
 
         </Form>
       </div>

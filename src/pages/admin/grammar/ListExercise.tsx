@@ -16,8 +16,6 @@ import moment from 'moment'
 import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { AnswerQuizType } from '../../../types/answerQuiz';
 
-
-
 interface DataType {
     key: React.Key;
     category?: string;
@@ -40,6 +38,8 @@ interface ExpandedDataType {
     quiz: string;
     answer: string;
     isCorrect: number;
+    wordMeaning: string;
+    explainAnswer: string;
 }
 
 const typeQuiz = [
@@ -48,13 +48,13 @@ const typeQuiz = [
     { id: 3, type: "selectCompound" }
 ]
 
-
 type DataIndex = keyof ExpandedDataType;
 type DataIndex2 = keyof DataType;
 
-
 type Props = {}
+
 const ListExercise = () => {
+
     const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
     const quizs = useAppSelector(item => item.quiz.value)
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
@@ -67,19 +67,9 @@ const ListExercise = () => {
     const searchInput = useRef<InputRef>(null);
     const [listTable, setListTable] = useState<any>([]);
 
-
     //------------------STATE--------------------
-    const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio')
-
-    const changeTable = (e) => {
-        console.log(e);
-        const news = tableWithType.filter((item: any) => item.type === e)
-        setListTable(news)
-    }
-
-    const resetTable = () => {
-        setListTable(tableWithType)
-    }
+    const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
+    const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity === '6346d2c0034348adfcfce58e')
 
     const dataTable = tableWithType.map((item: QuizType, index) => {
         return {
@@ -87,11 +77,10 @@ const ListExercise = () => {
             _id: item._id,
             question: item.question,
             type: item.type,
-            ssuggestionsgg: item.suggestions,
-            explain: item.explain,
+            suggestions: item.suggestions,
+            meaning: item.meaning,
             createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
             updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
-
         }
     })
     const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
@@ -100,10 +89,11 @@ const ListExercise = () => {
             _id: item._id,
             quiz: item.quiz,
             answer: item.answer,
-            isCorrect: item.isCorrect
+            isCorrect: item.isCorrect,
+            wordMeaning: item.wordMeaning,
+            explainAnswer: item.explainAnswer
         }
     })
-
 
     //------------------TABLE-DATA-------------------
 
@@ -173,20 +163,15 @@ const ListExercise = () => {
 
     });
 
-
     //------------------SEARCH--------------------
-
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         let rowSelected: { key: string, id: string | undefined }[] = []
         newSelectedRowKeys.map((item) => {
             childrenTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
         })
-        // console.log('rowSelected', rowSelected);
-        // console.log('newSelectedRowKeys', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys)
         setSelected(rowSelected);
-        // console.log('selectedRowKeys changed: ', selectedRowKeys);
     };
 
     const rowSelection: TableRowSelection<ExpandedDataType> = {
@@ -246,7 +231,6 @@ const ListExercise = () => {
     const handleOk1 = (id) => {
         const key = 'updatable';
         setConfirmLoading(true);
-        console.log(id);
         message.loading({ content: 'Loading...', key });
 
         setTimeout(() => {
@@ -263,7 +247,6 @@ const ListExercise = () => {
         message.error('Hủy Hành Động!');
     };
 
-
     //------------------REMOVE-CONFIRM-------------------
 
     const columns: ColumnsType<any> = [
@@ -271,8 +254,8 @@ const ListExercise = () => {
             title: 'STT',
             dataIndex: 'key',
             key: "key",
+            className: 'w-[70px]',
             sorter: (a: any, b: any) => a.key - b.key,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
         },
         {
@@ -281,10 +264,9 @@ const ListExercise = () => {
             key: "_id",
             ...getColumnSearchProps('_id'),
             sorter: (a: any, b: any) => a._id - b._id,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
             render: (record) => (
-                <div className="w-28 max-w-md truncate">
+                <div className="w-28 max-w-md ">
                     {record}
                 </div>
             )
@@ -303,9 +285,9 @@ const ListExercise = () => {
         },
         {
             title: 'Gợi ý',
-            dataIndex: 'explain',
-            key: "explain",
-            ...getColumnSearchProps('explain'),
+            dataIndex: 'meaning',
+            key: "meaning",
+            ...getColumnSearchProps('meaning'),
         },
         {
             title: 'Ngày Tạo',
@@ -320,11 +302,12 @@ const ListExercise = () => {
 
         },
         {
-            title: 'Hành động',
+            title: 'Hành Động',
+            fixed: "right",
             key: "action", render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button style={{ background: "#198754" }} >
-                        <Link to={`/manageDay/grammar/question/${record._id}/edit`} >
+                        <Link to={`/manageDay/listenspeak/question/${record._id}/edit`} >
                             <span className="text-white">Sửa</span>
                         </Link>
 
@@ -348,7 +331,7 @@ const ListExercise = () => {
             ),
         },
         {
-            title: 'Thêm đáp án',
+            title: 'Thêm câu trả lời',
             fixed: "right",
             key: "action", render: (text, record) => (
                 <Space align="center" size="small">
@@ -365,13 +348,13 @@ const ListExercise = () => {
 
     const expandedRowRender = (row: any) => {
 
-        // console.log("expandedRow", row);
-
         const columns2: ColumnsType<ExpandedDataType> = [
             { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
             { title: 'STT', dataIndex: 'stt', key: 'stt' },
             { title: 'ID', dataIndex: '_id', key: '_id' },
             { title: 'Đáp án', dataIndex: 'answer', key: 'answer' },
+            { title: 'Ngữ nghĩa / loại từ', dataIndex: 'wordMeaning', key: 'wordMeaning' },
+            { title: 'Giải thích đáp án', dataIndex: 'explainAnswer', key: 'explainAnswer' },
             {
                 title: 'Đáp án đúng',
 
@@ -415,6 +398,7 @@ const ListExercise = () => {
 
             },
 
+
         ];
 
         let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
@@ -424,8 +408,11 @@ const ListExercise = () => {
                 _id: item2._id,
                 answer: item2.answer,
                 quiz: item2.quiz,
-                isCorrect: item2.isCorrect
+                isCorrect: item2.isCorrect,
+                wordMeaning: item2.wordMeaning,
+                explainAnswer: item2.explainAnswer
             }
+
         })
 
         return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
@@ -468,15 +455,15 @@ const ListExercise = () => {
 
             <Table
                 bordered
-                footer={() => `Hiển thị 10 trên tổng ${tableWithType.length}`}
+                footer={() => `Hiển thị 10 trên tổng ${tableListenSpeak.length}`}
                 expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
                 columns={columns}
                 dataSource={dataTable}
-
+                scroll={{ x: 1550 }}
             />
 
         </div>
     )
 }
 
-export default ListExercise
+export default ListExercise 
