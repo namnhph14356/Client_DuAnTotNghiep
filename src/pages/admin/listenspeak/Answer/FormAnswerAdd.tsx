@@ -30,10 +30,10 @@ const FormAnswerListenSpeak = (props: Props) => {
 
   const { id } = useParams();
   console.log(id);
-  const filterAnswer = listAnswer.filter((item) => item.quiz === id )
+  const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
   console.log(filterIsCorrect);
-  
+
 
   const onFinish = async (value) => {
 
@@ -64,27 +64,19 @@ const FormAnswerListenSpeak = (props: Props) => {
   };
 
   const handleChange = (e) => {
-    if( filterIsCorrect.isCorrect === e){
+    if (filterIsCorrect.isCorrect === e) {
       console.log('Đã có đáp án đúng');
-    }else{
+    } else {
       console.log('CHưa có');
-      
+
     }
 
   }
 
 
   useEffect(() => {
-    if (id) {
-      const getQuiz = async () => {
-        const { data } = await detailAnswerQuiz(id)
-        setAnswerQuiz(data)
-        dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
-      }
-      getQuiz()
-    } else {
-      dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
-    }
+
+    dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
 
     dispatch(getListQuizSlide())
     const getAnswer = async () => {
@@ -101,9 +93,7 @@ const FormAnswerListenSpeak = (props: Props) => {
 
   return (
     <div className="container">
-      <div className='mx-6 my-6'>
-        <h1>Thêm câu hỏi</h1>
-      </div>
+      <AdminPageHeader breadcrumb={breadcrumb} />
       <div className="pb-6 mx-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 

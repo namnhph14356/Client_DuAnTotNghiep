@@ -70,19 +70,10 @@ const ListListenSpeak = (props: Props) => {
 
     //------------------STATE--------------------
     const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
+    const tableListenSpeak = tableWithType.filter((item:any) => item.practiceActivity === '6346d2c0034348adfcfce58e')
+    
 
-    const changeTable = (e) => {
-        console.log(e);
-        const news = tableWithType.filter((item: any) => item.type === e)
-        setListTable(news)
-    }
-
-    const resetTable = () => {
-        setListTable(tableWithType)
-    }
-
-
-    const dataTable = tableWithType.map((item: QuizType, index) => {
+    const dataTable = tableListenSpeak.map((item: QuizType, index) => {
         return {
             key: index + 1,
             _id: item._id,
@@ -95,7 +86,6 @@ const ListListenSpeak = (props: Props) => {
 
         }
     })
-    console.log('dataTable', dataTable);
 
     const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
         return {
@@ -274,6 +264,7 @@ const ListListenSpeak = (props: Props) => {
             title: 'STT',
             dataIndex: 'key',
             key: "key",
+            className: 'w-[70px]',
             sorter: (a: any, b: any) => a.key - b.key,
             // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
@@ -282,19 +273,21 @@ const ListListenSpeak = (props: Props) => {
             title: 'ID',
             dataIndex: '_id',
             key: "_id",
+            className: 'w-[220px]',
             ...getColumnSearchProps('_id'),
             sorter: (a: any, b: any) => a._id - b._id,
             // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
             render: (record) => (
-              <div className="w-28 max-w-md truncate">
-                  {record}
-              </div>
-          )
+                <div>
+                    {record}
+                </div>
+            )
         },
         {
             title: 'Hình ảnh',
             key: "image",
+            className: 'w-[100px]',
             render: (record) => (
                 <div className="">
                     <Image
@@ -315,6 +308,16 @@ const ListListenSpeak = (props: Props) => {
             title: 'Loại Câu Hỏi',
             dataIndex: 'type',
             key: "type",
+            render: ((item) => (
+                <>
+                    {item === "selectRadio"
+                        ? <p>Chọn đáp án</p> :
+                        item === "selectImage"
+                            ? <p>Chọn đáp án theo hình ảnh</p> :
+                            <p>Chọn nhiều đáp án</p>
+                    }
+                </>
+            )),
             filters: typeQuiz.map((item: any) => { return { text: item.type, value: item.type } }),
             onFilter: (value, record) => {
                 return record.type == value
@@ -325,6 +328,7 @@ const ListListenSpeak = (props: Props) => {
             dataIndex: 'timeLimit',
             key: "timeLimit",
             ...getColumnSearchProps('timeLimit'),
+            render: ((value) => (<p>{moment(value).format('mm:ss')} phút</p>))
         },
         {
             title: 'Ngày Tạo',
@@ -339,9 +343,8 @@ const ListListenSpeak = (props: Props) => {
 
         },
         {
-            title: <Button type="ghost" >
-                <Link to={`/manageDay/listenspeak/question/add`}>Thêm câu hỏi</Link>
-            </Button>,
+            title: 'Hành Động',
+            fixed: "right",
             key: "action", render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button style={{ background: "#198754" }} >
@@ -365,6 +368,19 @@ const ListListenSpeak = (props: Props) => {
                         </Button>
                     </Popconfirm>
 
+                </Space>
+            ),
+        },
+        {
+            title: 'Thêm câu trả lời',
+            fixed: "right",
+            key: "action", render: (text, record) => (
+                <Space align="center" size="small">
+                    <Button style={{ background: "#E7975A" }} >
+                        <Link to={`/manageDay/listenspeak/answer/${record._id}/add`} >
+                            <span className="text-white">Thêm</span>
+                        </Link>
+                    </Button>
                 </Space>
             ),
         }
@@ -423,19 +439,6 @@ const ListListenSpeak = (props: Props) => {
                 ),
 
             },
-            {
-                title: 'Thêm đáp án',
-
-                key: 'quiz',
-                render: (record) => (
-                    <Button style={{ background: "blue" }} >
-                        <Link to={`/manageDay/listenspeak/answer/${record.quiz}/add`} >
-                            <span className="text-white">Thêm</span>
-                        </Link>
-
-                    </Button>
-                ),
-            },
         ];
 
         let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
@@ -464,6 +467,9 @@ const ListListenSpeak = (props: Props) => {
     return (
         <div>
             <AdminPageHeader breadcrumb={breadcrumb} />
+            <Button type='primary' className='mb-8' >
+                <Link to={`/manageDay/listenspeak/question/add`}>Thêm câu hỏi</Link>
+            </Button>
 
             {selectedRowKeys.length > 1
                 ? <Popconfirm
@@ -486,11 +492,11 @@ const ListListenSpeak = (props: Props) => {
 
             <Table
                 bordered
-                footer={() => `Hiển thị 10 trên tổng ${tableWithType.length}`}
+                footer={() => `Hiển thị 10 trên tổng ${tableListenSpeak.length}`}
                 expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
                 columns={columns}
                 dataSource={dataTable}
-
+                scroll={{ x: 1550 }}
             />
 
         </div>

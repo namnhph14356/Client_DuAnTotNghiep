@@ -46,7 +46,7 @@ const FormAnswer = () => {
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate("/manageDay/listenspeak");
+      navigate("/manageDay/grammar/listExercise");
 
     }, 2000);
 

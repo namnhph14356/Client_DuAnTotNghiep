@@ -24,12 +24,12 @@ interface DataType {
     question: string;
     questionAfter?: string;
     image?: string;
-    meaning?:string,
-    suggestions?:string,
+    meaning?: string,
+    suggestions?: string,
     timeLimit?: string;
     type?: string;
     practiceActivity?: string;
-    explain? : string;
+    explain?: string;
     createdAt?: string;
     updatedAt?: string;
 }
@@ -55,7 +55,7 @@ type DataIndex2 = keyof DataType;
 
 type Props = {}
 const ListExercise = () => {
-  const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
+    const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
     const quizs = useAppSelector(item => item.quiz.value)
     const answerQuizs = useAppSelector(item => item.answerQuiz.value)
     const dispatch = useAppDispatch();
@@ -81,22 +81,19 @@ const ListExercise = () => {
         setListTable(tableWithType)
     }
 
-
     const dataTable = tableWithType.map((item: QuizType, index) => {
         return {
             key: index + 1,
             _id: item._id,
             question: item.question,
             type: item.type,
-            ssuggestionsgg : item.suggestions,
-            explain:item.explain,
+            ssuggestionsgg: item.suggestions,
+            explain: item.explain,
             createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
             updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
 
         }
     })
-    console.log('dataTable', dataTable);
-
     const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
         return {
             key: item._id,
@@ -287,10 +284,10 @@ const ListExercise = () => {
             // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
             render: (record) => (
-              <div className="w-28 max-w-md truncate">
-                  {record}
-              </div>
-          )
+                <div className="w-28 max-w-md truncate">
+                    {record}
+                </div>
+            )
         },
         {
             title: 'Câu hỏi',
@@ -323,9 +320,7 @@ const ListExercise = () => {
 
         },
         {
-            title: <Button type="ghost" >
-                <Link to={`/manageDay/grammar/question/add`}>Thêm câu hỏi</Link>
-            </Button>,
+            title: 'Hành động',
             key: "action", render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button style={{ background: "#198754" }} >
@@ -349,6 +344,19 @@ const ListExercise = () => {
                         </Button>
                     </Popconfirm>
 
+                </Space>
+            ),
+        },
+        {
+            title: 'Thêm đáp án',
+            fixed: "right",
+            key: "action", render: (text, record) => (
+                <Space align="center" size="small">
+                    <Button style={{ background: "#E7975A" }} >
+                        <Link to={`/manageDay/grammar/answer/${record._id}/add`} >
+                            <span className="text-white">Thêm</span>
+                        </Link>
+                    </Button>
                 </Space>
             ),
         }
@@ -406,18 +414,7 @@ const ListExercise = () => {
                 ),
 
             },
-            {
-                title: "Thêm đáp án",
-                key: 'quiz',
-                render: (record) => (
-                    <Button style={{ background: "blue" }} >
-                        <Link to={`/manageDay/grammar/answer/${record.quiz}/add`} >
-                            <span className="text-white">Thêm</span>
-                        </Link>
 
-                    </Button>
-                ),
-            },
         ];
 
         let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
@@ -446,6 +443,9 @@ const ListExercise = () => {
     return (
         <div>
             <AdminPageHeader breadcrumb={breadcrumb} />
+            <Button type='primary' className='mb-8' >
+                <Link to={`/manageDay/grammar/question/add`}>Thêm câu hỏi</Link>
+            </Button>
 
             {selectedRowKeys.length > 1
                 ? <Popconfirm
