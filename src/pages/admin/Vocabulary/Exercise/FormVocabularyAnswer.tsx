@@ -11,8 +11,6 @@ import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../..
 import { detailAnswerQuiz, listAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 
-
-
 type Props = {}
 
 const FormAnswerListenSpeak = (props: Props) => {
@@ -27,18 +25,11 @@ const FormAnswerListenSpeak = (props: Props) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
 
-
     const { id } = useParams();
-    console.log(id);
     const filterAnswer = listAnswer.filter((item) => item.quiz === id)
     const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
-    console.log(filterIsCorrect);
-
 
     const onFinish = async (value) => {
-
-        console.log("value", value);
-
         const key = 'updatable';
 
         message.loading({ content: 'Loading...', key });
@@ -73,12 +64,9 @@ const FormAnswerListenSpeak = (props: Props) => {
 
     }
 
-
     useEffect(() => {
 
         dispatch(changeBreadcrumb("Thêm câu trả lời"))
-
-
         dispatch(getListQuizSlide())
         const getAnswer = async () => {
             const { data } = await listAnswerQuiz()
@@ -88,9 +76,6 @@ const FormAnswerListenSpeak = (props: Props) => {
 
 
     }, [])
-
-
-
 
     return (
         <div className="container">
@@ -123,8 +108,6 @@ const FormAnswerListenSpeak = (props: Props) => {
                         </Select>
                     </Form.Item>
 
-
-
                     <Form.Item className='float-right'>
                         <Button className='inline-block mr-2' type="primary" htmlType="submit" >
                             Thêm
@@ -137,9 +120,6 @@ const FormAnswerListenSpeak = (props: Props) => {
 
                 </Form>
             </div>
-
-
-
 
         </div>
     )

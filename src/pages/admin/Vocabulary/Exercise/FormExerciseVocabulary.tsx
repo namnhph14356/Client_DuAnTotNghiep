@@ -34,13 +34,11 @@ const FormExerciseVocabulary = (props: Props) => {
   ]
   const type = "vocabulary"
   const prative: any = practiceActivity.find((item: any) => item.type === type)
-  console.log(prative?._id);
 
 
   const { id } = useParams();
 
   const onFinish = async (value) => {
-    console.log(value);
     if (fileList) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
@@ -58,13 +56,11 @@ const FormExerciseVocabulary = (props: Props) => {
       setfileList(null);
     }
 
-    console.log("value", value);
     if (value.type === 'selectImage') {
       if (!value.image) {
         return message.error('Không để trống Ảnh!');
       }
     }
-
 
     const key = 'updatable';
 
@@ -73,13 +69,11 @@ const FormExerciseVocabulary = (props: Props) => {
       if (id) {
         // dispatch(editQuizSlide(value));
         mutate(edit(value))
-        console.log("data swr", data);
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
         navigate("/manageDay/vocabulary/listExercise");
       } else {
         // dispatch(addQuizSlide(value));
         mutate(add(value))
-        console.log("data swr", data);
 
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
         navigate("/manageDay/vocabulary/listExercise");
@@ -99,10 +93,8 @@ const FormExerciseVocabulary = (props: Props) => {
   //----------------------UPLOAD
 
   const onChangeImage = async (e) => {
-    console.log("e", e.target.files[0]);
     if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
       setfileList(e.target.files[0])
-      console.log("fileList before", fileList);
       const imgPreview = document.getElementById("img-preview") as HTMLImageElement
 
       imgPreview.src = await URL.createObjectURL(e.target.files[0])
@@ -122,9 +114,7 @@ const FormExerciseVocabulary = (props: Props) => {
     if (id) {
       const getQuiz = async () => {
         const { data } = await detailQuiz(id)
-        // console.log("data edit", data);
         setQuiz(data)
-        console.log(data);
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
         dispatch(changeBreadcrumb("Sửa Quiz"))
@@ -137,9 +127,6 @@ const FormExerciseVocabulary = (props: Props) => {
     dispatch(getCategoryList())
 
   }, [])
-
-
-
 
   return (
     <div className="container">
@@ -196,8 +183,6 @@ const FormExerciseVocabulary = (props: Props) => {
             }
           </Form.Item>
 
-
-
           <div>
             <Form.Item name="image" valuePropName="src" label="ImagePreview" >
               <img id="img-preview" style={{ width: "100px" }} />
@@ -215,7 +200,6 @@ const FormExerciseVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
-
           <Form.Item label="practiceActivity" name="practiceActivity" hidden={true} >
             <Input />
           </Form.Item>
@@ -230,9 +214,6 @@ const FormExerciseVocabulary = (props: Props) => {
           </Form.Item>
         </Form>
       </div>
-
-
-
 
     </div >
   )
