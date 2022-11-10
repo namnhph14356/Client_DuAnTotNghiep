@@ -20,7 +20,6 @@ import { listAnswerListenWriteById } from '../../api/answerListenWrite';
 import { ListenWriteType, QuestionAnswerListenWriteType } from '../../types/listenWrite';
 import { Collapse, Modal } from 'antd';
 import Loading from '../../components/Loading';
-import { async } from '@firebase/util';
 
 const value = [
   { id: 1, name: 'Annette Black' },
@@ -65,6 +64,7 @@ const ExeWriteAndListen = () => {
   const [convertQuizz, setConvertQuizz] = useState<any>([])
   const [checkAudio, setCheckAudio] = useState<any>()
   const [checkStartAudio, setCheckStartAudio] = useState(false)
+  const [checkMeaning, setCheckMeaning] = useState(false)
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
 
   const [listText, setListText] = useState<any>([])
@@ -276,7 +276,7 @@ const ExeWriteAndListen = () => {
               </audio>
             </div>
 
-            {/* <div className='mx-4 my-8 '>
+            <div className='mx-4 my-8 '>
               <div className=' text-lg border-b'>
                 <div><i className="fa-solid fa-pen"></i> Nghe và trả lời câu hỏi.</div>
               </div>
@@ -321,7 +321,7 @@ const ExeWriteAndListen = () => {
                   )
                 })}
               </div>
-            </div> */}
+            </div>
 
             {/* <div className='mx-4 py-8 '>
               <div className='mb-8 text-lg border-b'>
@@ -362,33 +362,47 @@ const ExeWriteAndListen = () => {
             </div> */}
 
             <div className='mx-4 py-8 '>
-              <div className='mb-8 text-lg border-b'>
+              <div className='mb-4 text-lg border-b'>
                 <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
               </div>
-              <div>
-                <div className="content">
+
+              <div className='float-right'>
+                <div className='border px-3 rounded bg-gray-200 font-medium cursor-pointer hover:border-slate-400' onClick={() => setCheckMeaning(!checkMeaning)}>
                   {
-                    listText?.response?.results.map((item: any, index: number) => {
-                      return (
-                        <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-1 even:bg-slate-100"  >
-                          <div className='col-span-2 flex justify-between gap-4 py-2 '>
-                            <strong className='my-auto'>Long: </strong>
-                            {/* <span onClick={() => speak({ text: item.alternatives[0].transcript, rate: 1, pitch: 1, voice: voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span> */}
-                            {
-                              checkPause ?
-                                <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
-                                :
-                                <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
-                            }
-                          </div>
-                          <span id='speech' key={index + 1} className='col-span-10 my-auto normal-case'>{convertText(item.alternatives[0].transcript)}</span>
-                        </div>
-                      )
-                    })
+                    checkMeaning ? 'Ẩn tiếng việt' : 'Hiện tiếng việt'
                   }
                 </div>
               </div>
+
+              <div className="content">
+                {
+                  listText?.response?.results.map((item: any, index: number) => {
+                    return (
+                      <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-3 even:bg-slate-100"  >
+                        <div className='col-span-2 flex justify-between gap-4 my-auto'>
+                          <strong className='my-auto'>Long: </strong>
+                          {
+                            checkPause ?
+                              <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
+                              :
+                              <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                          }
+                        </div>
+                        <div className='col-span-10 my-auto'>
+                          <span id='speech' key={index + 1} className='text-base'>{convertText(item.alternatives[0].transcript)}</span>
+                          {
+                            checkMeaning ?
+                              <div className='text-sm text-gray-500'>Nghĩa tiếng việt</div>
+                              : ""
+                          }
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
+
             <div className="btn__Check__answer" >
               <button>Làm lại </button>
               <button>Nộp bài</button>
