@@ -116,6 +116,11 @@ const FormQuestionListenSpeak = (props: Props) => {
 
 
   }
+  React.useEffect(() => {
+    form.setFieldsValue({
+      practiceActivity: prative?._id
+    })
+  },[])
   useEffect(() => {
     if (id) {
       const getQuiz = async () => {
