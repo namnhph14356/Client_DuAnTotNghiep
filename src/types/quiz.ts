@@ -8,6 +8,7 @@ export type QuizType = {
   suggestions?:string,
   timeLimit?: string;
   type?: string;
+  explain? : string
   practiceActivity?: string;
   createdAt?: string;
   updatedAt?: string;
