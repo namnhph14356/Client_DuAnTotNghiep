@@ -106,6 +106,9 @@ import ListVocabulary from "./pages/admin/Vocabulary/Lesson/ListVocabulary";
 import ListListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/ListListenWrite";
 import ListListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/ListListenRead";
 import FormListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenRead";
+import ListLessonVocabulary from "./pages/admin/Vocabulary/Exercise/ListLessonVocabulary";
+import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
+import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
 
 function App() {
   return (
@@ -280,8 +283,12 @@ function App() {
             <Route path=":id/editLesson" element={<FormVocabulary />} />
 
             <Route path="addExercise" element={<FormExerciseVocabulary />} />
-            <Route path="listExercise" element={<ListSentencesExercise />} />
+            <Route path="listExercise" element={<ListLessonVocabulary />} />
             <Route path=":id/editExercise" element={<FormExerciseVocabulary />} />
+
+            <Route path=":id/addExerciseAnswer" element={<FormVocabularyAnswer />} />
+            <Route path=":id/editExerciseAnswer" element={<FormVocabularyEdit />} />
+
           </Route>
 
           <Route path="sentences">
