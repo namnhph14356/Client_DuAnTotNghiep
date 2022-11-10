@@ -14,11 +14,8 @@ type PracticeActivityArr = {
 
 const MenuAdverDeatil = () => {
   const { id, dayId } = useParams();
-  console.log("id",id)
-  console.log("dayId",dayId)
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
-  console.log("practiceActivity",practiceActivity)
   const practiceLearning = [...practiceActivity]
   practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
   const practiceArr = [

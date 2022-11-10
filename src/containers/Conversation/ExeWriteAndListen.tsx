@@ -20,6 +20,7 @@ import { listAnswerListenWriteById } from '../../api/answerListenWrite';
 import { ListenWriteType, QuestionAnswerListenWriteType } from '../../types/listenWrite';
 import { Collapse, Modal } from 'antd';
 import Loading from '../../components/Loading';
+import { async } from '@firebase/util';
 
 const value = [
   { id: 1, name: 'Annette Black' },
@@ -58,10 +59,15 @@ const ExeWriteAndListen = () => {
   const { id } = useParams();
   const [check, setCheck] = useState(false)
   const [checkDetailAnswer, setCheckDetailAnswer] = useState(false)
+  const [checkPause, setCheckPause] = useState(false)
   const [numTrueAnswer, setNumTrueAnswer] = useState(0)
   const [convertValues, setConvertValues] = useState<any>([])
   const [convertQuizz, setConvertQuizz] = useState<any>([])
+  const [checkAudio, setCheckAudio] = useState<any>()
+  const [checkStartAudio, setCheckStartAudio] = useState(false)
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } = useSpeechSynthesis();
+
+  const [listText, setListText] = useState<any>([])
 
   const onSubmit2 = async (item: any) => {
 
@@ -92,8 +98,6 @@ const ExeWriteAndListen = () => {
         }
       })
     }
-
-    console.log("item232333", item);
 
     // check answer listenWrite
     let convertValues2: any = [];
@@ -150,6 +154,9 @@ const ExeWriteAndListen = () => {
 
   const btListenWrite = async () => {
     const { payload } = await dispatch(getListenWriteByIdCategory(id))
+    const avx = JSON.parse(payload.test);
+    setListText(avx)
+
     if (payload) {
       const { data: question } = await getListQuestionListenWriteById(String(payload._id))
       let arr: any = [];
@@ -175,6 +182,83 @@ const ExeWriteAndListen = () => {
     setConvertQuizz([...convertQuizz, answer])
   }
 
+  const onStartAudio = async (value: any, index: number) => {
+    const audio: any = document.getElementById("audio1");
+    const firstItem = value?.alternatives[0].words[0]
+    audio.startTime = firstItem.startTime.seconds
+    audio.endTime = value.resultEndTime.seconds
+    audio.currentTime = firstItem.startTime.seconds
+
+    setCheckPause(true)
+    checkColorSpeech(value, index)
+    await audio.play()
+
+    setCheckAudio({ start: firstItem.startTime.seconds, end: value.resultEndTime.seconds })
+  }
+
+  const onTimeUpdate = async () => {
+    const audio: any = document.getElementById("audio1");
+    let speech: any = document.querySelectorAll("#speech");
+    let iconAudio: any = document.querySelectorAll("#iconAudio");
+
+    if (Math.floor(audio.currentTime) === Number(audio.endTime)) {
+      speech.forEach((element, i) => {
+        speech[i].style.color = "black";
+        iconAudio[i].style.display = "block"
+      });
+      setCheckPause(false)
+      await audio.pause()
+    }
+  }
+
+  const onPause = async () => {
+    const audio: any = document.getElementById("audio1");
+    let speech: any = document.querySelectorAll("#speech");
+    let iconAudio: any = document.querySelectorAll("#iconAudio");
+    speech.forEach((element, i) => {
+      speech[i].style.color = "black";
+      iconAudio[i].style.display = "block"
+    });
+    setCheckPause(false)
+    await audio.pause()
+  }
+
+  const convertText = (text: String) => {
+    if (text.charAt(0) === " ") {
+      return text.charAt(1).toUpperCase() + text.slice(2).toLowerCase();
+    }
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  }
+
+  const checkColorSpeech = (text: any, index: number) => {
+    let speech: any = document.querySelectorAll("#speech");
+    let iconAudio: any = document.querySelectorAll("#iconAudio");
+
+    // if (convertText(text.alternatives[0].transcript).toLowerCase() === speech[index]?.innerHTML.toLowerCase()) {
+
+    //   const abc = speech[index].innerHTML.split(" ")
+
+    //   // text.alternatives[0].words.map((item: any) => {
+    //   //   const start = item.startTime.seconds
+    //   //   const end = item.endTime.seconds
+    //   //   const second = (Number(end) - Number(start)) * 1000
+
+    //   //   setTimeout(() => {
+    //   //     speech[index].style.color = "black";
+    //   //   }, second)
+    //   // })
+    // }
+
+    if (convertText(text.alternatives[0].transcript).toLowerCase() === speech[index]?.innerHTML.toLowerCase()) {
+      speech[index].style.color = "orange";
+      iconAudio.forEach((element, i) => {
+        if (i !== index) {
+          iconAudio[i].style.display = "none"
+        }
+      });
+    }
+  }
+
   return (
     <div className='conversation__page'>
       {listQuestionAnswer.length > 0 ?
@@ -182,15 +266,17 @@ const ExeWriteAndListen = () => {
           <form className="content__conversation" onSubmit={handleSubmit(onSubmit2)} >
             <div className='mx-4 '>
               <audio
+                id='audio1'
                 className='w-full rounded-none'
-                controls
-                src={listenWrite?.audio}>
+                controls={true}
+                onTimeUpdate={onTimeUpdate}
+                src={`${listenWrite?.audio}`}>
                 Your browser does not support the
                 <code>audio</code> element.
               </audio>
             </div>
 
-            <div className='mx-4 my-8 '>
+            {/* <div className='mx-4 my-8 '>
               <div className=' text-lg border-b'>
                 <div><i className="fa-solid fa-pen"></i> Nghe và trả lời câu hỏi.</div>
               </div>
@@ -220,7 +306,7 @@ const ExeWriteAndListen = () => {
                             if (Number(e.idQuestion) == item.id) {
                               return (
                                 // even:bg-slate-100
-                                <div className='even:bg-slate-100 '>
+                                <div className='even:bg-slate-100 ' key={e.id}>
                                   <li key={e.id} className={` ${answer.length > 0 && answer[0].idQuestion == e.idQuestion ? answer[0].id == e.id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer py-2 px-4  font-sans flex gap-2  `} >
                                     <input type="radio" id={e.name} name={String(item.id)} onChange={(em) => changeValueQuiz(em, e)} value={e.name} />
                                     <label className='align-middle mt-[-2px]' htmlFor={e.name}>{e.name}</label>
@@ -235,9 +321,9 @@ const ExeWriteAndListen = () => {
                   )
                 })}
               </div>
-            </div>
+            </div> */}
 
-            <div className='mx-4 py-8 '>
+            {/* <div className='mx-4 py-8 '>
               <div className='mb-8 text-lg border-b'>
                 <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
               </div>
@@ -245,7 +331,6 @@ const ExeWriteAndListen = () => {
                 <div className="content">
                   {
                     listQuestionAnswer?.map((item: any, index: number) => {
-                      console.log("dadadaddd", item);
 
                       const quesToArr = item.question.text.split("___")
                       // tách chuỗi thành 1 mảng
@@ -268,6 +353,35 @@ const ExeWriteAndListen = () => {
                             <span onClick={() => speak({ text: speakInput(item.question, item.answer), rate: 1, pitch: 1, voice: item.question.name == "Cap" ? voices[0] : voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
                           </div>
                           <span className='col-span-10 my-auto'>{quesToArr.length == 1 ? item.question.text : tempQues}</span>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </div>
+            </div> */}
+
+            <div className='mx-4 py-8 '>
+              <div className='mb-8 text-lg border-b'>
+                <div><i className="fa-solid fa-pen"></i> Nghe và điền vào chỗ trống.</div>
+              </div>
+              <div>
+                <div className="content">
+                  {
+                    listText?.response?.results.map((item: any, index: number) => {
+                      return (
+                        <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-1 even:bg-slate-100"  >
+                          <div className='col-span-2 flex justify-between gap-4 py-2 '>
+                            <strong className='my-auto'>Long: </strong>
+                            {/* <span onClick={() => speak({ text: item.alternatives[0].transcript, rate: 1, pitch: 1, voice: voices[1] })}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span> */}
+                            {
+                              checkPause ?
+                                <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
+                                :
+                                <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                            }
+                          </div>
+                          <span id='speech' key={index + 1} className='col-span-10 my-auto normal-case'>{convertText(item.alternatives[0].transcript)}</span>
                         </div>
                       )
                     })

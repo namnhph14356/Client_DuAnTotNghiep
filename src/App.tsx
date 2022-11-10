@@ -294,7 +294,7 @@ function App() {
           </Route>
 
           {/* listenWrite */}
-          <Route path="listenWrite">
+          <Route path="conversation">
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />
