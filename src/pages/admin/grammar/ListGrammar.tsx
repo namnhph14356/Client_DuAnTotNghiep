@@ -218,7 +218,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/grammar/${record?.dayId}/edit`}>
+            <Link to={`/manageDay/grammar/${record?.dayId}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
