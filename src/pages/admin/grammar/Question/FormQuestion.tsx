@@ -134,9 +134,9 @@ const FormQuestion = () => {
   }, [])
 
   return (
-    <div className="container">
+    <div className="">
       <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+      <div className="pb-6 ">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
           {id ? <Form.Item label="_id" name="_id" hidden={true}>

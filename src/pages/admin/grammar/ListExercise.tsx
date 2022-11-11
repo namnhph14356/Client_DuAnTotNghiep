@@ -262,11 +262,12 @@ const ListExercise = () => {
             title: 'ID',
             dataIndex: '_id',
             key: "_id",
+            className: 'w-[220px]',
             ...getColumnSearchProps('_id'),
             sorter: (a: any, b: any) => a._id - b._id,
             sortDirections: ['descend'],
             render: (record) => (
-                <div className="w-28 max-w-md ">
+                <div>
                     {record}
                 </div>
             )
@@ -274,18 +275,21 @@ const ListExercise = () => {
         {
             title: 'Câu hỏi',
             dataIndex: 'question',
+            className: 'w-[200px]',
             key: "question",
             ...getColumnSearchProps('question'),
         },
         {
             title: 'Giải thích',
             dataIndex: 'suggestions',
+            className: 'w-[200px]',
             key: "suggestions",
             ...getColumnSearchProps('suggestions'),
         },
         {
             title: 'Gợi ý',
             dataIndex: 'meaning',
+            className: 'w-[220px]',
             key: "meaning",
             ...getColumnSearchProps('meaning'),
         },
