@@ -24,3 +24,10 @@
     /* margin: auto !important; */
     /* margin-top: 100px !important; */
 }
+
+/* Popup change */
+.model_body_day{
+    height: 100%;
+    place-content: center;
+    text-align: center;
+}

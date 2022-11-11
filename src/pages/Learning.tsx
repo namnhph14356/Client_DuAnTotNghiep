@@ -61,8 +61,9 @@ const Learning = () => {
   const [daySelect, setDaySelect] = useState<DayType | null>()
   const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
-  const days2 = days.filter((item: DayType) => item.week === weekSelect?._id)
-
+  console.log("đâyy",days);
+  const days2 = days?.filter((item: DayType) => item.week === weekSelect?._id)
+  
 
   //---ModalResult---
   //Hiện Modal kết quả

@@ -12,7 +12,7 @@ export const listDayByWeek = (id: string) => {
     return instance.get(url)
 }
 
-export const detailDay = (id: string) => {
+export const detailDay = (id: any) => {
     const url = `/day/${id}`
     return instance.get(url)
 }
@@ -30,4 +30,9 @@ export const editDay = (data: DayType) => {
 export const removeDay = (id: string) => {
     const url = `/day/${id}`
     return instance.delete(url)
+}
+
+export const dayBiggest = () => {
+    const url = `/dayBiggest`;
+    return instance.get(url)
 }

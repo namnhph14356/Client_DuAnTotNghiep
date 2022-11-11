@@ -191,6 +191,9 @@ const ListGrammar = (props: Props) => {
       dataIndex: "description",
       key: "description",
       className: "description_grammar",
+      render: (text, record) => (
+        <div dangerouslySetInnerHTML={{__html:`${record.description}`}}></div>
+      )
     },
     {
       title: "Tóm tắt",
