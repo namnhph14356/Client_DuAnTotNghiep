@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addDay, editDay, listDay, listDayByWeek, removeDay } from "../../../api/day";
+import { addDay, editDay, listDay, listDayByWeek, removeDay, dayBiggest } from "../../../api/day";
 import { DayType } from "../../../types/day";
-
-
-
-
 
 
 export const getListDaySlice = createAsyncThunk(
@@ -57,7 +53,15 @@ export const removeDaySlice = createAsyncThunk(
      }
 )
 
-
+export const getDayBiggest = createAsyncThunk(
+     "days/dayBiggest",
+     async () => {
+          const {data} = await dayBiggest();
+          // console.log("slice",data);
+          return data
+          
+     }
+)
 
 const daySlice = createSlice({
      
@@ -65,7 +69,8 @@ const daySlice = createSlice({
      initialState: {
           value: [],
           valueByWeek: [],
-          breadcrumb: ""
+          breadcrumb: "",
+          bigDay:[]
      },
      reducers: {
           changeBreadcrumb(state, action) {
@@ -76,6 +81,10 @@ const daySlice = createSlice({
           
           builder.addCase(getListDaySlice.fulfilled, (state, action) => {
                state.value = action.payload
+
+          })
+          builder.addCase(getDayBiggest.fulfilled, (state, action) => {
+               state.bigDay = action.payload
 
           })
           builder.addCase(getListDaySliceByWeek.fulfilled, (state, action) => {

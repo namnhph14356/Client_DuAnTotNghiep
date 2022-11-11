@@ -210,40 +210,6 @@ const FormVocabulary = (props: Props) => {
           ) : (
             ""
           )}
-
-          {/* Tháng - Tuần -Ngày */}
-          {/* <div className="flex gap-3">
-          <Form.Item className="w-[30%]" 
-          label="Tháng"
-          >
-            <Select defaultValue={"M1"}>
-              <Option value="M2">M2</Option>
-              <Option value="M3">M3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Tuần"
-          >
-            <Select defaultValue={"T1"}>
-              <Option value="T2">T2</Option>
-              <Option value="T3">T3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Ngày"
-          >
-            <Select defaultValue={"N1"}>
-              <Option value="N2">N2</Option>
-              <Option value="N3">N3</Option>
-            </Select>
-          </Form.Item>
-
-          </div> */}
-
-          {/*======================== */}
-
           <div className="">
             <div className="learning__btn__time">
               <div className="item__btn__time">

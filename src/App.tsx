@@ -106,6 +106,7 @@ import ListVocabulary from "./pages/admin/Vocabulary/Lesson/ListVocabulary";
 import ListListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/ListListenWrite";
 import ListListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/ListListenRead";
 import FormListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenRead";
+import PopupChange from "./components/AdminDayConponent/PopupChange";
 
 function App() {
   return (
@@ -259,7 +260,7 @@ function App() {
         </Route>
 
         {/* ---Day Manage */}
-        <Route path="manageDay" element={<DayLayout />}>
+        <Route path="manageDay/:dayId" element={<DayLayout />}>
           <Route index element={<Navigate to="listenspeak" />} />
 
           <Route path='listenspeak' >
@@ -332,6 +333,7 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
+        <Route path="/demo" element={<PopupChange closeModal={(prevState) => !prevState}/>}></Route>
       </Routes>
 
     </div>
