@@ -112,6 +112,7 @@ import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
 import ListLessonVocabulary from "./pages/admin/Vocabulary/Exercise/ListLessonVocabulary";
 import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
 import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
+import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 
 
 function App() {
@@ -213,6 +214,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="class" element={<AdminClassList />} />
           <Route path="class/detail/:id" element={<DetailClass />} />
+          <Route path="class/history/:userId" element={<HistoryUser />} />
           <Route path="learn">
             <Route index element={<LessonListTeacher />} />
             <Route path="add" element={<AdminLearnAdd />} />
