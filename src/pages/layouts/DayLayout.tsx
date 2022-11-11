@@ -234,11 +234,6 @@ const DayLayout = () => {
                   Danh sách{" "}
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="sub9_2_2">
-                <NavLink to="/manageDay/grammar/addExercise">
-                  Thêm bài tập
-                </NavLink>
-              </Menu.Item>
             </SubMenu>
           </SubMenu>
           <div className="text-center">

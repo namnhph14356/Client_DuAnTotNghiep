@@ -106,7 +106,13 @@ import ListVocabulary from "./pages/admin/Vocabulary/Lesson/ListVocabulary";
 import ListListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/ListListenWrite";
 import ListListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/ListListenRead";
 import FormListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenRead";
-import PopupChange from "./components/AdminDayConponent/PopupChange";
+import FormQuestion from "./pages/admin/grammar/Question/FormQuestion";
+import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
+import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
+import ListLessonVocabulary from "./pages/admin/Vocabulary/Exercise/ListLessonVocabulary";
+import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
+import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
+
 
 function App() {
   return (
@@ -281,8 +287,12 @@ function App() {
             <Route path=":id/editLesson" element={<FormVocabulary />} />
 
             <Route path="addExercise" element={<FormExerciseVocabulary />} />
-            <Route path="listExercise" element={<ListSentencesExercise />} />
+            <Route path="listExercise" element={<ListLessonVocabulary />} />
             <Route path=":id/editExercise" element={<FormExerciseVocabulary />} />
+
+            <Route path=":id/addExerciseAnswer" element={<FormVocabularyAnswer />} />
+            <Route path=":id/editExerciseAnswer" element={<FormVocabularyEdit />} />
+
           </Route>
 
           <Route path="sentences">
@@ -310,6 +320,17 @@ function App() {
             <Route path="listLesson"  element={<ListGrammar />} />
             <Route path="addLesson" element={<FormGrammar />} />
             <Route path=":id/editLesson" element={<FormGrammar />} />
+          
+
+            <Route path="question">
+              <Route path="add" element={<FormQuestion/>} />
+              <Route path=":id/edit" element={<FormQuestion />} />
+            </Route>
+            <Route path="answer">
+              <Route path=":id/add" element={<FormAnswer />} />
+              <Route path=":id/edit" element={<FormAnswerEdit />} />
+            </Route>
+
 
             <Route path="listExercise" element={<ListExercise />} />
             <Route path="addExercise" element={<FormExercise />} />
@@ -333,7 +354,6 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
-        <Route path="/demo" element={<PopupChange closeModal={(prevState) => !prevState}/>}></Route>
       </Routes>
 
     </div>

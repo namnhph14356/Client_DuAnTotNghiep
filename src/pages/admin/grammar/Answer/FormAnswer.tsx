@@ -12,10 +12,7 @@ import { detailAnswerQuiz, listAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 
 
-
-type Props = {}
-
-const FormAnswerListenSpeak = (props: Props) => {
+const FormAnswer = () => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
@@ -27,17 +24,11 @@ const FormAnswerListenSpeak = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
-
   const { id } = useParams();
-  console.log(id);
   const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
-  console.log(filterIsCorrect);
-
 
   const onFinish = async (value) => {
-
-    console.log("value", value);
 
     const key = 'updatable';
 
@@ -49,7 +40,7 @@ const FormAnswerListenSpeak = (props: Props) => {
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate("/manageDay/listenspeak");
+      navigate("/manageDay/grammar/listExercise");
 
     }, 2000);
 
@@ -68,15 +59,20 @@ const FormAnswerListenSpeak = (props: Props) => {
       console.log('Đã có đáp án đúng');
     } else {
       console.log('CHưa có');
-
     }
-
   }
 
-
   useEffect(() => {
-
-    dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
+    if (id) {
+      const getQuiz = async () => {
+        const { data } = await detailAnswerQuiz(id)
+        setAnswerQuiz(data)
+        dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
+      }
+      getQuiz()
+    } else {
+      dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
+    }
 
     dispatch(getListQuizSlide())
     const getAnswer = async () => {
@@ -93,13 +89,31 @@ const FormAnswerListenSpeak = (props: Props) => {
 
   return (
     <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
+      <div className='mx-6 my-6'>
+        <h1>Thêm đáp án bài tập</h1>
+      </div>
       <div className="pb-6 mx-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
           <Form.Item
             label="Đáp Án"
             name="answer"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Ngữ nghĩa / loại từ"
+            name="wordMeaning"
+            tooltip="Đáp án dành cho Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Giải thích đáp án"
+            name="explainAnswer"
             tooltip="Đáp án dành cho Quiz"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
@@ -144,4 +158,4 @@ const FormAnswerListenSpeak = (props: Props) => {
   )
 }
 
-export default FormAnswerListenSpeak
+export default FormAnswer

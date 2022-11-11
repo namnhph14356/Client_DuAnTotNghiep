@@ -15,7 +15,23 @@ import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 
 type Props = {}
 
-const FormQuestionListenSpeak = (props: Props) => {
+interface DataQuizType {
+  _id?: string;
+  category?: string;
+  question: string;
+  questionAfter?: string;
+  image?: string;
+  meaning?:string,
+  suggestions?:string,
+  timeLimit?: string;
+  type?: string;
+  practiceActivity?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+
+const FormQuestion = () => {
 
   const { data, error, mutate, add, edit, remove } = useQuiz()
   const quizs = useAppSelector(item => item.quiz.value)
@@ -24,7 +40,7 @@ const FormQuestionListenSpeak = (props: Props) => {
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
   const breadcrumb = useAppSelector(data => data.quiz.breadcrumb)
-  const [quiz, setQuiz] = useState<QuizType>()
+  const [quiz, setQuiz] = useState<DataQuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
@@ -34,9 +50,8 @@ const FormQuestionListenSpeak = (props: Props) => {
     { id: 2, name: "Chọn Đáp Án có hình ảnh", type: "selectImage" },
     { id: 3, name: "Ghép từng đáp án", type: "selectCompound" }
   ]
-  const type = "listenSpeaking"
+  const type = "grammar"
   const prative: any = practiceActivity.find((item: any) => item.type === type)
-
 
   const { id } = useParams();
 
@@ -72,11 +87,11 @@ const FormQuestionListenSpeak = (props: Props) => {
       if (id) {
         mutate(edit(value))
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/listenspeak");
+        navigate("/manageDay/grammar/listExercise");
       } else {
         mutate(add(value))
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/manageDay/listenspeak");
+        navigate("/manageDay/grammar/listExercise");
       }
 
     }, 2000);
@@ -91,25 +106,17 @@ const FormQuestionListenSpeak = (props: Props) => {
   };
 
   //----------------------UPLOAD
-
   const onChangeImage = async (e) => {
     if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
       setfileList(e.target.files[0])
       const imgPreview = document.getElementById("img-preview") as HTMLImageElement
-
       imgPreview.src = await URL.createObjectURL(e.target.files[0])
 
 
     } else {
       message.error('File không hợp lệ!');
     }
-
   }
-  React.useEffect(() => {
-    form.setFieldsValue({
-      practiceActivity: prative?._id
-    })
-  }, [])
   useEffect(() => {
     if (id) {
       const getQuiz = async () => {
@@ -117,15 +124,13 @@ const FormQuestionListenSpeak = (props: Props) => {
         setQuiz(data)
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
-        dispatch(changeBreadcrumb("Sửa Quiz"))
+        dispatch(changeBreadcrumb("Sửa bài tập"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm Quiz"))
+      dispatch(changeBreadcrumb("Thêm câu hỏi ngữ pháp bài tập"))
     }
-
     dispatch(getCategoryList())
-
   }, [])
 
   return (
@@ -181,6 +186,28 @@ const FormQuestionListenSpeak = (props: Props) => {
               <Input disabled={!selected} />
             }
           </Form.Item>
+          <Form.Item
+            label="Giải thích"
+            name="suggestions"
+            tooltip="Câu Hỏi dành cho Category"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            {id ?
+              <Input /> :
+              <Input disabled={!selected} />
+            }
+          </Form.Item>
+          <Form.Item
+            label="Gợi ý"
+            name="meaning"
+            tooltip="Câu Hỏi dành cho Category"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            {id ?
+              <Input /> :
+              <Input disabled={!selected} />
+            }
+          </Form.Item>
 
           {
             selected === 'selectImage' ?
@@ -201,19 +228,6 @@ const FormQuestionListenSpeak = (props: Props) => {
                 <Input />
               </Form.Item>
           }
-
-          <Form.Item
-            label="Thời Gian Làm"
-            name="timeLimit"
-            tooltip="Thời gian làm bài"
-            rules={[{ required: true, message: 'Không để Trống!' }]}
-          >
-            {id ?
-              <Input /> :
-              <Input disabled={!selected} />
-            }
-          </Form.Item>
-
           <Form.Item label="practiceActivity" name="practiceActivity" hidden={true}>
             <Input value={prative?._id} />
           </Form.Item>
@@ -231,5 +245,4 @@ const FormQuestionListenSpeak = (props: Props) => {
     </div >
   )
 }
-
-export default FormQuestionListenSpeak
+export default FormQuestion
