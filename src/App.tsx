@@ -12,7 +12,6 @@ import FileUser from './pages/FileUser';
 import SignUp from './pages/SignUp';
 import ExeWriteAndListen from './containers/Conversation/ExeWriteAndListen';
 import ListUser from './pages/admin/Auth/listUser';
-import AddUser from './pages/admin/Auth/AddUser';
 import Store from './pages/Store';
 import ForgotPassword from './components/user/ForgotPassword';
 import NewPassword from './components/user/NewPassword';
@@ -77,6 +76,7 @@ import ExerciseSentences from './containers/Sentences/ExerciseSentences';
 import ExamSentences from './containers/Sentences/ExamSentences';
 import QuizTypeSelect from './components/quiz/QuizTypeSelect';
 import { PrivateRouteHomePage, PrivateRouteLearning } from './midlerware/PrivateRoute';
+import EditUser from './pages/admin/Auth/EditUser';
 
 function App() {
   return (
@@ -179,7 +179,7 @@ function App() {
 
           <Route path="user" >
             <Route index element={<ListUser />} />
-            <Route path='add' element={<AddUser />} />
+            <Route path='edit/:id' element={<EditUser />} />
           </Route>
 
           {/* quizz */}

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addUser, editUser, getListUser, getUserById, removeUser } from "../../../api/user";
+import { addUser, editUser,  getUserById, getListUser, removeUser } from "../../../api/user";
 import { UserType } from "../../../types/user";
 
 export interface UserSlice {
@@ -8,19 +8,25 @@ export interface UserSlice {
   isAuthticated: boolean
 }
 
-export const getUserList = createAsyncThunk(
-  "user/getListUser",
+// export const getUserList = createAsyncThunk(
+//   "user/getListUser",
+//   async () => {
+//     const { data } = await getListUser();
+//     return data
+//   }
+// )
+export const getUserList:any = createAsyncThunk(
+  "user/getUser",
   async () => {
-    const { data } = await getListUser();
-    return data
+      const {data} = await getListUser();
+      return data;
   }
 )
-
-export const getUser = createAsyncThunk(
-  "user/getUserById",
-  async (id: string) => {
-    const { data } = await getUserById(id);
-    return data
+export const getUsersById:any = createAsyncThunk(
+  "contact/getUserById",
+  async (id:any) => {
+      const {data} = await getUserById(id);
+      return data;
   }
 )
 
@@ -32,7 +38,7 @@ export const addUserSlide = createAsyncThunk(
   }
 )
 
-export const editUserSlide = createAsyncThunk(
+export const editUserSlide:any = createAsyncThunk(
   "user/editUser",
   async (user: UserType) => {
     const { data } = await editUser(user);

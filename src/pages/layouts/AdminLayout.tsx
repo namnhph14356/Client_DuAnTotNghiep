@@ -116,6 +116,9 @@ const AdminLayout = () => {
                     <SubMenu key="sub6" icon={<FolderFilled />} title="Contact">
                         <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>List Contact</NavLink></Menu.Item>
                     </SubMenu>
+                    <SubMenu key="sub7" icon={<FolderFilled />} title="User">
+                        <Menu.Item key="/admin/user"><NavLink to='/admin/user'>List User</NavLink></Menu.Item>
+                    </SubMenu>
 
                 </Menu>
             </Sider>
