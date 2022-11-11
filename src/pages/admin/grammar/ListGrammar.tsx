@@ -190,7 +190,7 @@ const ListGrammar = (props: Props) => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      className: "description_grammar",
+      className: "description_grammar w-[320px] overflow-y-aut  ",
     },
     {
       title: "Tóm tắt",
@@ -243,9 +243,8 @@ const ListGrammar = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb="Quản lý Ngữ Pháp Bài Học" />
       <Button type="primary" className="my-6">
-        <Link to={`/manageDay/grammar/add`}>Thêm Ngữ Pháp</Link>
+        <Link to={`/manageDay/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
       </Button>
-      <h1>Ngữ pháp</h1>
       <Table columns={columns} dataSource={dataSources}></Table>
     </div>
   );
