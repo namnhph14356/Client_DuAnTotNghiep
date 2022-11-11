@@ -178,7 +178,6 @@ const ListGrammar = (props: Props) => {
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
     {
@@ -190,12 +189,16 @@ const ListGrammar = (props: Props) => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      className: "description_grammar w-[320px] overflow-y-aut  ",
+      className: "description_grammar",
+      render: (record) => (
+        <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
+      )
     },
     {
       title: "Tóm tắt",
       dataIndex: "summary",
       key: "summary",
+
     },
     {
       title: "Thời gian tạo",
