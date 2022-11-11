@@ -13,10 +13,6 @@ import SubMenu from "antd/lib/menu/SubMenu";
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import {
-  UserOutlined,
-  CommentOutlined,
-  DollarOutlined,
-  LaptopOutlined,
   FolderFilled,
   BellOutlined,
   ReadOutlined,
@@ -26,9 +22,7 @@ import { Option } from "antd/lib/mentions";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from "../../types/user";
-import { ReactDimmer } from "react-dimmer";
 import PopupChange from "../../components/AdminDayConponent/PopupChange";
-
 const DayLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
@@ -36,6 +30,7 @@ const DayLayout = () => {
   let location = useLocation();
   const [current, setCurrent] = useState(location.pathname);
   const [isModal, setIsModal] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   function textOver(text: String, len: number) {
     if (text.length > len) return `${text.slice(0, len)}...`;
   }
@@ -43,6 +38,10 @@ const DayLayout = () => {
   const handlonClick = () => {
     setIsModal((prevState) => !prevState);
   };
+
+  const openModal = () => {
+    setIsOpen(true);
+  }
   const notification = (
     <Menu
       items={[
@@ -243,17 +242,17 @@ const DayLayout = () => {
             </SubMenu>
           </SubMenu>
           <div className="text-center">
-            <button className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600" onClick={() => handlonClick()}>Change Day</button>
+            <button
+              className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600"
+              onClick={() => handlonClick()}
+            >
+              Đổi ngày
+            </button>
+
           </div>
+         
           <div>
             {isModal && <PopupChange closeModal={setIsModal} />}
-
-            <ReactDimmer
-              isOpen={isModal}
-              exitDimmer={setIsModal}
-              zIndex={100}
-              blur={1.5}
-            />
           </div>
           <div className="mt-8 mx-auto text-center">
             <NavLink
@@ -298,9 +297,13 @@ const DayLayout = () => {
             </div>
           </div>
         </Header>
-
-        <Content className=" main__content__admin p-8 ">
-          <Outlet />
+        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, textAlign: "center" }}
+          >
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

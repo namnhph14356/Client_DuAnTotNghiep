@@ -266,7 +266,7 @@ function App() {
         </Route>
 
         {/* ---Day Manage */}
-        <Route path="manageDay" element={<DayLayout />}>
+        <Route path="manageDay/:dayId" element={<DayLayout />}>
           <Route index element={<Navigate to="listenspeak" />} />
 
           <Route path='listenspeak' >
