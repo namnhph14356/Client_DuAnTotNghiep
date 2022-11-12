@@ -66,7 +66,7 @@ const ListUser = () => {
       render: (recore:any) => (
         <Space size="middle">
             <NavLink to={'/admin/user/edit/'+recore.id}>Edit</NavLink>
-            <button  onClick={() => onRemoveUser(recore.id)}>Delete</button>
+            <button  onClick={() => onRemoveUser(recore.id)}>Delete </button>
         </Space>
       )
     }
