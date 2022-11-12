@@ -69,7 +69,7 @@ const ExerciseGrammar = () => {
       score: score,
       totalScore: 0,
       totalCorrect: totalCorrect,
-      result: score >= questionQuiz.length ? 1 : 0,
+      result: score >= 8 ? 1 : 0,
       type: "grammar"
     })
 
@@ -292,11 +292,11 @@ const ExerciseGrammar = () => {
                           if (e.quiz == item._id) {
                             return (
                               <div key={e._id} className='even:bg-slate-100 '>
-                                <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""}    hover:cursor-pointer  font-sans   `} >
+                                <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""} font-sans`} >
                                   <div className='grid grid-cols-3 gap-4 divide-x-8 divide-gray-400'>
-                                    <div className='flex gap-2  py-2 px-5'>
+                                    <div className='flex gap-2 py-2 px-5'>
                                       <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" />
-                                      <label className='align-middle mt-[-2px]' htmlFor={e.answer}>{e.answer}</label>
+                                      <label className='align-middle mt-[-2px] hover:cursor-pointer w-full' htmlFor={e.answer}>{e.answer}</label>
                                     </div>
 
                                     {

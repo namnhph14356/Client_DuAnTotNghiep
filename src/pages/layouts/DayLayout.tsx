@@ -192,24 +192,24 @@ const DayLayout = () => {
           <SubMenu key="sub8" icon={<FolderFilled />} title="Luyện hội thoại">
             <SubMenu key="sub8_1" title="Bài tập">
               <Menu.Item key="/sub8_1_1">
-                <NavLink to="/manageDay/listenWrite/listExercise">
+                <NavLink to="/manageDay/conversation/listExercise">
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/sub8_1_2">
-                <NavLink to="/manageDay/listenWrite/addExercise">
+                <NavLink to="/manageDay/conversation/addExercise">
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub8_2" title="Nghe và đọc">
               <Menu.Item key="/sub8_2_1">
-                <NavLink to="/manageDay/listenWrite/listListenRead">
+                <NavLink to="/manageDay/conversation/listListenRead">
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/sub8_2_2">
-                <NavLink to="/manageDay/listenWrite/addListenRead">
+                <NavLink to="/manageDay/conversation/addListenRead">
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
