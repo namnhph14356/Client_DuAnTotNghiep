@@ -11,7 +11,7 @@ import {
 } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import {
   FolderFilled,
   BellOutlined,
@@ -23,6 +23,43 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from "../../types/user";
 import PopupChange from "../../components/AdminDayConponent/PopupChange";
+
+const notification = (
+  <Menu
+    items={[
+      {
+        key: "1",
+        icon: <BellOutlined />,
+        label: <span>Hồ sơ của bạn</span>,
+      },
+      {
+        key: "2",
+        label: <span>Đăng xuất</span>,
+        icon: <BellOutlined />,
+        danger: true,
+      },
+    ]}
+  />
+);
+
+const menu = (
+  <Menu
+    items={[
+      {
+        key: "1",
+        icon: <BellOutlined />,
+        label: <span>Hồ sơ của bạn</span>,
+      },
+      {
+        key: "2",
+        label: <span>Đăng xuất</span>,
+        icon: <BellOutlined />,
+        danger: true,
+      },
+    ]}
+  />
+);
+
 const DayLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
@@ -31,6 +68,7 @@ const DayLayout = () => {
   const [current, setCurrent] = useState(location.pathname);
   const [isModal, setIsModal] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const { dayId } = useParams();
   function textOver(text: String, len: number) {
     if (text.length > len) return `${text.slice(0, len)}...`;
   }
@@ -42,41 +80,7 @@ const DayLayout = () => {
   const openModal = () => {
     setIsOpen(true);
   }
-  const notification = (
-    <Menu
-      items={[
-        {
-          key: "1",
-          icon: <BellOutlined />,
-          label: <span>Hồ sơ của bạn</span>,
-        },
-        {
-          key: "2",
-          label: <span>Đăng xuất</span>,
-          icon: <BellOutlined />,
-          danger: true,
-        },
-      ]}
-    />
-  );
 
-  const menu = (
-    <Menu
-      items={[
-        {
-          key: "1",
-          icon: <BellOutlined />,
-          label: <span>Hồ sơ của bạn</span>,
-        },
-        {
-          key: "2",
-          label: <span>Đăng xuất</span>,
-          icon: <BellOutlined />,
-          danger: true,
-        },
-      ]}
-    />
-  );
 
   function handleClick(e: any) {
     setCurrent(e.key);
@@ -88,7 +92,7 @@ const DayLayout = () => {
         setCurrent(location.pathname);
       }
     }
-  }, [location, current]);
+  }, [location, current, dayId]);
 
   return (
     <Layout style={{ width: "100%" }}>
@@ -122,7 +126,7 @@ const DayLayout = () => {
           >
             <SubMenu key="sub5_1" title="Khởi động">
               <Menu.Item key="/sub5_1_1">
-                <NavLink to="/manageDay/listenspeak">Danh sách</NavLink>
+                <NavLink to={`/manageDay/${dayId}/listenspeak`}>Danh sách</NavLink>
               </Menu.Item>
               {/* <Menu.Item key="/manageDay">
                 <NavLink to="/manageDay">Thêm bài tập</NavLink>
@@ -133,12 +137,12 @@ const DayLayout = () => {
           <SubMenu key="sub6" icon={<FolderFilled />} title="Luyện từ vựng">
             <SubMenu key="sub6_1" title="Bài học">
               <Menu.Item key="sub6_1_1">
-                <NavLink to="/manageDay/vocabulary/listLesson">
+                <NavLink to={`/manageDay/${dayId}/vocabulary/listLesson`}>
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="sub6_1_2">
-                <NavLink to="/manageDay/vocabulary/addLesson">
+                <NavLink to={`/manageDay/${dayId}/vocabulary/addLesson`}>
                   Thêm từ vựng
                 </NavLink>
               </Menu.Item>
@@ -146,12 +150,12 @@ const DayLayout = () => {
 
             <SubMenu key="sub6_2" title="Bài tập">
               <Menu.Item key="sub6_2_1">
-                <NavLink to="/manageDay/vocabulary/listExercise">
-                  Danh sách bài tập
+                <NavLink to={`/manageDay/${dayId}/vocabulary/listExercise`}>
+                  Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="sub6_2_2">
-                <NavLink to="/manageDay/vocabulary/addExercise">
+                <NavLink to={`/manageDay/${dayId}/vocabulary/addExercise`}>
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
@@ -165,24 +169,24 @@ const DayLayout = () => {
           >
             <SubMenu key="sub7_1" title="Bài học">
               <Menu.Item key="sub7_1_1">
-                <NavLink to="/manageDay/sentences/listLesson">
+                <NavLink to={`/manageDay/${dayId}/sentences/listLesson`}>
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="sub7_1_2">
-                <NavLink to="/manageDay/sentences/addLesson">
+                <NavLink to={`/manageDay/${dayId}/sentences/addLesson`}>
                   Thêm bài học
                 </NavLink>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub7_2" title="Bài tập">
               <Menu.Item key="sub7_2_1">
-                <NavLink to="/manageDay/sentences/listExercise">
+                <NavLink to={`/manageDay/${dayId}/sentences/listExercise`}>
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="sub7_2_2">
-                <NavLink to="/manageDay/sentences/addExercise">
+                <NavLink to={`/manageDay/${dayId}/sentences/addExercise`}>
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
@@ -192,24 +196,24 @@ const DayLayout = () => {
           <SubMenu key="sub8" icon={<FolderFilled />} title="Luyện hội thoại">
             <SubMenu key="sub8_1" title="Bài tập">
               <Menu.Item key="/sub8_1_1">
-                <NavLink to="/manageDay/conversation/listExercise">
+                <NavLink to={`/manageDay/${dayId}/conversation/listExercise`}>
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/sub8_1_2">
-                <NavLink to="/manageDay/conversation/addExercise">
+                <NavLink to={`/manageDay/${dayId}/conversation/addExercise`}>
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub8_2" title="Nghe và đọc">
               <Menu.Item key="/sub8_2_1">
-                <NavLink to="/manageDay/conversation/listListenRead">
+                <NavLink to={`/manageDay/${dayId}/conversation/listListenRead`}>
                   Danh sách
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/sub8_2_2">
-                <NavLink to="/manageDay/conversation/addListenRead">
+                <NavLink to={`/manageDay/${dayId}/conversation/addListenRead`}>
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
@@ -219,10 +223,10 @@ const DayLayout = () => {
           <SubMenu key="sub9" icon={<FolderFilled />} title="Luyện ngữ pháp ">
             <SubMenu key="sub9_1" title="Bài học">
               <Menu.Item key="sub9_1_1">
-                <NavLink to="/manageDay/grammar/listLesson">Danh sách</NavLink>
+                <NavLink to={`/manageDay/${dayId}/grammar/listLesson`}>Danh sách</NavLink>
               </Menu.Item>
               <Menu.Item key="sub9_1_2">
-                <NavLink to="/manageDay/grammar/addLesson">
+                <NavLink to={`/manageDay/${dayId}/grammar/addLesson`}>
                   Thêm ngữ pháp
                 </NavLink>
               </Menu.Item>
@@ -230,12 +234,12 @@ const DayLayout = () => {
 
             <SubMenu key="sub9_2" title="Bài tập">
               <Menu.Item key="sub9_2_1">
-                <NavLink to="/manageDay/grammar/listExercise">
+                <NavLink to={`/manageDay/${dayId}/grammar/listExercise`}>
                   Danh sách{" "}
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/sub8_2_2">
-                <NavLink to="/manageDay/grammar/question/add">
+                <NavLink to={`/manageDay/${dayId}/grammar/question/add`}>
                   Thêm bài tập
                 </NavLink>
               </Menu.Item>
@@ -250,7 +254,7 @@ const DayLayout = () => {
             </button>
 
           </div>
-         
+
           <div>
             {isModal && <PopupChange closeModal={setIsModal} />}
           </div>
