@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag } from 'antd';
+import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
@@ -38,9 +38,9 @@ interface ExpandedDataType {
 }
 
 const typeQuiz = [
-    { id: 1, type: "selectRadio" },
-    { id: 2, type: "selectImage" },
-    { id: 3, type: "selectCompound" }
+    { id: 1, type: "selectRadio", text: 'Chọn đáp án' },
+    { id: 2, type: "selectImage", text: 'Chọn đáp án theo hình ảnh' },
+    { id: 3, type: "selectCompound", text: 'Chọn nhiều đáp án' }
 ]
 
 
@@ -70,8 +70,8 @@ const ListListenSpeak = (props: Props) => {
 
     //------------------STATE--------------------
     const tableWithType = quizs.filter((item: any) => item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
-    const tableListenSpeak = tableWithType.filter((item:any) => item.practiceActivity === '6346d2c0034348adfcfce58e')
-    
+    const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity === '6346d2c0034348adfcfce58e')
+
 
     const dataTable = tableListenSpeak.map((item: QuizType, index) => {
         return {
@@ -270,21 +270,6 @@ const ListListenSpeak = (props: Props) => {
             sortDirections: ['descend'],
         },
         {
-            title: 'ID',
-            dataIndex: '_id',
-            key: "_id",
-            className: 'w-[220px]',
-            ...getColumnSearchProps('_id'),
-            sorter: (a: any, b: any) => a._id - b._id,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
-            sortDirections: ['descend'],
-            render: (record) => (
-                <div>
-                    {record}
-                </div>
-            )
-        },
-        {
             title: 'Hình ảnh',
             key: "image",
             className: 'w-[100px]',
@@ -308,6 +293,7 @@ const ListListenSpeak = (props: Props) => {
             title: 'Loại Câu Hỏi',
             dataIndex: 'type',
             key: "type",
+            className: 'w-[220px]',
             render: ((item) => (
                 <>
                     {item === "selectRadio"
@@ -318,15 +304,16 @@ const ListListenSpeak = (props: Props) => {
                     }
                 </>
             )),
-            filters: typeQuiz.map((item: any) => { return { text: item.type, value: item.type } }),
+            filters: typeQuiz.map((item: any) => { return { text: item.text, value: item.type } }),
             onFilter: (value, record) => {
                 return record.type == value
             }
         },
         {
-            title: 'Thời gian làm bài',
+            title: 'Thời gian',
             dataIndex: 'timeLimit',
             key: "timeLimit",
+            className: 'w-[110px]',
             ...getColumnSearchProps('timeLimit'),
             render: ((value) => (<p>{moment(value).format('mm:ss')} phút</p>))
         },
@@ -334,17 +321,38 @@ const ListListenSpeak = (props: Props) => {
             title: 'Ngày Tạo',
             dataIndex: 'createdAt',
             key: "createdAt",
+            className: 'w-[110px]',
+            sortDirections: ['descend'],
+            ellipsis: {
+                showTitle: false,
+            },
+            render: ((value) => (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            ))
 
         },
         {
             title: 'Ngày Update',
             dataIndex: 'updatedAt',
             key: "updatedAt",
+            className: 'w-[130px]',
+            sortDirections: ['descend'],
+            ellipsis: {
+                showTitle: false,
+            },
+            render: ((value) => (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            ))
 
         },
         {
             title: 'Hành Động',
-            fixed: "right",
+            align:'center',
+            className: 'w-[150px]',
             key: "action", render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button style={{ background: "#198754" }} >
@@ -371,25 +379,9 @@ const ListListenSpeak = (props: Props) => {
                 </Space>
             ),
         },
-        {
-            title: 'Thêm câu trả lời',
-            fixed: "right",
-            key: "action", render: (text, record) => (
-                <Space align="center" size="small">
-                    <Button style={{ background: "#E7975A" }} >
-                        <Link to={`/manageDay/listenspeak/answer/${record._id}/add`} >
-                            <span className="text-white">Thêm</span>
-                        </Link>
-                    </Button>
-                </Space>
-            ),
-        }
-
     ];
 
     const expandedRowRender = (row: any) => {
-
-        // console.log("expandedRow", row);
 
         const columns2: ColumnsType<ExpandedDataType> = [
             { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
@@ -452,7 +444,18 @@ const ListListenSpeak = (props: Props) => {
             }
         })
 
-        return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+        return (
+            <div>
+                <Space align="center" size="small">
+                    <Button style={{ background: "#E7975A" }} >
+                        <Link to={`/manageDay/listenspeak/answer/${row._id}/add`} >
+                            <span className="text-white">Thêm đáp án</span>
+                        </Link>
+                    </Button>
+                </Space>
+                <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+            </div>
+        )
     }
     //------------------TABLE-COLUMM-------------------
 
@@ -493,10 +496,9 @@ const ListListenSpeak = (props: Props) => {
             <Table
                 bordered
                 footer={() => `Hiển thị 10 trên tổng ${tableListenSpeak.length}`}
-                expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
+                expandable={{ expandedRowRender }}
                 columns={columns}
                 dataSource={dataTable}
-                scroll={{ x: 1550 }}
             />
 
         </div>

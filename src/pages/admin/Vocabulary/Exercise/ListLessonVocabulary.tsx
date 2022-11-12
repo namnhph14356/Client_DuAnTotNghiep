@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag } from 'antd';
+import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link } from 'react-router-dom';
@@ -71,7 +71,7 @@ const ListLessonVocabulary = (props: Props) => {
     //------------------STATE--------------------
     const tableWithType = quizs.filter((item: any) => item.type === 'selectAuto' && item.practiceActivity === '6346d438034348adfcfce590')
     console.log(tableWithType);
-    
+
 
     const dataTable = tableWithType.map((item: QuizType, index) => {
         return {
@@ -264,25 +264,10 @@ const ListLessonVocabulary = (props: Props) => {
             title: 'STT',
             dataIndex: 'key',
             key: "key",
-            className: 'w-[60px]',
+            className: 'w-[70px]',
             sorter: (a: any, b: any) => a.key - b.key,
             // sorter: (record1, record2) => { return record1.key > record2.key },
             sortDirections: ['descend'],
-        },
-        {
-            title: 'ID',
-            dataIndex: '_id',
-            key: "_id",
-            className: 'w-[220px]',
-            ...getColumnSearchProps('_id'),
-            sorter: (a: any, b: any) => a._id - b._id,
-            // sorter: (record1, record2) => { return record1.key > record2.key },
-            sortDirections: ['descend'],
-            render: (record) => (
-                <div >
-                    {record}
-                </div>
-            )
         },
         {
             title: 'Hình ảnh',
@@ -308,6 +293,7 @@ const ListLessonVocabulary = (props: Props) => {
             title: 'Loại Câu Hỏi',
             dataIndex: 'type',
             key: "type",
+            className: 'w-[220px]',
             render: ((item) => (
                 <>
                     {item === "selectRadio"
@@ -318,30 +304,45 @@ const ListLessonVocabulary = (props: Props) => {
                     }
                 </>
             )),
-            filters: typeQuiz.map((item: any) => { return { text: item.type, value: item.type } }),
-            onFilter: (value, record) => {
-                return record.type == value
-            }
         },
         {
             title: 'Ngày Tạo',
             dataIndex: 'createdAt',
             key: "createdAt",
+            sortDirections: ['descend'],
+            ellipsis: {
+                showTitle: false,
+            },
+            render: ((value) => (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            ))
 
         },
         {
             title: 'Ngày Update',
             dataIndex: 'updatedAt',
             key: "updatedAt",
+            sortDirections: ['descend'],
+            ellipsis: {
+                showTitle: false,
+            },
+            render: ((value) => (
+                <Tooltip title={value}>
+                    <span>{value}</span>
+                </Tooltip>
+            ))
 
         },
         {
             title: 'Hành Động',
-            fixed: "right",
+            align: 'center',
+            className: 'w-[150px]',
             key: "action", render: (text, record) => (
                 <Space align="center" size="middle">
                     <Button style={{ background: "#198754" }} >
-                        <Link to={`/manageDay/vocabulary/${record._id}/editExercise`} >
+                        <Link to={`/manageDay/listenspeak/question/${record._id}/edit`} >
                             <span className="text-white">Sửa</span>
                         </Link>
 
@@ -361,19 +362,6 @@ const ListLessonVocabulary = (props: Props) => {
                         </Button>
                     </Popconfirm>
 
-                </Space>
-            ),
-        },
-        {
-            title: 'Thêm câu trả lời',
-            fixed: "right",
-            key: "action", render: (text, record) => (
-                <Space align="center" size="small">
-                    <Button style={{ background: "#E7975A" }} >
-                        <Link to={`/manageDay/vocabulary/${record._id}/addExerciseAnswer`} >
-                            <span className="text-white">Thêm</span>
-                        </Link>
-                    </Button>
                 </Space>
             ),
         }
@@ -445,7 +433,18 @@ const ListLessonVocabulary = (props: Props) => {
             }
         })
 
-        return <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+        return (
+            <div>
+                <Space align="center" size="small">
+                    <Button style={{ background: "#E7975A" }} >
+                        <Link to={`/manageDay/listenspeak/answer/${row._id}/add`} >
+                            <span className="text-white">Thêm đáp án</span>
+                        </Link>
+                    </Button>
+                </Space>
+                <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+            </div>
+        )
     }
     //------------------TABLE-COLUMM-------------------
 
@@ -489,7 +488,6 @@ const ListLessonVocabulary = (props: Props) => {
                 expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
                 columns={columns}
                 dataSource={dataTable}
-                scroll={{ x: 1550 }}
             />
 
         </div>
