@@ -31,6 +31,8 @@ import {
 import JoditEditor from "jodit-react";
 import { GammarType } from "../../../types/grammar";
 import AdminPageHeader from "../../../components/AdminPageHeader";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { changeBreadcrumb } from "../../../features/Slide/answerQuiz/AnswerQuizSlide";
 
 type Props = {};
 
@@ -39,6 +41,9 @@ const FormGrammar = (props: Props) => {
   const navigate = useNavigate();
   const [fileList, setfileList] = useState<any>();
   const [grammar, setGrammar] = useState("");
+  const { dayId } = useParams();
+  const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -94,16 +99,19 @@ const FormGrammar = (props: Props) => {
         form.setFieldsValue(data);
       };
       getDetail();
+      dispatch(changeBreadcrumb("Sửa học ngữ pháp"))
+    } else {
+      dispatch(changeBreadcrumb("Thêm bài học ngữ pháp"))
     }
-  }, []);
+  }, [id]);
   const config: any = {
     readonly: false,
     addNewLineOnDBLClick: false,
   };
   return (
-    <div className="">
-      <AdminPageHeader breadcrumb={titlePage} />
-      <div className="">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
+      <div>
         <Form
           layout="vertical"
           form={form}

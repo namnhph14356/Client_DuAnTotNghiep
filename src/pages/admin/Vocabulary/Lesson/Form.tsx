@@ -61,7 +61,7 @@ const FormVocabulary = (props: Props) => {
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
   let weeks = useAppSelector<WeekType[]>((item) => item.week.value);
   let days = useAppSelector<DayType[]>((item) => item.day.value);
-
+  const { dayId } = useParams()
   const [monthSelect, setMonthSelect] = useState<MonthType | null>();
   const [weekSelect, setWeekSelect] = useState<WeekType | null>();
   const [daySelect, setDaySelect] = useState<DayType | null>();
@@ -142,7 +142,6 @@ const FormVocabulary = (props: Props) => {
       navigate("/manageDay/vocabulary/listLesson");
     } else {
       const dayId = daySelect ? daySelect._id : "";
-      console.log("dayIDAdd", dayId);
 
       addVocabulary({ ...value, dayId: dayId });
       message.success({ content: "Thêm Thành Công!", key, duration: 2 });
@@ -187,16 +186,10 @@ const FormVocabulary = (props: Props) => {
     }
   }, []);
 
-  const check = (id: any) => {
-    console.log(id);
-  };
-
-  console.log("Day select", daySelect);
-
   return (
-    <div className="">
-      <AdminPageHeader breadcrumb={titlePage} />
-      <div className="">
+    <div>
+      <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
+      <div>
         <Form
           layout="vertical"
           form={form}
@@ -210,40 +203,6 @@ const FormVocabulary = (props: Props) => {
           ) : (
             ""
           )}
-
-          {/* Tháng - Tuần -Ngày */}
-          {/* <div className="flex gap-3">
-          <Form.Item className="w-[30%]" 
-          label="Tháng"
-          >
-            <Select defaultValue={"M1"}>
-              <Option value="M2">M2</Option>
-              <Option value="M3">M3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Tuần"
-          >
-            <Select defaultValue={"T1"}>
-              <Option value="T2">T2</Option>
-              <Option value="T3">T3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Ngày"
-          >
-            <Select defaultValue={"N1"}>
-              <Option value="N2">N2</Option>
-              <Option value="N3">N3</Option>
-            </Select>
-          </Form.Item>
-
-          </div> */}
-
-          {/*======================== */}
-
           <Form.Item
             label="Từ vựng"
             name="words"

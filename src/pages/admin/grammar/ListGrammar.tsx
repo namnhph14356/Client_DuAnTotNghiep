@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Table,
   Breadcrumb,
@@ -11,6 +11,7 @@ import {
   Image,
   Tag,
   Modal,
+  Tooltip,
 } from "antd";
 import type { ColumnsType, ColumnType } from "antd/es/table";
 import type { InputRef } from "antd";
@@ -42,6 +43,7 @@ const ListGrammar = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
   const dispatch = useDispatch();
+  const { dayId } = useParams()
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -50,8 +52,9 @@ const ListGrammar = (props: Props) => {
     };
     getData();
   }, []);
-  const dataSources = grammar?.map((items: any, index: any) => {
-    console.log(items.wordForm);
+
+  const tableWithType = grammar.filter((item: any) => item.dayId === dayId)
+  const dataSources = tableWithType?.map((items: any, index: any) => {
 
     return {
       key: index + 1,
@@ -177,6 +180,7 @@ const ListGrammar = (props: Props) => {
       title: "STT",
       dataIndex: "key",
       key: "key",
+      className: 'w-[70px]',
       sorter: (a: any, b: any) => a.key - b.key,
       sortDirections: ["descend"],
     },
@@ -201,16 +205,36 @@ const ListGrammar = (props: Props) => {
 
     },
     {
-      title: "Thời gian tạo",
-      dataIndex: "createdAt",
+      title: 'Ngày Tạo',
+      dataIndex: 'createdAt',
       key: "createdAt",
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[110px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
-      title: "Thời gian chỉnh sửa",
-      dataIndex: "updatedAt",
+      title: 'Ngày cập nhật',
+      dataIndex: 'updatedAt',
       key: "updatedAt",
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
       title: "Hành động",
@@ -218,7 +242,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/grammar/${record?.dayId}/editLesson`}>
+            <Link to={`/manageDay/${dayId}/grammar/${record?.dayId}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -244,11 +268,16 @@ const ListGrammar = (props: Props) => {
   ];
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý Ngữ Pháp Bài Học" />
+      <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{title:"Luyện ngữ pháp", route:"grammar"}} type={{title:"Bài học", route:"listLesson"}} />
       <Button type="primary" className="my-6">
-        <Link to={`/manageDay/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
+        <Link to={`/manageDay/${dayId}/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
       </Button>
-      <Table columns={columns} dataSource={dataSources}></Table>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={dataSources}
+        footer={() => `Hiển thị 10 trên tổng ${dataSources.length}`}
+      ></Table>
     </div>
   );
 };

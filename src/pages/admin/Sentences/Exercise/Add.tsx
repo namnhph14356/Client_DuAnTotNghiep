@@ -66,7 +66,7 @@ const AddSentencesExercise = (props: Props) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const { id } = useParams();
+  const { id, dayId } = useParams();
 
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
@@ -74,10 +74,7 @@ const AddSentencesExercise = (props: Props) => {
 
 
   const onFinish = async () => {
-    console.log("vào onSubmit");
     const question = arrQuestion.map((item) => item.text).join(" ")
-    console.log("questionQuiz", question, valueQuestion, "listenWrite");
-
     const { payload } = await dispatch(addQuizSlide({
       question: question,
       questionAfter: valueQuestion,
@@ -92,19 +89,11 @@ const AddSentencesExercise = (props: Props) => {
             answer: item.text
           }))
           if (answer) {
-              message.success("Thêm thành công !")            
+            message.success("Thêm thành công !")
           }
         }
       })
-
     }
-    console.log("payload question quiz", payload);
-
-
-    console.log(arrAnswer);
-    console.log(arrQuestion);
-
-
     setTurnOnListenWrite(true)
     setTurnOnQuiz(true)
   };
@@ -161,45 +150,45 @@ const AddSentencesExercise = (props: Props) => {
     form.resetFields();
   };
 
-  // useEffect(() => {
-  //   if (id) {
-  //     const getListenAndWrite = async () => {
-  //       const { data } = await detailListenWrite(id)
-  //       setListenWrite(data);
-  //       setAudio(data.audio)
-  //       let arr: {
-  //         _id: string,
-  //         name: string,
-  //         text: string,
-  //         answer?: string
-  //       }[] = [];
-  //       if (data) {
-  //         const { data: question } = await getListQuestionListenWriteById(String(data._id))
-  //         for (let i = 0; i < question.length; i++) {
-  //           const { data: answer } = await listAnswerListenWriteById(question[i]._id)
-  //           arr.push({ ...question[i], answer: answer ? answer.answer : null })
-  //         }
-  //       }
-  //       const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
-  //       form.setFieldsValue({
-  //         _id: id,
-  //         area: data.area,
-  //         // category: category[0].title,
-  //         category: data.category,
-  //         audio: data.imgLink,
-  //         content: arr
-  //       });
-  //       dispatch(changeBreadcrumb("SỬA BÀI TẬP LUYỆN HỘI THOẠI"))
-  //     }
-  //     getListenAndWrite()
-  //   } else {
-  //     dispatch(changeBreadcrumb("THÊM BÀI TẬP LUYỆN HỘI THOẠI"))
-  //   }
-  //   dispatch(getCategoryList())
-  //   dispatch(getListListenWrite())
-  //   listCate();
+  useEffect(() => {
+    if (id) {
+      // const getListenAndWrite = async () => {
+      //   const { data } = await detailListenWrite(id)
+      //   setListenWrite(data);
+      //   setAudio(data.audio)
+      //   let arr: {
+      //     _id: string,
+      //     name: string,
+      //     text: string,
+      //     answer?: string
+      //   }[] = [];
+      //   if (data) {
+      //     const { data: question } = await getListQuestionListenWriteById(String(data._id))
+      //     for (let i = 0; i < question.length; i++) {
+      //       const { data: answer } = await listAnswerListenWriteById(question[i]._id)
+      //       arr.push({ ...question[i], answer: answer ? answer.answer : null })
+      //     }
+      //   }
+      //   const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
+      //   form.setFieldsValue({
+      //     _id: id,
+      //     area: data.area,
+      //     // category: category[0].title,
+      //     category: data.category,
+      //     audio: data.imgLink,
+      //     content: arr
+      //   });
+      // }
+      // getListenAndWrite()
+      dispatch(changeBreadcrumb("Sửa bài tập"))
+    } else {
+      dispatch(changeBreadcrumb("Thêm bài tập"))
+    }
+    dispatch(getCategoryList())
+    dispatch(getListListenWrite())
+    // listCate();
 
-  // }, [id])
+  }, [id])
 
   const onChangeImage = (e: any) => {
     const imgPreview = document.getElementById("img-preview") as any;
@@ -214,7 +203,7 @@ const AddSentencesExercise = (props: Props) => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
       {/* <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <div className='shadow-md mb-8'>
           <div className='flex justify-between font-medium text-lg border-b hover:text-indigo-600 cursor-pointer' onClick={() => setTurnOnListenWrite(!turnOnListenWrite)}>

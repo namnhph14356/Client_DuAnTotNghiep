@@ -7,11 +7,9 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { QuizType } from '../../../../types/quiz';
 import { AnswerQuizType } from '../../../../types/answerQuiz';
-import { changeBreadcrumb,addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { detailAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
-
-
 
 type Props = {}
 
@@ -24,16 +22,11 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-
-  console.log("data edit", answerQuiz);
-
+  const { dayId } = useParams();
   const { id } = useParams();
-  console.log(id);
-
   const onFinish = async (value) => {
 
     const key = 'updatable';
-
     message.loading({ content: 'Loading...', key });
     setTimeout(() => {
       if (id) {
@@ -45,13 +38,10 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
         navigate("/admin/answerQuiz");
       }
-
     }, 2000);
-
   };
 
   const onFinishFailed = (errorInfo) => {
-
     id ? message.error('Sửa Không Thành Công!') : message.error('Thêm Không Thành Công!');
   };
 
@@ -59,37 +49,31 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
     form.resetFields();
   };
 
-
-
   useEffect(() => {
     if (id) {
       const getQuiz = async () => {
         const { data } = await detailAnswerQuiz(id)
         setAnswerQuiz(data)
         form.setFieldsValue(data);
-        dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
+        dispatch(changeBreadcrumb("Sửa đáp án"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
+      dispatch(changeBreadcrumb("Thêm đáp án"))
     }
 
     dispatch(getListQuizSlide())
 
   }, [])
 
-
-
-
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
           </Form.Item> : ""}
-
           <Form.Item
             label="Đáp Án"
             name="answer"
@@ -98,44 +82,6 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
           >
             <Input />
           </Form.Item>
-
-
-          {/* <Form.Item
-            label="Câu Hỏi"
-            name="quiz"
-            tooltip="Chọn Câu Hỏi"
-            rules={[{ required: true, message: 'Không để Trống!' }]}
-          >
-            {id
-              ? <Select >
-                {quizs?.map((item: QuizType, index) => (
-                  <Option key={index + 1} value={item._id}>
-                    {item.question}
-                  </Option>
-                ))}
-              </Select>
-              : <Select
-                defaultValue={quizs?.map((item: QuizType, index) => {
-                  if (item._id === answerQuiz?.quiz) {
-                    return <Option key={index + 1} value={item._id}>
-                      {item.question}
-                    </Option>
-                  }
-                })}
-              >
-
-                {quizs?.map((item: QuizType, index) => (
-                  <Option key={index + 1} value={item._id}>
-                    {item.question}
-                  </Option>
-                ))}
-              </Select>
-            }
-
-
-          </Form.Item> */}
-
-
           <Form.Item
             label="Trạng Thái"
             name="isCorrect"
@@ -143,28 +89,25 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
             {answerQuiz?.isCorrect === 0
-                ? <Select>
-                  <Option key={1} value={0}>
-                    Sai
-                  </Option>
-                  <Option key={2} value={1}>
-                    Đúng
-                  </Option>
-                </Select>
+              ? <Select>
+                <Option key={1} value={0}>
+                  Sai
+                </Option>
+                <Option key={2} value={1}>
+                  Đúng
+                </Option>
+              </Select>
 
-                : <Select>
-                  <Option key={1} value={1}>
-                    Đúng
-                  </Option>
-                  <Option key={2} value={0}>
-                    Sai
-                  </Option>
-                </Select>
-              }
+              : <Select>
+                <Option key={1} value={1}>
+                  Đúng
+                </Option>
+                <Option key={2} value={0}>
+                  Sai
+                </Option>
+              </Select>
+            }
           </Form.Item>
-
-
-
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               {id ? "Sửa" : "Thêm"}
@@ -173,14 +116,8 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
               Reset
             </Button>
           </Form.Item>
-
-
         </Form>
       </div>
-
-
-
-
     </div>
   )
 }

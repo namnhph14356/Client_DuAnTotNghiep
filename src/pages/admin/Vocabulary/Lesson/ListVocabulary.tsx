@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   Table,
   Breadcrumb,
@@ -11,6 +11,7 @@ import {
   Image,
   Tag,
   Modal,
+  Tooltip,
 } from "antd";
 import type { ColumnsType, ColumnType } from "antd/es/table";
 import type { InputRef } from "antd";
@@ -42,7 +43,7 @@ const ListVocabulary = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
   const [dayTitle, setDayTitle] = useState();
-
+  const { dayId } = useParams();
   // const use
   // Call api
   useEffect(() => {
@@ -54,7 +55,8 @@ const ListVocabulary = (props: Props) => {
   }, []);
   console.log("Tim", vocabulary);
 
-  const dataSources = vocabulary?.map((items: any, index: any) => {
+  const tableListenSpeak = vocabulary.filter((item: any) => item.dayId?._id === String(dayId))
+  const dataSources = tableListenSpeak?.map((items: any, index: any) => {
     return {
       key: index + 1,
       stt: index + 1,
@@ -180,15 +182,16 @@ const ListVocabulary = (props: Props) => {
   const columns: ColumnsType<DataType> = [
     {
       title: "STT",
+      className: 'w-[70px]',
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
-
     {
       title: "Từ vựng",
+    
       dataIndex: "words",
       key: "words",
       ...getColumnSearchProps("words"),
@@ -196,6 +199,7 @@ const ListVocabulary = (props: Props) => {
     {
       title: "Thuộc tính",
       key: "wordForm",
+      className: 'w-[110px]',
       // dataIndex: "wordForm"
       render: (record: any) => (
         <div className="">
@@ -229,24 +233,36 @@ const ListVocabulary = (props: Props) => {
         </div>
       ),
     },
-    // {
-    //   title: "Day",
-    //   dataIndex: "dayId",
-    //   key: "dayId",
-    // },
     {
-      title: "Ngày tạo",
-      dataIndex: "createdAt",
+      title: 'Ngày Tạo',
+      dataIndex: 'createdAt',
       key: "createdAt",
-      sorter: (a, b) => a.createdAt - b.createdAt,
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
-      title: "Ngày cập nhật",
-      dataIndex: "updatedAt",
+      title: 'Ngày cập nhật',
+      dataIndex: 'updatedAt',
       key: "updatedAt",
-      sorter: (a, b) => a.updatedAt - b.updatedAt,
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
     },
     {
       title: "Hành động",
@@ -254,7 +270,7 @@ const ListVocabulary = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/vocabulary/${record._id}/editLesson`}>
+            <Link to={`/manageDay/${dayId}/vocabulary/${record._id}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -280,11 +296,17 @@ const ListVocabulary = (props: Props) => {
   ];
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý vocabulary" />
+      <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson"}} />
       <Button type="primary" className="my-6">
-        <Link to={`/manageDay/vocabulary/addLesson`}>Thêm Từ Vựng</Link>
+        <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}>Thêm Từ Vựng</Link>
       </Button>
-      <Table columns={columns} dataSource={dataSources} className="overflow-auto"></Table>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={dataSources}
+        footer={() => `Hiển thị 10 trên tổng ${dataSources.length}`}
+      ></Table>
+
     </div>
   );
 };

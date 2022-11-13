@@ -29,6 +29,7 @@ const FormExerciseVocabulary = (props: Props) => {
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
+  const { dayId } = useParams();
   const typeQuiz = [
     { id: 1, name: "Chọn đáp án tự động", type: "selectAuto" },
   ]
@@ -117,11 +118,11 @@ const FormExerciseVocabulary = (props: Props) => {
         setQuiz(data)
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
-        dispatch(changeBreadcrumb("Sửa Quiz"))
+        dispatch(changeBreadcrumb("Sửa câu hỏi"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm câu hỏi bài tập phần từ vựng"))
+      dispatch(changeBreadcrumb("Thêm câu hỏi"))
     }
 
     dispatch(getCategoryList())
@@ -129,9 +130,9 @@ const FormExerciseVocabulary = (props: Props) => {
   }, [])
 
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} >
 
           {id ? <Form.Item label="_id" name="_id" hidden={true}>

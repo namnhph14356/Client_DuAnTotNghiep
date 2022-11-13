@@ -33,12 +33,12 @@ const FormSentencesLesson = (props: Props) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [sentences, setSentences] = useState("");
-  const { id } = useParams();
+  const { id, dayId } = useParams();
   var titlePage: string = "";
   if (id) {
-    titlePage = "LUYỆN CẤU TRÚC & CÂU / SỬA BÀI HỌC";
+    titlePage = "Sửa bài học";
   } else {
-    titlePage = "LUYỆN CẤU TRÚC & CÂU / THÊM BÀI HỌC";
+    titlePage = "Thêm bài học";
   }
   const onFinish = async (value: SentenceType) => {
     const key = "updatable";
@@ -107,9 +107,10 @@ const FormSentencesLesson = (props: Props) => {
     addNewLineOnDBLClick: false,
   };
   return (
-    <div className="">
-      <AdminPageHeader breadcrumb={titlePage} />
-      <div className="">
+    <div>
+      <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài học", route: "listLesson" }} />
+
+      <div>
         <Form
           layout="vertical"
           form={form}
