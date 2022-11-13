@@ -1,35 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import AdminPageHeader from '../../../components/AdminPageHeader';
+import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { Link, useParams } from 'react-router-dom';
-import { QuizType } from '../../../types/quiz';
-import { getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../types/category';
+import { QuizType } from '../../../../types/quiz';
+import { getListQuizSlide, removeQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
+import { CategoryType } from '../../../../types/category';
 import { SearchOutlined, CheckCircleOutlined, CloseCircleOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { AnswerQuizType } from '../../../types/answerQuiz';
+import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { AnswerQuizType } from '../../../../types/answerQuiz';
+
+
 
 interface DataType {
   key: React.Key;
-  category?: string;
-  question: string;
-  questionAfter?: string;
-  image?: string;
-  meaning?: string,
-  suggestions?: string,
-  timeLimit?: string;
-  type?: string;
-  practiceActivity?: string;
-  explain?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  _id?: string,
+  category: string,
+  question: string,
+  image: string,
+  timeLimit: string,
+  type?: string
+  // children?: any
 }
 
 interface ExpandedDataType {
@@ -38,8 +35,6 @@ interface ExpandedDataType {
   quiz: string;
   answer: string;
   isCorrect: number;
-  wordMeaning: string;
-  explainAnswer: string;
 }
 
 const typeQuiz = [
@@ -48,12 +43,14 @@ const typeQuiz = [
   { id: 3, type: "selectCompound" }
 ]
 
+
 type DataIndex = keyof ExpandedDataType;
 type DataIndex2 = keyof DataType;
 
+
 type Props = {}
 
-const ListExercise = () => {
+const ListExerciseVocabulary = (props: Props) => {
 
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
   const quizs = useAppSelector(item => item.quiz.value)
@@ -69,32 +66,31 @@ const ListExercise = () => {
   const { dayId } = useParams();
 
   //------------------STATE--------------------
-  const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "grammar" && item.type === 'selectRadio')
-  const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity?.day === String(dayId))
+  const tableWithType = quizs.filter((item: any) => item.type === 'selectAuto' && item.practiceActivity?.day === dayId && item.practiceActivity?.type === "vocabulary")
 
-  const dataTable = tableListenSpeak.map((item: QuizType, index) => {
+  const dataTable = tableWithType.map((item: QuizType, index) => {
     return {
       key: index + 1,
       _id: item._id,
       question: item.question,
+      image: item.image,
       type: item.type,
-      suggestions: item.suggestions,
-      meaning: item.meaning,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
+
     }
   })
+
   const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
     return {
       key: item._id,
       _id: item._id,
       quiz: item.quiz,
       answer: item.answer,
-      isCorrect: item.isCorrect,
-      wordMeaning: item.wordMeaning,
-      explainAnswer: item.explainAnswer
+      isCorrect: item.isCorrect
     }
   })
+
 
   //------------------TABLE-DATA-------------------
 
@@ -164,7 +160,9 @@ const ListExercise = () => {
 
   });
 
+
   //------------------SEARCH--------------------
+
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
     let rowSelected: { key: string, id: string | undefined }[] = []
@@ -248,6 +246,7 @@ const ListExercise = () => {
     message.error('Hủy Hành Động!');
   };
 
+
   //------------------REMOVE-CONFIRM-------------------
 
   const columns: ColumnsType<any> = [
@@ -257,34 +256,49 @@ const ListExercise = () => {
       key: "key",
       className: 'w-[70px]',
       sorter: (a: any, b: any) => a.key - b.key,
+      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ['descend'],
+    },
+    {
+      title: 'Hình ảnh',
+      key: "image",
+      className: 'w-[100px]',
+      render: (record) => (
+        <div className="">
+          <Image
+            width={60}
+            height={60}
+            src={record.image}
+          />
+        </div>
+      )
     },
     {
       title: 'Câu hỏi',
       dataIndex: 'question',
-      className: 'w-[280px]',
       key: "question",
       ...getColumnSearchProps('question'),
     },
     {
-      title: 'Giải thích',
-      dataIndex: 'suggestions',
-      className: 'w-[200px]',
-      key: "suggestions",
-      ...getColumnSearchProps('suggestions'),
-    },
-    {
-      title: 'Gợi ý',
-      dataIndex: 'meaning',
+      title: 'Loại Câu Hỏi',
+      dataIndex: 'type',
+      key: "type",
       className: 'w-[220px]',
-      key: "meaning",
-      ...getColumnSearchProps('meaning'),
+      render: ((item) => (
+        <>
+          {item === "selectRadio"
+            ? <p>Chọn đáp án</p> :
+            item === "selectImage"
+              ? <p>Chọn đáp án theo hình ảnh</p> :
+              <p>Tự động chọn đáp án</p>
+          }
+        </>
+      )),
     },
     {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
-      className: 'w-[130px]',
       sortDirections: ['descend'],
       ellipsis: {
         showTitle: false,
@@ -300,7 +314,6 @@ const ListExercise = () => {
       title: 'Ngày cập nhật',
       dataIndex: 'updatedAt',
       key: "updatedAt",
-      className: 'w-[130px]',
       sortDirections: ['descend'],
       ellipsis: {
         showTitle: false,
@@ -314,11 +327,12 @@ const ListExercise = () => {
     },
     {
       title: 'Hành Động',
-      fixed: "right",
+      align: 'center',
+      className: 'w-[150px]',
       key: "action", render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }} >
-            <Link to={`/manageDay/${dayId}/grammar/question/${record._id}/edit`} >
+            <Link to={`/manageDay/${dayId}/vocabulary/${record._id}/editExercise`} >
               <span className="text-white">Sửa</span>
             </Link>
 
@@ -337,19 +351,20 @@ const ListExercise = () => {
               Xóa
             </Button>
           </Popconfirm>
+
         </Space>
       ),
-    },
+    }
+
   ];
 
   const expandedRowRender = (row: any) => {
-
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
       { title: 'STT', dataIndex: 'stt', key: 'stt' },
+      { title: 'ID', dataIndex: '_id', key: '_id' },
+
       { title: 'Đáp án', dataIndex: 'answer', key: 'answer' },
-      { title: 'Ngữ nghĩa / loại từ', dataIndex: 'wordMeaning', key: 'wordMeaning' },
-      { title: 'Giải thích đáp án', dataIndex: 'explainAnswer', key: 'explainAnswer' },
       {
         title: 'Đáp án đúng',
 
@@ -368,10 +383,9 @@ const ListExercise = () => {
         key: "action", render: (text, record) => (
           <Space align="center" size="middle">
             <Button style={{ background: "#198754" }} >
-              <Link to={`/manageDay/${dayId}/grammar/answer/${record._id}/edit`} >
+              <Link to={`/manageDay/${dayId}/vocabulary/${record._id}/editExerciseAnswer`} >
                 <span className="text-white">Sửa</span>
               </Link>
-
             </Button>
 
             <Popconfirm
@@ -392,8 +406,6 @@ const ListExercise = () => {
         ),
 
       },
-
-
     ];
 
     let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
@@ -403,29 +415,27 @@ const ListExercise = () => {
         _id: item2._id,
         answer: item2.answer,
         quiz: item2.quiz,
-        isCorrect: item2.isCorrect,
-        wordMeaning: item2.wordMeaning,
-        explainAnswer: item2.explainAnswer
+        isCorrect: item2.isCorrect
       }
-
     })
 
-    return <div>
-      <Space align="center" size="small">
-        <Button style={{ background: "#E7975A" }} >
-          <Link to={`/manageDay/${dayId}/grammar/answer/${row._id}/add`} >
-            <span className="text-white">Thêm đáp án</span>
-          </Link>
-        </Button>
-      </Space>
-      <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
-    </div>
-
+    return (
+      <div>
+        <Space align="center" size="small">
+          <Button style={{ background: "#E7975A" }} >
+            <Link to={`/manageDay/${dayId}/vocabulary/${row._id}/addExerciseAnswer`} >
+              <span className="text-white">Thêm đáp án</span>
+            </Link>
+          </Button>
+        </Space>
+        <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+      </div>
+    )
   }
   //------------------TABLE-COLUMM-------------------
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Danh sách bài tập ngữ pháp"))
+    dispatch(changeBreadcrumb("Luyện từ vựng"))
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
     dispatch(getListQuizSlide())
@@ -434,9 +444,9 @@ const ListExercise = () => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' >
-        <Link to={`/manageDay/${dayId}/grammar/question/add`}>Thêm câu hỏi</Link>
+        <Link to={`/manageDay/${dayId}/vocabulary/addExercise`}>Thêm câu hỏi</Link>
       </Button>
 
       {selectedRowKeys.length > 1
@@ -460,7 +470,7 @@ const ListExercise = () => {
 
       <Table
         bordered
-        footer={() => `Hiển thị 10 trên tổng ${tableListenSpeak.length}`}
+        footer={() => `Hiển thị 10 trên tổng ${tableWithType.length}`}
         expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
         columns={columns}
         dataSource={dataTable}
@@ -470,4 +480,4 @@ const ListExercise = () => {
   )
 }
 
-export default ListExercise 
+export default ListExerciseVocabulary

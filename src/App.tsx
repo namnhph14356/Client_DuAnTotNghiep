@@ -99,6 +99,7 @@ import FormAnswerListenSpeak from "./pages/admin/listenspeak/Answer/FormAnswerAd
 import FormAnswerListenSpeakEdit from "./pages/admin/listenspeak/Answer/FormAnswerEdit";
 import ListExercise from "./pages/admin/grammar/ListExercise";
 import FormExercise from "./pages/admin/grammar/FormExercise";
+import ExamLayout from "./pages/layouts/ExamLayout";
 import FormLessonVocabulary from "./pages/admin/Vocabulary/Exercise/FormExerciseVocabulary";
 import FormExerciseVoca from "./pages/admin/Vocabulary/Exercise/FormExerciseVocabulary";
 import FormExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/FormExerciseVocabulary";
@@ -108,11 +109,12 @@ import ListListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/Lis
 import FormListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenRead";
 import FormQuestion from "./pages/admin/grammar/Question/FormQuestion";
 import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
-import ListLessonVocabulary from "./pages/admin/Vocabulary/Exercise/ListLessonVocabulary";
 import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
 import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
 import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
+import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
+
 
 
 function App() {
@@ -133,8 +135,12 @@ function App() {
             <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
 
             <Route path='oral'>
-              <Route path=':dayId' element={<OralPage />} />
-              <Route path='oralseven' element={<OralSeven />} />
+              <Route path=':dayId' element={<ExamLayout />} >
+                <Route index element={<OralPage />} />
+                <Route path='exam' element={<OralSeven />} />
+              </Route>
+              {/* <Route path=':dayId' element={<OralPage />} />
+              <Route path=':dayId/exam' element={<OralSeven />} /> */}
             </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
@@ -284,12 +290,13 @@ function App() {
           </Route>
 
           <Route path="vocabulary">
+            <Route index element={<Navigate to="listLesson" />} />
             <Route path="listLesson" element={<ListVocabulary />} />
             <Route path="addLesson" element={<FormVocabulary />} />
             <Route path=":id/editLesson" element={<FormVocabulary />} />
 
             <Route path="addExercise" element={<FormExerciseVocabulary />} />
-            <Route path="listExercise" element={<ListLessonVocabulary />} />
+            <Route path="listExercise" element={<ListExerciseVocabulary />} />
             <Route path=":id/editExercise" element={<FormExerciseVocabulary />} />
 
             <Route path=":id/addExerciseAnswer" element={<FormVocabularyAnswer />} />
@@ -298,16 +305,19 @@ function App() {
           </Route>
 
           <Route path="sentences">
+            <Route index element={<Navigate to="listLesson" />} />
             <Route path="listLesson" element={<ListSentencesLesson />} />
             <Route path="addLesson" element={<FormSentencesLesson />} />
             <Route path=":id/editLesson" element={<FormSentencesLesson />} />
 
-            <Route path="addExercise" element={<AddSentencesExercise />} />
             <Route path="listExercise" element={<ListSentencesExercise />} />
+            <Route path="addExercise" element={<AddSentencesExercise />} />
+            <Route path=":id/editExercise" element={<AddSentencesExercise />} />
           </Route>
 
           {/* listenWrite */}
-          <Route path="listenWrite">
+          <Route path="conversation">
+            <Route index element={<Navigate to="listExercise" />} />
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />
@@ -315,24 +325,24 @@ function App() {
             <Route path="listListenRead" element={<ListListenRead />} />
             <Route path="addListenRead" element={<FormListenRead />} />
             <Route path=":id/editListenRead" element={<FormListenRead />} />
-            
+
           </Route>
 
           <Route path="grammar">
-            <Route path="listLesson"  element={<ListGrammar />} />
+            <Route index element={<Navigate to="listLesson" />} />
+            <Route path="listLesson" element={<ListGrammar />} />
             <Route path="addLesson" element={<FormGrammar />} />
             <Route path=":id/editLesson" element={<FormGrammar />} />
-          
+
 
             <Route path="question">
-              <Route path="add" element={<FormQuestion/>} />
+              <Route path="add" element={<FormQuestion />} />
               <Route path=":id/edit" element={<FormQuestion />} />
             </Route>
             <Route path="answer">
               <Route path=":id/add" element={<FormAnswer />} />
               <Route path=":id/edit" element={<FormAnswerEdit />} />
             </Route>
-
 
             <Route path="listExercise" element={<ListExercise />} />
             <Route path="addExercise" element={<FormExercise />} />

@@ -6,7 +6,9 @@ const googleSpeechSlice = createSlice({
     name: "googleSpeech",
     initialState: {
         speechValue: {},
-        transcript: ""
+        transcript: "",
+        isFinish: false,
+        arrReset : []
     },
     reducers: {
         changeSpeechValue(state, action) {
@@ -17,10 +19,20 @@ const googleSpeechSlice = createSlice({
                 state.speechValue = action.payload
                 state.transcript = action.payload.results[0].alternatives[0].transcript.toLowerCase()
             }
+        },
+        changeArrReset(state, action) {
+            state.arrReset = action.payload
+        },
+        changeSpeechFinish(state, action) {
+            state.isFinish = action.payload
+        },
+        resetSpeechValue(state, action){
+            state.speechValue = {}
+            state.transcript = ""
         }
     }
 })
 
-export const { changeSpeechValue } = googleSpeechSlice.actions
+export const { changeSpeechValue, changeSpeechFinish, resetSpeechValue, changeArrReset } = googleSpeechSlice.actions
 
 export default googleSpeechSlice.reducer

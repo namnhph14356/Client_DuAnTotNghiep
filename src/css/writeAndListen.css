@@ -38,11 +38,7 @@
 } */
 
 .inp__text {
-  border-bottom: 1px solid #000;
-  @apply bg-slate-100 text-center outline-none
-}
-.inp__text:focus {
-  border-color: #3498db;
+  @apply border-b border-dashed font-semibold text-center border-black outline-none focus:border-[#130ff8] bg-none
 }
 
 .conversation__box p {

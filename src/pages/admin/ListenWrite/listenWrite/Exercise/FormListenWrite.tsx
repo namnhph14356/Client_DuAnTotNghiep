@@ -46,7 +46,6 @@ const FormListenWrite = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const breadcrumb = useAppSelector(data => data.listenWrite.breadcrumb)
-  const categories = useAppSelector(data => data.category.value)
   const listWrite = useAppSelector(data => data.listenWrite.value)
   const [categoryExist, setCategoryExist] = useState<string[]>([])
   const [listenWrite, setListenWrite] = useState<ListenWriteType>()
@@ -59,7 +58,7 @@ const FormListenWrite = (props: Props) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const { id } = useParams();
+  const { id, dayId } = useParams();
 
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
@@ -203,7 +202,7 @@ const FormListenWrite = (props: Props) => {
             arr.push({ ...question[i], answer: answer ? answer.answer : null })
           }
         }
-        const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
+        // const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
         form.setFieldsValue({
           _id: id,
           area: data.area,
@@ -212,11 +211,11 @@ const FormListenWrite = (props: Props) => {
           audio: data.imgLink,
           content: arr
         });
-        dispatch(changeBreadcrumb("SỬA BÀI TẬP LUYỆN HỘI THOẠI"))
       }
       getListenAndWrite()
+      dispatch(changeBreadcrumb("Sửa bài tập"))
     } else {
-      dispatch(changeBreadcrumb("THÊM BÀI TẬP LUYỆN HỘI THOẠI"))
+      dispatch(changeBreadcrumb("Thêm bài tập"))
     }
     dispatch(getCategoryList())
     dispatch(getListListenWrite())
@@ -237,7 +236,7 @@ const FormListenWrite = (props: Props) => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
         <div className='shadow-md mb-8'>
           <div className='flex justify-between font-medium text-lg border-b hover:text-indigo-600 cursor-pointer' onClick={() => setTurnOnListenWrite(!turnOnListenWrite)}>

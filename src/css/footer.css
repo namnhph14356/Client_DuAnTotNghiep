@@ -1,6 +1,6 @@
 
 .footer{
-    @apply bg-[#512E5F]
+    @apply bg-[#6078ea]
 }
 .footer .container{
     @apply w-10/12 m-auto text-white py-[20px] 

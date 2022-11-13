@@ -20,7 +20,7 @@ const FormAnswer = () => {
   const quizs = useAppSelector(data => data.quiz.value)
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
   const [listAnswer, setListAnswer] = useState<any>([])
-
+  const { dayId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
@@ -63,36 +63,19 @@ const FormAnswer = () => {
   }
 
   useEffect(() => {
-    if (id) {
-      const getQuiz = async () => {
-        const { data } = await detailAnswerQuiz(id)
-        setAnswerQuiz(data)
-        dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
-      }
-      getQuiz()
-    } else {
-      dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
-    }
-
     dispatch(getListQuizSlide())
+    dispatch(changeBreadcrumb("Thêm đáp án bài tập ngữ pháp"))
     const getAnswer = async () => {
-      const { data } = await listAnswerQuiz()
+      const { data } = await listAnswerQuiz() 
       setListAnswer(data);
     }
     getAnswer()
-
-
   }, [])
 
-
-
-
   return (
-    <div className="container">
-      <div className='mx-6 my-6'>
-        <h1>Thêm đáp án bài tập</h1>
-      </div>
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
           <Form.Item

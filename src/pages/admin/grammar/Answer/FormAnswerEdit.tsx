@@ -22,7 +22,7 @@ const FormAnswerEdit = () => {
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-
+  const { dayId } = useParams();
   const { id } = useParams();
 
   const onFinish = async (value) => {
@@ -60,11 +60,11 @@ const FormAnswerEdit = () => {
         const { data } = await detailAnswerQuiz(id)
         setAnswerQuiz(data)
         form.setFieldsValue(data);
-        dispatch(changeBreadcrumb("Sửa AnswerQuiz"))
+        dispatch(changeBreadcrumb("Sửa đáp án bài tập ngữ pháp"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
+      dispatch(changeBreadcrumb("Thêm đáp án bài tập ngữ pháp"))
     }
 
     dispatch(getListQuizSlide())
@@ -72,9 +72,9 @@ const FormAnswerEdit = () => {
   }, [])
 
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
             <Input />
