@@ -75,6 +75,12 @@ const AdminClassList = (props) => {
 
   const columns = [
     {
+      title: "STT",
+      dataIndex: "index",
+      key: "index",
+      render: (row, item, index) => `${index + 1}`,
+    },
+    {
       title: "Name Class",
       dataIndex: "nameClass",
       key: "nameClass",
