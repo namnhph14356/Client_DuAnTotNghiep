@@ -37,6 +37,7 @@ import { addLearningProgress, detailLearningProgressByUser, editLearningProgress
 import { SemicolonPreference } from 'typescript';
 import { addLearningProgressSlice, editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress';
 import { resetSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
+import { shuffleArray } from '../../utils/shuffleArray';
 
 
 
@@ -123,6 +124,7 @@ const QuizTypeSelect = () => {
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
     const user = useSelector(((item: RootState) => item.auth.value)) as UserType
     const dispatch = useAppDispatch()
+    const [learningProgress, setLearningProgress] = useState<number>(0)
     const [select, setSelect] = useState<any>(null)
     const [check, setCheck] = useState(false)
     const [check2, setCheck2] = useState<any>()
@@ -231,6 +233,7 @@ const QuizTypeSelect = () => {
     //---Countinute---
     // Chuyển câu hỏi
     const onContinute = () => {
+        dispatch(resetSpeechValue(""))
         setSelect(null)
         setCheck2(null)
         setCheck(false)
@@ -269,12 +272,12 @@ const QuizTypeSelect = () => {
             dispatch(addLearningProgressSlice({day: dayId, user: user._id}))
         }else{
             // const {data} = await editLearningProgress({...learningProgress[0],listeningSpeakingScore: Math.round(score)})
-            dispatch(editLearningProgressSlice({...learningProgress[0],listeningSpeakingScore: Math.round(score)}))
+            dispatch(editLearningProgressSlice({...learningProgress,listeningSpeakingScore: Math.round(score)}))
         }
        
         const { data: data2 } = await addHistory({
             user: user._id,
-            learningProgress: learningProgress[0]._id,
+            learningProgress: learningProgress._id,
             practiceActivity: quiz2.itemPracticeActivity._id,
             score: Math.round(score),
             totalScore: totalPoint,
@@ -298,6 +301,7 @@ const QuizTypeSelect = () => {
         }))
         setHistory(test2)
         console.log("test2",test2)
+        dispatch(resetSpeechValue(""))
         setIsModalOpen(true);
     }
 
@@ -312,16 +316,16 @@ const QuizTypeSelect = () => {
     };
 
     //---ModalResult---
-    function shuffleArray(array) {
-        let i = array.length - 1;
-        for (; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-        return array;
-    }
+    // function shuffleArray(array) {
+    //     let i = array.length - 1;
+    //     for (; i > 0; i--) {
+    //         const j = Math.floor(Math.random() * (i + 1));
+    //         const temp = array[i];
+    //         array[i] = array[j];
+    //         array[j] = temp;
+    //     }
+    //     return array;
+    // }
 
     //---ModalResult---
     //Hiện Modal kết quả
@@ -368,8 +372,8 @@ const QuizTypeSelect = () => {
             console.log("data",data)
             console.log("test2",test2)
             setHistory(test2)
-            const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
-            console.log("learningProgress",learningProgress[0])
+            // const { data: learningProgress } = await detailLearningProgressByUser(dayId,user._id)
+            // console.log("learningProgress",learningProgress)
 
         }
         getQuiz()
@@ -421,6 +425,11 @@ const QuizTypeSelect = () => {
                         </div>
 
                         <div className="p-5 mt-5">
+                            <div className={`${transcript !== ""? "flex": "hidden"} my-6 justify-center items-center `}>
+                                <span className="py-1 px-4  font-normal text-base rounded-md border border-gray-400">{transcript}</span>
+
+                            </div>
+
                             {quizList ?
                                 quizList[quizIndex]?.quiz?.type === "selectRadio"
                                     ? <div className="main__content__spaeking">

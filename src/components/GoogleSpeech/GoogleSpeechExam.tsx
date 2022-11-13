@@ -1,19 +1,50 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 // import io from 'socket.io'
 import io from 'socket.io-client'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { changeSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
-
+import { changeSpeechFinish, changeSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
+import Countdown from 'react-countdown';
 // import {} from './recorderWorkletProcessor'
 
-type GoogleSpeechOralProps = {}
+type GoogleSpeechExamProps = {
+    resetSpeaker: boolean,
+    onHanldeResetSpeaker: (value: boolean) => void
+}
+
 const socket = io("http://localhost:8000", { transports: ['websocket'] });
 
-const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
+const CountdownWrapper = ({ time, reset }) => {
+    //---TimeLimitCountdown---
+    //Đếm ngược thời gian làm 
+    const [state, setState] = useState<any>()
+    const renderer = ({ hours, minutes, seconds, completed }) => {
+        return <span>{seconds}</span>;
+    };
+
+    useEffect(() => {
+        setState(Date.now() + time)
+    }, [time, reset])
+
+    return <Countdown
+        // date={Date.now() + 7000}
+        date={state}
+        renderer={renderer}
+    />
+};
+
+const MemoCountdown = React.memo(CountdownWrapper);
+
+
+
+const GoogleSpeechExam = ({ resetSpeaker, onHanldeResetSpeaker }: GoogleSpeechExamProps) => {
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
-    console.log("transcript", transcript)
+    const isFinish = useAppSelector(item => item.googleSpeech.isFinish)
+    const arrReset = useAppSelector(item => item.googleSpeech.arrReset)
     const dispatch = useAppDispatch()
 
+    const renderer = ({ hours, minutes, seconds, completed }) => {
+        return <span>{seconds}</span>;
+    };
 
     useEffect(() => {
         //================= CONFIG =================
@@ -49,7 +80,7 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
                 latencyHint: 'interactive',
             });
 
-            await context.audioWorklet.addModule('/assets/js2/recorderWorkletProcessor2.js')
+            await context.audioWorklet.addModule('/assets/js2/recorderWorkletProcessor3.js')
             context.resume();
 
             globalStream = await navigator.mediaDevices.getUserMedia(constraints)
@@ -74,18 +105,16 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
         //================= INTERFACE =================
         var startButton = document.getElementById('startRecButton') as HTMLButtonElement;
         startButton.addEventListener('click', startRecording);
-
         var endButton = document.getElementById('stopRecButton') as HTMLButtonElement;
-        // endButton.addEventListener('click', stopRecording);
-        // endButton.disabled = true;
-
         var recordingStatus = document.getElementById('recordingStatus') as HTMLDivElement;
+
+        if (resetSpeaker) {
+            startRecording()
+        }
 
         function startRecording() {
             startButton.disabled = true;
             startButton.className = "text-white !h-10 !w-10 !bg-red-600 !rounded-full scale-105 "
-            // endButton.disabled = false;
-            // recordingStatus.style.visibility = 'visible';
             initRecording();
             console.log("start")
             setTimeout(() => {
@@ -99,8 +128,6 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
             // waited for FinalWord
             startButton.disabled = false;
             startButton.className = "text-white !h-10 !w-10 !bg-blue-600 !rounded-full "
-            // endButton.disabled = true;
-            // recordingStatus.style.visibility = 'hidden';
             streamStreaming = false;
             socket.emit('endGoogleCloudStream', '');
 
@@ -115,6 +142,8 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
                 context = null;
                 AudioContext = null;
                 startButton.disabled = false;
+                dispatch(changeSpeechFinish(true))
+                onHanldeResetSpeaker(false)
             });
 
         }
@@ -130,29 +159,15 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
         });
 
         socket.on('speechData', function (data) {
-            // console.log(data.results[0].alternatives[0].transcript);
             var dataFinal = undefined || data.results[0].isFinal;
-            // console.log("dataFinal", dataFinal);
-            // console.log("data", data);
-
             if (dataFinal === false) {
-                // console.log(resultText.lastElementChild);
-                if (removeLastSentence) {
-                    // resultText.lastElementChild.remove();
-                }
                 removeLastSentence = true;
-
-                // console.log("dataFinal false", dataFinal);
             } else if (dataFinal === true) {
-                // resultText.lastElementChild.remove();
-                // console.log("dataFinal true", dataFinal);
                 dispatch(changeSpeechValue(data))
                 finalWord = true;
                 removeLastSentence = false;
             }
         });
-
-
 
         window.onbeforeunload = function () {
             if (streamStreaming) {
@@ -181,28 +196,21 @@ const GoogleSpeechOral = (props: GoogleSpeechOralProps) => {
             }
             return s.charAt(0).toUpperCase() + s.slice(1);
         }
-
-
-
-
-    }, [])
-
+    }, [arrReset, isFinish])
 
     return (
         <div>
-            <audio  ></audio>
+            <audio></audio>
             <button className=' !h-10 !w-10 !bg-blue-600 !rounded-full !text-white ' id="startRecButton" type="button" >
-                <i className="fa-solid fa-volume-high !m-0 !p-0"></i>
+                {/* <i className="fa-solid fa-volume-high !m-0 !p-0"></i> */}
+                <Countdown
+                    date={Date.now() + 7000}
+                    renderer={renderer}
+                />
+                {/* <MemoCountdown time={7000} reset={isFinish} /> */}
             </button>
-            {/* 
-            <button id="startRecButton" type="button"  > Start recording</button>
-            <button id="stopRecButton" type="button"> Stop recording</button> */}
-            {/* <div id="recordingStatus">&nbsp;</div> */}
-
-
-
         </div>
     )
 }
 
-export default GoogleSpeechOral
+export default GoogleSpeechExam

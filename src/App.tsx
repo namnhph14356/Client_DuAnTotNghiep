@@ -97,6 +97,7 @@ import DayLayout from "./pages/layouts/DayLayout";
 import ListDay from "./pages/admin/Day/ListDay";
 import ListExercise from "./pages/admin/grammar/ListExercise";
 import FormExercise from "./pages/admin/grammar/FormExercise";
+import ExamLayout from "./pages/layouts/ExamLayout";
 
 function App() {
   return (
@@ -116,8 +117,12 @@ function App() {
             <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
 
             <Route path='oral'>
-              <Route path=':dayId' element={<OralPage />} />
-              <Route path='oralseven' element={<OralSeven />} />
+              <Route path=':dayId' element={<ExamLayout />} >
+                <Route index element={<OralPage />} />
+                <Route path='exam' element={<OralSeven />} />
+              </Route>
+              {/* <Route path=':dayId' element={<OralPage />} />
+              <Route path=':dayId/exam' element={<OralSeven />} /> */}
             </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
