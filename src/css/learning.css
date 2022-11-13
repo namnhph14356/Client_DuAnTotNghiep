@@ -42,7 +42,7 @@
   @apply py-1
 }
 .statistical__topic__learning__point{
-  @apply ml-[50px] text-[red] 
+  @apply ml-[50px] font-bold 
 }
 .btn__learning__statistical{
   @apply  mt-[30px]

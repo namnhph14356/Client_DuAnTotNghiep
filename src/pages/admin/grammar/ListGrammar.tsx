@@ -178,7 +178,6 @@ const ListGrammar = (props: Props) => {
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
     {
@@ -191,11 +190,15 @@ const ListGrammar = (props: Props) => {
       dataIndex: "description",
       key: "description",
       className: "description_grammar",
+      render: (record) => (
+        <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
+      )
     },
     {
       title: "Tóm tắt",
       dataIndex: "summary",
       key: "summary",
+
     },
     {
       title: "Thời gian tạo",
@@ -215,7 +218,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/grammar/${record?.dayId}/edit`}>
+            <Link to={`/manageDay/grammar/${record?.dayId}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -243,9 +246,8 @@ const ListGrammar = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb="Quản lý Ngữ Pháp Bài Học" />
       <Button type="primary" className="my-6">
-        <Link to={`/manageDay/grammar/add`}>Thêm Ngữ Pháp</Link>
+        <Link to={`/manageDay/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
       </Button>
-      <h1>Ngữ pháp</h1>
       <Table columns={columns} dataSource={dataSources}></Table>
     </div>
   );

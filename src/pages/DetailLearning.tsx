@@ -65,7 +65,7 @@ const DetailLearning = () => {
   useEffect(() => {
     dispatch(getListPracticeActivitySliceByDay(dayId))
   }, [dayId])
-
+  
   return (
     <div className='detail__learning__page'>
       <div className="content__detail__learning">

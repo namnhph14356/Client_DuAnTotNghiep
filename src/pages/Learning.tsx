@@ -61,8 +61,9 @@ const Learning = () => {
   const [daySelect, setDaySelect] = useState<DayType | null>()
   const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
-  const days2 = days.filter((item: DayType) => item.week === weekSelect?._id)
-
+  console.log("đâyy",days);
+  const days2 = days?.filter((item: DayType) => item.week === weekSelect?._id)
+  
 
   //---ModalResult---
   //Hiện Modal kết quả
@@ -175,7 +176,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {months.map((item: MonthType, index: number) => (
                           <Menu.Item >
@@ -218,7 +219,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {weeks2.map((item: WeekType) => (
 
@@ -260,7 +261,7 @@ const Learning = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {days2.map((item: DayType, index: number) => (
 
                           <Menu.Item >
@@ -358,11 +359,11 @@ const Learning = () => {
                 <div className="statistical__topic__learning__point">
                   {learningProgressSelect
                     ? <ul>
-                      <li>{learningProgressSelect.listeningSpeakingScore}</li>
-                      <li>{learningProgressSelect.vocabularyScore}</li>
-                      <li>{learningProgressSelect.structureSentencesScore}</li>
-                      <li>{learningProgressSelect.conversationScore}</li>
-                      <li>{learningProgressSelect.grammarScore}</li>
+                      <li className={`${learningProgressSelect.listeningSpeakingScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.listeningSpeakingScore}</li>
+                      <li className={`${learningProgressSelect.vocabularyScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.vocabularyScore}</li>
+                      <li className={`${learningProgressSelect.structureSentencesScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.structureSentencesScore}</li>
+                      <li className={`${learningProgressSelect.conversationScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.conversationScore}</li>
+                      <li className={`${learningProgressSelect.grammarScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.grammarScore}</li>
                     </ul>
                     : <ul>
                       <li>0</li>

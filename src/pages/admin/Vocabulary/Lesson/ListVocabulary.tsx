@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { listVocabulary, deleteVocabulary } from "../../../api/vocabulary";
 import {
   Table,
   Breadcrumb,
@@ -18,11 +17,10 @@ import type { InputRef } from "antd";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { VocabulatyType } from "../../../types/vocabularyType";
-import AdminPageHeader from "../../../components/AdminPageHeader";
-import { useAppSelector } from "../../../app/hooks";
-import { DayType } from "../../../types/day";
-import { detailDay } from "../../../api/day";
+import { VocabulatyType } from "../../../../types/vocabularyType";
+import { deleteVocabulary, listVocabulary } from "../../../../api/vocabulary";
+import AdminPageHeader from "../../../../components/AdminPageHeader";
+
 type Props = {};
 
 interface DataType {
@@ -190,13 +188,13 @@ const ListVocabulary = (props: Props) => {
     },
 
     {
-      title: "Words",
+      title: "Từ vựng",
       dataIndex: "words",
       key: "words",
       ...getColumnSearchProps("words"),
     },
     {
-      title: "WordForm",
+      title: "Thuộc tính",
       key: "wordForm",
       // dataIndex: "wordForm"
       render: (record: any) => (
@@ -217,13 +215,13 @@ const ListVocabulary = (props: Props) => {
       // ...getColumnSearchProps('wordForm'),
     },
     {
-      title: "Meaning",
+      title: "Nghĩa",
       dataIndex: "meaning",
       key: "meaning",
       ...getColumnSearchProps("meaning"),
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       key: "image",
       render: (record) => (
         <div className="">
@@ -231,32 +229,32 @@ const ListVocabulary = (props: Props) => {
         </div>
       ),
     },
+    // {
+    //   title: "Day",
+    //   dataIndex: "dayId",
+    //   key: "dayId",
+    // },
     {
-      title: "Day",
-      dataIndex: "dayId",
-      key: "dayId",
-    },
-    {
-      title: "Created At",
+      title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
       sorter: (a, b) => a.createdAt - b.createdAt,
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Updated At",
+      title: "Ngày cập nhật",
       dataIndex: "updatedAt",
       key: "updatedAt",
       sorter: (a, b) => a.updatedAt - b.updatedAt,
       sortDirections: ["descend", "ascend"],
     },
     {
-      title: "Actions",
+      title: "Hành động",
       key: "action",
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/vocabulary/${record._id}/edit`}>
+            <Link to={`/manageDay/vocabulary/${record._id}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -284,9 +282,8 @@ const ListVocabulary = (props: Props) => {
     <div>
       <AdminPageHeader breadcrumb="Quản lý vocabulary" />
       <Button type="primary" className="my-6">
-        <Link to={`/manageDay/vocabulary/add`}>Thêm Từ Vựng</Link>
+        <Link to={`/manageDay/vocabulary/addLesson`}>Thêm Từ Vựng</Link>
       </Button>
-      <h1>Vocabulary</h1>
       <Table columns={columns} dataSource={dataSources} className="overflow-auto"></Table>
     </div>
   );

@@ -21,17 +21,17 @@ import {
   addVocabulary,
   detailVocabulary,
   editVocabulary,
-} from "../../../api/vocabulary";
+} from "../../../../api/vocabulary";
 import ReactQuill from "react-quill";
-import AdminPageHeader from "../../../components/AdminPageHeader";
-import { getCategoryList } from "../../../features/Slide/category/CategorySlide";
-import { getListMonthSlice } from "../../../features/Slide/month/MonthSlice";
-import { getListWeekSlice } from "../../../features/Slide/week/WeekSlice";
-import { getListDaySlice } from "../../../features/Slide/day/DaySlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { MonthType } from "../../../types/month";
-import { WeekType } from "../../../types/week";
-import { DayType } from "../../../types/day";
+import AdminPageHeader from "../../../../components/AdminPageHeader";
+import { getCategoryList } from "../../../../features/Slide/category/CategorySlide";
+import { getListMonthSlice } from "../../../../features/Slide/month/MonthSlice";
+import { getListWeekSlice } from "../../../../features/Slide/week/WeekSlice";
+import { getListDaySlice } from "../../../../features/Slide/day/DaySlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { MonthType } from "../../../../types/month";
+import { WeekType } from "../../../../types/week";
+import { DayType } from "../../../../types/day";
 import { Menu, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -111,9 +111,9 @@ const FormVocabulary = (props: Props) => {
   var titlePage: string = "";
 
   if (id) {
-    titlePage = "Update Vocablulary";
+    titlePage = "Sửa từ vựng";
   } else {
-    titlePage = "Add New Vocabulary";
+    titlePage = "Thêm mới từ vựng";
   }
   const onFinish = async (value: any) => {
     if (fileList) {
@@ -139,14 +139,14 @@ const FormVocabulary = (props: Props) => {
     if (id) {
       editVocabulary(value);
       message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-      navigate("/admin/vocabulary");
+      navigate("/manageDay/vocabulary/listLesson");
     } else {
       const dayId = daySelect ? daySelect._id : "";
       console.log("dayIDAdd", dayId);
 
       addVocabulary({ ...value, dayId: dayId });
       message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-      navigate("/admin/vocabulary");
+      navigate("/manageDay/vocabulary/listLesson");
     }
   };
 
@@ -244,161 +244,17 @@ const FormVocabulary = (props: Props) => {
 
           {/*======================== */}
 
-          <div className="">
-            <div className="learning__btn__time">
-              <div className="item__btn__time">
-                <Menu as="div" className="relative inline-block text-left ">
-                  <div>
-                    <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
-                      {`Tháng ${monthSelect?.order}`}{" "}
-                      <span className="h-full my-auto">
-                        <ChevronDownIcon className="w-5 h-5" />
-                      </span>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {months.map((item: MonthType, index: number) => (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <p
-                              className={classNames(
-                                active
-                                  ? "bg-green-100 text-gray-900"
-                                  : "text-gray-700",
-                                "group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer"
-                              )}
-                              onClick={() => {
-                                setMonthSelect(item);
-                                setWeekSelect(
-                                  findSmallestOrder(weeks, item?._id)
-                                );
-                              }}
-                            >
-                              {`Chặng ${item?.order}`}
-                            </p>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-              <div className="item__btn__time">
-                <Menu as="div" className="relative inline-block text-left ">
-                  <div>
-                    <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
-                      {weekSelect ? weekSelect.title : "Tuần 1"}{" "}
-                      <span className="h-full my-auto">
-                        <ChevronDownIcon className="w-5 h-5" />
-                      </span>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {weeks2.map((item: WeekType) => (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <p
-                              className={classNames(
-                                active
-                                  ? "bg-green-100 text-gray-900"
-                                  : "text-gray-700",
-                                "group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer"
-                              )}
-                              onClick={() => {
-                                setWeekSelect(item);
-                              }}
-                            >
-                              {item.title}
-                            </p>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-              {/* <Form.Item className="" name="dayId"> */}
-              <div className="item__btn__time">
-                <Menu as="div" className="relative inline-block text-left ">
-                  <div>
-                    <Menu.Button className="relative flex w-full py-2 pr-4 text-base font-semibold text-left text-indigo-600 cursor-default sm:text-lg">
-                      {daySelect ? daySelect.title : "Ngày 1"}{" "}
-                      <span className="h-full my-auto">
-                        <ChevronDownIcon className="w-5 h-5" />
-                      </span>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 ml-5 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      {days2.map((item: DayType) => (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <p
-                              className={classNames(
-                                active
-                                  ? "bg-green-100 text-gray-900"
-                                  : "text-gray-700",
-                                "group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer"
-                              )}
-                              onClick={() => {
-                                setDaySelect(item);
-                              }}
-                            >
-                              {/* check(item._id) */}
-                              {item.title}
-                            </p>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-              {/* </Form.Item> */}
-            </div>
-          </div>
-
-          <Form.Item className="" name="dayId">
-            <span className="" hidden> {daySelect ? daySelect._id : ""} </span>
-          </Form.Item>
-
           <Form.Item
-            label="Words"
+            label="Từ vựng"
             name="words"
             tooltip="Câu Hỏi dành cho Category"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
             <Input />
           </Form.Item>
- 
+
           <Form.Item
-            label="Meaning"
+            label="Nghĩa"
             name="meaning"
             tooltip="Ý nghĩa"
             rules={[{ required: true, message: "Không để Trống!" }]}
@@ -407,13 +263,13 @@ const FormVocabulary = (props: Props) => {
           </Form.Item>
 
           <Form.Item
-            label="WordForm"
+            label="Dạng từ"
             name="wordForm"
             tooltip="dạng từ"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
             <Select
-              placeholder="Select a option and change input text above"
+              placeholder="Chọn một tùy chọn và thay đổi văn bản nhập ở trên"
               allowClear
             >
               <Option value="1">nouns</Option>
@@ -424,7 +280,7 @@ const FormVocabulary = (props: Props) => {
           </Form.Item>
 
           <Form.Item
-            label="Spelling"
+            label="Phiên âm"
             name="pa"
             tooltip="phiên âm"
             rules={[{ required: true, message: "Không để Trống!" }]}
@@ -432,6 +288,9 @@ const FormVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
+          <Form.Item name="image" valuePropName="src" label="ImagePreview">
+            <img id="img-preview" style={{ width: "100px" }} />
+          </Form.Item>
           <Form.Item label="Upload image" tooltip="Image for Quiz">
             <Input
               type="file"
@@ -442,7 +301,7 @@ const FormVocabulary = (props: Props) => {
           </Form.Item>
 
           <Form.Item
-            label="Example"
+            label="Ví dụ"
             name="example"
             tooltip="ví dụ"
             rules={[{ required: true, message: "Không để Trống!" }]}
@@ -452,10 +311,6 @@ const FormVocabulary = (props: Props) => {
               theme="snow"
               style={{ background: "#fff" }}
             />
-          </Form.Item>
-
-          <Form.Item name="image" valuePropName="src" label="ImagePreview">
-            <img id="img-preview" style={{ width: "100px" }} />
           </Form.Item>
           <Form.Item className="float-right">
             <Button
