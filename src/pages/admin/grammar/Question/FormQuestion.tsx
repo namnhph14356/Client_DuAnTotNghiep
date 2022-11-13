@@ -21,8 +21,8 @@ interface DataQuizType {
   question: string;
   questionAfter?: string;
   image?: string;
-  meaning?:string,
-  suggestions?:string,
+  meaning?: string,
+  suggestions?: string,
   timeLimit?: string;
   type?: string;
   practiceActivity?: string;
@@ -43,12 +43,11 @@ const FormQuestion = () => {
   const [quiz, setQuiz] = useState<DataQuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
+  const { dayId } = useParams();
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
   const typeQuiz = [
     { id: 1, name: "Chọn đáp án", type: "selectRadio" },
-    { id: 2, name: "Chọn Đáp Án có hình ảnh", type: "selectImage" },
-    { id: 3, name: "Ghép từng đáp án", type: "selectCompound" }
   ]
   const type = "grammar"
   const prative: any = practiceActivity.find((item: any) => item.type === type)
@@ -78,7 +77,6 @@ const FormQuestion = () => {
         return message.error('Không để trống Ảnh!');
       }
     }
-
 
     const key = 'updatable';
 
@@ -124,18 +122,18 @@ const FormQuestion = () => {
         setQuiz(data)
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
-        dispatch(changeBreadcrumb("Sửa bài tập"))
+        dispatch(changeBreadcrumb("Sửa câu hỏi"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm câu hỏi ngữ pháp bài tập"))
+      dispatch(changeBreadcrumb("Thêm câu hỏi"))
     }
     dispatch(getCategoryList())
   }, [])
 
   return (
     <div className="">
-      <AdminPageHeader breadcrumb={breadcrumb} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6 ">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
@@ -146,7 +144,7 @@ const FormQuestion = () => {
           <Form.Item
             label="Thể Loại"
             name="type"
-            tooltip="Thể Loại Quiz"
+            tooltip="Thể Loại"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
             {id

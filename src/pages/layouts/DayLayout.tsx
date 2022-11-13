@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from "../../types/user";
 import PopupChange from "../../components/AdminDayConponent/PopupChange";
+import AdminPageHeader from "../../components/AdminPageHeader";
 
 const notification = (
   <Menu
@@ -301,10 +302,10 @@ const DayLayout = () => {
             </div>
           </div>
         </Header>
-        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+        <Content style={{ margin: "24px 16px", overflow: "initial" }}>
           <div
             className="site-layout-background"
-            style={{ padding: 24, textAlign: "center" }}
+            style={{ padding: 24 }}
           >
             <Outlet />
           </div>

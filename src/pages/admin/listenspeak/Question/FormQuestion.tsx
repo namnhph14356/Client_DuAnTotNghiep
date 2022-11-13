@@ -27,6 +27,7 @@ const FormQuestionListenSpeak = (props: Props) => {
   const [quiz, setQuiz] = useState<QuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
+  const { dayId } = useParams();
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
   const typeQuiz = [
@@ -117,11 +118,11 @@ const FormQuestionListenSpeak = (props: Props) => {
         setQuiz(data)
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
-        dispatch(changeBreadcrumb("Sửa Quiz"))
+        dispatch(changeBreadcrumb("Sửa câu hỏi"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm Quiz"))
+      dispatch(changeBreadcrumb("Thêm câu hỏi"))
     }
 
     dispatch(getCategoryList())
@@ -129,9 +130,9 @@ const FormQuestionListenSpeak = (props: Props) => {
   }, [])
 
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: ""}}/>
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
           {id ? <Form.Item label="_id" name="_id" hidden={true}>

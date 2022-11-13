@@ -23,16 +23,14 @@ const FormAnswerListenSpeak = (props: Props) => {
   const quizs = useAppSelector(data => data.quiz.value)
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
   const [listAnswer, setListAnswer] = useState<any>([])
-
+  const { dayId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
 
 
   const { id } = useParams();
-  console.log(id);
   const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
-  console.log(filterIsCorrect);
 
 
   const onFinish = async (value) => {
@@ -43,16 +41,13 @@ const FormAnswerListenSpeak = (props: Props) => {
 
     message.loading({ content: 'Loading...', key });
     setTimeout(() => {
-
       dispatch(addAnswerQuizSlide({
         ...value,
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
       navigate("/manageDay/listenspeak");
-
     }, 2000);
-
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -68,33 +63,23 @@ const FormAnswerListenSpeak = (props: Props) => {
       console.log('Đã có đáp án đúng');
     } else {
       console.log('CHưa có');
-
     }
-
   }
 
-
   useEffect(() => {
-
-    dispatch(changeBreadcrumb("Thêm AnswerQuiz"))
-
+    dispatch(changeBreadcrumb("Thêm đáp án"))
     dispatch(getListQuizSlide())
     const getAnswer = async () => {
       const { data } = await listAnswerQuiz()
       setListAnswer(data);
     }
     getAnswer()
-
-
   }, [])
 
-
-
-
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: ""}} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 
           <Form.Item
