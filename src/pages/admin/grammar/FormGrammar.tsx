@@ -41,7 +41,7 @@ const FormGrammar = (props: Props) => {
   const navigate = useNavigate();
   const [fileList, setfileList] = useState<any>();
   const [grammar, setGrammar] = useState("");
-  const { dayId } = useParams();
+  const { id, dayId } = useParams();
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
   const dispatch = useAppDispatch();
   const {
@@ -51,30 +51,31 @@ const FormGrammar = (props: Props) => {
     reset,
     control,
   } = useForm();
-  const { id } = useParams();
   var titlePage: string = "";
   if (id) {
     titlePage = "Cập Nhật Ngữ Pháp Bài Học";
   } else {
     titlePage = "Thêm Ngữ Pháp Bài Học";
   }
+
   const onFinish = async (value: GammarType) => {
     const key = "updatable";
-
+    console.log("value", value);
+    
     message.loading({ content: "Loading...", key });
     if (id) {
       try {
-        updateGrammar(value);
+        updateGrammar({ ...value, dayId: dayId });
         message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-        navigate("/manageDay/grammar");
+        navigate(`/manageDay/${dayId}/grammar`);
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
     } else {
       try {
-        addGrammar(value);
+        addGrammar({ ...value, dayId: dayId });
         message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-        navigate("/manageDay/grammar");
+        navigate(`/manageDay/${dayId}/grammar`);
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
@@ -95,6 +96,8 @@ const FormGrammar = (props: Props) => {
     if (id) {
       const getDetail = async () => {
         const { data } = await getGrammarDetail(id);
+        console.log("data", data);
+        
         setGrammar(data);
         form.setFieldsValue(data);
       };
@@ -108,6 +111,9 @@ const FormGrammar = (props: Props) => {
     readonly: false,
     addNewLineOnDBLClick: false,
   };
+  console.log("grammar", grammar);
+  console.log("id", id);
+  
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />

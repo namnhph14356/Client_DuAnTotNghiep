@@ -32,11 +32,11 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
       if (id) {
         dispatch(editAnswerQuizSlide(value));
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/admin/answerQuiz");
+        navigate(`/manageDay/${dayId}/listenspeak`);
       } else {
         dispatch(addAnswerQuizSlide(value));
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/admin/answerQuiz");
+        navigate(`/manageDay/${dayId}/listenspeak`);
       }
     }, 2000);
   };

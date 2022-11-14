@@ -10,6 +10,7 @@ import {
   Badge,
   Image,
   Tag,
+  Modal,
 } from "antd";
 import type { Key, TableRowSelection } from "antd/es/table/interface";
 import {
@@ -32,9 +33,11 @@ import {
   getDayBiggest,
   getListDaySlice,
 } from "../../../features/Slide/day/DaySlice";
-import { getListPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { addPracticeActivitylice, getListPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { dayBiggest } from "../../../api/day";
 import { useSelector } from "react-redux";
+import { type } from "@testing-library/user-event/dist/types/setup/directApi";
+import { async } from "@firebase/util";
 
 interface DataType {
   key: React.Key;
@@ -53,6 +56,13 @@ interface ExpandedDataType {
 type DataIndex = keyof ExpandedDataType;
 
 type Props = {};
+const typeActivity = [
+  { id: 1, title: "listenspeak", type: "Luyện nghe nói phản xạ" },
+  { id: 2, title: "vocabulary", type: "Luyện từ vựng" },
+  { id: 3, title: "sentences", type: "Luyện cấu trúc và câu" },
+  { id: 4, title: "conversation", type: "Luyện hội thoại" },
+  { id: 5, title: "grammar", type: "Luyện ngữ pháp" },
+]
 
 const ListDay = (props: Props) => {
   const breadcrumb = useAppSelector((item) => item.day.breadcrumb);
@@ -182,18 +192,37 @@ const ListDay = (props: Props) => {
   var number: any = 1;
   var newOrder: any = dayBiggest?.order + number;
   var newDay: any = {
-    title: `ngày ${newOrder}`,
+    title: `Ngày ${newOrder}`,
     order: newOrder,
   };
   const addDay = async () => {
-    try {
-      const data = await dispatch(addDaySlice(newDay));
-      setTimeout(() => {
-        navigate(`/manageDay/${data.payload?._id}`);
-      }, 1000);
-    } catch (error) {
-      message.error("LỖI");
-    }
+
+    Modal.confirm({
+      title: `Bạn có muốn thêm ngày thứ ${days.length + 1} không ?`,
+      content: <div className=' text-sm'>
+        <p>Số ngày học hiện có {days.length} !</p>
+      </div>,
+      width: "30%",
+      onOk: async () => {
+        try {
+          const { payload } = await dispatch(addDaySlice(newDay));
+          typeActivity.map(async (item) => {
+            await dispatch(addPracticeActivitylice({
+              day: payload._id,
+              title: item.type,
+              type: item.title,
+              order: item.id
+            }))
+          })
+          navigate(`/manageDay/${payload?._id}`);
+          message.success("Thêm thành công " + payload.title);
+        } catch (error) {
+          message.error("LỖI");
+        }
+      },
+    })
+
+
   };
 
   //------------------REMOVE-CONFIRM-------------------
@@ -203,12 +232,13 @@ const ListDay = (props: Props) => {
       title: "STT",
       dataIndex: "key",
       key: "key",
+      className: "w-[100px]",
       sorter: (a: any, b: any) => a.key - b.key,
       // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
     {
-      title: "Tiêu đề",
+      title: "Ngày học",
       dataIndex: "title",
       key: "title",
     },
@@ -218,7 +248,7 @@ const ListDay = (props: Props) => {
       key: "createdAt",
     },
     {
-      title: "Ngày Update",
+      title: "Ngày cập nhật",
       dataIndex: "updatedAt",
       key: "updatedAt",
     },
@@ -238,58 +268,47 @@ const ListDay = (props: Props) => {
   ];
 
   const expandedRowRender = (row: any) => {
-    console.log("row", row);
+    console.log("${findOne}", row);
 
     const columns2: ColumnsType<ExpandedDataType> = [
-      { title: "Key", dataIndex: "key", key: "key", className: "hidden" },
-      { title: "STT", dataIndex: "stt", key: "stt" },
-      { title: "ID", dataIndex: "_id", key: "_id" },
-      { title: "Title", dataIndex: "title", key: "title" },
-      { title: "Type", dataIndex: "type", key: "type" },
+      {
+        title: "STT", dataIndex: "stt", key: "stt",
+        sorter: (a: any, b: any) => a.stt - b.stt,
+        className: "w-[100px]"
+      },
+      { title: "Tiêu đề", dataIndex: "title", key: "title" },
+      {
+        title: "Trạng thái", dataIndex: "status", key: "status",
+        render: (record: any) => (
+          <div className="">
+            {record === "1" ? (
+              <Tag color="green">Nouns</Tag>
+            ) : record === "2" ? (
+              <Tag color="blue">Adj</Tag>
+            ) : record === "3" ? (
+              <Tag color="purple">Adv</Tag>
+            ) : record === "4" ? (
+              <Tag color="purple">Verbs</Tag>
+            ) : (
+              <Tag color="red">ERROR</Tag>
+            )}
+          </div>
+        ),
+      },
       {
         title: "Hành Động",
         key: "action",
         render: (text, record) => (
           <Space align="center" size="middle">
             <Button style={{ background: "#198754" }}>
-              <Link to={`/admin/answerQuiz/${record._id}/edit`}>
+              <Link to={`/manageDay/${row._id}/${record.type}`}>
                 <span className="text-white">Sửa</span>
               </Link>
             </Button>
-
-            <Popconfirm
-              placement="topRight"
-              title="Bạn Có Muốn Xóa?"
-              okText="Có"
-              cancelText="Không"
-              onConfirm={() => {
-                handleOk(record._id);
-              }}
-              okButtonProps={{ loading: confirmLoading }}
-              onCancel={handleCancel}
-            >
-              <Button type="primary" danger>
-                Xóa
-              </Button>
-            </Popconfirm>
           </Space>
         ),
       },
     ];
-
-    console.log(
-      activity
-        .filter((item: PracticeActivityType) => item?.day === row._id)
-        .map((item2: PracticeActivityType, index) => {
-          return {
-            key: item2?._id,
-            stt: index + 1,
-            _id: item2?._id,
-            title: item2?.title,
-            type: item2.type,
-          };
-        })
-    );
 
     let data: any = activity
       .filter((item: PracticeActivityType) => item?.day == row._id)
@@ -299,14 +318,14 @@ const ListDay = (props: Props) => {
           stt: index + 1,
           _id: item2?._id,
           title: item2?.title,
-          type: item2.type,
+          order: item2.order,
+          type: item2.type
         };
-      });
-    console.log("dataActivi", data);
+      }).sort((a, b) => a.order - b.order)
 
     return (
       <Table
-        rowSelection={rowSelection}
+        bordered
         columns={columns2}
         dataSource={data}
         pagination={false}
@@ -327,31 +346,6 @@ const ListDay = (props: Props) => {
       <Button type="primary" className="my-6" onClick={() => addDay()}>
         Thêm ngày
       </Button>
-
-      {selectedRowKeys.length > 1 ? (
-        <Popconfirm
-          title="Bạn Có Muốn Xóa Hết?"
-          okText="Có"
-          cancelText="Không"
-          onConfirm={() => {
-            handleOk(selected);
-          }}
-          okButtonProps={{ loading: confirmLoading }}
-          onCancel={handleCancel}
-        >
-          <Button className="ml-4" type="primary" danger>
-            Xóa Hết
-          </Button>
-        </Popconfirm>
-      ) : (
-        ""
-      )}
-
-      <span style={{ marginLeft: 8 }}>
-        {selectedRowKeys.length > 0
-          ? `Đã chọn ${selectedRowKeys.length} hàng`
-          : ""}
-      </span>
 
       <Table
         bordered

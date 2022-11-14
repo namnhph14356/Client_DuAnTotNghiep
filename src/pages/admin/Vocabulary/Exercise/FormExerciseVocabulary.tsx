@@ -34,8 +34,7 @@ const FormExerciseVocabulary = (props: Props) => {
     { id: 1, name: "Chọn đáp án tự động", type: "selectAuto" },
   ]
   const type = "vocabulary"
-  const prative: any = practiceActivity.find((item: any) => item.type === type)
-
+  const prative: any = practiceActivity.find((item: any) => item.type === type && item.day === dayId)
 
   const { id } = useParams();
 
@@ -66,21 +65,15 @@ const FormExerciseVocabulary = (props: Props) => {
     const key = 'updatable';
 
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
       if (id) {
-        // dispatch(editQuizSlide(value));
         mutate(edit(value))
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/vocabulary/listExercise");
+        message.success({ content: 'Sửa Thành Công!', key });
+        navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
       } else {
-        // dispatch(addQuizSlide(value));
-        mutate(add(value))
-
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/manageDay/vocabulary/listExercise");
+        mutate(add({...value, practiceActivity:prative._id}))
+        message.success({ content: 'Thêm Thành Công!', key });
+        navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
       }
-
-    }, 2000);
   };
 
   const onFinishFailed = (errorInfo) => {

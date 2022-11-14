@@ -69,9 +69,8 @@ const ListListenSpeak = (props: Props) => {
   const { dayId } = useParams();
 
   //------------------STATE--------------------
-  const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "listenSpeaking" && item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
+  const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "listenspeak" && item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
   const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity?.day === String(dayId))
-
   const dataTable = tableListenSpeak.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -449,7 +448,7 @@ const ListListenSpeak = (props: Props) => {
             </Link>
           </Button>
         </Space>
-        <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+        <Table bordered rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
       </div>
     )
   }

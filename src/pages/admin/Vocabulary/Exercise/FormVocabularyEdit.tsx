@@ -31,17 +31,15 @@ const FormVocabularyEdit = (props: Props) => {
 
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      if (id) {
-        dispatch(editAnswerQuizSlide(value));
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/vocabulary/listExercise");
-      } else {
-        dispatch(addAnswerQuizSlide(value));
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("manageDay/vocabulary/listExercise");
-      }
-    }, 2000);
+    if (id) {
+      dispatch(editAnswerQuizSlide(value));
+      message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+      navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
+    } else {
+      dispatch(addAnswerQuizSlide(value));
+      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+      navigate(`manageDay/${dayId}/vocabulary/listExercise`);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {

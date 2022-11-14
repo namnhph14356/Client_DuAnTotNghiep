@@ -26,27 +26,20 @@ const FormAnswerEdit = () => {
   const { id } = useParams();
 
   const onFinish = async (value) => {
-
     const key = 'updatable';
-
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
       if (id) {
         dispatch(editAnswerQuizSlide(value));
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/admin/grammar/listExercise");
+        navigate(`/manageDay/${dayId}/grammar/listExercise`);
       } else {
         dispatch(addAnswerQuizSlide(value));
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/admin/grammar/listExercise");
+        navigate(`/manageDay/${dayId}/grammar/listExercise`);
       }
-
-    }, 2000);
-
   };
 
   const onFinishFailed = (errorInfo) => {
-
     id ? message.error('Sửa Không Thành Công!') : message.error('Thêm Không Thành Công!');
   };
 

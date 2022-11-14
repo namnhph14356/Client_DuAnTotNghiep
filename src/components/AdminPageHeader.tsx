@@ -66,8 +66,8 @@ const AdminPageHeader = ({ breadcrumb, day, activity, type }: AdminPageHeaderPro
       </div>
       <PageHeader
         className="site-page-header text-indigo-600"
-        title={`${breadcrumb}`}
-        style={{ paddingLeft: 0 }}
+        title={`${day ? `${detailDay?.title} / ${breadcrumb}` : `${breadcrumb}`}`}
+        style={{ paddingLeft: 0 }} 
       />
     </div>
   )
