@@ -67,7 +67,6 @@ const ListExerciseVocabulary = (props: Props) => {
 
   //------------------STATE--------------------
   const tableWithType = quizs.filter((item: any) => item.type === 'selectAuto' && item.practiceActivity?.day === dayId && item.practiceActivity?.type === "vocabulary")
-
   const dataTable = tableWithType.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -362,8 +361,6 @@ const ListExerciseVocabulary = (props: Props) => {
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
       { title: 'STT', dataIndex: 'stt', key: 'stt' },
-      { title: 'ID', dataIndex: '_id', key: '_id' },
-
       { title: 'Đáp án', dataIndex: 'answer', key: 'answer' },
       {
         title: 'Đáp án đúng',
@@ -428,7 +425,7 @@ const ListExerciseVocabulary = (props: Props) => {
             </Link>
           </Button>
         </Space>
-        <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+        <Table bordered rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
       </div>
     )
   }

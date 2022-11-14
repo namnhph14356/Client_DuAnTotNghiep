@@ -68,16 +68,13 @@ const ListGrammar = (props: Props) => {
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
-  const handleOk = (id) => {
+  const handleOk = async (id) => {
     const key = "updatable";
     setConfirmLoading(true);
-    console.log(id);
+    await deleteGrammar(id);
+    setGrammar(grammar.filter((item: GammarType) => item._id !== id));
     message.loading({ content: "Loading...", key });
-
-    setTimeout(() => {
-      // delete record
-      message.success({ content: "Xóa Thành Công!", key, duration: 2 });
-    }, 2000);
+    message.success({ content: "Xóa Thành Công!", key, duration: 2 });
   };
 
   const handleCancel = () => {
@@ -99,15 +96,6 @@ const ListGrammar = (props: Props) => {
     setSearchText("");
   };
 
-  const onDelete = (_id: any) => {
-    Modal.confirm({
-      title: "Bạn có chắc chắn xóa không?",
-      onOk: async () => {
-        await deleteGrammar(_id);
-        setGrammar(grammar.filter((item: GammarType) => item._id !== _id));
-      },
-    });
-  };
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<DataType> => ({
@@ -193,7 +181,6 @@ const ListGrammar = (props: Props) => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      className: "description_grammar",
       render: (record) => (
         <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
       )
@@ -202,6 +189,9 @@ const ListGrammar = (props: Props) => {
       title: "Tóm tắt",
       dataIndex: "summary",
       key: "summary",
+      render: (record) => (
+        <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
+      )
 
     },
     {
@@ -242,7 +232,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/${dayId}/grammar/${record?.dayId}/editLesson`}>
+            <Link to={`/manageDay/${dayId}/grammar/${record?._id}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -258,7 +248,7 @@ const ListGrammar = (props: Props) => {
             okButtonProps={{ loading: confirmLoading }}
             onCancel={handleCancel}
           >
-            <Button type="primary" danger onClick={() => onDelete(record._id)}>
+            <Button type="primary" danger>
               Xóa
             </Button>
           </Popconfirm>
@@ -268,7 +258,7 @@ const ListGrammar = (props: Props) => {
   ];
   return (
     <div>
-      <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{title:"Luyện ngữ pháp", route:"grammar"}} type={{title:"Bài học", route:"listLesson"}} />
+      <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6">
         <Link to={`/manageDay/${dayId}/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
       </Button>

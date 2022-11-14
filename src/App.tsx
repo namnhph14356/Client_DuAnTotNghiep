@@ -345,8 +345,8 @@ function App() {
             </Route>
 
             <Route path="listExercise" element={<ListExercise />} />
-            <Route path="addExercise" element={<FormExercise />} />
-            <Route path=":id/addExercise" element={<FormExercise />} />
+            {/* <Route path="addExercise" element={<FormExercise />} />
+            <Route path=":id/addExercise" element={<FormExercise />} /> */}
           </Route>
         </Route>
 

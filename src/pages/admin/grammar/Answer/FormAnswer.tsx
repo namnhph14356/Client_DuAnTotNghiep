@@ -29,21 +29,14 @@ const FormAnswer = () => {
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
 
   const onFinish = async (value) => {
-
     const key = 'updatable';
-
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-
-      dispatch(addAnswerQuizSlide({
-        ...value,
-        quiz: id
-      }));
-      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate("/manageDay/grammar/listExercise");
-
-    }, 2000);
-
+    dispatch(addAnswerQuizSlide({
+      ...value,
+      quiz: id
+    }));
+    message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+    navigate(`/manageDay/${dayId}/grammar/listExercise`);
   };
 
   const onFinishFailed = (errorInfo) => {

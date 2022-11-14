@@ -32,23 +32,9 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { MonthType } from "../../../../types/month";
 import { WeekType } from "../../../../types/week";
 import { DayType } from "../../../../types/day";
-import { Menu, Transition } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpDownIcon,
-  DocumentTextIcon,
-  EllipsisHorizontalIcon,
-  HomeIcon,
-  LockClosedIcon,
-  ShieldCheckIcon,
-  UserPlusIcon,
-} from "@heroicons/react/20/solid";
+
 type Props = {};
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 const FormVocabulary = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
@@ -57,7 +43,6 @@ const FormVocabulary = (props: Props) => {
   const [vocabulary, setVocabulary] = useState();
 
   const dispatch = useAppDispatch();
-  const categories = useAppSelector((item) => item.category.value);
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
   let weeks = useAppSelector<WeekType[]>((item) => item.week.value);
   let days = useAppSelector<DayType[]>((item) => item.day.value);
@@ -65,18 +50,6 @@ const FormVocabulary = (props: Props) => {
   const [monthSelect, setMonthSelect] = useState<MonthType | null>();
   const [weekSelect, setWeekSelect] = useState<WeekType | null>();
   const [daySelect, setDaySelect] = useState<DayType | null>();
-  const weeks2 = weeks.filter(
-    (item: WeekType) => item.month === monthSelect?._id
-  );
-  const days2 = days.filter((item: DayType) => item.week === weekSelect?._id);
-
-  const findSmallestOrder = (data, id) => {
-    const temp = data?.filter((item: WeekType) => item.month === id);
-    const minPrice = Math.min(...temp.map(({ order }) => order));
-    const cheapeastShirt = temp.find(({ order }: any) => minPrice === order);
-    return cheapeastShirt;
-  };
-  // getCategoryList
 
   useEffect(() => {
     dispatch(getCategoryList());
@@ -99,7 +72,6 @@ const FormVocabulary = (props: Props) => {
     setWeekSelect(temp);
     setDaySelect(days.find((item: DayType) => item.week === temp._id));
   }, []);
-  // const [selected, setSelected] = useState(item[3])
   const {
     register,
     handleSubmit,
@@ -139,13 +111,11 @@ const FormVocabulary = (props: Props) => {
     if (id) {
       editVocabulary(value);
       message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-      navigate("/manageDay/vocabulary/listLesson");
+      navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     } else {
-      const dayId = daySelect ? daySelect._id : "";
-
       addVocabulary({ ...value, dayId: dayId });
       message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-      navigate("/manageDay/vocabulary/listLesson");
+      navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     }
   };
 

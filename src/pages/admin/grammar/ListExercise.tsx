@@ -71,7 +71,6 @@ const ListExercise = () => {
   //------------------STATE--------------------
   const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "grammar" && item.type === 'selectRadio')
   const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity?.day === String(dayId))
-
   const dataTable = tableListenSpeak.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -267,14 +266,14 @@ const ListExercise = () => {
       ...getColumnSearchProps('question'),
     },
     {
-      title: 'Giải thích',
+      title: 'Gợi ý',
       dataIndex: 'suggestions',
       className: 'w-[200px]',
       key: "suggestions",
       ...getColumnSearchProps('suggestions'),
     },
     {
-      title: 'Gợi ý',
+      title: 'Ý nghĩa',
       dataIndex: 'meaning',
       className: 'w-[220px]',
       key: "meaning",

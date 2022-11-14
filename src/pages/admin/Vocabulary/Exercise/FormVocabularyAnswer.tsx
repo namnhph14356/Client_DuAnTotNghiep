@@ -33,16 +33,12 @@ const FormAnswerListenSpeak = (props: Props) => {
     const key = 'updatable';
 
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
       dispatch(addAnswerQuizSlide({
         ...value,
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate("/manageDay/vocabulary/listExercise");
-
-    }, 2000);
-
+      navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
   };
 
   const onFinishFailed = (errorInfo) => {

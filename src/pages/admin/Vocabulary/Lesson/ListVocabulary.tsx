@@ -44,7 +44,6 @@ const ListVocabulary = (props: Props) => {
   const searchInput = useRef<InputRef>(null);
   const [dayTitle, setDayTitle] = useState();
   const { dayId } = useParams();
-  // const use
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -53,7 +52,6 @@ const ListVocabulary = (props: Props) => {
     };
     getData();
   }, []);
-  console.log("Tim", vocabulary);
 
   const tableListenSpeak = vocabulary.filter((item: any) => item.dayId?._id === String(dayId))
   const dataSources = tableListenSpeak?.map((items: any, index: any) => {
@@ -70,16 +68,18 @@ const ListVocabulary = (props: Props) => {
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
-  const handleOk = (id) => {
+  const handleOk = async (id) => {
     const key = "updatable";
     setConfirmLoading(true);
     console.log(id);
+    const del =  await deleteVocabulary(id);
+    setVocabulary(
+      vocabulary.filter((item: VocabulatyType) => item._id !== id)
+    );
     message.loading({ content: "Loading...", key });
-
-    setTimeout(() => {
-      // delete record
+    if (del) {
       message.success({ content: "Xóa Thành Công!", key, duration: 2 });
-    }, 2000);
+    }
   };
 
   const handleCancel = () => {
@@ -101,17 +101,6 @@ const ListVocabulary = (props: Props) => {
     setSearchText("");
   };
 
-  const onDelete = (_id: any) => {
-    Modal.confirm({
-      title: "You want to delete this Contact ?",
-      onOk: async () => {
-        await deleteVocabulary(_id);
-        setVocabulary(
-          vocabulary.filter((item: VocabulatyType) => item._id !== _id)
-        );
-      },
-    });
-  };
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<DataType> => ({
@@ -186,7 +175,6 @@ const ListVocabulary = (props: Props) => {
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
     {
@@ -286,7 +274,7 @@ const ListVocabulary = (props: Props) => {
             okButtonProps={{ loading: confirmLoading }}
             onCancel={handleCancel}
           >
-            <Button type="primary" danger onClick={() => onDelete(record._id)}>
+            <Button type="primary" danger >
               Xóa
             </Button>
           </Popconfirm>

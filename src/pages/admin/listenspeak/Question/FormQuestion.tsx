@@ -35,8 +35,8 @@ const FormQuestionListenSpeak = (props: Props) => {
     { id: 2, name: "Chọn Đáp Án có hình ảnh", type: "selectImage" },
     { id: 3, name: "Ghép từng đáp án", type: "selectCompound" }
   ]
-  const type = "listenSpeaking"
-  const prative: any = practiceActivity.find((item: any) => item.type === type)
+  const type = "listenspeak"
+  const prative: any = practiceActivity.find((item: any) => item.type === type && item.day === dayId)
 
 
   const { id } = useParams();
@@ -73,11 +73,11 @@ const FormQuestionListenSpeak = (props: Props) => {
       if (id) {
         mutate(edit(value))
         message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/listenspeak");
+        navigate(`/manageDay/${dayId}/listenspeak`);
       } else {
         mutate(add(value))
         message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/manageDay/listenspeak");
+        navigate(`/manageDay/${dayId}/listenspeak`);
       }
 
     }, 2000);
@@ -131,7 +131,7 @@ const FormQuestionListenSpeak = (props: Props) => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: ""}}/>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 

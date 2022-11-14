@@ -46,7 +46,7 @@ const FormAnswerListenSpeak = (props: Props) => {
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate("/manageDay/listenspeak");
+      navigate(`/manageDay/${dayId}/listenspeak`);
     }, 2000);
   };
 

@@ -284,7 +284,7 @@ const QuizTypeSelect = () => {
             totalScore: totalPoint,
             totalCorrect: totalCorrect,
             result: pass,
-            type: "listenSpeaking"
+            type: "listenspeak"
         })
         for (let index = 0; index < result.length; index++) {
             const flag = { ...result[index], history: data2._id }

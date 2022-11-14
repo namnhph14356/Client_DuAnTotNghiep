@@ -55,16 +55,16 @@ const Learning = () => {
   const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const [userHistory, setUserHistory] = useState<any>()
-  console.log("userHistory", userHistory)
   const [monthSelect, setMonthSelect] = useState<MonthType | null>()
   const [weekSelect, setWeekSelect] = useState<WeekType | null>()
   const [daySelect, setDaySelect] = useState<DayType | null>()
   const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
-  console.log("đâyy",days);
   const days2 = days?.filter((item: DayType) => item.week === weekSelect?._id)
-  
 
+  console.log("days", days);
+  console.log("weeks", weeks);
+  console.log("months", months);
   //---ModalResult---
   //Hiện Modal kết quả
   const { Panel } = Collapse;
@@ -135,14 +135,13 @@ const Learning = () => {
 
     const getHistoryUser = async () => {
       const { data } = await listHistoryByUser(user._id)
-      console.log("data getHistoryUser", data)
       const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
         const { data } = await detailHistory(item._id)
         return data
       }))
       setUserHistory(test2.reverse())
     }
-    getHistoryUser()
+    // getHistoryUser()
   }, [])
 
   return (
@@ -179,7 +178,7 @@ const Learning = () => {
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {months.map((item: MonthType, index: number) => (
-                          <Menu.Item >
+                          <Menu.Item key={index + 1}>
                             {({ active }) => (
                               <p
                                 className={classNames(
@@ -359,11 +358,11 @@ const Learning = () => {
                 <div className="statistical__topic__learning__point">
                   {learningProgressSelect
                     ? <ul>
-                      <li className={`${learningProgressSelect.listeningSpeakingScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.listeningSpeakingScore}</li>
-                      <li className={`${learningProgressSelect.vocabularyScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.vocabularyScore}</li>
-                      <li className={`${learningProgressSelect.structureSentencesScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.structureSentencesScore}</li>
-                      <li className={`${learningProgressSelect.conversationScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.conversationScore}</li>
-                      <li className={`${learningProgressSelect.grammarScore >=8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.grammarScore}</li>
+                      <li className={`${learningProgressSelect.listeningSpeakingScore >= 8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.listeningSpeakingScore}</li>
+                      <li className={`${learningProgressSelect.vocabularyScore >= 8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.vocabularyScore}</li>
+                      <li className={`${learningProgressSelect.structureSentencesScore >= 8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.structureSentencesScore}</li>
+                      <li className={`${learningProgressSelect.conversationScore >= 8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.conversationScore}</li>
+                      <li className={`${learningProgressSelect.grammarScore >= 8 ? 'text-green-500' : 'text-red-500'}`}>{learningProgressSelect.grammarScore}</li>
                     </ul>
                     : <ul>
                       <li>0</li>

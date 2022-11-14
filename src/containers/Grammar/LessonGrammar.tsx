@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-import { detailDayIdGrammmar } from "../../api/grammar";
+import { detailDayIdGrammmar, getListGrammar } from "../../api/grammar";
 import parse from "html-react-parser";
 import Loading from "../../components/Loading";
 const LessonGrammar = () => {
   const [grammar, setGrammar] = useState<any>();
   const { dayId, id } = useParams();
+
+  const getData = async () => {
+    const { data } = await getListGrammar();
+    const grammarByDay = data.find((item) => item.dayId === dayId)
+    setGrammar(grammarByDay);
+  };
+
   useEffect(() => {
-    const getData = async () => {
-      const { data } = await detailDayIdGrammmar(dayId);
-      console.log('data', data);
-      setGrammar(data);
-    };
     getData();
   }, []);
+  
   return (
     <>
       {

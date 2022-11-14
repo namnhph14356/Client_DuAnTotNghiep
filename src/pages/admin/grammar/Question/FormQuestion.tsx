@@ -43,16 +43,14 @@ const FormQuestion = () => {
   const [quiz, setQuiz] = useState<DataQuizType>()
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const { dayId } = useParams();
+  const { id, dayId } = useParams();
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
   const typeQuiz = [
     { id: 1, name: "Chọn đáp án", type: "selectRadio" },
   ]
   const type = "grammar"
-  const prative: any = practiceActivity.find((item: any) => item.type === type)
-
-  const { id } = useParams();
+  const prative: any = practiceActivity.find((item: any) => item.type === type && item.day === dayId)
 
   const onFinish = async (value) => {
     if (fileList) {
@@ -81,18 +79,16 @@ const FormQuestion = () => {
     const key = 'updatable';
 
     message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      if (id) {
-        mutate(edit(value))
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/grammar/listExercise");
-      } else {
-        mutate(add(value))
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/manageDay/grammar/listExercise");
-      }
+    if (id) {
+      mutate(edit(value))
+      message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+      navigate(`/manageDay/${dayId}/grammar/listExercise`);
+    } else {
+      mutate(add({ ...value, practiceActivity: prative._id }))
+      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+      navigate(`/manageDay/${dayId}/grammar/listExercise`);
+    }
 
-    }, 2000);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -185,7 +181,7 @@ const FormQuestion = () => {
             }
           </Form.Item>
           <Form.Item
-            label="Giải thích"
+            label="Gợi ý"
             name="suggestions"
             tooltip="Câu Hỏi dành cho Category"
             rules={[{ required: true, message: 'Không để Trống!' }]}
@@ -196,7 +192,7 @@ const FormQuestion = () => {
             }
           </Form.Item>
           <Form.Item
-            label="Gợi ý"
+            label="Ý nghĩa"
             name="meaning"
             tooltip="Câu Hỏi dành cho Category"
             rules={[{ required: true, message: 'Không để Trống!' }]}
