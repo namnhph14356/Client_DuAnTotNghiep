@@ -2,18 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import BannerPage from "../components/BannerPage";
 import Message from "../components/Message";
-import { Popover } from "antd";
 
 // import Count from '../features/count/Count'
 // import Product from '../features/product/Product'
 import "./../css/home.css";
-const text = <span>Title</span>;
-const content = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
-  </div>
-);
+
 const Home = () => {
   const navigate = useNavigate();
   const startLearning = () => {
@@ -32,21 +25,8 @@ const Home = () => {
     <div>
       <BannerPage />
       {/* START: section */}
-      <Popover
-        className="positon"
-        placement="topRight"
-        title={text}
-        content={content}
-        trigger="click"
-      >
-        <div>
-          <div className="message-wrapper"></div>
-          <div className="icon-hove-wrapper">
-            <Message />
-          </div>
-        </div>
-      </Popover>
-
+      
+      
       <section className="our-product">
         <div className="container">
           <div className="row">
