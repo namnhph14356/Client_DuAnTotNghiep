@@ -1,0 +1,124 @@
+.wrapper-message {
+  width: 300px;
+  height: 450px;
+}
+
+.header-message {
+  height: 40px;
+  background-color: rgb(59 130 246 / 1);
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ant-popover-inner-content {
+  padding: 0 !important;
+}
+
+.text-header-message {
+  margin: 0;
+  color: white;
+  font-weight: bold;
+}
+
+.icon-cancel-message {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color linear 0.35s;
+  cursor: pointer;
+}
+
+.icon-cancel-message:hover {
+  background-color: white;
+}
+
+.icon-cancel-message:hover span {
+  color: black !important;
+}
+
+.message-content {
+  height: 350px;
+  overflow: auto;
+  padding: 10px;
+}
+
+.message-send {
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option-message {
+  margin-right: 10px;
+}
+
+.wrapper-message1 {
+  height: 300px;
+  width: 200px;
+
+}
+
+.cusound {
+  cursor: pointer;
+}
+
+.message-content-wrapper {
+  padding: 10px;
+  height: 240px;
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.message-content-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.text-message {
+    cursor: pointer;
+    background-color: rgb(0, 132, 255);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 5px 10px;
+    text-align: center;
+    color: white;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+  }
+
+.text-message1 {
+  cursor: pointer;
+  background-color: rgb(0, 132, 255);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 5px 10px;
+  text-align: left;
+  color: white;
+  margin-bottom: 10px;
+  margin-right: 0;
+  margin-left: auto;
+  max-width: 70%;
+  width: fit-content;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-repmessage {
+  cursor: pointer;
+  width: fit-content;
+  max-width: 70%;
+  background-color: #e4e6eb;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 5px 10px;
+  color: black;
+  margin-bottom: 10px;
+  text-align: left;
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
