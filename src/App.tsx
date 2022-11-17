@@ -112,6 +112,7 @@ import ListLessonVocabulary from "./pages/admin/Vocabulary/Exercise/ListLessonVo
 import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
 import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
 import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
+import SearchDirectory from "./pages/SearchDirectory";
 
 
 function App() {
@@ -206,6 +207,7 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
+          <Route path="directory" element={<SearchDirectory />}></Route>
         </Route>
 
         <Route path="manageteacher" element={<TeacherLayout />}>
