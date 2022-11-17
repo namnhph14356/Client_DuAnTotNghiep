@@ -32,51 +32,30 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { MonthType } from "../../../../types/month";
 import { WeekType } from "../../../../types/week";
 import { DayType } from "../../../../types/day";
-import { Menu, Transition } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpDownIcon,
-  DocumentTextIcon,
-  EllipsisHorizontalIcon,
-  HomeIcon,
-  LockClosedIcon,
-  ShieldCheckIcon,
-  UserPlusIcon,
-} from "@heroicons/react/20/solid";
+import { getListVocabularySlice } from "../../../../features/Slide/vocabulary/vocabulary";
+import { PracticeActivityType } from "../../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { VocabulatyType } from "../../../../types/vocabularyType";
+
 type Props = {};
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+
 const FormVocabulary = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [fileList, setfileList] = useState<any>();
   const [vocabulary, setVocabulary] = useState();
-
+  const vocabularies = useAppSelector((item) => item.vocabulary.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const quizs: any = useAppSelector(item => item.quiz.value)
   const dispatch = useAppDispatch();
-  const categories = useAppSelector((item) => item.category.value);
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
   let weeks = useAppSelector<WeekType[]>((item) => item.week.value);
   let days = useAppSelector<DayType[]>((item) => item.day.value);
-
+  const { dayId } = useParams()
   const [monthSelect, setMonthSelect] = useState<MonthType | null>();
   const [weekSelect, setWeekSelect] = useState<WeekType | null>();
   const [daySelect, setDaySelect] = useState<DayType | null>();
-  const weeks2 = weeks.filter(
-    (item: WeekType) => item.month === monthSelect?._id
-  );
-  const days2 = days.filter((item: DayType) => item.week === weekSelect?._id);
-
-  const findSmallestOrder = (data, id) => {
-    const temp = data?.filter((item: WeekType) => item.month === id);
-    const minPrice = Math.min(...temp.map(({ order }) => order));
-    const cheapeastShirt = temp.find(({ order }: any) => minPrice === order);
-    return cheapeastShirt;
-  };
-  // getCategoryList
 
   useEffect(() => {
     dispatch(getCategoryList());
@@ -99,7 +78,6 @@ const FormVocabulary = (props: Props) => {
     setWeekSelect(temp);
     setDaySelect(days.find((item: DayType) => item.week === temp._id));
   }, []);
-  // const [selected, setSelected] = useState(item[3])
   const {
     register,
     handleSubmit,
@@ -115,7 +93,21 @@ const FormVocabulary = (props: Props) => {
   } else {
     titlePage = "Thêm mới từ vựng";
   }
+
+  const checkActivity = (voca: VocabulatyType[]) => {
+    const vocaByDay = voca.filter((e) => e.dayId?._id === dayId)
+    let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "vocabulary")
+    const listQuiz = quizs.filter((e) => e.practiceActivity?._id === activity._id)
+
+    if (vocaByDay.length === 4 && listQuiz.length === 10) {
+      dispatch(editPracticeActivitylice({ ...activity, status: true }))
+    } else if (vocaByDay.length === 5) {
+      return true
+    }
+  }
+
   const onFinish = async (value: any) => {
+
     if (fileList) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
@@ -135,18 +127,22 @@ const FormVocabulary = (props: Props) => {
 
     const key = "updatable";
 
-    message.loading({ content: "Loading...", key });
     if (id) {
+      message.loading({ content: "Loading...", key });
       editVocabulary(value);
       message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-      navigate("/manageDay/vocabulary/listLesson");
+      navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     } else {
-      const dayId = daySelect ? daySelect._id : "";
-      console.log("dayIDAdd", dayId);
+      const check = checkActivity(vocabularies);
+      if (check === true) {
+        message.warning("Đã đạt giới hạn đáp án !")
+      } else {
+        message.loading({ content: "Loading...", key });
+        addVocabulary({ ...value, dayId: dayId });
+        message.success({ content: "Thêm Thành Công!", key, duration: 2 });
+      }
+      navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
 
-      addVocabulary({ ...value, dayId: dayId });
-      message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-      navigate("/manageDay/vocabulary/listLesson");
     }
   };
 
@@ -185,18 +181,13 @@ const FormVocabulary = (props: Props) => {
       };
       getDetail();
     }
+    dispatch(getListVocabularySlice())
   }, []);
 
-  const check = (id: any) => {
-    console.log(id);
-  };
-
-  console.log("Day select", daySelect);
-
   return (
-    <div className="">
-      <AdminPageHeader breadcrumb={titlePage} />
-      <div className="">
+    <div>
+      <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
+      <div>
         <Form
           layout="vertical"
           form={form}
@@ -210,40 +201,6 @@ const FormVocabulary = (props: Props) => {
           ) : (
             ""
           )}
-
-          {/* Tháng - Tuần -Ngày */}
-          {/* <div className="flex gap-3">
-          <Form.Item className="w-[30%]" 
-          label="Tháng"
-          >
-            <Select defaultValue={"M1"}>
-              <Option value="M2">M2</Option>
-              <Option value="M3">M3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Tuần"
-          >
-            <Select defaultValue={"T1"}>
-              <Option value="T2">T2</Option>
-              <Option value="T3">T3</Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item className="w-[30%]" 
-          label="Ngày"
-          >
-            <Select defaultValue={"N1"}>
-              <Option value="N2">N2</Option>
-              <Option value="N3">N3</Option>
-            </Select>
-          </Form.Item>
-
-          </div> */}
-
-          {/*======================== */}
-
           <Form.Item
             label="Từ vựng"
             name="words"

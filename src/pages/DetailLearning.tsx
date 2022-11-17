@@ -82,13 +82,13 @@ const DetailLearning = () => {
                 <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.order)}`}>
                   <div className="item__list__learning">
                     <div className="info__item__list">
-                      <div>
-                        {practiceArr.map((item2: PracticeActivityArr) => {
+                      {practiceArr.map((item2: PracticeActivityArr, index: number) => {
                           if (item2.id === item.order) {
-                            return item2.icon
+                            return <div key={index + 1} className="">
+                              {item2.icon}
+                            </div>
                           }
                         })}
-                      </div>
                       <div>
                         <h4 className="title__info__item">
                           {item.title}

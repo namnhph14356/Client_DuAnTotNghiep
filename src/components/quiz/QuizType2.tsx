@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { SpeechContext } from '../../context/GoogleSpeechContext'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 
 type QuizType2Props = {
     data: any,
@@ -9,7 +9,8 @@ type QuizType2Props = {
 }
 
 const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) => {
-    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+    const transcript = useAppSelector(item => item.googleSpeech.transcript)
+    const dispatch = useAppDispatch()
     const onHandleSpeakSelect = ()=>{
         if (data.answer.replace(',', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
@@ -17,7 +18,7 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
     }
     useEffect(()=>{
         onHandleSpeakSelect()
-    },[transcript,speechValue])
+    },[transcript])
 
     return (
         <div className={`border-2 list__question__item ${data._id == select?.id

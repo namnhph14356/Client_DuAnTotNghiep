@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Table,
   Breadcrumb,
@@ -11,6 +11,7 @@ import {
   Image,
   Tag,
   Modal,
+  Tooltip,
 } from "antd";
 import type { ColumnsType, ColumnType } from "antd/es/table";
 import type { InputRef } from "antd";
@@ -20,6 +21,9 @@ import moment from "moment";
 import { VocabulatyType } from "../../../../types/vocabularyType";
 import { deleteVocabulary, listVocabulary } from "../../../../api/vocabulary";
 import AdminPageHeader from "../../../../components/AdminPageHeader";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { PracticeActivityType } from "../../../../types/practiceActivity";
 
 type Props = {};
 
@@ -31,8 +35,8 @@ interface DataType {
   image: string;
   dayId: string;
   meaning: string;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: string;
+  updatedAt: string;
 }
 type DataIndex = keyof DataType;
 const ListVocabulary = (props: Props) => {
@@ -42,8 +46,11 @@ const ListVocabulary = (props: Props) => {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
   const [dayTitle, setDayTitle] = useState();
+  const dispatch = useAppDispatch();
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const { dayId } = useParams();
+  const navigate = useNavigate();
 
-  // const use
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -52,9 +59,9 @@ const ListVocabulary = (props: Props) => {
     };
     getData();
   }, []);
-  console.log("Tim", vocabulary);
 
-  const dataSources = vocabulary?.map((items: any, index: any) => {
+  const tableListenSpeak = vocabulary.filter((item: VocabulatyType) => item.dayId?._id === String(dayId))
+  const dataSources = tableListenSpeak?.map((items: any, index: number) => {
     return {
       key: index + 1,
       stt: index + 1,
@@ -68,16 +75,20 @@ const ListVocabulary = (props: Props) => {
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
-  const handleOk = (id) => {
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "vocabulary")
+
+  const handleOk = async (id) => {
     const key = "updatable";
     setConfirmLoading(true);
-    console.log(id);
+    const del = await deleteVocabulary(id);
+    setVocabulary(
+      vocabulary.filter((item: VocabulatyType) => item._id !== id)
+    );
+    dispatch(editPracticeActivitylice({ ...activity, status: false }))
     message.loading({ content: "Loading...", key });
-
-    setTimeout(() => {
-      // delete record
+    if (del) {
       message.success({ content: "Xóa Thành Công!", key, duration: 2 });
-    }, 2000);
+    }
   };
 
   const handleCancel = () => {
@@ -99,17 +110,16 @@ const ListVocabulary = (props: Props) => {
     setSearchText("");
   };
 
-  const onDelete = (_id: any) => {
-    Modal.confirm({
-      title: "You want to delete this Contact ?",
-      onOk: async () => {
-        await deleteVocabulary(_id);
-        setVocabulary(
-          vocabulary.filter((item: VocabulatyType) => item._id !== _id)
-        );
-      },
-    });
-  };
+  const checkAnswer = () => {
+    const voca = vocabulary.filter((e:VocabulatyType) => e.dayId?._id === dayId)
+    if (voca.length === 5) {
+      message.warning("Đã đạt giới hạn từ vựng !")
+    } else {
+      navigate(`/manageDay/${dayId}/vocabulary/addLesson`)
+    }
+
+  }
+
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<DataType> => ({
@@ -180,15 +190,15 @@ const ListVocabulary = (props: Props) => {
   const columns: ColumnsType<DataType> = [
     {
       title: "STT",
+      className: 'w-[70px]',
       dataIndex: "key",
       key: "key",
       sorter: (a: any, b: any) => a.key - b.key,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
-
     {
       title: "Từ vựng",
+
       dataIndex: "words",
       key: "words",
       ...getColumnSearchProps("words"),
@@ -196,7 +206,7 @@ const ListVocabulary = (props: Props) => {
     {
       title: "Thuộc tính",
       key: "wordForm",
-      // dataIndex: "wordForm"
+      className: 'w-[110px]',
       render: (record: any) => (
         <div className="">
           {record.wordForm === "1" ? (
@@ -229,24 +239,36 @@ const ListVocabulary = (props: Props) => {
         </div>
       ),
     },
-    // {
-    //   title: "Day",
-    //   dataIndex: "dayId",
-    //   key: "dayId",
-    // },
     {
-      title: "Ngày tạo",
-      dataIndex: "createdAt",
+      title: 'Ngày Tạo',
+      dataIndex: 'createdAt',
       key: "createdAt",
-      sorter: (a, b) => a.createdAt - b.createdAt,
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
-      title: "Ngày cập nhật",
-      dataIndex: "updatedAt",
+      title: 'Ngày cập nhật',
+      dataIndex: 'updatedAt',
       key: "updatedAt",
-      sorter: (a, b) => a.updatedAt - b.updatedAt,
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
     },
     {
       title: "Hành động",
@@ -254,7 +276,7 @@ const ListVocabulary = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/vocabulary/${record._id}/editLesson`}>
+            <Link to={`/manageDay/${dayId}/vocabulary/${record._id}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -270,7 +292,7 @@ const ListVocabulary = (props: Props) => {
             okButtonProps={{ loading: confirmLoading }}
             onCancel={handleCancel}
           >
-            <Button type="primary" danger onClick={() => onDelete(record._id)}>
+            <Button type="primary" danger >
               Xóa
             </Button>
           </Popconfirm>
@@ -278,13 +300,22 @@ const ListVocabulary = (props: Props) => {
       ),
     },
   ];
+  
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý vocabulary" />
-      <Button type="primary" className="my-6">
-        <Link to={`/manageDay/vocabulary/addLesson`}>Thêm Từ Vựng</Link>
+      <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
+      <Button type="primary" className="my-6" onClick={() => checkAnswer()}>
+        {/* <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}> */}
+        Thêm Từ Vựng
+        {/* </Link> */}
       </Button>
-      <Table columns={columns} dataSource={dataSources} className="overflow-auto"></Table>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={dataSources}
+        footer={() => `Hiển thị 10 trên tổng ${dataSources.length}`}
+      ></Table>
+
     </div>
   );
 };
