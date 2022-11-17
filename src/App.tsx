@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import WebsiteLayout from "./pages/layouts/WebsiteLayout";
 import Home from "./pages/Home";
 import AdminLayout from "./pages/layouts/AdminLayout";
@@ -116,12 +116,24 @@ import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
-
-
+import Message from "./components/Message";
 
 function App() {
+  let location = useLocation();
+
+  const check =
+    location.pathname.includes("admin") ||
+    location.pathname.includes("manageteacher");
   return (
     <div>
+      {!check && (
+        <div className="message">
+          <div className="message-wrapper"></div>
+          <div className="icon-hove-wrapper">
+            <Message />
+          </div>
+        </div>
+      )}
       <Routes>
         <Route
           path="/"
@@ -133,27 +145,34 @@ function App() {
         >
           <Route index element={<Home />} />
           <Route path="learning">
+            <Route
+              index
+              element={
+                <PrivateRouteLearning>
+                  <Learning />
+                </PrivateRouteLearning>
+              }
+            />
 
-            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
-
-            <Route path='oral'>
-              <Route path=':dayId' element={<ExamLayout />} >
+            <Route path="oral">
+              <Route path=":dayId" element={<ExamLayout />}>
                 <Route index element={<OralPage />} />
-                <Route path='exam' element={<OralSeven />} />
+                <Route path="exam" element={<OralSeven />} />
               </Route>
               {/* <Route path=':dayId' element={<OralPage />} />
               <Route path=':dayId/exam' element={<OralSeven />} /> */}
             </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
-              <Route path=':id' element={<DetailLearningLayout />}>
-
-                <Route path='listenSpeak' element={<SpeakingPage />}>
-                  <Route path='startUp' element={<StartUp />} />
-                  <Route path='quiz2' element={<QuizPage />} />
-                  <Route path='quiz' element={<QuizTypeSelect />} />
-                  <Route path='questionAndAnswer' element={<QuestionAnswer />} />
-
+              <Route path=":id" element={<DetailLearningLayout />}>
+                <Route path="listenSpeak" element={<SpeakingPage />}>
+                  <Route path="startUp" element={<StartUp />} />
+                  <Route path="quiz2" element={<QuizPage />} />
+                  <Route path="quiz" element={<QuizTypeSelect />} />
+                  <Route
+                    path="questionAndAnswer"
+                    element={<QuestionAnswer />}
+                  />
                 </Route>
 
                 <Route path="vocabulary" element={<Vocabulary />}>
@@ -279,7 +298,7 @@ function App() {
         <Route path="manageDay/:dayId" element={<DayLayout />}>
           <Route index element={<Navigate to="listenspeak" />} />
 
-          <Route path='listenspeak' >
+          <Route path="listenspeak">
             <Route index element={<ListListenSpeak />} />
             <Route path="question">
               <Route path="add" element={<FormQuestionListenSpeak />} />
@@ -299,11 +318,19 @@ function App() {
 
             <Route path="addExercise" element={<FormExerciseVocabulary />} />
             <Route path="listExercise" element={<ListExerciseVocabulary />} />
-            <Route path=":id/editExercise" element={<FormExerciseVocabulary />} />
+            <Route
+              path=":id/editExercise"
+              element={<FormExerciseVocabulary />}
+            />
 
-            <Route path=":id/addExerciseAnswer" element={<FormVocabularyAnswer />} />
-            <Route path=":id/editExerciseAnswer" element={<FormVocabularyEdit />} />
-
+            <Route
+              path=":id/addExerciseAnswer"
+              element={<FormVocabularyAnswer />}
+            />
+            <Route
+              path=":id/editExerciseAnswer"
+              element={<FormVocabularyEdit />}
+            />
           </Route>
 
           <Route path="sentences">
@@ -333,7 +360,6 @@ function App() {
             <Route path="listListenRead" element={<ListListenRead />} />
             <Route path="addListenRead" element={<FormListenRead />} />
             <Route path=":id/editListenRead" element={<FormListenRead />} />
-
           </Route>
 
           <Route path="grammar">
@@ -341,7 +367,6 @@ function App() {
             <Route path="listLesson" element={<ListGrammar />} />
             <Route path="addLesson" element={<FormGrammar />} />
             <Route path=":id/editLesson" element={<FormGrammar />} />
-
 
             <Route path="question">
               <Route path="add" element={<FormQuestion />} />
@@ -375,7 +400,6 @@ function App() {
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
       </Routes>
-
     </div>
   );
 }
