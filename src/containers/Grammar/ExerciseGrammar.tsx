@@ -9,7 +9,7 @@ import { addHistory } from '../../api/history'
 import { detailLearningProgressByUser } from '../../api/learningProgress'
 import { addUserQuiz } from '../../api/userQuiz'
 import { RootState } from '../../app/store'
-import { AnswerQuizType, AnswerType } from '../../types/answerQuiz'
+import { AnswerQuizType } from '../../types/answerQuiz'
 import { LearningProgressType } from '../../types/learningProgress'
 import { UserType } from '../../types/user'
 import { message } from 'antd';

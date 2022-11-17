@@ -1,17 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { changeBreadcrumb } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
 import { detailQuiz } from '../../../../api/quiz';
 import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+import { PracticeActivityType } from '../../../../types/practiceActivity';
 
 type Props = {}
 
@@ -30,6 +28,11 @@ interface DataQuizType {
   updatedAt?: string;
 }
 
+interface TypeQuiz {
+  _id?: number;
+  name?: string,
+  type?: string
+}
 
 const FormQuestion = () => {
 
@@ -38,7 +41,6 @@ const FormQuestion = () => {
   const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const { Option } = Select;
   const [form] = Form.useForm();
-  const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
   const breadcrumb = useAppSelector(data => data.quiz.breadcrumb)
   const [quiz, setQuiz] = useState<DataQuizType>()
   const dispatch = useAppDispatch();
@@ -50,10 +52,11 @@ const FormQuestion = () => {
     { id: 1, name: "Chọn đáp án", type: "selectRadio" },
   ]
   const type = "grammar"
-  const prative: any = practiceActivity.find((item: any) => item.type === type && item.day === dayId)
+  let prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
+  let lengthQuiz = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "grammar")
 
   const onFinish = async (value) => {
-    if (fileList) {
+    if (fileList && lengthQuiz.length < 10) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
         "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
@@ -78,12 +81,19 @@ const FormQuestion = () => {
 
     const key = 'updatable';
 
-    message.loading({ content: 'Loading...', key });
     if (id) {
+      message.loading({ content: 'Loading...', key });
       mutate(edit(value))
       message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
       navigate(`/manageDay/${dayId}/grammar/listExercise`);
     } else {
+
+      if (lengthQuiz.length === 10) {
+        message.warning("Đã đạt giới hạn câu hỏi !")
+        return navigate(`/manageDay/${dayId}/grammar/listExercise`);
+      }
+
+      message.loading({ content: 'Loading...', key });
       mutate(add({ ...value, practiceActivity: prative._id }))
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
       navigate(`/manageDay/${dayId}/grammar/listExercise`);
@@ -145,14 +155,14 @@ const FormQuestion = () => {
           >
             {id
               ? <Select >
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>
                 ))}
               </Select>
               : <Select onChange={(e) => setSelected(e)}
-                defaultValue={typeQuiz?.map((item: any, index) => {
+                defaultValue={typeQuiz?.map((item: TypeQuiz, index) => {
                   if (item.type === quiz?.type) {
                     return <Option key={index + 1} value={item.type}>
                       {item.name}
@@ -161,7 +171,7 @@ const FormQuestion = () => {
                 })}
               >
 
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>

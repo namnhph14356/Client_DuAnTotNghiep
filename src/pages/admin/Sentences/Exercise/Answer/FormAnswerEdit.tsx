@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
-import { QuizType } from '../../../../types/quiz';
-import { AnswerQuizType } from '../../../../types/answerQuiz';
-import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { detailAnswerQuiz } from '../../../../api/answerQuiz';
-import AdminPageHeader from '../../../../components/AdminPageHeader';
+import { UploadOutlined } from "@ant-design/icons";
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { AnswerQuizType } from '../../../../../types/answerQuiz';
+import { changeBreadcrumb, editAnswerQuizSlide } from '../../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { detailAnswerQuiz } from '../../../../../api/answerQuiz';
+import { getListQuizSlide } from '../../../../../features/Slide/quiz/QuizSlide';
+import AdminPageHeader from '../../../../../components/AdminPageHeader';
 
 type Props = {}
 
-const FormAnswerListenSpeakEdit = (props: Props) => {
+const FormAnswerSentencesEdit = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
@@ -30,11 +30,7 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
     if (id) {
       dispatch(editAnswerQuizSlide(value));
       message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-      navigate(`/manageDay/${dayId}/listenspeak`);
-    } else {
-      dispatch(addAnswerQuizSlide(value));
-      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate(`/manageDay/${dayId}/listenspeak`);
+      navigate(`/manageDay/${dayId}/sentences/listExercise`);
     }
   };
 
@@ -65,7 +61,7 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
@@ -119,4 +115,4 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
   )
 }
 
-export default FormAnswerListenSpeakEdit
+export default FormAnswerSentencesEdit

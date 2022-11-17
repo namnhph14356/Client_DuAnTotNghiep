@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../components/AdminPageHeader';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { QuizType } from '../../../types/quiz';
-import { getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
+import { editQuizSlide, getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../types/category';
@@ -15,18 +16,22 @@ import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
 import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { AnswerQuizType } from '../../../types/answerQuiz';
+import { async } from '@firebase/util';
+import { editPracticeActivitylice, getListPracticeActivitySliceByDay } from '../../../features/Slide/practiceActivity/PracticeActivitySlice';
+import { PracticeActivityType } from '../../../types/practiceActivity';
 
 
 
 interface DataType {
   key: React.Key;
-  _id?: string,
-  category: string,
-  question: string,
-  image: string,
-  timeLimit: string,
+  image?: string,
+  question?: string,
   type?: string
-  // children?: any
+  status?: boolean,
+  _id?: string,
+  category?: string,
+  createdAt?: string,
+  updatedAt?: string
 }
 
 interface ExpandedDataType {
@@ -35,6 +40,12 @@ interface ExpandedDataType {
   quiz: string;
   answer: string;
   isCorrect: number;
+}
+
+interface TypeQuiz {
+  id?: number,
+  type: string,
+  text: string
 }
 
 const typeQuiz = [
@@ -53,12 +64,10 @@ type Props = {}
 const ListListenSpeak = (props: Props) => {
 
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
-  const quizs: any = useAppSelector(item => item.quiz.value)
+  const quizs = useAppSelector(item => item.quiz.value)
   const answerQuizs = useAppSelector(item => item.answerQuiz.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const dispatch = useAppDispatch();
-  console.log('quizs', quizs);
-  // console.log('answerQuizs', answerQuizs);
-  // console.log('categories', categories);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selected, setSelected] = useState<{ key: string, id: string | undefined }[]>([]);
@@ -67,10 +76,10 @@ const ListListenSpeak = (props: Props) => {
   const searchInput = useRef<InputRef>(null);
   const [listTable, setListTable] = useState<any>([]);
   const { dayId } = useParams();
-
+  const navigate = useNavigate();
   //------------------STATE--------------------
-  const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "listenspeak" && item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
-  const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity?.day === String(dayId))
+  const tableWithType = quizs.filter((item: QuizType) => item.practiceActivity?.type === "listenspeak" && item.type === 'selectRadio' || item.type === 'selectImage' || item.type === 'selectCompound')
+  const tableListenSpeak = tableWithType.filter((item: QuizType) => item.practiceActivity?.day === String(dayId))
   const dataTable = tableListenSpeak.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -79,6 +88,7 @@ const ListListenSpeak = (props: Props) => {
       image: item.image,
       timeLimit: item.timeLimit,
       type: item.type,
+      status: item.status,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
 
@@ -173,11 +183,8 @@ const ListListenSpeak = (props: Props) => {
     newSelectedRowKeys.map((item) => {
       childrenTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
     })
-    // console.log('rowSelected', rowSelected);
-    // console.log('newSelectedRowKeys', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys)
     setSelected(rowSelected);
-    // console.log('selectedRowKeys changed: ', selectedRowKeys);
   };
 
   const rowSelection: TableRowSelection<ExpandedDataType> = {
@@ -219,41 +226,100 @@ const ListListenSpeak = (props: Props) => {
   }
   //------------------SELECT-ROW-------------------
 
-  const handleOk = (id) => {
+  const handleOk = async (answer) => {
     const key = 'updatable';
     setConfirmLoading(true);
     message.loading({ content: 'Loading...', key });
 
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-        dispatch(removeAnswerQuizSlide(id))
-      } else {
-        dispatch(removeAnswerQuizSlide(id))
-      }
-      setConfirmLoading(false);
-      message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
-    }, 2000);
+    if (Array.isArray(answer.id)) {
+      dispatch(removeAnswerQuizSlide(answer._id))
+    } else {
+      dispatch(removeAnswerQuizSlide(answer._id))
+    }
+    let detailQuestion: any = quizs.find((e: QuizType) => e?._id === answer.quiz)
+    const { payload } = await dispatch(editQuizSlide({ ...detailQuestion, status: false }))
+    await dispatch(getListQuizSlide())
+
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e._id === payload.practiceActivity)
+    await dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
   };
-  const handleOk1 = (id) => {
+
+  const handleOk1 = async (id) => {
     const key = 'updatable';
     setConfirmLoading(true);
-    console.log(id);
     message.loading({ content: 'Loading...', key });
 
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-        dispatch(removeQuizSlide(id))
-      } else {
-        dispatch(removeQuizSlide(id))
-      }
-      setConfirmLoading(false);
-      message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
-    }, 2000);
+    const { payload } = await dispatch(removeQuizSlide(id))
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e._id === payload.practiceActivity)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "listenspeak" && item.practiceActivity?._id === detailActivity._id)
+    if (lengthQuiz.length < 2) {
+      await dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    }
+
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
   };
+
   const handleCancel = () => {
     message.error('Hủy Hành Động!');
   };
 
+  const checkQuestion = () => {
+    const quizLength = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "listenspeak")
+
+    if (quizLength.length === 10) {
+      message.warning("Đã đạt giới hạn câu hỏi !")
+    } else {
+      navigate(`/manageDay/${dayId}/listenspeak/question/add`)
+    }
+  }
+
+  const checkAnswer = (question: QuizType) => {
+    let lengthAns = answerQuizs.filter((e: AnswerQuizType) => e.quiz === question._id)
+    switch (question.type) {
+      case "selectRadio":
+        if (lengthAns.length === 4) {
+          message.warning("Đã đạt giới hạn đáp án !")
+        } else {
+          navigate(`/manageDay/${dayId}/listenspeak/answer/${question._id}/add`)
+        }
+        break;
+
+      case "selectImage":
+        if (lengthAns.length === 4) {
+          message.warning("Đã đạt giới hạn đáp án !")
+        } else {
+          navigate(`/manageDay/${dayId}/listenspeak/answer/${question._id}/add`)
+        }
+        break;
+
+      case "selectCompound":
+        if (lengthAns.length === 6) {
+          message.warning("Đã đạt giới hạn đáp án !")
+          return
+        } else {
+          navigate(`/manageDay/${dayId}/listenspeak/answer/${question._id}/add`)
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  const checkStatusActivity = () => {
+    const quizStatus = quizs.filter((item: QuizType) => item.practiceActivity?.type === "listenspeak" && item.practiceActivity?.day === String(dayId) && item.status === false)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "listenspeak" && item.practiceActivity?.day === String(dayId))
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "listenspeak")
+
+    if (quizStatus.length > 0 || lengthQuiz.length < 10) {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    } else {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: true }))
+    }
+  }
 
   //------------------REMOVE-CONFIRM-------------------
 
@@ -302,10 +368,22 @@ const ListListenSpeak = (props: Props) => {
           }
         </>
       )),
-      filters: typeQuiz.map((item: any) => { return { text: item.text, value: item.type } }),
+      filters: typeQuiz.map((item: TypeQuiz) => { return { text: item.text, value: item.type } }),
       onFilter: (value, record) => {
         return record.type == value
       }
+    },
+    {
+      title: "Trạng thái", dataIndex: "status", key: "status",
+      render: (record: any) => (
+        <div >
+          {record === true ?
+            <Tag color="green">Đã đủ</Tag>
+            :
+            <Tag color="red">Chưa đủ</Tag>
+          }
+        </div>
+      ),
     },
     {
       title: 'Thời gian',
@@ -379,7 +457,7 @@ const ListListenSpeak = (props: Props) => {
     },
   ];
 
-  const expandedRowRender = (row: any) => {
+  const expandedRowRender = (row: QuizType) => {
 
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
@@ -413,7 +491,7 @@ const ListListenSpeak = (props: Props) => {
               title="Bạn Có Muốn Xóa?"
               okText="Có"
               cancelText="Không"
-              onConfirm={() => { handleOk(record._id) }}
+              onConfirm={() => { handleOk(record) }}
               okButtonProps={{ loading: confirmLoading }}
               onCancel={handleCancel}
             >
@@ -442,10 +520,8 @@ const ListListenSpeak = (props: Props) => {
     return (
       <div>
         <Space align="center" size="small">
-          <Button style={{ background: "#E7975A" }} >
-            <Link to={`/manageDay/${dayId}/listenspeak/answer/${row._id}/add`} >
-              <span className="text-white">Thêm đáp án</span>
-            </Link>
+          <Button style={{ background: "#E7975A" }} onClick={() => checkAnswer(row)} >
+            <span className="text-white">Thêm đáp án</span>
           </Button>
         </Space>
         <Table bordered rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
@@ -458,14 +534,20 @@ const ListListenSpeak = (props: Props) => {
     dispatch(changeBreadcrumb("Danh sách câu hỏi"))
     dispatch(getListAnswerQuizSlide())
     dispatch(getListQuizSlide())
+    dispatch(getListPracticeActivitySliceByDay(dayId))
     setListTable(tableWithType)
+    checkStatusActivity()
   }, [dayId])
+
+  useEffect(() => {
+    checkStatusActivity()
+  }, [])
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: ""}} />
-      <Button type='primary' className='mb-8'>
-        <Link to={`/manageDay/${dayId}/listenspeak/question/add`}>Thêm câu hỏi</Link>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
+      <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
+        Thêm câu hỏi
       </Button>
 
       {selectedRowKeys.length > 1

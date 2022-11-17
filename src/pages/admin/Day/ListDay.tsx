@@ -1,56 +1,37 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Table,
-  Breadcrumb,
-  Button,
-  Space,
-  Popconfirm,
-  message,
-  Input,
-  Badge,
-  Image,
-  Tag,
-  Modal,
-} from "antd";
-import type { Key, TableRowSelection } from "antd/es/table/interface";
-import {
-  SearchOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-} from "@ant-design/icons";
-import type { InputRef } from "antd";
-import type { FilterConfirmProps } from "antd/es/table/interface";
-import type { ColumnsType, ColumnType } from "antd/es/table";
+import React, { useEffect } from "react";
+import { Table, Button, Space, message, Tag, Modal, } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import moment from "moment";
 import AdminPageHeader from "../../../components/AdminPageHeader";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { DayType } from "../../../types/day";
 import { PracticeActivityType } from "../../../types/practiceActivity";
-import {
-  addDaySlice,
-  changeBreadcrumb,
-  getDayBiggest,
-  getListDaySlice,
-} from "../../../features/Slide/day/DaySlice";
+import { addDaySlice, changeBreadcrumb, getDayBiggest, getListDaySlice, } from "../../../features/Slide/day/DaySlice";
 import { addPracticeActivitylice, getListPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
-import { dayBiggest } from "../../../api/day";
-import { useSelector } from "react-redux";
-import { type } from "@testing-library/user-event/dist/types/setup/directApi";
-import { async } from "@firebase/util";
+import { getListVocabularySlice } from "../../../features/Slide/vocabulary/vocabulary";
 
 interface DataType {
   key: React.Key;
   _id?: string;
-  title: string;
+  title?: string;
+  status?: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface ExpandedDataType {
-  key: React.Key;
+  key?: React.Key;
+  order?: number,
+  status?: boolean;
+  stt?: number,
+  title?: string;
+  type?: string;
   _id?: string;
+  action: PracticeActivityType;
   day?: DayType;
-  title: string;
-  type: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 type DataIndex = keyof ExpandedDataType;
@@ -70,131 +51,30 @@ const ListDay = (props: Props) => {
   const dayBiggest = useAppSelector((item: any) => item.day.bigDay);
   const activity = useAppSelector((item) => item.practiceActivity.value);
   const dispatch = useAppDispatch();
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selected, setSelected] = useState<
-    { key: string; id: string | undefined }[]
-  >([]);
-  const searchInput = useRef<InputRef>(null);
-  const [bigDay, setBigDay] = useState<DayType>();
   const navigate = useNavigate();
-  //------------------STATE--------------------
 
-  useEffect(() => {
-    dispatch(getDayBiggest());
-    dispatch(getListDaySlice());
-  }, []);
+
 
   const dataTable = days.map((item: DayType, index) => {
+    const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
+
     return {
       key: index + 1,
       _id: item._id,
       title: item.title,
+      status: activityByDay.length,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
 
-  const childrenTable = activity.map((item: PracticeActivityType, index) => {
-    return {
-      key: item._id,
-      _id: item._id,
-    };
-  });
-
-  //------------------TABLE-DATA-------------------
-
-  const handleSearch = (
-    selectedKeys: string[],
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    confirm();
-  };
-
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-  };
-
-  //------------------SEARCH--------------------
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    let rowSelected: { key: string; id: string | undefined }[] = [];
-    newSelectedRowKeys.map((item) => {
-      childrenTable.map((item2) =>
-        item2.key === item
-          ? rowSelected.push({ key: item2.key, id: item2._id })
-          : ""
-      );
-    });
-    setSelectedRowKeys(newSelectedRowKeys);
-    setSelected(rowSelected);
-  };
-
-  const rowSelection: TableRowSelection<ExpandedDataType> = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: "odd",
-        text: "Select Odd Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys: Key[] = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return false;
-            }
-            return true;
-          });
-          onSelectChange(newSelectedRowKeys);
-        },
-      },
-      {
-        key: "even",
-        text: "Select Even Row",
-        onSelect: (changableRowKeys) => {
-          let newSelectedRowKeys: Key[] = [];
-          newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          onSelectChange(newSelectedRowKeys);
-        },
-      },
-    ],
-  };
-  //------------------SELECT-ROW-------------------
-
-  const handleOk = (id) => {
-    const key = "updatable";
-    setConfirmLoading(true);
-    message.loading({ content: "Loading...", key });
-
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-      } else {
-      }
-      setConfirmLoading(false);
-      message.success({ content: "Xóa Thành Công!", key, duration: 2 });
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    message.error("Hủy Hành Động!");
-  };
-
-  // -----Add New DAY
-  var number: any = 1;
-  var newOrder: any = dayBiggest?.order + number;
-  var newDay: any = {
+  var number: number = 1;
+  var newOrder: number = dayBiggest?.order + number;
+  var newDay: { title: string, order: number } = {
     title: `Ngày ${newOrder}`,
     order: newOrder,
   };
+
   const addDay = async () => {
 
     Modal.confirm({
@@ -227,20 +107,43 @@ const ListDay = (props: Props) => {
 
   //------------------REMOVE-CONFIRM-------------------
 
-  const columns: ColumnsType<any> = [
+  const columns: ColumnsType<DataType> = [
     {
       title: "STT",
       dataIndex: "key",
       key: "key",
       className: "w-[100px]",
       sorter: (a: any, b: any) => a.key - b.key,
-      // sorter: (record1, record2) => { return record1.key > record2.key },
       sortDirections: ["descend"],
     },
     {
       title: "Ngày học",
       dataIndex: "title",
       key: "title",
+    },
+    {
+      title: "Trạng thái",
+      key: "status",
+      render: (record: DayType) => (
+        <div className="">
+          {record.status === 0 ? (
+            <Tag color="red">Trống trơn</Tag>
+          ) : record.status === 1 ? (
+            <Tag color="blue">1 phần</Tag>
+          ) : record.status === 2 ? (
+            <Tag color="purple">2 phần</Tag>
+          ) : record.status === 3 ? (
+            <Tag color="purple">3 phần</Tag>
+          ) : record.status === 4 ? (
+            <Tag color="purple">4 phần</Tag>
+          ) : record.status === 5 ? (
+            <Tag color="green">5 phần</Tag>
+          ) : (
+            <Tag color="red">ERROR</Tag>
+          )}
+        </div>
+      ),
+      // ...getColumnSearchProps('wordForm'),
     },
     {
       title: "Ngày Tạo",
@@ -267,8 +170,7 @@ const ListDay = (props: Props) => {
     },
   ];
 
-  const expandedRowRender = (row: any) => {
-    console.log("${findOne}", row);
+  const expandedRowRender = (row: DataType) => {
 
     const columns2: ColumnsType<ExpandedDataType> = [
       {
@@ -279,19 +181,13 @@ const ListDay = (props: Props) => {
       { title: "Tiêu đề", dataIndex: "title", key: "title" },
       {
         title: "Trạng thái", dataIndex: "status", key: "status",
-        render: (record: any) => (
+        render: (record: boolean) => (
           <div className="">
-            {record === "1" ? (
-              <Tag color="green">Nouns</Tag>
-            ) : record === "2" ? (
-              <Tag color="blue">Adj</Tag>
-            ) : record === "3" ? (
-              <Tag color="purple">Adv</Tag>
-            ) : record === "4" ? (
-              <Tag color="purple">Verbs</Tag>
-            ) : (
-              <Tag color="red">ERROR</Tag>
-            )}
+            {record === true ?
+              <Tag color="green">Đã đủ</Tag>
+              :
+              <Tag color="red">Chưa đủ</Tag>
+            }
           </div>
         ),
       },
@@ -310,18 +206,21 @@ const ListDay = (props: Props) => {
       },
     ];
 
-    let data: any = activity
+    let data = activity
       .filter((item: PracticeActivityType) => item?.day == row._id)
       .map((item2: PracticeActivityType, index) => {
         return {
-          key: item2?._id,
+          key: item2._id,
           stt: index + 1,
-          _id: item2?._id,
-          title: item2?.title,
+          _id: item2._id,
+          title: item2.title,
           order: item2.order,
-          type: item2.type
+          status: item2.status,
+          type: item2.type,
+          action: item2
         };
       }).sort((a, b) => a.order - b.order)
+    console.log("dâtaaa", data);
 
     return (
       <Table
@@ -335,6 +234,8 @@ const ListDay = (props: Props) => {
   //------------------TABLE-COLUMM-------------------
 
   useEffect(() => {
+    dispatch(getListVocabularySlice())
+    dispatch(getDayBiggest());
     dispatch(changeBreadcrumb("Quản Lý Ngày Học"));
     dispatch(getListDaySlice());
     dispatch(getListPracticeActivitylice());

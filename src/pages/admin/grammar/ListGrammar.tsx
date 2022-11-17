@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Table,
   Breadcrumb,
@@ -19,10 +19,13 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { deleteGrammar, getListGrammar } from "../../../api/grammar";
-import { GammarType } from "../../../types/grammar";
 import { useDispatch } from "react-redux";
 import { changeBreadcrumb } from "../../../features/Slide/category/CategorySlide";
 import AdminPageHeader from "../../../components/AdminPageHeader";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { PracticeActivityType } from "../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { GrammarType } from "../../../types/grammar";
 type Props = {};
 
 interface DataType {
@@ -37,13 +40,16 @@ interface DataType {
 }
 type DataIndex = keyof DataType;
 const ListGrammar = (props: Props) => {
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const [grammar, setGrammar] = useState([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { dayId } = useParams()
+  const navigate = useNavigate();
+
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -51,11 +57,11 @@ const ListGrammar = (props: Props) => {
       setGrammar(data);
     };
     getData();
-  }, []);
+  }, [dayId]);
 
-  const tableWithType = grammar.filter((item: any) => item.dayId === dayId)
-  const dataSources = tableWithType?.map((items: any, index: any) => {
-
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
+  let tableWithType = grammar.filter((item: GrammarType) => item.dayId === dayId)
+  const dataSources = tableWithType?.map((items: GrammarType, index: number) => {
     return {
       key: index + 1,
       stt: index + 1,
@@ -68,11 +74,13 @@ const ListGrammar = (props: Props) => {
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
+
   const handleOk = async (id) => {
     const key = "updatable";
     setConfirmLoading(true);
     await deleteGrammar(id);
-    setGrammar(grammar.filter((item: GammarType) => item._id !== id));
+    setGrammar(grammar.filter((item: GrammarType) => item._id !== id));
+    dispatch(editPracticeActivitylice({ ...activity, status: false }))
     message.loading({ content: "Loading...", key });
     message.success({ content: "Xóa Thành Công!", key, duration: 2 });
   };
@@ -95,6 +103,14 @@ const ListGrammar = (props: Props) => {
     clearFilters();
     setSearchText("");
   };
+
+  const checkQuestion = () => {
+    if (tableWithType.length >= 1) {
+      message.warning("Đã đạt giới hạn bài học !")
+    } else {
+      navigate(`/manageDay/${dayId}/grammar/addLesson`)
+    }
+  }
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
@@ -256,11 +272,14 @@ const ListGrammar = (props: Props) => {
       ),
     },
   ];
+
   return (
     <div>
       <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
-      <Button type="primary" className="my-6">
-        <Link to={`/manageDay/${dayId}/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
+      <Button type="primary" className="my-6" onClick={() => checkQuestion()}>
+        {/* <Link to={`/manageDay/${dayId}/grammar/addLesson`}> */}
+          Thêm Ngữ Pháp
+          {/* </Link> */}
       </Button>
       <Table
         bordered

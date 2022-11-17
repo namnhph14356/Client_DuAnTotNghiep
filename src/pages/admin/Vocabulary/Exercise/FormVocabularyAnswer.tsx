@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { editQuizSlide, getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { QuizType } from '../../../../types/quiz';
 import { AnswerQuizType } from '../../../../types/answerQuiz';
 import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
@@ -20,7 +20,7 @@ const FormAnswerListenSpeak = (props: Props) => {
   const breadcrumb = useAppSelector(data => data.answerQuiz.breadcrumb)
   const quizs = useAppSelector(data => data.quiz.value)
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
-  const [listAnswer, setListAnswer] = useState<any>([])
+  const [listAnswer, setListAnswer] = useState<AnswerQuizType[]>([])
   const { dayId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
@@ -29,16 +29,31 @@ const FormAnswerListenSpeak = (props: Props) => {
   const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
 
+  const checkAnswer = (question: QuizType, length: number) => {
+    if (length === 3) {
+      dispatch(editQuizSlide({ ...question, status: true }))
+    }
+  }
+
   const onFinish = async (value) => {
+    if (filterAnswer.length === 4) {
+      message.warning("Đã đạt giới hạn đáp án !")
+      return navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
+    }
     const key = 'updatable';
+    let detailQuiz = quizs.find((e: QuizType) => e._id === id)
+    if (detailQuiz) {
+      checkAnswer(detailQuiz, filterAnswer.length);
+    }
 
     message.loading({ content: 'Loading...', key });
-      dispatch(addAnswerQuizSlide({
-        ...value,
-        quiz: id
-      }));
-      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
+    dispatch(addAnswerQuizSlide({
+      ...value,
+      quiz: id
+    }));
+    await dispatch(getListQuizSlide())
+    message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+    navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -48,14 +63,6 @@ const FormAnswerListenSpeak = (props: Props) => {
   const onReset = () => {
     form.resetFields();
   };
-
-  const handleChange = (e) => {
-    if (filterIsCorrect.isCorrect === e) {
-      console.log('Đã có đáp án đúng');
-    } else {
-      console.log('CHưa có');
-    }
-  }
 
   useEffect(() => {
     dispatch(changeBreadcrumb("Thêm đáp án"))
@@ -87,7 +94,7 @@ const FormAnswerListenSpeak = (props: Props) => {
             tooltip="Trạng Thái Đáp Án"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            <Select onChange={(e) => handleChange(Boolean(e))}>
+            <Select>
               <Option key={1} value={0}>
                 Sai
               </Option>
