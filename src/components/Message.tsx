@@ -84,7 +84,7 @@ const Message = (props) => {
       //   inputRef.current.value = '';
       // }
     }
-  }
+  };
 
   const content2 = (
     <div className="wrapper-message1">
@@ -96,7 +96,11 @@ const Message = (props) => {
       </div>
       <div className="message-content-wrapper">
         {dataFrequentlyAskedQuestion.map((item) => (
-          <p onClick={() => onAddMessage(item.text)} key={item.id} className="text-message">
+          <p
+            onClick={() => onAddMessage(item.text)}
+            key={item.id}
+            className="text-message"
+          >
             {item.text}
           </p>
         ))}
@@ -111,41 +115,58 @@ const Message = (props) => {
           <CloseOutlined style={{ fontSize: "14px", color: "#fff" }} />
         </div>
       </div>
-      <div className="message-content">
-        <p className="text-repmessage">Chào bạn {auth.username}</p>
-        <p className="text-repmessage">Bạn cần chúng tôi giúp gì nhỉ?</p>
-        <p className="text-repmessage">
-          Chúng tôi sẽ trả lời bạn sớm nhất khi có thể
-        </p>
-        {dataQuestion.map((item: any) => (
-          <div key={item.id}>
-            {item.isAdmin ? (
-              <p className="text-repmessage">{item.text}</p>
-            ) : (
-              <p className="text-message1">{item.text}</p>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="message-send">
-        <div onClick={onClose1} className="cusound">
-          <Popover placement="topLeft" content={content2} open={clicked1} trigger="click">
-            <div className="option-message">
-              <AlignLeftOutlined style={{ fontSize: "24px", color: "#000" }} />
+      {auth?.username ? (
+        <div className="message-content">
+          <p className="text-repmessage">Chào bạn {auth.username}</p>
+          <p className="text-repmessage">Bạn cần chúng tôi giúp gì nhỉ?</p>
+          <p className="text-repmessage">
+            Chúng tôi sẽ trả lời bạn sớm nhất khi có thể
+          </p>
+          {dataQuestion.map((item: any) => (
+            <div key={item.id}>
+              {item.isAdmin ? (
+                <p className="text-repmessage">{item.text}</p>
+              ) : (
+                <p className="text-message1">{item.text}</p>
+              )}
             </div>
-          </Popover>
+          ))}
         </div>
+      ) : (
+        <div className="message-content">
+          <p className="text-center">
+            Bạn cần đăng ký hoặc đăng nhập để chat với quản trị viên{" "}
+          </p>
+        </div>
+      )}
 
-        <Search
-          ref={inputRef}
-          placeholder="Nhắn cho admin"
-          allowClear
-          enterButton={<SendOutlined />}
-          size="large"
-          onSearch={onSearch}
-        />
-      </div>
+      {auth?.username && (
+        <div className="message-send">
+          <div onClick={onClose1} className="cusound">
+            <Popover
+              placement="topLeft"
+              content={content2}
+              open={clicked1}
+              trigger="click"
+            >
+              <div className="option-message">
+                <AlignLeftOutlined
+                  style={{ fontSize: "24px", color: "#000" }}
+                />
+              </div>
+            </Popover>
+          </div>
+
+          <Search
+            ref={inputRef}
+            placeholder="Nhắn cho admin"
+            allowClear
+            enterButton={<SendOutlined />}
+            size="large"
+            onSearch={onSearch}
+          />
+        </div>
+      )}
     </div>
   );
   return (
