@@ -2,18 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { addQuizSlide, changeBreadcrumb, editQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
 import { detailQuiz } from '../../../../api/quiz';
 import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+import { PracticeActivityType } from '../../../../types/practiceActivity';
 
 type Props = {}
+
+interface TypeQuiz {
+  id?: number,
+  name: string,
+  type: string
+}
 
 const FormQuestionListenSpeak = (props: Props) => {
 
@@ -36,13 +41,13 @@ const FormQuestionListenSpeak = (props: Props) => {
     { id: 3, name: "Ghép từng đáp án", type: "selectCompound" }
   ]
   const type = "listenspeak"
-  const prative: any = practiceActivity.find((item: any) => item.type === type && item.day === dayId)
-
+  const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
+  let quizLength = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "listenspeak")
 
   const { id } = useParams();
 
   const onFinish = async (value) => {
-    if (fileList) {
+    if (fileList && quizLength.length < 10) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
         "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
@@ -59,28 +64,29 @@ const FormQuestionListenSpeak = (props: Props) => {
       setfileList(null);
     }
 
-    if (value.type === 'selectImage') {
+    if (value.type === 'selectImage' && quizLength.length < 10) {
       if (!value.image) {
         return message.error('Không để trống Ảnh!');
       }
     }
-
-
-    const key = 'updatable';
-
-    message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      if (id) {
-        mutate(edit(value))
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate(`/manageDay/${dayId}/listenspeak`);
-      } else {
-        mutate(add(value))
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate(`/manageDay/${dayId}/listenspeak`);
+    
+    let key = 'updatable';
+    
+    if (id) {
+      message.loading({ content: 'Loading...', key });
+      mutate(edit(value))
+      message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+    } else {
+      if (quizLength.length === 10) {
+        message.warning("Đã đạt giới hạn câu hỏi !")
+        return navigate(`/manageDay/${dayId}/listenspeak`);
       }
-
-    }, 2000);
+      message.loading({ content: 'Loading...', key });
+      mutate(add(value))
+      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+    }
+    
+    navigate(`/manageDay/${dayId}/listenspeak`);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -147,14 +153,14 @@ const FormQuestionListenSpeak = (props: Props) => {
           >
             {id
               ? <Select >
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>
                 ))}
               </Select>
               : <Select onChange={(e) => setSelected(e)}
-                defaultValue={typeQuiz?.map((item: any, index) => {
+                defaultValue={typeQuiz?.map((item: TypeQuiz, index) => {
                   if (item.type === quiz?.type) {
                     return <Option key={index + 1} value={item.type}>
                       {item.name}
@@ -163,7 +169,7 @@ const FormQuestionListenSpeak = (props: Props) => {
                 })}
               >
 
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>

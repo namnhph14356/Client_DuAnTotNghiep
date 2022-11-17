@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { editQuizSlide, getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
 import { QuizType } from '../../../../types/quiz';
 import { AnswerQuizType } from '../../../../types/answerQuiz';
 import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { detailAnswerQuiz, listAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
+import { editPracticeActivitylice } from '../../../../features/Slide/practiceActivity/PracticeActivitySlice';
 
 
 
@@ -32,22 +33,53 @@ const FormAnswerListenSpeak = (props: Props) => {
   const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
 
+  const checkAnswer = (question: any, length: number) => {
+    switch (question.type) {
+      case "selectRadio":
+        if (length === 3) {
+          dispatch(editQuizSlide({ ...question, status: true }))
+        } else if (length === 4) {
+          return true
+        }
+        break;
+
+      case "selectImage":
+        if (length === 3) {
+          dispatch(editQuizSlide({ ...question, status: true }))
+        } else if (length === 4) {
+          return true
+        }
+        break;
+
+      case "selectCompound":
+        if (length >= 2) {
+          dispatch(editQuizSlide({ ...question, status: true }))
+        } else if (length === 6) {
+          return true
+        }
+        break;
+      default:
+        break;
+    }
+  }
 
   const onFinish = async (value) => {
-
-    console.log("value", value);
-
     const key = 'updatable';
+    const detailQuiz = quizs.find((e: QuizType) => e._id === id)
 
-    message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      dispatch(addAnswerQuizSlide({
+    const check = checkAnswer(detailQuiz, filterAnswer.length);
+    if (check === true) {
+      message.warning("Đã đạt giới hạn đáp án !")
+    } else {
+      message.loading({ content: 'Loading...', key });
+      await dispatch(addAnswerQuizSlide({
         ...value,
         quiz: id
       }));
       message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-      navigate(`/manageDay/${dayId}/listenspeak`);
-    }, 2000);
+      await dispatch(getListQuizSlide())
+    }
+    navigate(`/manageDay/${dayId}/listenspeak`);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -78,7 +110,7 @@ const FormAnswerListenSpeak = (props: Props) => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: ""}} />
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
 

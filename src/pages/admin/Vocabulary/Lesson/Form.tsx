@@ -32,6 +32,10 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { MonthType } from "../../../../types/month";
 import { WeekType } from "../../../../types/week";
 import { DayType } from "../../../../types/day";
+import { getListVocabularySlice } from "../../../../features/Slide/vocabulary/vocabulary";
+import { PracticeActivityType } from "../../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { VocabulatyType } from "../../../../types/vocabularyType";
 
 type Props = {};
 
@@ -41,7 +45,9 @@ const FormVocabulary = (props: Props) => {
   const navigate = useNavigate();
   const [fileList, setfileList] = useState<any>();
   const [vocabulary, setVocabulary] = useState();
-
+  const vocabularies = useAppSelector((item) => item.vocabulary.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const quizs: any = useAppSelector(item => item.quiz.value)
   const dispatch = useAppDispatch();
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
   let weeks = useAppSelector<WeekType[]>((item) => item.week.value);
@@ -87,7 +93,21 @@ const FormVocabulary = (props: Props) => {
   } else {
     titlePage = "Thêm mới từ vựng";
   }
+
+  const checkActivity = (voca: VocabulatyType[]) => {
+    const vocaByDay = voca.filter((e) => e.dayId?._id === dayId)
+    let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "vocabulary")
+    const listQuiz = quizs.filter((e) => e.practiceActivity?._id === activity._id)
+
+    if (vocaByDay.length === 4 && listQuiz.length === 10) {
+      dispatch(editPracticeActivitylice({ ...activity, status: true }))
+    } else if (vocaByDay.length === 5) {
+      return true
+    }
+  }
+
   const onFinish = async (value: any) => {
+
     if (fileList) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
@@ -107,15 +127,22 @@ const FormVocabulary = (props: Props) => {
 
     const key = "updatable";
 
-    message.loading({ content: "Loading...", key });
     if (id) {
+      message.loading({ content: "Loading...", key });
       editVocabulary(value);
       message.success({ content: "Sửa Thành Công!", key, duration: 2 });
       navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     } else {
-      addVocabulary({ ...value, dayId: dayId });
-      message.success({ content: "Thêm Thành Công!", key, duration: 2 });
+      const check = checkActivity(vocabularies);
+      if (check === true) {
+        message.warning("Đã đạt giới hạn đáp án !")
+      } else {
+        message.loading({ content: "Loading...", key });
+        addVocabulary({ ...value, dayId: dayId });
+        message.success({ content: "Thêm Thành Công!", key, duration: 2 });
+      }
       navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
+
     }
   };
 
@@ -154,6 +181,7 @@ const FormVocabulary = (props: Props) => {
       };
       getDetail();
     }
+    dispatch(getListVocabularySlice())
   }, []);
 
   return (

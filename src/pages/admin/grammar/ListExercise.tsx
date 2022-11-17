@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
 import AdminPageHeader from '../../../components/AdminPageHeader';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { QuizType } from '../../../types/quiz';
-import { getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
+import { editQuizSlide, getListQuizSlide, removeQuizSlide } from '../../../features/Slide/quiz/QuizSlide';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { getCategoryList } from '../../../features/Slide/category/CategorySlide';
 import { CategoryType } from '../../../types/category';
@@ -15,6 +15,9 @@ import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
 import { changeBreadcrumb, getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { AnswerQuizType } from '../../../types/answerQuiz';
+import { editPracticeActivitylice } from '../../../features/Slide/practiceActivity/PracticeActivitySlice';
+import { GrammarType } from '../../../types/grammar';
+import { PracticeActivityType } from '../../../types/practiceActivity';
 
 interface DataType {
   key: React.Key;
@@ -58,6 +61,10 @@ const ListExercise = () => {
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
   const quizs = useAppSelector(item => item.quiz.value)
   const answerQuizs = useAppSelector(item => item.answerQuiz.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+
+  const grammar = useAppSelector(item => item.grammar.value)
+
   const dispatch = useAppDispatch();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -65,12 +72,13 @@ const ListExercise = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
-  const [listTable, setListTable] = useState<any>([]);
   const { dayId } = useParams();
+  const navigate = useNavigate();
 
   //------------------STATE--------------------
-  const tableWithType = quizs.filter((item: any) => item.practiceActivity?.type === "grammar" && item.type === 'selectRadio')
-  const tableListenSpeak = tableWithType.filter((item: any) => item.practiceActivity?.day === String(dayId))
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
+  const tableWithType = quizs.filter((item: QuizType) => item.practiceActivity?.type === "grammar" && item.type === 'selectRadio')
+  const tableListenSpeak = tableWithType.filter((item: QuizType) => item.practiceActivity?.day === String(dayId))
   const dataTable = tableListenSpeak.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -79,6 +87,7 @@ const ListExercise = () => {
       type: item.type,
       suggestions: item.suggestions,
       meaning: item.meaning,
+      status: item.status,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
       updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     }
@@ -91,7 +100,7 @@ const ListExercise = () => {
       answer: item.answer,
       isCorrect: item.isCorrect,
       wordMeaning: item.wordMeaning,
-      explainAnswer: item.explainAnswer
+      explainAnswer: item.explainAnswer,
     }
   })
 
@@ -213,35 +222,67 @@ const ListExercise = () => {
   }
   //------------------SELECT-ROW-------------------
 
-  const handleOk = (id) => {
+  const checkQuestion = () => {
+    const quizLength = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "grammar")
+
+    if (quizLength.length === 10) {
+      message.warning("Đã đạt giới hạn câu hỏi !")
+    } else {
+      navigate(`/manageDay/${dayId}/grammar/question/add`)
+    }
+  }
+
+  const checkAnswer = (question: QuizType) => {
+    let lengthAns = answerQuizs.filter((e: AnswerQuizType) => e.quiz === question._id)
+    if (lengthAns.length === 4) {
+      message.warning("Đã đạt giới hạn đáp án !")
+    } else {
+      navigate(`/manageDay/${dayId}/grammar/answer/${question._id}/add`)
+    }
+  }
+
+  const checkStatusActivity = () => {
+    const quizStatus = quizs.filter((item: QuizType) => item.practiceActivity?.type === "grammar" && item.practiceActivity?.day === String(dayId) && item.status === false)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "grammar" && item.practiceActivity?.day === String(dayId))
+    const gram = grammar.filter((e: GrammarType) => e.dayId === dayId)
+
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
+
+    if (quizStatus.length > 0 || lengthQuiz.length < 10 || gram.length < 1) {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    } else {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: true }))
+    }
+  }
+
+  const handleOk = async (id) => {
     const key = 'updatable';
     setConfirmLoading(true);
     message.loading({ content: 'Loading...', key });
 
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-        dispatch(removeAnswerQuizSlide(id))
-      } else {
-        dispatch(removeAnswerQuizSlide(id))
-      }
-      setConfirmLoading(false);
-      message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
-    }, 2000);
+    const { payload } = await dispatch(removeAnswerQuizSlide(id))
+    if (payload) {
+      const detailQuestion: any = quizs.find((e: QuizType) => e._id === payload.quiz)
+      await dispatch(editQuizSlide({ ...detailQuestion, status: false }))
+      await dispatch(getListQuizSlide())
+      dispatch(editPracticeActivitylice({ ...activity, status: false }))
+    }
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
   };
-  const handleOk1 = (id) => {
+  const handleOk1 = async (id) => {
     const key = 'updatable';
     setConfirmLoading(true);
     message.loading({ content: 'Loading...', key });
 
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-        dispatch(removeQuizSlide(id))
-      } else {
-        dispatch(removeQuizSlide(id))
-      }
-      setConfirmLoading(false);
-      message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
-    }, 2000);
+    const { payload } = await dispatch(removeQuizSlide(id))
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e._id === payload.practiceActivity)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "grammar" && item.practiceActivity?._id === detailActivity._id)
+    if (lengthQuiz.length - 1 < 10) {
+      await dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    }
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
   };
   const handleCancel = () => {
     message.error('Hủy Hành Động!');
@@ -261,14 +302,14 @@ const ListExercise = () => {
     {
       title: 'Câu hỏi',
       dataIndex: 'question',
-      className: 'w-[280px]',
+      className: 'w-[250px]',
       key: "question",
       ...getColumnSearchProps('question'),
     },
     {
       title: 'Gợi ý',
       dataIndex: 'suggestions',
-      className: 'w-[200px]',
+      className: 'w-[180px]',
       key: "suggestions",
       ...getColumnSearchProps('suggestions'),
     },
@@ -280,10 +321,23 @@ const ListExercise = () => {
       ...getColumnSearchProps('meaning'),
     },
     {
+      title: "Trạng thái", dataIndex: "status", key: "status",
+      className: 'w-[100px]',
+      render: (record: any) => (
+        <div >
+          {record === true ?
+            <Tag color="green">Đã đủ</Tag>
+            :
+            <Tag color="red">Chưa đủ</Tag>
+          }
+        </div>
+      ),
+    },
+    {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
-      className: 'w-[130px]',
+      className: 'w-[100px]',
       sortDirections: ['descend'],
       ellipsis: {
         showTitle: false,
@@ -299,7 +353,7 @@ const ListExercise = () => {
       title: 'Ngày cập nhật',
       dataIndex: 'updatedAt',
       key: "updatedAt",
-      className: 'w-[130px]',
+      className: 'w-[110px]',
       sortDirections: ['descend'],
       ellipsis: {
         showTitle: false,
@@ -341,7 +395,7 @@ const ListExercise = () => {
     },
   ];
 
-  const expandedRowRender = (row: any) => {
+  const expandedRowRender = (row: QuizType) => {
 
     const columns2: ColumnsType<ExpandedDataType> = [
       { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
@@ -411,10 +465,8 @@ const ListExercise = () => {
 
     return <div>
       <Space align="center" size="small">
-        <Button style={{ background: "#E7975A" }} >
-          <Link to={`/manageDay/${dayId}/grammar/answer/${row._id}/add`} >
-            <span className="text-white">Thêm đáp án</span>
-          </Link>
+        <Button style={{ background: "#E7975A" }} onClick={() => checkAnswer(row)}>
+          <span className="text-white">Thêm đáp án</span>
         </Button>
       </Space>
       <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
@@ -428,14 +480,16 @@ const ListExercise = () => {
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
     dispatch(getListQuizSlide())
-    setListTable(tableWithType)
+    checkStatusActivity()
   }, [])
 
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
-      <Button type='primary' className='mb-8' >
-        <Link to={`/manageDay/${dayId}/grammar/question/add`}>Thêm câu hỏi</Link>
+      <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
+        {/* <Link to={`/manageDay/${dayId}/grammar/question/add`}> */}
+        Thêm câu hỏi
+        {/* </Link> */}
       </Button>
 
       {selectedRowKeys.length > 1

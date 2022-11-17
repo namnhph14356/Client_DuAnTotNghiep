@@ -1,3 +1,5 @@
+import { PracticeActivityType } from "./practiceActivity";
+
 export type QuizType = {
   _id?: string;
   category?: string;
@@ -8,7 +10,8 @@ export type QuizType = {
   suggestions?:string,
   timeLimit?: string;
   type?: string;
-  practiceActivity?: string;
+  status?: boolean;
+  practiceActivity?: PracticeActivityType;
   createdAt?: string;
   updatedAt?: string;
 };

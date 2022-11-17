@@ -114,6 +114,8 @@ import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabulary
 import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
+import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
+import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
 
 function App() {
@@ -340,6 +342,12 @@ function App() {
             <Route path="listExercise" element={<ListSentencesExercise />} />
             <Route path="addExercise" element={<AddSentencesExercise />} />
             <Route path=":id/editExercise" element={<AddSentencesExercise />} />
+
+            <Route path="answer">
+              <Route path=":id/add" element={<FormAnswerSentences />} />
+              <Route path=":id/edit" element={<FormAnswerSentencesEdit />} />
+            </Route>
+
           </Route>
 
           {/* listenWrite */}

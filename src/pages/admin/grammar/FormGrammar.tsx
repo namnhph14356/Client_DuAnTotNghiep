@@ -1,70 +1,52 @@
-import {
-  Divider,
-  Form,
-  Input,
-  Button,
-  Checkbox,
-  Upload,
-  Select,
-  Avatar,
-  message,
-  Modal,
-  Progress,
-  Image,
-  Empty,
-} from "antd";
-import { useForm } from "react-hook-form";
+import { Form, Input, Button, message } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-import {
-  addVocabulary,
-  detailVocabulary,
-  editVocabulary,
-} from "../../../api/vocabulary";
-import ReactQuill from "react-quill";
-import {
-  addGrammar,
-  getGrammarDetail,
-  updateGrammar,
-} from "../../../api/grammar";
+import { addGrammar, getGrammarDetail, updateGrammar, } from "../../../api/grammar";
 import JoditEditor from "jodit-react";
-import { GammarType } from "../../../types/grammar";
 import AdminPageHeader from "../../../components/AdminPageHeader";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { changeBreadcrumb } from "../../../features/Slide/answerQuiz/AnswerQuizSlide";
+import { GrammarType } from "../../../types/grammar";
+import { PracticeActivityType } from "../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { getListGrammarSlice } from "../../../features/Slide/grammar/grammarSlice";
+import { QuizType } from "../../../types/quiz";
 
 type Props = {};
 
 const FormGrammar = (props: Props) => {
+  const grammars = useAppSelector((item) => item.grammar.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const quizs = useAppSelector(item => item.quiz.value)
+
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [fileList, setfileList] = useState<any>();
   const [grammar, setGrammar] = useState("");
   const { id, dayId } = useParams();
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
   const dispatch = useAppDispatch();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    control,
-  } = useForm();
+
   var titlePage: string = "";
   if (id) {
     titlePage = "Cập Nhật Ngữ Pháp Bài Học";
   } else {
     titlePage = "Thêm Ngữ Pháp Bài Học";
   }
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
+  let gram = grammars.filter((e: GrammarType) => e.dayId === dayId)
+  let listQuiz = quizs.filter((e: QuizType) => e.practiceActivity?._id === activity._id)
 
-  const onFinish = async (value: GammarType) => {
+  const checkActivity = () => {
+    if (gram.length === 0 && listQuiz.length === 10) {
+      dispatch(editPracticeActivitylice({ ...activity, status: true }))
+    }
+  }
+
+  const onFinish = async (value: GrammarType) => {
     const key = "updatable";
-    console.log("value", value);
-    
-    message.loading({ content: "Loading...", key });
     if (id) {
       try {
+        message.loading({ content: "Loading...", key });
         updateGrammar({ ...value, dayId: dayId });
         message.success({ content: "Sửa Thành Công!", key, duration: 2 });
         navigate(`/manageDay/${dayId}/grammar`);
@@ -73,6 +55,12 @@ const FormGrammar = (props: Props) => {
       }
     } else {
       try {
+        if (gram.length === 1) {
+          message.warning("Đã đạt giới hạn bài học !")
+          return navigate(`/manageDay/${dayId}/grammar`);
+        }
+        checkActivity();
+        message.loading({ content: "Loading...", key });
         addGrammar({ ...value, dayId: dayId });
         message.success({ content: "Thêm Thành Công!", key, duration: 2 });
         navigate(`/manageDay/${dayId}/grammar`);
@@ -96,8 +84,6 @@ const FormGrammar = (props: Props) => {
     if (id) {
       const getDetail = async () => {
         const { data } = await getGrammarDetail(id);
-        console.log("data", data);
-        
         setGrammar(data);
         form.setFieldsValue(data);
       };
@@ -106,14 +92,14 @@ const FormGrammar = (props: Props) => {
     } else {
       dispatch(changeBreadcrumb("Thêm bài học ngữ pháp"))
     }
+    dispatch(getListGrammarSlice())
   }, [id]);
+
   const config: any = {
     readonly: false,
     addNewLineOnDBLClick: false,
   };
-  console.log("grammar", grammar);
-  console.log("id", id);
-  
+
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
