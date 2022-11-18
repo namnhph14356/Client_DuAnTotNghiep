@@ -112,11 +112,13 @@ import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
 import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
 import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
 import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
+import SearchDirectory from "./pages/SearchDirectory";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
+
 
 function App() {
   let location = useLocation();
@@ -234,6 +236,7 @@ function App() {
           <Route path="user" element={<User />} />
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
+          <Route path="directory" element={<SearchDirectory />}></Route>
         </Route>
 
         <Route path="manageteacher" element={<TeacherLayout />}>

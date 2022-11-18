@@ -11,6 +11,7 @@ const navigation = [
   { name: 'Giới thiệu', to: 'aboutUs' },
   { name: 'Liên hệ', to: '/contact' },
   { name: 'Khóa học', to: '/course' },
+  {name: 'Tra từ', to: '/directory'}
 
 ]
 
