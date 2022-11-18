@@ -4,6 +4,8 @@ import io from 'socket.io-client'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { changeSpeechFinish, changeSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
 import Countdown from 'react-countdown';
+import TimeCountDown from '../TimeCountDown';
+import Timer from '../Timer';
 // import {} from './recorderWorkletProcessor'
 
 type GoogleSpeechExamProps = {
@@ -13,27 +15,6 @@ type GoogleSpeechExamProps = {
 
 const socket = io("http://localhost:8000", { transports: ['websocket'] });
 
-const CountdownWrapper = ({ time, reset }) => {
-    //---TimeLimitCountdown---
-    //Đếm ngược thời gian làm 
-    const [state, setState] = useState<any>()
-    const renderer = ({ hours, minutes, seconds, completed }) => {
-        return <span>{seconds}</span>;
-    };
-
-    useEffect(() => {
-        setState(Date.now() + time)
-    }, [time, reset])
-
-    return <Countdown
-        // date={Date.now() + 7000}
-        date={state}
-        renderer={renderer}
-    />
-};
-
-const MemoCountdown = React.memo(CountdownWrapper);
-
 
 
 const GoogleSpeechExam = ({ resetSpeaker, onHanldeResetSpeaker }: GoogleSpeechExamProps) => {
@@ -42,9 +23,6 @@ const GoogleSpeechExam = ({ resetSpeaker, onHanldeResetSpeaker }: GoogleSpeechEx
     const arrReset = useAppSelector(item => item.googleSpeech.arrReset)
     const dispatch = useAppDispatch()
 
-    const renderer = ({ hours, minutes, seconds, completed }) => {
-        return <span>{seconds}</span>;
-    };
 
     useEffect(() => {
         //================= CONFIG =================
@@ -117,10 +95,14 @@ const GoogleSpeechExam = ({ resetSpeaker, onHanldeResetSpeaker }: GoogleSpeechEx
             startButton.className = "text-white !h-10 !w-10 !bg-red-600 !rounded-full scale-105 "
             initRecording();
             console.log("start")
-            setTimeout(() => {
+            const timeOut = setTimeout(() => {
                 stopRecording()
                 console.log("end")
             }, 7000)
+            if(transcript !== ""){
+                clearTimeout(timeOut);
+            }
+            
 
         }
 
@@ -202,12 +184,8 @@ const GoogleSpeechExam = ({ resetSpeaker, onHanldeResetSpeaker }: GoogleSpeechEx
         <div>
             <audio></audio>
             <button className=' !h-10 !w-10 !bg-blue-600 !rounded-full !text-white ' id="startRecButton" type="button" >
-                {/* <i className="fa-solid fa-volume-high !m-0 !p-0"></i> */}
-                <Countdown
-                    date={Date.now() + 7000}
-                    renderer={renderer}
-                />
-                {/* <MemoCountdown time={7000} reset={isFinish} /> */}
+                <Timer seconds={7} />
+
             </button>
         </div>
     )
