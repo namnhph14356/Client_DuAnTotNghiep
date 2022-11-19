@@ -115,7 +115,7 @@ const Message :React.FC = (props)  => {
           <CloseOutlined style={{ fontSize: "14px", color: "#fff" }} />
         </div>
       </div>
-      {auth?.username ? (
+      { auth && auth?.username ? (
         <div className="message-content">
           <p className="text-repmessage">Chào bạn {auth.username}</p>
           <p className="text-repmessage">Bạn cần chúng tôi giúp gì nhỉ?</p>
@@ -140,7 +140,7 @@ const Message :React.FC = (props)  => {
         </div>
       )}
 
-      {auth?.username && (
+      {auth && auth?.username && (
         <div className="message-send">
           <div onClick={onClose1} className="cusound">
             <Popover
