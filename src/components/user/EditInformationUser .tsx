@@ -6,6 +6,7 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { editUser, getUserById } from '../../api/user'
 import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
+import { currentUserSlice, editUserSilce } from '../../features/Slide/auth/authSlide'
 import { UserType } from '../../types/user'
 import MenuSettingUser from './MenuSettingUser'
 

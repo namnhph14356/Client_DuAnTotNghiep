@@ -10,6 +10,7 @@ import { uploadImage } from '../../utils/upload'
 import { editUser } from '../../api/user'
 import { message } from 'antd'
 import { useAppDispatch } from '../../app/hooks'
+import { editUserSilce } from '../../features/Slide/auth/authSlide'
 
 
 
@@ -58,7 +59,7 @@ const EditImage = () => {
       const response = await uploadImage(imgPost);
       data.img = response;
     }
-    await dispatch(editUserSilc(data));
+    await dispatch(editUserSilce(data));
     console.log('data', data);
     
     // message.success('Cập nhật thành công')

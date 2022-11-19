@@ -115,14 +115,7 @@ import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
 import SearchDirectory from "./pages/SearchDirectory";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
-import UserLayout from "./pages/layouts/UserLayout";
-import InformationUser from "./components/user/InformationUser";
-import EditInformationUser from "./components/user/EditInformationUser";
-import MyClassUser from "./components/user/MyClassUser";
-import PayHistoryUser from "./components/user/PayHistoryUser";
-import PrivateUser from "./components/user/PrivateUser";
-import EditEmailUser from "./components/user/EditEmailUser";
-import EditPasswordUser from "./components/user/EditPasswordUser";
+
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";

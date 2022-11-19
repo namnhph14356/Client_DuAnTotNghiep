@@ -1,6 +1,7 @@
 
 import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { changeOTP, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle } from "../../../api/user";
+import { changeOTP, getUserById, editUser, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle } from "../../../api/user";
+import { UserType } from "../../../types/user";
 
 export interface AuthSlice {
   value: Object,
@@ -54,7 +55,7 @@ export const signUp = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",
-  async (email:{email:string}) => {
+  async (email: { email: string }) => {
     const { data } = await forgotPass(email);
     return data
   }
@@ -62,9 +63,32 @@ export const forgotPassword = createAsyncThunk(
 
 export const newPass = createAsyncThunk(
   "auth/changePassword",
-  async (email:{email:string, password:string}) => {
+  async (email: { email: string, password: string }) => {
     const { data } = await newPassword(email);
     return data
+  }
+)
+export const newPassSlice = createAsyncThunk(
+  "auth/changePassword",
+  async (password: { password: string }) => {
+    const { data } = await newPassword(password);
+    return data
+  }
+)
+
+export const editUserSilce:any = createAsyncThunk(
+  "auth/editUser",
+  async (user: UserType) => {
+    const { data } = await editUser(user);
+    return data;
+  }
+)
+
+export const getUserByIdSlice: any = createAsyncThunk(
+  "auth/getUserById",
+  async (id: any) => {
+    const { data } = await getUserById(id)
+    return data;
   }
 )
 
@@ -104,6 +128,17 @@ const authSlide = createSlice({
     builer.addCase(forgotPassword.fulfilled, (state: AuthSlice, action) => {
     })
     builer.addCase(newPass.fulfilled, (state: AuthSlice, action) => {
+    })
+    builer.addCase(newPassSlice.fulfilled, (state: AuthSlice, action) => {
+    })
+    builer.addCase(editUserSilce.fulfilled, (state: any, action) => {
+      console.log('payload', action.payload);
+      console.log('state', state.value);
+      // state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+      state.value = action.payload;
+    })
+    builer.addCase(getUserByIdSlice.fulfilled, (state: any, action: any) => {
+      state.value = action.payload;
     })
   }
 })
