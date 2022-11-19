@@ -13,6 +13,11 @@ export const listWeekByMonth = (id: string) => {
     return instance.get(url)
 }
 
+export const weekBiggest = () => {
+  const url = `/week/weekBiggest`
+  return instance.get(url)
+}
+
 export const detailWeek = (id: string) => {
     const url = `/week/${id}`
     return instance.get(url)

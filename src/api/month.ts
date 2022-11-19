@@ -7,6 +7,11 @@ export const listMonth = () => {
     return instance.get(url)
 }
 
+export const monthBiggest = () => {
+  const url = `/month/monthBiggest`
+  return instance.get(url)
+}
+
 export const detailMonth = (id: string) => {
     const url = `/month/${id}`
     return instance.get(url)
