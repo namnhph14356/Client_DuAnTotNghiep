@@ -151,7 +151,7 @@ const OralSeven = () => {
             </thead>
             <tbody>
               <tr className='row__body__table__oral'>
-                <th className="w-24  border border-gray-200 ">
+                <th className="py-4 w-24  border border-gray-200 ">
                   Thu âm
                   {showStart
                     ? ""

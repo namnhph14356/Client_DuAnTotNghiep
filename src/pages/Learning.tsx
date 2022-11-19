@@ -123,7 +123,7 @@ const Learning = () => {
     }
     if (learningProgress.length !== 0) {
       const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
-      const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress.day._id)
+      const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
       const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
 
       if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
