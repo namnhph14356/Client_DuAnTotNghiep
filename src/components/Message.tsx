@@ -40,11 +40,11 @@ const dataFrequentlyAskedQuestion = [
   },
 ];
 
-const Message = (props) => {
+const Message :React.FC = (props)  => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
   const [dataQuestion, setDataQuestion] = useState<any>([]);
-  const [clicked, setClicked] = useState(false);
-  const [clicked1, setClicked1] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked1, setClicked1] = useState<boolean>(false);
   const onClose = () => {
     setClicked(!clicked);
   };
