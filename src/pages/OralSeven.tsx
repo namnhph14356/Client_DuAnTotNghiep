@@ -6,7 +6,6 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavOral from '../components/NavOral'
 import HeaderOral from '../HeaderOral'
 import { Link, useParams } from 'react-router-dom'
-import { listSentencesByIdActivity, listSentencesByIdDay } from '../api/sentence'
 import { SentenceType } from '../types/sentence'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
@@ -24,6 +23,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../app/store'
 import { addLearningProgressSlice, editLearningProgressSlice } from '../features/Slide/learningProgress/LearningProgress'
 import Countdown from 'react-countdown';
+import { listSentencesByIdDay } from '../api/sentences'
 
 
 const OralSeven = () => {

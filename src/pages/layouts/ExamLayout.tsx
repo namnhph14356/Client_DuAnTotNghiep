@@ -6,7 +6,6 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavOral from '../../components/NavOral'
 import HeaderOral from '../../HeaderOral'
 import { Outlet, useParams } from 'react-router-dom'
-import { listSentencesByIdActivity, listSentencesByIdDay } from '../../api/sentence'
 import { SentenceType } from '../../types/sentence'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks'

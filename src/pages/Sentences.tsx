@@ -1,10 +1,9 @@
 /* eslint-disable no-restricted-globals */
-import { hover } from '@testing-library/user-event/dist/types/convenience'
 import React, { useEffect, useState } from 'react'
 import { Navigate, NavLink, Outlet, useLocation, useParams, useRoutes } from 'react-router-dom'
 import '../css/grammar.css'
 import '../css/sentence.css'
-
+// import { hover } from '@testing-library/user-event/dist/types/convenience'
 const Sentences = () => {
   const { dayId, id } = useParams();
   const [color, setColor] = useState('');

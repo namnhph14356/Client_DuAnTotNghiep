@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useParams } from 'react-router-dom'
-import { listSentencesByIdActivity } from '../../api/sentence'
+import { listSentencesByIdActivity } from '../../api/sentences'
 import Loading from '../../components/Loading'
 import { SentenceType } from '../../types/sentence'
 

@@ -27,28 +27,48 @@ import JoditEditor from "jodit-react";
 import { addSentences, detailSentences, editSentences } from "../../../../api/sentences";
 import '../../../../css/admin/sentences.css'
 import { SentenceType } from "../../../../types/sentence";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { PracticeActivityType } from "../../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { getListSentencesSlice } from "../../../../features/Slide/sentences/sentencesSlice";
 type Props = {};
 
 const FormSentencesLesson = (props: Props) => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [sentences, setSentences] = useState("");
-  const { id } = useParams();
+  const { id, dayId } = useParams();
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const senten = useAppSelector(item => item.sentences.value)
+  const quizs: any = useAppSelector(item => item.quiz.value)
+  const dispatch = useAppDispatch();
+
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "sentences")
+  let sentencesByDay = senten.filter((e: SentenceType) => e.practiceActivity === activity._id)
+
   var titlePage: string = "";
   if (id) {
-    titlePage = "LUYỆN CẤU TRÚC & CÂU / SỬA BÀI HỌC";
+    titlePage = "Sửa bài học";
   } else {
-    titlePage = "LUYỆN CẤU TRÚC & CÂU / THÊM BÀI HỌC";
+    titlePage = "Thêm bài học";
   }
-  const onFinish = async (value: SentenceType) => {
-    const key = "updatable";
 
-    message.loading({ content: "Loading...", key });
+  const checkActivity = () => {
+    const listQuiz = quizs.filter((e) => e.practiceActivity?._id === activity._id)
+
+    if (sentencesByDay.length === 4 && listQuiz.length === 10) {
+      dispatch(editPracticeActivitylice({ ...activity, status: true }))
+    }
+  }
+
+  const onFinish = async (value: SentenceType) => {
+
+    const key = "updatable";
     if (id) {
       try {
         await editSentences({
           _id: id,
-          practiceActivity: "6346d44a034348adfcfce592",
+          practiceActivity: activity._id,
           words: value.words,
           meaning: value.meaning,
           phoneticTranscription: value.phoneticTranscription,
@@ -57,14 +77,19 @@ const FormSentencesLesson = (props: Props) => {
           soundCombinations: value.soundCombinations
         });
         message.success({ content: "Sửa Thành Công!", key, duration: 2 });
-        navigate("/admin/sentences/listLesson");
+        navigate(`/manageDay/${dayId}/sentences/listLesson`);
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
     } else {
       try {
+        if (sentencesByDay.length === 5) {
+          message.warning("Đã đạt giới hạn câu hỏi !")
+          return navigate(`/manageDay/${dayId}/sentences/listLesson`);
+        }
+        checkActivity()
         await addSentences({
-          practiceActivity: "6346d44a034348adfcfce592",
+          practiceActivity: activity._id,
           words: value.words,
           meaning: value.meaning,
           phoneticTranscription: value.phoneticTranscription,
@@ -73,7 +98,7 @@ const FormSentencesLesson = (props: Props) => {
           soundCombinations: value.soundCombinations
         });
         message.success({ content: "Thêm Thành Công!", key, duration: 2 });
-        navigate("/admin/sentences/addLesson");
+        navigate(`/manageDay/${dayId}/sentences/listLesson`);
       } catch (error) {
         message.error({ content: "Lỗi", key, duration: 2 });
       }
@@ -100,6 +125,7 @@ const FormSentencesLesson = (props: Props) => {
     if (id) {
       getDetail();
     }
+    dispatch(getListSentencesSlice())
   }, [id]);
 
   const config: any = {
@@ -107,9 +133,10 @@ const FormSentencesLesson = (props: Props) => {
     addNewLineOnDBLClick: false,
   };
   return (
-    <div className="">
-      <AdminPageHeader breadcrumb={titlePage} />
-      <div className="">
+    <div>
+      <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài học", route: "listLesson" }} />
+
+      <div>
         <Form
           layout="vertical"
           form={form}

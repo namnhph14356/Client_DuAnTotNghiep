@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Table,
   Breadcrumb,
@@ -11,6 +11,7 @@ import {
   Image,
   Tag,
   Modal,
+  Tooltip,
 } from "antd";
 import type { ColumnsType, ColumnType } from "antd/es/table";
 import type { InputRef } from "antd";
@@ -18,10 +19,13 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { deleteGrammar, getListGrammar } from "../../../api/grammar";
-import { GammarType } from "../../../types/grammar";
 import { useDispatch } from "react-redux";
 import { changeBreadcrumb } from "../../../features/Slide/category/CategorySlide";
 import AdminPageHeader from "../../../components/AdminPageHeader";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { PracticeActivityType } from "../../../types/practiceActivity";
+import { editPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
+import { GrammarType } from "../../../types/grammar";
 type Props = {};
 
 interface DataType {
@@ -36,12 +40,16 @@ interface DataType {
 }
 type DataIndex = keyof DataType;
 const ListGrammar = (props: Props) => {
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const [grammar, setGrammar] = useState([]);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { dayId } = useParams()
+  const navigate = useNavigate();
+
   // Call api
   useEffect(() => {
     const getData = async () => {
@@ -49,10 +57,11 @@ const ListGrammar = (props: Props) => {
       setGrammar(data);
     };
     getData();
-  }, []);
-  const dataSources = grammar?.map((items: any, index: any) => {
-    console.log(items.wordForm);
+  }, [dayId]);
 
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
+  let tableWithType = grammar.filter((item: GrammarType) => item.dayId === dayId)
+  const dataSources = tableWithType?.map((items: GrammarType, index: number) => {
     return {
       key: index + 1,
       stt: index + 1,
@@ -65,16 +74,15 @@ const ListGrammar = (props: Props) => {
       updatedAt: moment(items.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
     };
   });
-  const handleOk = (id) => {
+
+  const handleOk = async (id) => {
     const key = "updatable";
     setConfirmLoading(true);
-    console.log(id);
+    await deleteGrammar(id);
+    setGrammar(grammar.filter((item: GrammarType) => item._id !== id));
+    dispatch(editPracticeActivitylice({ ...activity, status: false }))
     message.loading({ content: "Loading...", key });
-
-    setTimeout(() => {
-      // delete record
-      message.success({ content: "Xóa Thành Công!", key, duration: 2 });
-    }, 2000);
+    message.success({ content: "Xóa Thành Công!", key, duration: 2 });
   };
 
   const handleCancel = () => {
@@ -96,15 +104,14 @@ const ListGrammar = (props: Props) => {
     setSearchText("");
   };
 
-  const onDelete = (_id: any) => {
-    Modal.confirm({
-      title: "Bạn có chắc chắn xóa không?",
-      onOk: async () => {
-        await deleteGrammar(_id);
-        setGrammar(grammar.filter((item: GammarType) => item._id !== _id));
-      },
-    });
-  };
+  const checkQuestion = () => {
+    if (tableWithType.length >= 1) {
+      message.warning("Đã đạt giới hạn bài học !")
+    } else {
+      navigate(`/manageDay/${dayId}/grammar/addLesson`)
+    }
+  }
+
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ColumnType<DataType> => ({
@@ -177,6 +184,7 @@ const ListGrammar = (props: Props) => {
       title: "STT",
       dataIndex: "key",
       key: "key",
+      className: 'w-[70px]',
       sorter: (a: any, b: any) => a.key - b.key,
       sortDirections: ["descend"],
     },
@@ -189,7 +197,6 @@ const ListGrammar = (props: Props) => {
       title: "Mô tả",
       dataIndex: "description",
       key: "description",
-      className: "description_grammar",
       render: (record) => (
         <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
       )
@@ -198,19 +205,42 @@ const ListGrammar = (props: Props) => {
       title: "Tóm tắt",
       dataIndex: "summary",
       key: "summary",
+      render: (record) => (
+        <div className="description_grammar" dangerouslySetInnerHTML={{ __html: `${record}` }}></div>
+      )
 
     },
     {
-      title: "Thời gian tạo",
-      dataIndex: "createdAt",
+      title: 'Ngày Tạo',
+      dataIndex: 'createdAt',
       key: "createdAt",
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[110px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
-      title: "Thời gian chỉnh sửa",
-      dataIndex: "updatedAt",
+      title: 'Ngày cập nhật',
+      dataIndex: 'updatedAt',
       key: "updatedAt",
-      sortDirections: ["descend", "ascend"],
+      className: 'w-[130px]',
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
+
     },
     {
       title: "Hành động",
@@ -218,7 +248,7 @@ const ListGrammar = (props: Props) => {
       render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }}>
-            <Link to={`/manageDay/grammar/${record?.dayId}/editLesson`}>
+            <Link to={`/manageDay/${dayId}/grammar/${record?._id}/editLesson`}>
               <span className="text-white">Sửa</span>
             </Link>
           </Button>
@@ -234,7 +264,7 @@ const ListGrammar = (props: Props) => {
             okButtonProps={{ loading: confirmLoading }}
             onCancel={handleCancel}
           >
-            <Button type="primary" danger onClick={() => onDelete(record._id)}>
+            <Button type="primary" danger>
               Xóa
             </Button>
           </Popconfirm>
@@ -242,13 +272,21 @@ const ListGrammar = (props: Props) => {
       ),
     },
   ];
+
   return (
     <div>
-      <AdminPageHeader breadcrumb="Quản lý Ngữ Pháp Bài Học" />
-      <Button type="primary" className="my-6">
-        <Link to={`/manageDay/grammar/addLesson`}>Thêm Ngữ Pháp</Link>
+      <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
+      <Button type="primary" className="my-6" onClick={() => checkQuestion()}>
+        {/* <Link to={`/manageDay/${dayId}/grammar/addLesson`}> */}
+          Thêm Ngữ Pháp
+          {/* </Link> */}
       </Button>
-      <Table columns={columns} dataSource={dataSources}></Table>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={dataSources}
+        footer={() => `Hiển thị 10 trên tổng ${dataSources.length}`}
+      ></Table>
     </div>
   );
 };

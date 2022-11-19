@@ -12,8 +12,17 @@ import { CategoryType } from '../../../../types/category';
 import { detailQuiz } from '../../../../api/quiz';
 import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+import { string } from 'yup/lib/locale';
+import { PracticeActivityType } from '../../../../types/practiceActivity';
 
 type Props = {}
+
+interface TypeQuiz {
+  id: number,
+  name: string,
+  type: string
+}
+
 
 const FormExerciseVocabulary = (props: Props) => {
 
@@ -29,17 +38,20 @@ const FormExerciseVocabulary = (props: Props) => {
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
+  const { dayId } = useParams();
+
   const typeQuiz = [
     { id: 1, name: "Chọn đáp án tự động", type: "selectAuto" },
   ]
   const type = "vocabulary"
-  const prative: any = practiceActivity.find((item: any) => item.type === type)
-
-
+  const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
+  const voca = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "vocabulary")
   const { id } = useParams();
 
+
   const onFinish = async (value) => {
-    if (fileList) {
+
+    if (fileList && voca.length < 10) {
       const CLOUDINARY_PRESET = "ypn4yccr";
       const CLOUDINARY_API_URL =
         "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
@@ -56,7 +68,7 @@ const FormExerciseVocabulary = (props: Props) => {
       setfileList(null);
     }
 
-    if (value.type === 'selectImage') {
+    if (value.type === 'selectImage' && voca.length < 10) {
       if (!value.image) {
         return message.error('Không để trống Ảnh!');
       }
@@ -64,22 +76,23 @@ const FormExerciseVocabulary = (props: Props) => {
 
     const key = 'updatable';
 
-    message.loading({ content: 'Loading...', key });
-    setTimeout(() => {
-      if (id) {
-        // dispatch(editQuizSlide(value));
-        mutate(edit(value))
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate("/manageDay/vocabulary/listExercise");
-      } else {
-        // dispatch(addQuizSlide(value));
-        mutate(add(value))
+    if (id) {
+      message.loading({ content: 'Loading...', key });
+      mutate(edit(value))
+      message.success({ content: 'Sửa Thành Công!', key });
+      navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
+    } else {
 
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate("/manageDay/vocabulary/listExercise");
+      if (voca.length === 10) {
+        message.warning("Đã đạt giới hạn câu hỏi !")
+        return navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
       }
 
-    }, 2000);
+      message.loading({ content: 'Loading...', key });
+      mutate(add({ ...value, practiceActivity: prative._id }))
+      message.success({ content: 'Thêm Thành Công!', key });
+      navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -117,11 +130,11 @@ const FormExerciseVocabulary = (props: Props) => {
         setQuiz(data)
         setSelected(data.quiz.type)
         form.setFieldsValue(data.quiz);
-        dispatch(changeBreadcrumb("Sửa Quiz"))
+        dispatch(changeBreadcrumb("Sửa câu hỏi"))
       }
       getQuiz()
     } else {
-      dispatch(changeBreadcrumb("Thêm câu hỏi bài tập phần từ vựng"))
+      dispatch(changeBreadcrumb("Thêm câu hỏi"))
     }
 
     dispatch(getCategoryList())
@@ -129,9 +142,9 @@ const FormExerciseVocabulary = (props: Props) => {
   }, [])
 
   return (
-    <div className="container">
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      <div className="pb-6 mx-6">
+    <div>
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} >
 
           {id ? <Form.Item label="_id" name="_id" hidden={true}>
@@ -146,14 +159,14 @@ const FormExerciseVocabulary = (props: Props) => {
           >
             {id
               ? <Select defaultValue={'selectAuto'}>
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>
                 ))}
               </Select>
               : <Select
-                defaultValue={typeQuiz?.map((item: any, index) => {
+                defaultValue={typeQuiz?.map((item: TypeQuiz, index) => {
                   if (item.type === quiz?.type) {
                     return <Option key={index + 1} value={item.type}>
                       {item.name}
@@ -162,7 +175,7 @@ const FormExerciseVocabulary = (props: Props) => {
                 })}
               >
 
-                {typeQuiz?.map((item: any, index) => (
+                {typeQuiz?.map((item: TypeQuiz, index) => (
                   <Option key={index + 1} value={item.type}>
                     {item.name}
                   </Option>

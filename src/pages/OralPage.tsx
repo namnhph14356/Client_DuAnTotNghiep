@@ -6,7 +6,6 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import NavOral from '../components/NavOral'
 import HeaderOral from '../HeaderOral'
 import { useParams } from 'react-router-dom'
-import { listSentencesByIdActivity, listSentencesByIdDay } from '../api/sentence'
 import { SentenceType } from '../types/sentence'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
@@ -16,10 +15,8 @@ import { changeSpeechValue, resetSpeechValue } from '../features/Slide/googleSpe
 import { XOutline, CheckOutline } from "heroicons-react"
 import { detailDay } from '../api/day'
 import { DayType } from '../types/day'
+import { listSentencesByIdDay } from '../api/sentences'
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 const OralPage = () => {
 
     const transcript = useAppSelector(item => item.googleSpeech.transcript)

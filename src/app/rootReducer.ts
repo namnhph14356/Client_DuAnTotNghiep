@@ -25,6 +25,9 @@ import DaySlice from "../features/Slide/day/DaySlice";
 import PracticeActivitySlice from "../features/Slide/practiceActivity/PracticeActivitySlice";
 import LearningProgressSlice from '../features/Slide/learningProgress/LearningProgress'
 import GoogleSpeechSlice from "../features/Slide/googleSpeech/GoogleSpeechSlice";
+import vocabulary from "../features/Slide/vocabulary/vocabulary";
+import sentencesSlice from "../features/Slide/sentences/sentencesSlice";
+import grammarSlice from "../features/Slide/grammar/grammarSlice";
 
 const rootReducer = combineReducers({
     count: CountSlide,
@@ -50,7 +53,10 @@ const rootReducer = combineReducers({
     day: DaySlice,
     practiceActivity: PracticeActivitySlice,
     learningProgress: LearningProgressSlice,
-    googleSpeech: GoogleSpeechSlice
+    googleSpeech: GoogleSpeechSlice,
+    vocabulary: vocabulary,
+    sentences: sentencesSlice,
+    grammar: grammarSlice
 });
 
 export default rootReducer;

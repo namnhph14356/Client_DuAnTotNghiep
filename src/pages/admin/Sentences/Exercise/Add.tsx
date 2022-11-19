@@ -20,10 +20,33 @@ import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
 import { async } from '@firebase/util';
 import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
-import { addQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
-import { addAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { addQuizSlide, editQuizSlide, getListQuizSlide } from '../../../../features/Slide/quiz/QuizSlide';
+import { addAnswerQuizSlide, removeAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { detailQuiz } from '../../../../api/quiz';
+import { getAnswerByIdQuiz } from '../../../../api/answerQuiz';
+import axios from 'axios';
+import { editPracticeActivitylice } from '../../../../features/Slide/practiceActivity/PracticeActivitySlice';
+import { PracticeActivityType } from '../../../../types/practiceActivity';
+import { AnswerQuizType } from '../../../../types/answerQuiz';
 
 type Props = {}
+
+interface TypeQuiz {
+  id?: number,
+  name: string,
+  type: string
+}
+
+interface TypeArrQuestion {
+  id: number,
+  text: string
+}
+
+interface TypeArrAnswer {
+  id: number,
+  text: string,
+  checkAnswer: boolean
+}
 
 const areas = [
   { label: 'Hai nhân vật', value: 'twoPeople' },
@@ -36,10 +59,10 @@ const sights = {
   threePeople: ['Kevin', 'Stuart', 'Bob'],
   manyPeople: ['Cap', 'Tony', 'Kevin', 'Stuart', 'Bob', 'Natasha', 'Bruce', 'Peter'],
 };
+
 const typeQuiz = [
-  { id: 1, name: "Nghe rồi chọn Đáp Án" },
-  { id: 2, name: "Chọn Đáp Án" },
-  { id: 3, name: "Nghe rồi Viết Đáp Án" }
+  { id: 1, name: "Chọn đáp án", type: "selectAuto" },
+  { id: 2, name: "Nghe rồi Viết Đáp Án", type: "listenWrite" },
 ]
 
 type SightsKeys = keyof typeof sights;
@@ -48,78 +71,139 @@ const AddSentencesExercise = (props: Props) => {
   const { Option } = Select;
   const [form] = Form.useForm();
   const breadcrumb = useAppSelector(data => data.listenWrite.breadcrumb)
-  const categories = useAppSelector(data => data.category.value)
-  const listWrite = useAppSelector(data => data.listenWrite.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
+  const quizs: any = useAppSelector(item => item.quiz.value)
 
   const [valueQuestion, setValueQuestion] = useState("")
-  const [arrAnswer, setArrAnswer] = useState<any>([])
-  const [arrQuestion, setArrQuestion] = useState<any>([])
+  const [arrAnswer, setArrAnswer] = useState<TypeArrAnswer[]>([])
+  const [arrQuestion, setArrQuestion] = useState<TypeArrQuestion[]>([])
 
-  const [categoryExist, setCategoryExist] = useState<string[]>([])
-  const [listenWrite, setListenWrite] = useState<ListenWriteType>()
-  const [turnOnListenWrite, setTurnOnListenWrite] = useState(false)
-  const [turnOnQuiz, setTurnOnQuiz] = useState(false)
-  const [audio, setAudio] = useState<string>("");
   const [quiz, setQuiz] = useState<QuizType>()
-  const [fileList, setfileList] = useState<any>();
-  const { data, error, mutate, add, edit, remove } = useQuiz()
+  const [answerListenWrite, setAnswerListenWrite] = useState<any>()
 
+  const [fileList, setfileList] = useState<any>();
+  const [selected, setSelected] = useState<any>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const { id } = useParams();
+  const { id, dayId } = useParams();
 
+  let prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === "sentences" && item.day === dayId)
+  let lengthQuiz = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "vocabulary")
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
   };
 
 
-  const onFinish = async () => {
-    console.log("vào onSubmit");
-    const question = arrQuestion.map((item) => item.text).join(" ")
-    console.log("questionQuiz", question, valueQuestion, "listenWrite");
+  const onFinish = async (value) => {
 
-    const { payload } = await dispatch(addQuizSlide({
-      question: question,
-      questionAfter: valueQuestion,
-      type: "listenWrite",
-      practiceActivity: "6346d44a034348adfcfce592"
-    }))
-    if (payload) {
-      arrAnswer.map(async (item) => {
-        if (item.checkAnswer === true) {
-          const { payload: answer } = await dispatch(addAnswerQuizSlide({
-            quiz: payload._id,
-            answer: item.text
-          }))
-          if (answer) {
-              message.success("Thêm thành công !")            
-          }
+    if (fileList && lengthQuiz.length < 10) {
+      const CLOUDINARY_PRESET = "ypn4yccr";
+      const CLOUDINARY_API_URL = "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
+      const formData = new FormData();
+      formData.append("file", fileList);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
+
+      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
+        headers: {
+          "Content-Type": "application/form-data"
         }
-      })
-
+      });
+      value.image = data.url;
+      setfileList(null);
     }
-    console.log("payload question quiz", payload);
 
+    if (id) {
+      switch (selected) {
+        case "selectAuto":
+          dispatch(editQuizSlide(value));
+          message.success({ content: 'Sửa Thành Công!' });
+          navigate(`/manageDay/${dayId}/sentences/listExercise`)
+          break;
+        case "listenWrite":
+          const question = arrQuestion.map((item) => item.text).join(" ")
+          const { payload } = await dispatch(editQuizSlide({
+            _id: id,
+            question: question,
+            questionAfter: valueQuestion,
+            type: "listenWrite",
+            practiceActivity: prative._id
+          }))
 
-    console.log(arrAnswer);
-    console.log(arrQuestion);
+          const test2 = await Promise.all(answerListenWrite.map(async (item: AnswerQuizType) => {
+            await dispatch(removeAnswerQuizSlide(item._id))
+          }))
 
-
-    setTurnOnListenWrite(true)
-    setTurnOnQuiz(true)
+          if (payload) {
+            arrAnswer.map(async (item) => {
+              if (item.checkAnswer === true) {
+                await dispatch(addAnswerQuizSlide({
+                  quiz: payload._id,
+                  answer: item.text
+                }))
+              }
+            })
+          }
+          message.success("Sửa thành công !")
+          navigate(`/manageDay/${dayId}/sentences/listExercise`)
+          break;
+        default:
+          break;
+      }
+    } else {
+      if (lengthQuiz.length === 10) {
+        message.warning("Đã đạt giới hạn câu hỏi !")
+        return navigate(`/manageDay/${dayId}/sentences/listExercise`)
+      }
+      switch (selected) {
+        case "selectAuto":
+          if (!value.image) {
+            return message.error('Không để trống Ảnh!');
+          }
+          dispatch(addQuizSlide(value));
+          message.success('Thêm Thành Công!');
+          navigate(`/manageDay/${dayId}/sentences/listExercise`)
+          break;
+        case "listenWrite":
+          const question = arrQuestion.map((item) => item.text).join(" ")
+          const { payload } = await dispatch(addQuizSlide({
+            question: question,
+            questionAfter: valueQuestion,
+            type: "listenWrite",
+            practiceActivity: prative._id,
+            status: true
+          }))
+          await dispatch(getListQuizSlide())
+          if (payload) {
+            arrAnswer.map(async (item) => {
+              if (item.checkAnswer === true) {
+                await dispatch(addAnswerQuizSlide({
+                  quiz: payload._id,
+                  answer: item.text
+                }))
+              }
+            })
+          }
+          message.success("Thêm thành công !")
+          navigate(`/manageDay/${dayId}/sentences/listExercise`)
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
     id ? message.error('Sửa Không Thành Công!') : message.error('Thêm Không Thành Công!');
   };
+
   const onChange = async (value) => {
     setValueQuestion(value.target.value)
 
     // arr question
     let arrQues = value.target.value.split(' ')
-    const arrQ: any = [];
+    const arrQ: TypeArrQuestion[] = [];
     let koin = "";
-    arrQues.map((element: any, index: number) => {
+    arrQues.map((element: string, index: number) => {
       if (element !== '') {
         arrQ.push({ id: index + 1, text: element })
         koin += element
@@ -130,8 +214,33 @@ const AddSentencesExercise = (props: Props) => {
 
     // arr answer
     let arrAns = value.target.value.replaceAll("?", '').replaceAll(',', '').replaceAll('.', '').split(' ')
-    const arr: any = [];
-    arrAns.map((element: any, index: number) => {
+    const arr: TypeArrAnswer[] = [];
+    arrAns.map((element: string, index: number) => {
+      if (element !== '') {
+        arr.push({ id: index + 1, text: element, checkAnswer: false })
+      }
+    });
+    setArrAnswer(arr)
+  }
+
+  const setQuestionById = async (value) => {
+    setValueQuestion(value)
+    // arr question
+    let arrQues = value.split(' ')
+    const arrQ: TypeArrQuestion[] = [];
+    let koin = "";
+    arrQues.map((element: string, index: number) => {
+      if (element !== '') {
+        arrQ.push({ id: index + 1, text: element })
+        koin += element
+      }
+    });
+    setArrQuestion(arrQ)
+
+    // arr answer
+    let arrAns = value.replaceAll("?", '').replaceAll(',', '').replaceAll('.', '').split(' ')
+    const arr: TypeArrAnswer[] = [];
+    arrAns.map((element: string, index: number) => {
       if (element !== '') {
         arr.push({ id: index + 1, text: element, checkAnswer: false })
       }
@@ -140,7 +249,8 @@ const AddSentencesExercise = (props: Props) => {
   }
 
   const changeAnswer = (value: any, id: number, checkAnswer: boolean) => {
-    arrAnswer.map((e: any) => {
+
+    arrAnswer.map((e: TypeArrAnswer) => {
       if (e.text === value.target.innerHTML && e.id === id) {
         if (checkAnswer === true) {
           value.target.style.background = "#16A34A"
@@ -161,290 +271,94 @@ const AddSentencesExercise = (props: Props) => {
     form.resetFields();
   };
 
-  // useEffect(() => {
-  //   if (id) {
-  //     const getListenAndWrite = async () => {
-  //       const { data } = await detailListenWrite(id)
-  //       setListenWrite(data);
-  //       setAudio(data.audio)
-  //       let arr: {
-  //         _id: string,
-  //         name: string,
-  //         text: string,
-  //         answer?: string
-  //       }[] = [];
-  //       if (data) {
-  //         const { data: question } = await getListQuestionListenWriteById(String(data._id))
-  //         for (let i = 0; i < question.length; i++) {
-  //           const { data: answer } = await listAnswerListenWriteById(question[i]._id)
-  //           arr.push({ ...question[i], answer: answer ? answer.answer : null })
-  //         }
-  //       }
-  //       const category: CategoryType[] = categories.filter(((item: CategoryType) => item._id == data.category ? item.title : ""))
-  //       form.setFieldsValue({
-  //         _id: id,
-  //         area: data.area,
-  //         // category: category[0].title,
-  //         category: data.category,
-  //         audio: data.imgLink,
-  //         content: arr
-  //       });
-  //       dispatch(changeBreadcrumb("SỬA BÀI TẬP LUYỆN HỘI THOẠI"))
-  //     }
-  //     getListenAndWrite()
-  //   } else {
-  //     dispatch(changeBreadcrumb("THÊM BÀI TẬP LUYỆN HỘI THOẠI"))
-  //   }
-  //   dispatch(getCategoryList())
-  //   dispatch(getListListenWrite())
-  //   listCate();
+  React.useEffect(() => {
+    form.setFieldsValue({
+      practiceActivity: prative?._id
+    })
+  }, [])
 
-  // }, [id])
+  useEffect(() => {
+    if (id) {
+      const getQuiz = async () => {
+        const { data } = await detailQuiz(id)
+        setQuiz(data)
+        setSelected(data.quiz.type)
+        form.setFieldsValue(data.quiz);
 
-  const onChangeImage = (e: any) => {
-    const imgPreview = document.getElementById("img-preview") as any;
-    console.log(e.target.files[0]);
-    imgPreview.src = URL.createObjectURL(e.target.files[0])
+        if (data.quiz.type === "listenWrite") {
+          setQuestionById(data.quiz.questionAfter)
+          const { data: answer } = await getAnswerByIdQuiz(id)
+          setAnswerListenWrite(answer)
+        }
+
+        dispatch(changeBreadcrumb("Sửa câu hỏi"))
+      }
+      getQuiz()
+      dispatch(changeBreadcrumb("Sửa bài tập"))
+    } else {
+      dispatch(changeBreadcrumb("Thêm bài tập"))
+    }
+    dispatch(getCategoryList())
+    dispatch(getListListenWrite())
+  }, [id])
+
+  const onChangeImage = async (e) => {
+    if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
+      setfileList(e.target.files[0])
+      const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+      imgPreview.src = await URL.createObjectURL(e.target.files[0])
+    } else {
+      message.error('File không hợp lệ!');
+    }
   }
 
-  const onChangeAudio = (e: any) => {
-    const audioPreview = document.getElementById("audio-preview") as any;
-    audioPreview.src = URL.createObjectURL(e.target.files[0])
-  }
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} />
-      {/* <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-        <div className='shadow-md mb-8'>
-          <div className='flex justify-between font-medium text-lg border-b hover:text-indigo-600 cursor-pointer' onClick={() => setTurnOnListenWrite(!turnOnListenWrite)}>
-            <div>Nghe và trả lời câu hỏi.</div>
-            <div className='px-4 rounded-t bg-gray-400'>
-              {
-                turnOnListenWrite ?
-                  <i className="fa-sharp fa-solid fa-caret-up"></i>
-                  :
-                  <i className="fa-sharp fa-solid fa-caret-down"></i>
-              }
-            </div>
-          </div>
-          {
-            turnOnListenWrite ?
-              <div className='border px-8 py-4'>
-                <div>
-                  {id ? <Form.Item label="quiz._id" name="quiz._id" hidden={true}>
-                    <Input />
-                  </Form.Item> : ""}
+      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <div className="pb-6">
+        <Form layout="vertical" form={form} onFinishFailed={onFinishFailed} onFinish={selected === "selectAuto" ? onFinish : () => { }} onChange={onChange}>
+          {id ? <Form.Item label="_id" name="_id" hidden={true}>
+            <Input />
+          </Form.Item> : ""}
 
-                  <div className='mb-4'>
-                    <Form.Item
-                      label="Câu Hỏi"
-                      name="quiz.question"
-                      tooltip="Câu Hỏi dành cho Category"
-                      rules={[{ required: true, message: 'Không để Trống!' }]}
-                      className="py-4"
-                    >
-                      <Input />
-                    </Form.Item>
-                  </div>
+          <Form.Item
+            label="Thể Loại"
+            name="type"
+            tooltip="Thể Loại Quiz"
+            rules={[{ required: true, message: 'Không để Trống!' }]}
+          >
+            {id
+              ? <Select disabled={true}>
+                {typeQuiz?.map((item: TypeQuiz, index) => (
+                  <Option key={index + 1} value={item.type} >
+                    {item.name}
+                  </Option>
+                ))}
+              </Select>
+              : <Select onChange={(e) => setSelected(e)}
+                defaultValue={typeQuiz?.map((item: TypeQuiz, index) => {
+                  if (item.type === quiz?.type) {
+                    return <Option key={index + 1} value={item.type}>
+                      {item.name}
+                    </Option>
+                  }
+                })}
+              >
 
-                  <div className='mb-4'>
-                    <Form.Item
-                      label="Upload ảnh"
-                      tooltip="Ảnh dành cho Quiz"
-
-                      rules={[{ required: true, message: 'Không để Trống!' }]}
-
-                    >
-                      <Input type="file" accept='.png,.jpg' className="form-control" id="upload_image" onChange={(e) => onChangeImage(e)} />
-                    </Form.Item>
-                  </div>
-
-                  <div className='mb-4'>
-                    <Form.Item name="quiz.image" valuePropName="src" label="ImagePreview" >
-                      <img id="img-preview" style={{ width: "100px" }} />
-                    </Form.Item>
-                  </div>
-
-                  <div className='mb-4'>
-                    <Form.Item
-                      label="Thể Loại"
-                      name="quiz.type"
-                      tooltip="Thể Loại Quiz"
-                      rules={[{ required: true, message: 'Không để Trống!' }]}
-                    >
-                      {id
-                        ? <Select >
-                          {typeQuiz?.map((item: any, index) => (
-                            <Option key={index + 1} value={item.id}>
-                              {item.name}
-                            </Option>
-                          ))}
-                        </Select>
-                        : <Select
-                          defaultValue={typeQuiz?.map((item: any, index) => {
-                            if (item.id === quiz?.type) {
-                              return <Option key={index + 1} value={item.id}>
-                                {item.name}
-                              </Option>
-                            }
-                          })}
-                        >
-
-                          {typeQuiz?.map((item: any, index) => (
-                            <Option key={index + 1} value={item.id}>
-                              {item.name}
-                            </Option>
-                          ))}
-                        </Select>}
-
-
-                    </Form.Item>
-                  </div>
-                </div>
-              </div>
-              : ""
-          }
-        </div>
-
-        <div className='shadow-md'>
-          <div className='flex justify-between font-medium text-lg border-b hover:text-indigo-600 cursor-pointer' onClick={() => setTurnOnQuiz(!turnOnQuiz)}>
-            <div>Nghe và điền từ vào ô trống.</div>
-            <div className='px-4 rounded-t bg-gray-400'>
-              {
-                turnOnQuiz ?
-                  <i className="fa-sharp fa-solid fa-caret-up"></i>
-                  :
-                  <i className="fa-sharp fa-solid fa-caret-down"></i>
-              }
-            </div>
-          </div>
-          {
-            turnOnQuiz ?
-              <div className='border px-8 py-4'>
-                <div>
-                  {id ? <Form.Item label="listenWrite._id" name="listenWrite._id" hidden={true}>
-                    <Input />
-                  </Form.Item> : ""}
-                  <div className='mb-4'>
-                    <Form.Item name="area" label="Chọn vai" rules={[{ required: true, message: 'Missing area' }]}>
-                      <Select options={areas} onChange={handleChange} />
-                    </Form.Item>
-                  </div>
-                  <div className='mb-4'>
-                    <Form.List name="content" >
-                      {(fields, { add, remove }) => (
-                        <>
-                          {fields.map((field, index) => (
-                            <Space key={index + 1} align="baseline" >
-                              <Form.Item
-                                noStyle
-                                shouldUpdate={(prevValues, curValues) =>
-                                  prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
-                                }
-                              >
-                                {() => (
-                                  <Form.Item
-                                    {...field}
-                                    label="Tên"
-                                    name={[field.name, 'name']}
-                                    rules={[{ required: true, message: 'Chưa chọn tên nhân vật' }]}
-                                  >
-                                    <Select disabled={!form.getFieldValue('area')} style={{ width: 130 }}>
-                                      {(sights[form.getFieldValue('area') as SightsKeys] || []).map(item => (
-                                        <Option key={item} value={item}>
-                                          {item}
-                                        </Option>
-                                      ))}
-                                    </Select>
-                                  </Form.Item>
-                                )}
-                              </Form.Item>
-
-                              <Form.Item
-                                {...field}
-                                label="Câu thoại"
-                                name={[field.name, 'text']}
-                                rules={[{ required: true, message: 'Không được để trống' }]}
-                                style={{ minWidth: "500px" }}
-
-                              >
-                                <Input />
-                              </Form.Item>
-
-                              <Form.Item
-                                {...field}
-                                label="Đáp án"
-                                name={[field.name, 'answer']}
-
-                              >
-                                <Input />
-                              </Form.Item>
-                              <MinusCircleOutlined onClick={() => remove(field.name)} />
-                            </Space>
-                          ))}
-
-                          <Form.Item>
-                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                              Thêm câu thoại
-                            </Button>
-                          </Form.Item>
-                        </>
-                      )}
-                    </Form.List>
-                  </div>
-                  <div className='mb-4'>
-                    <Form.Item
-                      label="Audio"
-                      tooltip="Audio"
-                      rules={[{ required: true, message: 'Không để Trống!' }]}
-                    >
-                      <Input type={'file'} id={'upload_audio'} name="listenWrite.audio" onChange={(e) => onChangeAudio(e)} />
-
-
-                    </Form.Item>
-                    <Form.Item name="listenWrite.audio" valuePropName="src" label="AudioPreview" >
-                      <ReactAudioPlayer
-                        id='audio-preview'
-                        src={audio ? audio : ""}
-                        controls
-                        className='mt-2'
-                      />
-                    </Form.Item>
-
-                  </div>
-
-                </div>
-                <div>
-                  <h3>* Ghi chú:</h3>
-                  <ul style={{ listStyle: "inside", marginLeft: "20px", color: "#0a76cf" }}>
-                    <li>Câu thoại: Dùng "___" (Ba dấu gạch chân) để tạo khoảng chống để điền đáp án</li>
-                    <li>Abccc</li>
-                  </ul>
-                </div>
-              </div>
-              : ""
-          }
-
-        </div>
-
-        <div className='mt-4'>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Thêm
-            </Button>
+                {typeQuiz?.map((item: TypeQuiz, index) => (
+                  <Option key={index + 1} value={item.type}>
+                    {item.name}
+                  </Option>
+                ))}
+              </Select>}
           </Form.Item>
-        </div>
-      </Form> */}
 
-      <Form layout="vertical" form={form} onChange={onChange} onFinishFailed={onFinishFailed}>
-        <div className=' mb-8'>
-          <div className='text-xl font-semibold'>Thêm câu hỏi:</div>
-          <div className='border px-8 py-4'>
-            <div>
+          {
+            selected === 'listenWrite' ?
               <div className='mb-4'>
                 <Form.Item
-                  label="Nhập câu Hỏi"
+                  label="Câu Hỏi"
                   name="question"
                   tooltip="Câu Hỏi dành cho Category"
                   rules={[{ required: true, message: 'Không để Trống!' }]}
@@ -457,7 +371,7 @@ const AddSentencesExercise = (props: Props) => {
                   <div className='font-bold py-1 col-span-2'>Câu hỏi: </div>
                   <div className='flex col-span-10 space-x-1'>
                     {arrQuestion &&
-                      arrQuestion.map((item: any) => (
+                      arrQuestion.map((item: TypeArrQuestion) => (
                         <div key={item.id}>
                           {item.text}
                         </div>
@@ -468,7 +382,7 @@ const AddSentencesExercise = (props: Props) => {
                 <div className='grid grid-cols-12 gap-4'>
                   <div className='font-bold py-1 col-span-2'>Chọn đáp án: </div>
                   <ul className='flex space-x-8 col-span-10'>
-                    {arrAnswer?.map((item: any, index: number) => {
+                    {arrAnswer?.map((item: TypeArrAnswer, index: number) => {
                       return (
                         <button key={item.id} onClick={(e) => changeAnswer(e, item.id, !item.checkAnswer)}><li className='border px-3 py-1 my-auto rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item.text}</li></button>
                       );
@@ -478,18 +392,50 @@ const AddSentencesExercise = (props: Props) => {
                 </div>
 
               </div>
-            </div>
-          </div>
-        </div>
+              :
+              <div>
+                <Form.Item
+                  label="Câu Hỏi"
+                  name="question"
+                  tooltip="Câu Hỏi"
+                  rules={[{ required: true, message: 'Không để Trống!' }]}
+                >
+                  {id ?
+                    <Input /> :
+                    <Input disabled={!selected} />
+                  }
+                </Form.Item>
+                <Form.Item
+                  label="Upload ảnh"
+                  tooltip="Hình ảnh"
+                >
+                  {id ?
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} /> :
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} disabled={!selected} />
+                  }
+                </Form.Item>
 
-        <div className='mt-4'>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" onClick={onFinish}>
-              Thêm
+                <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                  <img id="img-preview" style={{ width: "100px" }} />
+                </Form.Item>
+              </div>
+          }
+
+          <Form.Item label="practiceActivity" name="practiceActivity" hidden={true}>
+            <Input value={prative?._id} />
+          </Form.Item>
+
+          <Form.Item className='float-right'>
+            <Button className='inline-block mr-2' type="primary" htmlType="submit" onClick={selected === "listenWrite" ? onFinish : () => { }} >
+              {id ? "Sửa" : "Thêm"}
+            </Button>
+            <Button className='inline-block ' type="primary" danger onClick={() => { onReset() }}>
+              Reset
             </Button>
           </Form.Item>
-        </div>
-      </Form>
+
+        </Form>
+      </div>
     </div>
   )
 }
