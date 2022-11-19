@@ -17,6 +17,7 @@ const navigation = [
 
 const HeaderComponent = () => {
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogout = () => {
@@ -48,7 +49,7 @@ const HeaderComponent = () => {
               </div>
             </div>
             {
-              auth ?
+              auth && auth?.username ?
                 <div className='text-white flex space-x-2 '>
                   <Link to="/user" className='text-white my-auto'>
                     <Avatar image={String(auth.img)} className="text-sm w-10 h-10 text-white" />
