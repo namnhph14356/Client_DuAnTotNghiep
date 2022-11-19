@@ -118,6 +118,7 @@ import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerci
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
+import AboutUs from "./pages/AboutUs";
 
 
 function App() {
@@ -237,6 +238,7 @@ function App() {
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
           <Route path="directory" element={<SearchDirectory />}></Route>
+          <Route path="aboutUs" element={<AboutUs />}></Route>
         </Route>
 
         <Route path="manageteacher" element={<TeacherLayout />}>
