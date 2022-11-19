@@ -146,7 +146,6 @@ const Message :React.FC = (props)  => {
             <Popover
               placement="topLeft"
               content={content2}
-              open={clicked1}
               trigger="click"
             >
               <div className="option-message">
@@ -172,7 +171,6 @@ const Message :React.FC = (props)  => {
   return (
     <div className="positon-messgae">
       <Popover
-        open={clicked}
         placement="topRight"
         content={content}
         trigger="click"

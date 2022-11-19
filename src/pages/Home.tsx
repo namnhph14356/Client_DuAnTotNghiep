@@ -31,7 +31,7 @@ const Home = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate pt-8 mb-8">
-              <h2 className="text-xl text-white">Ngữ Pháp Và Cách Sử Dụng</h2>
+              <h2 className="text-xl text-white">Nhiều lợi ích hơn</h2>
               <p className="lead text-white">
                 Trong khi bạn đang nghĩ mình nên học tiếng Anh ở đâu hay mình
                 nên đăng ký khóa học nào thì bạn cũng muốn...{" "}
@@ -42,73 +42,68 @@ const Home = () => {
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-heart2" />{" "}
-                <span className="text-white">
-                  Phân biệt cách dùng các giới từ chỉ thời gian: “In”, “On”,
-                  “At”
+                <span className="text-white text-lg">
+                Tạo sự chủ động
                 </span>
               </h3>
               <p>
-                Giới từ được sử dụng khá nhiều trong tiếng Anh. Nó được dùng để
-                liên kết các danh từ, đại từ hoặc cụm danh...
+              Học trực tuyến đồng nghĩa với việc phải tự học, tự khai thác thông tin kiến thức. Với những trẻ yêu thích tiếng Anh, sự say mê tìm tòi sẽ kích thích bé sáng tạo và chủ động tiếp nhận các kiến thức.
               </p>
             </div>
             <div className=" probootstrap-animate ">
               <h3 className="heading-with-icon">
                 <i className="icon-rocket" />{" "}
-                <span className="text-white">Danh từ trong tiếng Anh</span>
+                <span className="text-white text-lg">Bài tập, đề kiểm tra, tài liệu chọn lọc</span>
               </h3>
               <p>
-                Danh từ là từ loại trong tiếng Anh chỉ tên người, đồ vật, sự
-                việc hay địa điểm, nơi chốn. Danh từ trong tiếng Anh là Nouns,
-                viết tắt (n).{" "}
+              Các bài tập của khóa tiếng Anh 360 trực tuyến luôn được chọn lọc kỹ trước khi ra mắt đảm bảo theo trình độ
+               và nhu cầu mong muốn của người học. Bên cạnh đó là hệ thống ngân hàng bài kiểm
+                tra, bài thi đa dạng, cho phép các em trau dồi kiến thức liên tục.
               </p>
             </div>
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-image" />{" "}
-                <span className="text-white">Động từ trong tiếng Anh</span>
+                <span className="text-white text-lg">Chi phí phù hợp</span>
               </h3>
               <p>
-                Động từ là từ loại trong tiếng Anh diễn tả hành động, một tình
-                trạng hay một cảm xúc. Động từ trong tiếng Anh giúp xác định chủ
-                từ đang làm hay chịu đựng điều gì.
+                Chỉ với 360.000 đ bạn đã có thể đăng ký được khóa học Online của 360 VianEnglish
+                gồm rất nhiều bài học đa dạng cho bạn thỏa sức lựa chọn mà không sợ chán. Đặc biệt là các
+                bài thi sau mỗi tuần giúp bạn có thể kiểm tra lại kiến thức.
               </p>
             </div>
+
+
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-briefcase" />
-                <span className="text-white">Tính từ trong tiếng Anh</span>
+                <span className="text-white text-lg">Có thể theo dõi quá trình học</span>
               </h3>
               <p>
-                Tính từ là từ loại trong tiếng Anh chỉ tính chất của sự vật, sự
-                việc, hiện tượng. Tính từ trong tiếng Anh là Adjective, viết tắt
-                là (adj).
+              Với khóa học 360 của chúng tôi, phụ huynh, học sinh có thể đăng nhập vào tài khoản để theo dõi quá trình học tập
+               của con thông qua việc giao bài tập, tự động chấm điểm và đọc báo 
+               cáo kết quả bài làm mà có sự điều chỉnh, động viên, tác động phù hợp.
               </p>
             </div>
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-chat" />{" "}
-                <span className="text-white">Trạng Từ Trong Tiếng Anh</span>
+                <span className="text-white text-lg">Kiểm tra hàng tuần</span>
               </h3>
               <p>
-                Trạng từ (hay còn được gọi là phó từ) là từ dùng để bổ nghĩa cho
-                động từ, tính từ, một trạng từ khác hay cho cả câu.Trạng từ
-                thường đứng trước từ hay mệnh đề mà nó cần bổ nghĩa. Nhưng cũng
-                tùy trường hợp câu nói mà người ta có thể đặt nó đứng đầu hoặc
-                cuối câu.
+                Mỗi tuần bạn sẽ có một bài kiểm tra để ôn lại hết những kiến thức đã học trong một tuần, với đa dạng các câu hỏi, kiến thức trong tuần đó
               </p>
             </div>
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-colours" />{" "}
-                <span className="text-white">Mạo Từ </span>
+                <span className="text-white text-lg">Học mãi không chán</span>
               </h3>
               <p>
-                “A” và “An” dùng chỉ những sự vật, hiện tượng cụ thể người nghe
-                không biết, “The” chỉ sự việc cả người nói và người nghe đều
-                biết.
+                Với vô vàn bài tập, bài học cùng những các dạng bài khác nhau, hiệu ứng đa dạng giúp học sinh có được sự thích thú, lôi cuốn.
               </p>
-            </div>{" "}
+            </div>
+            
             <div className="clearfix visible-sm-block" />
           </div>
         </div>

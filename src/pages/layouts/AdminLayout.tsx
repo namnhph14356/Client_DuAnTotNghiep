@@ -90,8 +90,8 @@ const AdminLayout = () => {
 
 
   return (
-    <Layout className='h-full' style={{ width: "100%" }}>
-      <Sider className='sider__bar__admin' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} style={{ background: "#001529", height: "unset" }}>
+    <Layout style={{ width: "100%" }}>
+      <Sider  collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
         <div className="logo  bg-[#001529]">
           <NavLink aria-current="page" className="active text-[#fff] " to="/">
             <img
@@ -101,12 +101,13 @@ const AdminLayout = () => {
             />
           </NavLink>
         </div>
-        <Menu className='menu__bar__admin'
+        <Menu 
+         className="bg-[#001529]"
           theme="dark"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
-          style={{ background: "#001529", height: "unset" }}
+          style={{ background: "#001529", height: "100%", width: "100%" }}
         >
           <SubMenu key="sub11" icon={<FolderFilled />} title="Quản lí ngày học">
             <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>

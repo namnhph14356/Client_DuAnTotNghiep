@@ -65,12 +65,15 @@ const DetailLearning = () => {
   useEffect(() => {
     dispatch(getListPracticeActivitySliceByDay(dayId))
   }, [dayId])
-  
+
   return (
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
         <div className="video__learning">
           <img src="https://i.pinimg.com/564x/46/1e/a8/461ea8504beb717ac0364e55c712d16e.jpg" alt="" />
+          <div>
+            Video hướng dẫn lớp học tiếng Anh giao tiếp 360
+          </div>
         </div>
         <div className="deatil__main__learning">
           <h3 className="title__detail__main">
@@ -83,12 +86,12 @@ const DetailLearning = () => {
                   <div className="item__list__learning">
                     <div className="info__item__list">
                       {practiceArr.map((item2: PracticeActivityArr, index: number) => {
-                          if (item2.id === item.order) {
-                            return <div key={index + 1} className="">
-                              {item2.icon}
-                            </div>
-                          }
-                        })}
+                        if (item2.id === item.order) {
+                          return <div key={index + 1} className="">
+                            {item2.icon}
+                          </div>
+                        }
+                      })}
                       <div>
                         <h4 className="title__info__item">
                           {item.title}

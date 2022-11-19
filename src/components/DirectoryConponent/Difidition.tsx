@@ -32,7 +32,7 @@ const Difidition = ({word, meaning}) => {
       {/* audio---------------------------- */}
 
       {word === "" ? (
-        <span className="subTitle text-lg font-bold">Start by typing a word in search</span>
+        <span className="subTitle text-lg font-bold">Bắt đầu bằng cách nhập một từ trong tìm kiếm</span>
       ) : (
         meaning.map((mean) =>
           // <div></div>

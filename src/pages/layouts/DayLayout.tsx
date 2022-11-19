@@ -247,12 +247,12 @@ const DayLayout = () => {
             </SubMenu>
           </SubMenu>
           <div className="text-center">
-            <button
+            {/* <button
               className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600"
               onClick={() => handlonClick()}
             >
               Đổi ngày
-            </button>
+            </button> */}
 
           </div>
 
