@@ -1,6 +1,6 @@
 export type MonthType = {
     _id?: string,
-    course: string,
+    course?: string,
     title: string,
     order: number,
     createdAt?: string,

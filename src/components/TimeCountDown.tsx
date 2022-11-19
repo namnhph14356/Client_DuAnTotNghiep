@@ -1,77 +1,30 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Countdown from 'react-countdown';
 import { Progress, Button, Modal, Collapse } from 'antd';
 import moment from 'moment';
 
 type TimeCountdownProps = {
     time: number,
-
+    reset: any
 }
 
-const TimeCountdown = ({ time }: TimeCountdownProps) => {
-    const [timeLimit2, setTimeLimit2] = useState<number>(time)
-    const Completionist = () => <span>You are good to go!</span>;
-    let timeLimit = 100
-    let point = 1000
-    let timeCurrent = ""
-    const [state, setState] = useState<number>()
-
-
-    const renderer = ({ total, hours, minutes, seconds, milliseconds, completed }) => {
-        if (completed) {
-            // Render a completed state
-            return <Completionist />;
-        } else {
-
-            let tempTime = moment.duration(120000);
-            const total = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 100
-            const total2 = (1 / (tempTime.minutes() * 60) + tempTime.seconds()) * 1000
-            timeLimit = timeLimit - total
-            point = point - total2
-            if (timeLimit === 0) {
-                timeLimit = 100;
-            }
-
-            timeCurrent = `${minutes}:${seconds}`
-
-
-            return <div className="">
-                <Progress
-                    strokeColor={{
-                        from: '#108ee9',
-                        to: '#87d068',
-                    }}
-                    percent={timeLimit}
-                    status="active"
-                    className="!mt-[3px] !h-4 !text-white "
-                    showInfo={false}
-                />
-
-            </div>
-        }
+const TimeCountdown = ({ time, reset }: TimeCountdownProps) => {
+    //---TimeLimitCountdown---
+    //Đếm ngược thời gian làm 
+    const [state, setState] = useState<any>()
+    const renderer = ({ hours, minutes, seconds, completed }) => {
+        return <span>{seconds}</span>;
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         setState(Date.now() + time)
-    },[time])
+    }, [time, reset])
 
-    return (
-        <div>
-            <Countdown
-                date={state}
-                // ref={setRef}
-                key={state}
-                // ref={ref}
-                renderer={renderer}
-                autoStart={true}
-            />
-            {/* <Countdown
-                date={Date.now() + timeLimit2}
-
-                renderer={renderer}
-            /> */}
-        </div>
-    )
+    return <Countdown
+        // date={Date.now() + 7000}
+        date={state}
+        renderer={renderer}
+    />
 }
 
 export default React.memo(TimeCountdown)

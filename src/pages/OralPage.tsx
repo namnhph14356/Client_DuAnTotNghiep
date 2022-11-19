@@ -55,7 +55,7 @@ const OralPage = () => {
             setDataSentSentences(data)
             setDay(dataDay)
             setSentencesSplit(data[sentencesIndex].words.split(" "))
-
+           
         }
         getSentences()
     }, [dayId])
