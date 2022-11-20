@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
+import { SpeechContext } from '../../context/GoogleSpeechContext';
 
 type QuizType1Props = {
     data: any,
@@ -10,6 +11,17 @@ type QuizType1Props = {
 
 const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) => {
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
+    const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+    const onHandleSpeakSelect = ()=>{
+        if (data.answer.replace(',', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
+            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
+        }
+    }
+    useEffect(()=>{
+        onHandleSpeakSelect()
+    },[transcript,speechValue])
+
+
     return (
         <div className={`relative flex items-start py-4 
         ${data._id == select?.id
@@ -17,7 +29,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 : "border-[#CCCCCC]"} 
                 ${check === true
                 ? data._id == select?.id
-                    ? select?.isCorrect === 1
+                    ? select?.isCorrect === true
                         ? "bg-[#D6EAF8] border-[#5DADE2] "
                         : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
                     : ""
@@ -25,7 +37,6 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
         `}
             onClick={() => {
                 if (check !== true) {
-                    console.log("quiz 1")
                     onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect }, check)
                 }
             }}
@@ -36,7 +47,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 <input type="radio" checked={select?.id === data._id}
                     className={`${check === true
                         ? data._id == select?.id
-                            ? data?.isCorrect === 1
+                            ? data?.isCorrect === true
                                 ? "accent-[#5DADE2] "
                                 : "accent-[#C0392B]"
                             : ""

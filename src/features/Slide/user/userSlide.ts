@@ -7,29 +7,21 @@ export interface UserSlice {
   otp: string[],
   isAuthticated: boolean
 }
-
-// export const getUserList = createAsyncThunk(
-//   "user/getListUser",
-//   async () => {
-//     const { data } = await getListUser();
-//     return data
-//   }
-// )
 export const getUserList:any = createAsyncThunk(
-  "user/getUser",
+  "user/getListUser",
   async () => {
       const {data} = await getListUser();
       return data;
   }
 )
-export const getUsersById:any = createAsyncThunk(
-  "contact/getUserById",
-  async (id:any) => {
-      const {data} = await getUserById(id);
-      return data;
-  }
-)
+// export const getUsersById:any = createAsyncThunk(
+//   "contact/getUserById",
+//   async (id:any) => {
+//       const {data} = await getUserById(id);
+//       return data;
 
+//   }
+//   )
 export const addUserSlide = createAsyncThunk(
   "user/addUser",
   async (user: UserType) => {
@@ -37,7 +29,6 @@ export const addUserSlide = createAsyncThunk(
     return data
   }
 )
-
 export const editUserSlide:any = createAsyncThunk(
   "user/editUser",
   async (user: UserType) => {
@@ -51,6 +42,14 @@ export const removeUserSlide = createAsyncThunk(
   async (id: string) => {
     const { data } = await removeUser(id);
     return data
+  }
+)
+export const getUser:any = createAsyncThunk(
+  "user/getUserById",
+  async (id: string) => {
+    const { data } = await getUserById(id);
+    return data
+
   }
 )
 

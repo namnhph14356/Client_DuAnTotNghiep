@@ -21,11 +21,13 @@ import { changeBreadcrumb,getListUserQuizSlide } from '../../../../features/Slid
 interface DataType {
   key: React.Key;
   _id?: string,
-  answerQuiz: string,
+  answerQuiz?: string,
   history: string,
   quiz: string,
-  time: string,
-  score: number
+  time?: string,
+  score?: number,
+  point?: number;
+  answer?: string;
 }
 
 

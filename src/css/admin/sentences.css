@@ -1,0 +1,25 @@
+.icon-addField svg{
+  @apply mb-[5px]
+}
+.inputCombinations{
+  @apply mb-0
+}
+.inputCombinations div div div {
+  @apply flex space-x-2 mr-8 my-auto
+}
+.inputCombinations div div div span{
+  @apply pt-[13px];
+}
+.ant-space-item span svg{
+  @apply my-auto
+}
+
+.combinationsInput .ant-form-item-control div div div {
+  @apply mb-0
+}
+.inputCombinations {
+  @apply pb-[24px]
+}
+.addCombinations span svg{
+  @apply mb-2
+}

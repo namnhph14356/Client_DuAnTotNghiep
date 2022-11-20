@@ -1,29 +1,41 @@
-.grammar__page{
+.grammar__page {
 }
-.main__grammar__page{
-    @apply col-span-9
+.main__grammar__page {
+  @apply col-span-9;
 }
-.content__grammar{
-     @apply shadow px-8 py-4 
+.content__grammar {
+  @apply shadow px-8 py-4;
 }
-.title__content__grammar{
-    @apply text-center font-medium text-xl
+.title__content__grammar {
+  @apply text-center font-medium text-xl;
 }
-.example__structure__exercise__grammar span{
-    @apply text-red-600
+.example__structure__exercise__grammar span {
+  @apply text-red-600;
 }
-.explain__example{
-    @apply ml-3
+.explain__example {
+  @apply ml-3;
 }
-.next__page__grammar button{
-    @apply bg-[#337ab7] px-5 py-1 rounded text-white
+.next__page__grammar button {
+  @apply bg-[#337ab7] px-5 py-1 rounded text-white;
 }
-.attention__grammar{
-    @apply mb-5
-}
-.note__attention{
-    border: 2px solid #B2DEF0; 
+.attention__grammar {
+  @apply mb-5;
 }
 .note__attention {
-    @apply bg-[#F3FCFF] px-5 py-2
+  border: 2px solid #b2def0;
+}
+.note__attention {
+  @apply bg-[#F3FCFF] px-5 py-2;
+}
+
+.description_grammar {
+    display: block;
+    display: -webkit-box;
+    max-height: 78px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    visibility: visible;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    max-width: 500px;
 }

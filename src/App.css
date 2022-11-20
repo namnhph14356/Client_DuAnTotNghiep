@@ -140,3 +140,20 @@
 .footer .container .row .col ul li {
     @apply block py-2
 }
+
+
+/* Day admin */
+
+.ant-menu-submenu-title{
+   white-space: nowrap !important;
+   width: 115px !important;
+   overflow: hidden !important;
+}
+.ant-menu-submenu-title span{
+    text-overflow: ellipsis !important;
+}
+
+/* Admin */
+.ant-layout-sider{
+    height: auto;
+}

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import BannerPage from '../components/BannerPage';
@@ -23,43 +22,40 @@ const Home = () => {
         <div>
             <BannerPage />
             {/* START: section */}
-            <section className="probootstrap-section probootstrap-section-colored">
+            <section className="our-product">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate">
-                            <h2>More Benefits</h2>
-                            <p className="lead">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                        <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate pt-8 mb-8">
+                            <h2 className='text-xl text-white'>Ngữ Pháp Và Cách Sử Dụng</h2>
+                            <p className="lead text-white">Trong khi bạn đang nghĩ mình nên học tiếng Anh ở đâu hay mình nên đăng ký khóa học nào thì bạn cũng muốn... </p>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-heart2" /> <span>We bring emotion</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                    <div className=" grid grid-cols-3 gap-4 pt-8 pb-8">
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-heart2" /> <span className='text-white'>Phân biệt cách dùng các giới từ chỉ thời gian: “In”, “On”, “At”</span></h3>
+                            <p>Giới từ được sử dụng khá nhiều trong tiếng Anh. Nó được dùng để liên kết các danh từ, đại từ hoặc cụm danh...</p>
                         </div>
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-rocket" /> <span>We guide companies</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <div className=" probootstrap-animate ">
+                            <h3 className="heading-with-icon"><i className="icon-rocket" /> <span className='text-white'>Danh từ trong tiếng Anh</span></h3>
+                            <p>Danh từ là từ loại trong tiếng Anh chỉ tên người, đồ vật, sự việc hay địa điểm, nơi chốn. Danh từ trong tiếng Anh là Nouns, viết tắt (n). </p>
                         </div>
-                        <div className="clearfix visible-sm-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-image" /> <span>We design extraordinary</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-image" /> <span className='text-white'>Động từ trong tiếng Anh</span></h3>
+                            <p>Động từ là từ loại trong tiếng Anh diễn tả hành động, một tình trạng hay một cảm xúc. Động từ trong tiếng Anh giúp xác định chủ từ đang làm hay chịu đựng điều gì.</p>
                         </div>
-                        <div className="clearfix visible-md-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-briefcase" /> <span>We bring emotion</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-briefcase" /><span className='text-white'>Tính từ trong tiếng Anh</span></h3>
+                            <p>Tính từ là từ loại trong tiếng Anh chỉ tính chất của sự vật, sự việc, hiện tượng. Tính từ trong tiếng Anh là Adjective, viết tắt là (adj).</p>
                         </div>
-                        <div className="clearfix visible-sm-block" />
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-chat" /> <span>We guide companies</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-chat" /> <span className='text-white'>Trạng Từ Trong Tiếng Anh</span></h3>
+                            <p>Trạng từ (hay còn được gọi là phó từ) là từ dùng để bổ nghĩa cho động từ, tính từ, một trạng từ khác hay cho cả câu.Trạng từ thường đứng trước từ hay mệnh đề mà nó cần bổ nghĩa. Nhưng cũng tùy trường hợp câu nói mà người ta có thể đặt nó đứng đầu hoặc cuối câu.</p>
                         </div>
-                        <div className="col-md-4 col-sm-6 col-xs-12 probootstrap-animate">
-                            <h3 className="heading-with-icon"><i className="icon-colours" /> <span>We design extraordinary</span></h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                        </div>
-                        <div className="clearfix visible-sm-block" />
+                        <div className=" probootstrap-animate">
+                            <h3 className="heading-with-icon"><i className="icon-colours" /> <span className='text-white'>Mạo Từ </span></h3>
+                            <p>“A” và “An” dùng chỉ những sự vật, hiện tượng cụ thể người nghe không biết, “The” chỉ sự việc cả người nói và người nghe đều biết.</p>
+                        </div> <div className="clearfix visible-sm-block" />
                     </div>
                 </div>
             </section>
@@ -67,48 +63,45 @@ const Home = () => {
 
             <div>
                 {/* START: section */}
-                <section className="probootstrap-section probootstrap-section-extra last">
-                    <div className="container-fluid probootstrap-absolute">
+                <section className="probootstrap-section probootstrap-section-extra last grid grid-cols-2 mt-8">
+                <div className="container">
                         <div className="row">
-                            <div className="col-md-7 col-md-push-6 probootstrap-animate" data-animate-effect="fadeInRight">
-                                <img width={"100%"} src="https://megastudy.edu.vn/upload/tinymce/banner.png" alt="Free Bootstrap Template by uicookies.com" className="img-responsive shadow-left" />
+                            <div className="col-lg-5 col-md-5 section-heading probootstrap-animate ml-8">
+                                <h2 className='text-lg'>Lợi Ích Khi Học Tiếng Anh Tại VianEnglish</h2>
+
+                                <blockquote className="probootstrap-quote">
+                                    <p className='text-black'>“ VianEnglish là website học tiếng Anh giao tiếp online cung cấp rất nhiều tài liệu tự học tiếng Anh trực tuyến
+                                    hoàn toàn miễn phí, giúp bạn nâng cao vốn tiếng Anh của mình. Nguồn tài liệu tự học tiếng Anh online bao gồm video, các ứng dụng dành cho điện thoại di động, bài luyện nghe và các bài tập ngữ pháp.”</p>
+                                </blockquote>
                             </div>
                         </div>
                     </div>
-                    <div className="container">
+                    <div className="container-fluid probootstrap-absolute">
                         <div className="row">
-                            <div className="col-lg-5 col-md-5 section-heading probootstrap-animate">
-                                <h2>We bring emotion to our product</h2>
-
-                                <blockquote className="probootstrap-quote">
-                                    <p>“ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam dolorem est numquam natus eum dolorum, quisquam id vel dolores repellendus cupiditate, exercitationem aut ducimus, reiciendis iusto eveniet quidem iure!
-                                        A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.”</p>
-                                </blockquote>
+                            <div className="col-md-7 col-md-push-6 probootstrap-animate" data-animate-effect="fadeInRight">
+                                <img  src="https://megastudy.edu.vn/upload/tinymce/banner.png" alt="Free Bootstrap Template by uicookies.com" width={"100%"}  className="img-responsive" />
                             </div>
                         </div>
                     </div>
                 </section>
                 {/* END: section */}
                 {/* START: section */}
-                <section className="probootstrap-section probootstrap-section-extra ">
+                <section className="probootstrap-section probootstrap-section-extra grid grid-cols-2">
                     <div className="container-fluid probootstrap-absolute mt-[50px]">
                         <div className="row">
                             <div className="col-md-8 col-md-pull-2 probootstrap-animate" data-animate-effect="fadeInLeft">
-                                <img src="https://telacademyvn.com/Uploads/7F147FD3915DD461E068B29F5C39353E/images/ti%E1%BA%BFng%20Anh%20giao%20ti%E1%BA%BFp%20trong%20l%E1%BB%9Bp%20h%E1%BB%8Dc.jpg" width={"100%"} alt='' className="img-responsive" />
+                                <img w-full src="https://wallstreetenglish.edu.vn/wp-content/uploads/2021/06/Img1869-1024x683-1-768x512.jpg" width={"100%"} alt='' className="img-responsive" />
                             </div>
                         </div>
                     </div>
                     <div className="container ">
-                        <div className="row mt-[50px]">
-                            <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate">
-                                <h2>We design extraordinary</h2>
-                                <p className="lead">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                        <div className="row ">
+                            <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate ml-8">
+                                <h2 className='text-lg'>Giao Tiếp Hiệu Quả</h2>
                                 <blockquote className="probootstrap-quote">
-                                    <figure className="probootstrap-quote-logo facebook">
-                                        <img src="img/facebook.png" alt="Free Bootstrap Template by uicookies.com" className="img-responsive" />
-                                    </figure>
-                                    <p>“A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.”</p>
-                                    <p className="probootstrap-quote-author"><img src="img/person_5.jpg" alt="Free Bootstrap Template by uicookies.com" /> Janet Morris, Facebook</p>
+                                    <p className='text-black'>“ Miễn phí học thử và kiểm tra trình độ.
+                                    Cùng VianEnglish chinh phục tiếng Anh,nói tiếng Anh cũng sẽ giúp bạn gặp gỡ rất nhiều người nước ngoài và từ đó kết bạn với họ, trở nên cởi mở hơn trong các mối quan hệ xã hội ,nói tiếng Anh cũng sẽ giúp bạn
+                                     gặp gỡ rất nhiều người nước ngoài và từ đó kết bạn với họ, trở nên cởi mở hơn trong các mối quan hệ xã hội.”</p>
                                 </blockquote>
                             </div>
                         </div>
@@ -118,7 +111,7 @@ const Home = () => {
             </div>
             {/* teacher  */}
             <section className='box__teacher'>
-                <h2 className="title__lecturers">
+                <h2 className="title__lecturers mt-8 mb-8">
                     Giảng  Viên Của Vogue
                 </h2>
                 <div className="list__teacher">
@@ -170,7 +163,7 @@ const Home = () => {
                 <h2 className="title__course__main">
                     ĐĂNG KÝ KHÓA HỌC
                 </h2>
-                <div className='distance__course'>
+                <div className='distance__course'>   
 
 
                     <div className="box__course">

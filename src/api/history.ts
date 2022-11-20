@@ -6,12 +6,24 @@ export const listHistory = async () => {
     return instance.get(url)
 }
 
+
+export const listHistoryByUser = (userId: string | undefined) => {
+    const url = `/history/user/${userId}`
+    return instance.get(url)
+}
+
+export const detailHistoryByUserActivity= (acivityId: string, userId: string | undefined) => {
+    const url = `/learningProgress?activityId=${acivityId}&userId=${userId}`
+    return instance.get(url)
+}
+
+
 export const detailHistory = async (id: string | undefined) => {
     const url = `/history/${id}`
     return instance.get(url)
 }
 
-export const addHistory = async (data: HistoryType ) => {
+export const addHistory = async (data: any ) => {
     const url = `/history`
     return instance.post(url,data)
 }

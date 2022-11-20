@@ -6,22 +6,25 @@ import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
 import { UserType } from '../types/user';
 import { Avatar } from './Avatar';
-
 const navigation = [
   { name: 'Học thử', to: '/learning' },
-  { name: 'Liên hệ chúng tôi', to: 'contact' },
+  { name: 'Giới thiệu', to: 'aboutUs' },
+  { name: 'Liên hệ', to: '/contact' },
+  { name: 'Khóa học', to: '/course' },
 
 ]
 
 const HeaderComponent = () => {
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onLogout = () => {
     Modal.confirm({
       title: "Bạn có chắc muốn đăng xuất không ?",
       onOk: () => {
         dispatch(logout(auth))
         message.success("Đăng xuất thành công")
+        navigate('/')
       }
     })
   }
@@ -30,10 +33,10 @@ const HeaderComponent = () => {
     <div className="relative bg-gray-50">
       <header className="bg-indigo-600">
         <nav className="mx-auto w-10/12 " aria-label="Top">
-          <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
+          <div className="flex w-full items-center justify-between border-b border-indigo-500 py-4 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">
-                VianEnglish
+               <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={100} alt="" />
               </NavLink>
               <div className=" ml-10 space-x-8 lg:block">
                 {navigation.map((link) => (

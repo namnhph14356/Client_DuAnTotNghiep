@@ -1,0 +1,88 @@
+
+.list__sentences{
+    @apply border divide-y divide-gray-200
+}
+.item__list_sentences{
+    @apply flex justify-between py-4 px-3
+}
+.item__content__list i {
+    @apply mr-2 text-black
+}
+.title__item__content__list{ 
+    @apply text-[#3dae48] text-base
+}
+.phonetic__content , .viet__phonetic__content{
+    @apply ml-7
+}
+.item__icon__list i {
+    @apply text-cyan-700 text-3xl font-bold
+}
+.content__detail__sentences{
+    @apply px-3 mt-5
+}
+
+.content__detail__main{
+    @apply mt-4
+}
+.title__content__detail{
+    @apply text-xl text-[#3dae48]
+}
+.title__content__detail i {
+    @apply text-slate-700 mr-3 text-base 
+}
+.phonetic__content__detail p{
+    @apply text-slate-700 text-base mb-0
+}
+.table__spelling{
+    @apply mt-3 ml-10
+}
+.table__item__spelling{ 
+    @apply border border-slate-300 mt-1
+}
+.table__item__spelling td{ 
+    @apply px-2 text-slate-600
+}
+.table__item__spelling i{ 
+
+}
+
+.structural__analysis__detail{
+    @apply mt-8 mb-3
+}
+.title__structural{
+    @apply text-sm font-normal
+}
+.content__structural{
+    @apply border border-neutral-400 px-4 py-2
+}
+.item__Content__structural{
+    @apply mb-10
+}
+.content__structural span{
+    @apply font-bold
+}
+
+.btn__close__sentences{
+    @apply hover:text-white hover:bg-blue-600
+}
+.btn__close__sentences , .btn__pre__sentences , .btn__next__sentences{
+    @apply border border-blue-600 px-3 py-0 text-blue-500 mr-2
+}
+.btn__pre__sentences {
+    @apply hover:text-white hover:bg-blue-600
+}
+.btn__next__sentences{
+    @apply hover:text-white hover:bg-blue-600
+}
+.title__topic__sentence{
+    @apply text-lg text-[#99cc00]
+}
+.topic__sentence i{
+    @apply text-xs text-black
+}
+.topic__sentence p {
+    @apply mb-0
+}
+.phonetic__vn__sentence{ 
+    @apply ml-6
+}

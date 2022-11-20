@@ -12,8 +12,10 @@ import {
   Table,
   Typography,
 } from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { getClassById } from "../../../api/class";
 import { getListUser } from "../../../api/user";
 import {
@@ -73,9 +75,10 @@ const AdminClassList = (props) => {
 
   const columns = [
     {
-      title: "nameClass",
+      title: "Name Class",
       dataIndex: "nameClass",
       key: "nameClass",
+      render: (row, item) => <Link to={`detail/${item?._id}`}>{item.nameClass}</Link>,
     },
     {
       title: "Link Join Class",
@@ -92,6 +95,12 @@ const AdminClassList = (props) => {
       title: "Lever",
       dataIndex: "lever",
       key: "lever",
+    },
+    {
+      title: "Create Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (row, item) => `${moment(item?.createdAt).format('DD/MM/YYYY')}`,
     },
     {
       title: "Action",
@@ -162,7 +171,7 @@ const AdminClassList = (props) => {
         }
       });
     } else {
-      value.userOfClass = value.userOfClass.map((item) => ({
+      value.userOfClass = value.userOfClass?.map((item) => ({
         userId: item,
         timeJoinClass: new Date(),
       }));
@@ -236,36 +245,6 @@ const AdminClassList = (props) => {
               <Input />
             </Form.Item>
             <Form.Item
-              label="Link join class"
-              name="linkJoinClass"
-              labelAlign="left"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Link join class!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="User Of Class"
-              labelAlign="left"
-              name="userOfClass"
-              rules={[
-                { required: true, message: "Please input your User Of Class!" },
-              ]}
-            >
-              {options && options.length > 0 && (
-                <Select
-                  mode="multiple"
-                  style={{ width: "100%" }}
-                  placeholder="Chọn user vào lớp học"
-                  options={options}
-                />
-              )}
-            </Form.Item>
-            <Form.Item
               label="Lever"
               labelAlign="left"
               name="lever"
@@ -281,6 +260,21 @@ const AdminClassList = (props) => {
                 <Option value="Advanced">Advanced</Option>
               </Select>
             </Form.Item>
+            <Form.Item
+              label="User Of Class"
+              labelAlign="left"
+              name="userOfClass"
+            >
+              {options && options.length > 0 && (
+                <Select
+                  mode="multiple"
+                  style={{ width: "100%" }}
+                  placeholder="Chọn user vào lớp học"
+                  options={options}
+                />
+              )}
+            </Form.Item>
+            
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
@@ -374,7 +368,7 @@ const AdminClassList = (props) => {
             </Button>
           </div>
         </div>
-        <Table scroll={{y: '150px'}} dataSource={listClass} columns={columns} />
+        <Table scroll={{y: '40vh'}} dataSource={listClass} columns={columns} />
       </div>
     </div>
   );

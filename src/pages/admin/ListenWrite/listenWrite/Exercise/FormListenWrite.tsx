@@ -3,23 +3,23 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Divider, Form, Input, Button, Space, Checkbox, Upload, Select, Avatar, message, Modal, Progress, Image, Empty } from 'antd';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getCategoryList } from '../../../../features/Slide/category/CategorySlide';
-import { CategoryType } from '../../../../types/category';
+import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
+import { getCategoryList } from '../../../../../features/Slide/category/CategorySlide';
+import { CategoryType } from '../../../../../types/category';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ReactAudioPlayer from 'react-audio-player';
-import { changeImage, changeVideo, uploadImage, uploadVideo } from '../../../../utils/upload';
-import { addListen, changeBreadcrumb, editListen, getListListenWrite } from '../../../../features/Slide/listenWrite/ListenWriteSlice';
-import { ListenWriteType } from '../../../../types/listenWrite';
-import { detailListenWrite } from '../../../../api/listenWrite';
-import AdminPageHeader from '../../../../components/AdminPageHeader';
-import { addQuestionListenSlide, editQuestionListenWriteSlide } from '../../../../features/Slide/questionListenWrite/questionListenWrite';
-import { addAnswerListenWriteSlide, editAnswerListenWriteSlide } from '../../../../features/Slide/answerListenWrite/answerListenWrite';
-import { getListQuestionListenWriteById } from '../../../../api/questionListenWrite';
-import { listAnswerListenWriteById } from '../../../../api/answerListenWrite';
+import { changeImage, changeVideo, uploadImage, uploadVideo } from '../../../../../utils/upload';
+import { addListen, changeBreadcrumb, editListen, getListListenWrite } from '../../../../../features/Slide/listenWrite/ListenWriteSlice';
+import { ListenWriteType } from '../../../../../types/listenWrite';
+import { detailListenWrite } from '../../../../../api/listenWrite';
+import AdminPageHeader from '../../../../../components/AdminPageHeader';
+import { addQuestionListenSlide, editQuestionListenWriteSlide } from '../../../../../features/Slide/questionListenWrite/questionListenWrite';
+import { addAnswerListenWriteSlide, editAnswerListenWriteSlide } from '../../../../../features/Slide/answerListenWrite/answerListenWrite';
+import { getListQuestionListenWriteById } from '../../../../../api/questionListenWrite';
+import { listAnswerListenWriteById } from '../../../../../api/answerListenWrite';
 import { async } from '@firebase/util';
-import { QuizType } from '../../../../types/quiz';
-import useQuiz from '../../../../features/Slide/quiz/use_quiz';
+import { QuizType } from '../../../../../types/quiz';
+import useQuiz from '../../../../../features/Slide/quiz/use_quiz';
 
 type Props = {}
 

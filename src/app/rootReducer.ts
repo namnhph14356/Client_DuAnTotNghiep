@@ -12,6 +12,7 @@ import UserListenWriteSlice from "../features/Slide/userListenWrite/UserListenWr
 import CommentSlice from "../features/Slide/comment/CommentSlice";
 import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLimitCountdown";
 import ClassSlide from "../features/Slide/class/classSlice";  
+import ReplycommentSlide from "../features/Slide/comment/ReplySilce"
 import userSlide from "../features/Slide/user/userSlide";
 import authSlide from "../features/Slide/auth/authSlide";
 
@@ -22,6 +23,9 @@ import CourseSlide from "../features/Slide/course/CourseSlide";
 import WeekSlice from "../features/Slide/week/WeekSlice";
 import DaySlice from "../features/Slide/day/DaySlice";
 import PracticeActivitySlice from "../features/Slide/practiceActivity/PracticeActivitySlice";
+import LearningProgressSlice from '../features/Slide/learningProgress/LearningProgress'
+import GoogleSpeechSlice from "../features/Slide/googleSpeech/GoogleSpeechSlice";
+
 const rootReducer = combineReducers({
     count: CountSlide,
     product: ProductSlide,
@@ -38,12 +42,15 @@ const rootReducer = combineReducers({
     auth: authSlide,
     time: TimeLimitCountdownSlice,
     class: ClassSlide,
+    reply: ReplycommentSlide,
     noteCouse: NoteSlice,
     course: CourseSlide,
     month: MonthSlice,
     week: WeekSlice,
     day: DaySlice,
-    practiceActivity: PracticeActivitySlice
+    practiceActivity: PracticeActivitySlice,
+    learningProgress: LearningProgressSlice,
+    googleSpeech: GoogleSpeechSlice
 });
 
 export default rootReducer;

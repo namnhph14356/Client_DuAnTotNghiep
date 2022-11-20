@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import toas from 'toastr';
-import { editUserSlide, getUserList, getUsersById } from '../../../features/Slide/user/userSlide';
+import { editUserSlide, getUser, getUserList} from '../../../features/Slide/user/userSlide';
 import { changeImage, uploadImage } from '../../../utils/upload';
 
 const layout = {
@@ -34,7 +34,7 @@ const EditUser = () => {
 
         if (id) {
             const getListUser = async (id: any) => {
-                const { payload } = await dispath(getUsersById(id));
+                const { payload } = await dispath(getUser(id));
                 form.setFieldsValue(payload)
                 setValues(payload)
                 // onreset(payload)
@@ -48,13 +48,14 @@ const EditUser = () => {
 
 
     const onFinish = async (values: any) => {
+    console.log (values)
         try {
             await dispath(editUserSlide(
                 {
                     _id: id,
                     username: values.username,
                     email: values.email,
-                    image: values.img,
+                    img: values.img,
                     phone: values.phone,
                     address: values.address,
                     role: values.role,
@@ -63,9 +64,7 @@ const EditUser = () => {
             ))
 
             toas.success("Edit successfully");
-
             navigate('/admin/user')
-
         } catch (error: any) {
             toas.error(error);
 
@@ -87,11 +86,11 @@ const EditUser = () => {
                 {/* <Form.Item name={'img'} label="Img">
                     <Input  />
                 </Form.Item> */}
-                <Form.Item name={[ 'image']} label="Image" rules={[{ required: true }]}>
+                <Form.Item name={[ 'image']} label="Chọn Ảnh" rules={[{ required: true }]}>
                     <Input type="file" className="form-control" id="file-upload" />
                 </Form.Item>
 
-                <Form.Item name={'image2'} label="Image" >
+                <Form.Item name={'image2'} label="Ảnh" >
                     <span className="inline-block  rounded-full overflow-hidden bg-gray-100">
                         <img id="img-preview" src='' style={{ width: "100px" }} />
                     </span>
@@ -102,17 +101,17 @@ const EditUser = () => {
                 <Form.Item name={'address'} label="Địa chỉ">
                     <Input />
                 </Form.Item>
-                <Form.Item name={'role'} label="role">
+                <Form.Item name={'role'} label="Quyền ">
                     <Select>
-                        <Select.Option value={0}>User</Select.Option>
-                        <Select.Option value={1}>Admin</Select.Option>
-                        <Select.Option value={2}>Teacher</Select.Option>
+                        <Select.Option value={"user"}>User</Select.Option>
+                        <Select.Option value={"admin"}>Admin</Select.Option>
+                        <Select.Option value={"teacher"}>Teacher</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name={'sex'} label="Gender">
+                <Form.Item name={'sex'} label="Giới tính">
                     <Select>
-                        <Select.Option value={0}>Male</Select.Option>
-                        <Select.Option value={1}>Female</Select.Option>
+                        <Select.Option value={"male"}>Male</Select.Option>
+                        <Select.Option value={"femle"}>Female</Select.Option>
                     </Select>
                 </Form.Item>
 

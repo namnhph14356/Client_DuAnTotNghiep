@@ -16,13 +16,11 @@ type PracticeActivityArr = {
 }
 
 const DetailLearning = () => {
-  const { id } = useParams();
+  const { dayId } = useParams();
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
-  console.log("practiceActivity", practiceActivity);
   const practiceLearning = [...practiceActivity]
-  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.type - b.type)
-  console.log("practiceLearning", practiceLearning);
+  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
   const practiceArr = [
     {
       id: 1,
@@ -52,23 +50,22 @@ const DetailLearning = () => {
   ]
 
 
-  const onChangeURL = (type: number) => {
+  const onChangeURL = (order: number) => {
     const flag: PracticeActivityArr[] = practiceArr.filter((item2: PracticeActivityArr) => {
-      if (item2.id === type) {
+      if (item2.id === order) {
         return item2.url
       }
     })
-    return flag[0].url
+    return flag[0]?.url
   }
 
   const flag = onChangeURL(2)
-  console.log("flag", flag);
 
 
   useEffect(() => {
-    dispatch(getListPracticeActivitySliceByDay(id))
-  }, [id])
-
+    dispatch(getListPracticeActivitySliceByDay(dayId))
+  }, [dayId])
+  
   return (
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
@@ -82,12 +79,12 @@ const DetailLearning = () => {
           <div className="list__main__learning">
             {practiceLearning.map((item: PracticeActivityType, index: number) => {
               return <div key={index + 1}>
-                <NavLink to={`/learning/${id}/detailLearning/${item._id}/${onChangeURL(item.type)}`}>
+                <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.order)}`}>
                   <div className="item__list__learning">
                     <div className="info__item__list">
                       <div>
                         {practiceArr.map((item2: PracticeActivityArr) => {
-                          if (item2.id === item.type) {
+                          if (item2.id === item.order) {
                             return item2.icon
                           }
                         })}
@@ -109,97 +106,6 @@ const DetailLearning = () => {
               </div>
             })}
 
-            {/* <div>
-              <NavLink to={'/learning/detailLearning/:id/vocabulary/lesson'}>
-                <div className="item__list__learning">
-                  <div className="info__item__list">
-                    <div>
-                      <i className="fa-solid fa-file-word"></i>
-                    </div>
-                    <div>
-                      <h4 className="title__info__item">
-                        Luyện từ vựng
-                      </h4>
-                      <p>
-                        00 điểm |<span> bắt buộc</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className='icon__item__list'>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-              </NavLink>
-            </div>
-
-            <div>
-              <NavLink to={'/learning/detailLearning/:id/sentences/lesson'}>
-                <div className="item__list__learning">
-                  <div className="info__item__list">
-                    <div>
-                      <i className="fa-solid fa-bars-staggered"></i>
-                    </div>
-                    <div>
-                      <h4 className="title__info__item">
-                        Luyện cấu trúc & câu
-                      </h4>
-                      <p>
-                        00 điểm |<span> bắt buộc</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className='icon__item__list'>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-              </NavLink>
-            </div>
-
-            <div>
-              <NavLink to={'/learning/detailLearning/:id/conversation/listenWrite'}>
-                <div className="item__list__learning">
-                  <div className="info__item__list">
-                    <div>
-                      <i className="fa-solid fa-comment"></i>
-                    </div>
-                    <div>
-                      <h4 className="title__info__item">
-                        Luyện hội thoại
-                      </h4>
-                      <p>
-                        00 điểm |<span> bắt buộc</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className='icon__item__list'>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-              </NavLink>
-            </div>
-
-            <div>
-              <NavLink to={'/learning/detailLearning/:id/grammar/lesson'}>
-                <div className="item__list__learning">
-                  <div className="info__item__list">
-                    <div>
-                      <i className="fa-solid fa-book-open"></i>
-                    </div>
-                    <div>
-                      <h4 className="title__info__item">
-                        Luyện ngữ pháp
-                      </h4>
-                      <p>
-                        00 điểm |<span> bắt buộc</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className='icon__item__list'>
-                    <i className="fa-solid fa-chevron-right"></i>
-                  </div>
-                </div>
-              </NavLink>
-            </div> */}
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ export interface UserType {
     phone?: number,
     address?: string,
     img?: string,
-    sex?: number,
+    sex?: string,
     role?: string , // chuyển thành number (toDo)
     colorImage?:string,
     idFacebook?: string,
