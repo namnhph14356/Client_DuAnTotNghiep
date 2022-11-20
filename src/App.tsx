@@ -121,6 +121,12 @@ import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/For
 import Message from "./components/Message";
 import EditImage from "./components/user/EditImage";
 import AboutUs from "./pages/AboutUs";
+import UserLayout from "./pages/layouts/UserLayout";
+import InformationUser from "./components/user/InformationUser ";
+import EditInformationUser from "./components/user/EditInformationUser ";
+import PrivateUser from "./components/user/PrivateUser ";
+import EditEmailUser from "./components/user/EmailUser";
+import EditPasswordUser from "./components/user/EditPasswordUser ";
 
 
 
@@ -240,8 +246,6 @@ function App() {
           <Route path="user" element={<UserLayout />} >
             <Route index element={<InformationUser />} />
             <Route path="settingUser/:id" element={<EditInformationUser />} />
-            <Route path="payHistory" element={<PayHistoryUser />} />
-            <Route path="classUser" element={<MyClassUser />} />
             <Route path="privateUser" element={<PrivateUser />} />
             <Route path="editEmailUser/:id" element={<EditEmailUser />} />
             <Route path="editImage/:id" element={<EditImage />} />

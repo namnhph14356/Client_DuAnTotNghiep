@@ -69,7 +69,7 @@ export const newPass = createAsyncThunk(
   }
 )
 export const newPassSlice = createAsyncThunk(
-  "auth/changePassword",
+  "auth/changePasswords",
   async (password: { password: string }) => {
     const { data } = await newPassword(password);
     return data
