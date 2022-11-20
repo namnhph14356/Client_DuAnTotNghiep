@@ -43,5 +43,5 @@
     @apply mb-0
 }
 .item__exemple__vocabulary span{
-    @apply ml-6 text-red-400
+    @apply ml-2 text-red-400
 }

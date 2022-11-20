@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from 'react'
 
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { useSpeechSynthesis } from "react-speech-kit";
 import { listVocabulary } from '../../api/vocabulary';
 import Loading from '../../components/Loading';
 import { VocabulatyType } from '../../types/vocabularyType';
 
+const WordForm = [
+  { id: "1", wordForm: 'Nouns' },
+  { id: "2", wordForm: 'Adj' },
+  { id: "3", wordForm: 'Adv' },
+  { id: "4", wordForm: 'Verbs' },
+]
+
 const LessonVocabulary = () => {
   const [dataVocab, setDataVocab] = useState<VocabulatyType[]>([])
+  const { dayId } = useParams()
   useEffect(() => {
     const getVocab = async () => {
       const { data } = await listVocabulary();
-      setDataVocab(data);
+      const vocabularyByDay = data.filter((e: VocabulatyType) => e.dayId?._id === dayId)
+      setDataVocab(vocabularyByDay);
     }
     getVocab()
-  }, [])
+  }, [dayId])
 
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } =
-  useSpeechSynthesis();
-  
+    useSpeechSynthesis();
+
   return (
     <div className='voabulary__page'>
       <div className="main__voacbulary">
@@ -41,24 +50,17 @@ const LessonVocabulary = () => {
                     }>
 
                       <i className="fa-solid fa-volume-high"></i>
-                      {item.words} <span>{item.pa}</span>
+                      {item.words} <span>{WordForm.map((e) => e.id === item.wordForm ? e.wordForm : "")}</span>
                     </button>
                     <p>
                       {item.meaning}
                     </p>
-                    <span>(intransitive/transitive verb) to telephone someone</span>
+                    <span>{item.pa}</span>
                   </div>
-                  <div className="item__exemple__vocabulary">
-
-                    <p>
-
-                      <i className="fa-solid fa-volume-high"></i>
-
-                      {item.example}
-                    </p>
-                    <span>
-                      Gọi điện cho tôi khi bạn đến đó nhé.
-                    </span>
+                  <div className="item__exemple__vocabulary flex space-x-1">
+                    <i className="fa-solid fa-volume-high my-auto">
+                      </i>
+                    <span dangerouslySetInnerHTML={{ __html: `${item.example}` }}></span>
                   </div>
                 </div>
               </div>
