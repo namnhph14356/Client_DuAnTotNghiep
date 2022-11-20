@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, Outlet } from 'react-router-dom'
+import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
+import { getUserByIdSlice } from '../../features/Slide/auth/authSlide'
 import { UserType } from '../../types/user'
 import '../user/user.css'
 const UserLayout = () => {
     const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
-    console.log('auth', auth);
-
+    const dispatch = useAppDispatch()
+    
+    useEffect(() => {
+        dispatch(getUserByIdSlice())
+    }, [])
     return (
         <div className='container'>
 

@@ -91,6 +91,12 @@
 .labal__form__edit{
     @apply w-32
 }
+.labal__form__edit__pass{
+    @apply w-40
+}
+.inp__name__edit__pass {
+    @apply border outline-none px-2 py-1 w-52 text-black border-slate-400
+}
 .inp__name__edit {
     @apply border outline-none px-2 py-1 w-80 text-black border-slate-400
 }
