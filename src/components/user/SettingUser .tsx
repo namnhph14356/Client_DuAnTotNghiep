@@ -18,7 +18,7 @@ const SettingUser = () => {
                     <i className="fa-solid fa-camera"></i> Thay đổi ảnh đại diện
                 </button>
             </div>
-            <div className="nav__profile">
+            {/* <div className="nav__profile">
                 <ul className='list__link'>
                     <li> <i className="fa-solid fa-user"></i> <NavLink to={''}>Thông tin cá nhân</NavLink></li>
                     <li> <i className="fa-solid fa-newspaper"></i><NavLink to={''}>Lớp học của tôi</NavLink></li>
@@ -28,7 +28,7 @@ const SettingUser = () => {
                     <li><i className="fa-solid fa-comments"></i><NavLink to={''}>Thảo luận của tôi</NavLink></li>
                     <li><i className="fa-solid fa-users"></i><NavLink to={''}>Diễn đàn</NavLink></li>
                 </ul>
-            </div>
+            </div> */}
         </div>
     )
 }

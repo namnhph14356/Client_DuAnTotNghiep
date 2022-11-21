@@ -11,8 +11,11 @@
 .breadcrumbs__user{
     @apply flex
 }
+.breadcrumbs__user div{
+  @apply flex px-3 space-x-2 bg-[#ebf3e4]
+}
 .breadcrumbs__user li{
-    @apply pr-2 bg-[#ebf3e4] px-3 font-medium text-xs py-1
+    @apply  font-medium text-xs py-1
 }
 .page__content{
     @apply mt-5
@@ -95,7 +98,7 @@
     @apply w-40
 }
 .inp__name__edit__pass {
-    @apply border outline-none px-2 py-1 w-52 text-black border-slate-400
+    @apply border  px-2 py-1 w-52 text-black border-slate-400
 }
 .inp__name__edit {
     @apply border outline-none px-2 py-1 w-80 text-black border-slate-400

@@ -1,16 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import MenuSettingUser from './MenuSettingUser'
 import { message } from 'antd';
 import { newPassSlice } from '../../features/Slide/auth/authSlide';
+import { RootState } from '../../app/store';
+import { UserType } from '../../types/user';
+import { getUserById } from '../../api/user';
 
 
 const fromSchema = yup.object().shape({
-
+  oldPassword: yup.string()
+    .required("Mật khẩu không được để trống")
+    .min(6, 'Mật khẩu phải lớn hơn 6 kí tự'),
   password: yup.string()
     .required("Mật khẩu không được để trống")
     .min(6, 'Mật khẩu phải lớn hơn 6 kí tự'),
@@ -21,14 +26,15 @@ const fromSchema = yup.object().shape({
 const validation = { resolver: yupResolver(fromSchema) }
 
 type FormType = {
+  oldPassword: string,
   password: string | number,
   confirmPassword?: string | number,
 }
 
 
 const EditPasswordUser = () => {
-
-  const { register, handleSubmit, formState } = useForm<FormType>()
+  let auth = useAppSelector(((item: RootState) => item.auth.value)) as UserType
+  const { register, handleSubmit, formState } = useForm<FormType>(validation)
   const dispatch = useAppDispatch()
   const { errors } = formState;
 
@@ -41,10 +47,9 @@ const EditPasswordUser = () => {
   }
 
   const onSubmit: SubmitHandler<FormType> = async (useForm: FormType) => {
+    console.log("userForm", useForm);
     try {
-      const { payload } = await dispatch(newPassSlice({
-        password: String(useForm.password)
-      }))
+      const { payload } = await dispatch(newPassSlice({ _id: String(auth._id), oldPass: String(useForm.oldPassword), password: String(useForm.password) }))
       console.log('payload', payload);
       if (payload.message) {
         message.warning(payload.message)
@@ -54,8 +59,8 @@ const EditPasswordUser = () => {
     } catch (error) {
       alert('Error !!!')
     }
-   
-    
+
+
   }
 
   const checkValue = (e) => {
@@ -66,20 +71,27 @@ const EditPasswordUser = () => {
     }
   }
 
+  const getUser = async () => {
+    const { data } = await getUserById(auth._id)
+    console.log("data", data);
+  }
+  useEffect(() => {
+    getUser()
+  }, [auth._id])
 
   return (
     <div className='edit__password__page'>
       <MenuSettingUser />
-      <div className="content__change__password">
+      <div className="">
         <form onSubmit={handleSubmit(onSubmit)} >
           <div className="form__edit__user">
-            
+
             <div className='item__form__edit'>
               <div className='labal__form__edit__pass'>
                 <label htmlFor="">Mật khẩu hiện tại :</label>
               </div>
               <div className='change__form__edit'>
-                <input {...register('password')} className='inp__name__edit__pass' type="password" id=""  />
+                <input {...register('oldPassword')} className={`inp__name__edit__pass ${errors.oldPassword ? 'outline-red-500' : 'outline-none'}`} type="password" id="" />
               </div>
             </div>
             <div className='item__form__edit'>
@@ -87,7 +99,7 @@ const EditPasswordUser = () => {
                 <label htmlFor="">Mật khẩu mới :</label>
               </div>
               <div className='change__form__edit'>
-                <input {...register('password')} onChange={(e) => checkValue(e)} className={` inp__name__edit__pass  ${errors.password ? 'outline-red-500' : ''}`}  autoComplete="on"  type="password" id=""  />
+                <input {...register('password')} onChange={(e) => checkValue(e)} className={`inp__name__edit__pass ${errors.password ? 'outline-red-500' : 'outline-none'}`} autoComplete="on" type="password" id="" />
               </div>
             </div>
             <div className='item__form__edit'>
@@ -95,7 +107,7 @@ const EditPasswordUser = () => {
                 <label htmlFor="">Xác nhận mật khẩu :</label>
               </div>
               <div className='change__form__edit'>
-                <input  {...register('confirmPassword')} onChange={(e) => checkValue(e)} className={`inp__name__edit__pass ${errors.confirmPassword ? 'outline-red-500' : ''}`} type="password" autoComplete="on"  id=""  />
+                <input  {...register('confirmPassword')} onChange={(e) => checkValue(e)} className={`inp__name__edit__pass ${errors.confirmPassword ? 'outline-red-500' : 'outline-none'}`} type="password" autoComplete="on" id="" />
               </div>
             </div>
           </div>

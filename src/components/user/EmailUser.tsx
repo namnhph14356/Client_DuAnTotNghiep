@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
 import { UserType } from '../../types/user'
 import MenuSettingUser from './MenuSettingUser'
-import { currentUserSlice, editUserSilce } from '../../features/Slide/auth/authSlide'
+import { currentUserSlice, editAuthSilce } from '../../features/Slide/auth/authSlide'
 import { message } from 'antd'
 import { getUserById } from '../../api/user'
 
@@ -26,7 +26,7 @@ const EditEmailUser = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInput>()
 
   const onSubmit: SubmitHandler<FormInput> = async (user) => {
-    const data = await dispatch(editUserSilce(user))
+    const data = await dispatch(editAuthSilce(user))
     message.success('Cập nhật thành công')
     navigate('/user')
   }
@@ -62,12 +62,13 @@ const EditEmailUser = () => {
               <label htmlFor="">Email mới :</label>
             </div>
             <div className='change__form__edit'>
-            <input className='inp__name__edit' type="text" id="" {...register('email')} />
+            <input className='inp__name__edit bg-gray-300' type="text" id="" {...register('email')} disabled={true}/>
             </div>
           </div>
+          <p className='text-red-500'>Tính năng đang được cập nhật</p>
         </div>
         <div className="btn__save__info">
-          <button>
+          <button disabled>
             Lưu thay đổi
           </button>
         </div>

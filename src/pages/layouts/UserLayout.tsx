@@ -19,9 +19,13 @@ const UserLayout = () => {
             <div className='info__user'>
                 <div className="header__info__user">
                     <ul className='breadcrumbs__user'>
-                        <li>Bùi Hồng Hạnh  /  </li>
-                        <li>Profile / </li>
-                        <li>Thông tin cá nhân</li>
+                        <div>
+                          <li>{auth.username}</li>
+                          <li>/</li>
+                          <li>Profile</li>
+                          <li>/</li>
+                          <li>Thông tin cá nhân</li>
+                        </div>
                     </ul>
                 </div>
 
@@ -41,11 +45,9 @@ const UserLayout = () => {
                     <ul className='list__link'>
                         <li> <i className="fa-solid fa-user"></i> <NavLink to={''}>Thông tin cá nhân</NavLink></li>
                         <li> <i className="fa-solid fa-newspaper"></i><NavLink to={''}>Lớp học của tôi</NavLink></li>
+                        <li> <i className="fa-solid fa-clock-rotate-left"></i><NavLink to={''}>Lịch sử làm bài</NavLink></li>
                         <li> <i className="fa-solid fa-clock-rotate-left"></i><NavLink to={''}>Lịch sử thanh toán</NavLink></li>
-                        <li> <i className="fa-solid fa-gift"></i><NavLink to={''}>Quà tặng</NavLink></li>
-                        <li><i className="fa-solid fa-arrow-right-arrow-left"></i> <NavLink to={''}> Chính sách chuyển đổi lớp học</NavLink></li>
-                        <li><i className="fa-solid fa-comments"></i><NavLink to={''}>Thảo luận của tôi</NavLink></li>
-                        <li><i className="fa-solid fa-users"></i><NavLink to={''}>Diễn đàn</NavLink></li>
+                        <li className='border-none'><i className="fa-solid fa-comments"></i><NavLink to={''}>Thảo luận của tôi</NavLink></li>
                     </ul>
                 </div>
             </div>

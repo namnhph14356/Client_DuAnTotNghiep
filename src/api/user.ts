@@ -56,7 +56,7 @@ export const newPassword = (user:any) => {
     return instance.put(url, user);
 } 
 export const newPasswordUser = (user:any) => {
-    const url = `/users/${user._id}`;
+    const url = `/users/editPass/${user._id}`;
     return instance.patch(url, user);
 } 
 

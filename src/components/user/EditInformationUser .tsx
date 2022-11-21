@@ -6,7 +6,7 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { editUser, getUserById } from '../../api/user'
 import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
-import { currentUserSlice, editUserSilce } from '../../features/Slide/auth/authSlide'
+import { currentUserSlice, editAuthSilce } from '../../features/Slide/auth/authSlide'
 import { UserType } from '../../types/user'
 import MenuSettingUser from './MenuSettingUser'
 
@@ -29,21 +29,24 @@ const EditInformationUser = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInput>()
 
   const onSubmit: SubmitHandler<FormInput> = async (user) => {
-    const data = await dispatch(editUserSilce(user))
-    message.success('Cập nhật thành công')
+    
+    const { payload } = await dispatch(editAuthSilce(user))
+    if (payload.message === "Cập nhật thành công !") {
+      message.success(payload.message);
+      localStorage.setItem("tokenUser", JSON.stringify(payload.token))
+    } else {
+      message.error(payload.message);
+    }
+
     navigate('/user')
   }
 
   useEffect(() => {
-    const getUser = async (id: any) => {
-      const { data } = await getUserById(id)
-      console.log('data', data);
-      reset(auth)
-    }
-    getUser(id)
+    reset(auth)
     dispatch(currentUserSlice())
   }, [id])
-
+  console.log("a", auth);
+  
   return (
     <div className='edit__infomation__page'>
       <MenuSettingUser />
@@ -64,8 +67,8 @@ const EditInformationUser = () => {
               <label htmlFor="">Giới tính :</label>
             </div>
             <div className='change__form__edit'>
-              <input className="form-check-input" type="radio"   {...register('sex')} value={1} /> Nữ
-              <input className="form-check-input ml-3" type="radio"   {...register('sex')} value={0} /> Nam
+              <input className="form-check-input" type="radio"   {...register('sex')}  /> Nữ
+              <input className="form-check-input ml-3" type="radio"   {...register('sex')}  /> Nam
             </div>
           </div>
           <div className='item__form__edit'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/store'
@@ -10,7 +10,7 @@ import { uploadImage } from '../../utils/upload'
 import { editUser } from '../../api/user'
 import { message } from 'antd'
 import { useAppDispatch } from '../../app/hooks'
-import { editUserSilce } from '../../features/Slide/auth/authSlide'
+import { currentUserSlice, editAuthSilce } from '../../features/Slide/auth/authSlide'
 
 
 
@@ -37,48 +37,51 @@ const validation = { resolver: yupResolver(fromSchema) }
 
 
 const EditImage = () => {
-  const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
+  let auth = useSelector(((item: RootState) => item.auth.value)) as UserType
 
   const { register, handleSubmit, formState, reset } = useForm<any>();
   const [preview, setPreview] = useState<string>();
-
   const dispatch = useAppDispatch()
-
-
   const navigate = useNavigate()
-
-  const handlePreview = (e: any) => {
-    setPreview(URL.createObjectURL(e.target.files[0]));
+  
+  const handlePreview = async (e: any) => {
+    const imgLink = await uploadImage(e.target);
+    setPreview(imgLink);
   }
 
   const onSubmit: SubmitHandler<any> = async data => {
     
-    const imgPost = document.querySelector<any>("#file-upload");
-    console.log(imgPost);
-    
-    const imgLink = await uploadImage(imgPost);
-    if (imgPost.files.length) {
-      const response = await uploadImage(imgPost);
-      data.img = response;
+    if (!preview) {
+      return message.error("Bạn chưa chọn ảnh !")
     }
-    await dispatch(editUserSilce(data));
-    console.log('data', data);
     
-    // message.success('Cập nhật thành công')
-    // navigate('/user')
+    const { payload } = await dispatch(editAuthSilce({...auth, img:preview}));
+
+    if (payload.message === "Cập nhật thành công !") {
+      message.success(payload.message);
+      localStorage.setItem("tokenUser", JSON.stringify(payload.token))
+    } else {
+      message.error(payload.message);
+    }
+
+    navigate('/user')
   }
+
+  useEffect(() => {
+    dispatch(currentUserSlice())
+  },[])
 
   return (
     <div className='box__img__user'>
       <div className="form__edit__img">
-        <form onSubmit={ handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <p>Chọn ảnh cần upload từ máy của bạn ( Tối đa 2MB):</p>
           <input type="file" {...register('img')} onChange={e => handlePreview(e)} id='file-upload' />
-          
-            <button type='submit'  className='btn__edit__img'>
-              Lưu ảnh
-            </button>
-         
+
+          <button type='submit' className='btn__edit__img'>
+            Lưu ảnh
+          </button>
+
 
         </form>
       </div>

@@ -11,6 +11,6 @@ export interface UserType {
     colorImage?:string,
     idFacebook?: string,
     idGoogle?: string
-    createdAt?: "2022-07-08T15:56:49.062Z",
-    updatedAt?: "2022-07-08T16:55:45.851Z",
+    createdAt?: string,
+    updatedAt?: string,
 }

@@ -70,15 +70,15 @@ export const newPass = createAsyncThunk(
 )
 export const newPassSlice = createAsyncThunk(
   "auth/changePasswords",
-  async (password: { password: string }) => {
-    const { data } = await newPasswordUser(password);
+  async (user:{_id:string, password: string, oldPass:string}) => {
+    const { data } = await newPasswordUser(user);
     console.log('data slice', data);
     
     return data
   }
 )
 
-export const editUserSilce:any = createAsyncThunk(
+export const editAuthSilce:any = createAsyncThunk(
   "auth/editUser",
   async (user: UserType) => {
     const { data } = await editUser(user);
@@ -133,10 +133,7 @@ const authSlide = createSlice({
     })
     builer.addCase(newPassSlice.fulfilled, (state: AuthSlice, action) => {
     })
-    builer.addCase(editUserSilce.fulfilled, (state: any, action) => {
-      console.log('payload', action.payload);
-      console.log('state', state.value);
-      // state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+    builer.addCase(editAuthSilce.fulfilled, (state: any, action) => {
       state.value = action.payload;
     })
     builer.addCase(getUserByIdSlice.fulfilled, (state: any, action: any) => {

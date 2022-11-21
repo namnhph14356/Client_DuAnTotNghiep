@@ -28,7 +28,7 @@ const Home = () => {
       
       
       <section className="our-product">
-        <div className="container">
+        <div className="w-10/12 m-auto">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate pt-8 mb-8">
               <h2 className="text-xl text-white">Nhiều lợi ích hơn</h2>
@@ -113,7 +113,7 @@ const Home = () => {
       <div>
         {/* START: section */}
         <section className="probootstrap-section probootstrap-section-extra last grid grid-cols-2 mt-8">
-          <div className="container">
+          <div className="w-10/12 m-auto">
             <div className="row">
               <div className="col-lg-5 col-md-5 section-heading probootstrap-animate ml-8">
                 <h2 className="text-lg">
@@ -168,7 +168,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="container ">
+          <div className="w-10/12 m-auto ">
             <div className="row ">
               <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate ml-8">
                 <h2 className="text-lg">Giao Tiếp Hiệu Quả</h2>
