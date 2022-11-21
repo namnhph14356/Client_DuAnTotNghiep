@@ -69,17 +69,13 @@ const AdminLayout = () => {
           ),
           icon: <BellOutlined />,
           danger: true,
-
-
         }
       ]}
     />
   );
-
   function handleClick(e: any) {
     setCurrent(e.key);
   }
-
   useEffect(() => {
     if (location) {
       if (current !== location.pathname) {
@@ -87,8 +83,6 @@ const AdminLayout = () => {
       }
     }
   }, [location, current])
-
-
   return (
     <Layout style={{ width: "100%" }}>
       <Sider  collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
@@ -133,10 +127,12 @@ const AdminLayout = () => {
           <SubMenu key="sub6" icon={<FolderFilled />} title="Liên hệ">
             <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>Danh sách</NavLink></Menu.Item>
           </SubMenu>
+          <SubMenu key="sub7" icon={<FolderFilled />} title="User">
+            <Menu.Item key="/admin/user"><NavLink to='/admin/user'>Danh sách</NavLink></Menu.Item>
+          </SubMenu>
 
         </Menu>
       </Sider>
-
       <Layout className="site-layout" >
         <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >
 
@@ -178,5 +174,4 @@ const AdminLayout = () => {
     </Layout>
   )
 }
-
 export default AdminLayout
