@@ -129,11 +129,11 @@ const FormAnswerListenSpeak = (props: Props) => {
             tooltip="Trạng Thái Đáp Án"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            <Select onChange={(e) => handleChange(Boolean(e))}>
-              <Option key={1} value={0}>
+            <Select>
+              <Option key={1} value={false}>
                 Sai
               </Option>
-              <Option key={2} value={1}>
+              <Option key={2} value={true}>
                 Đúng
               </Option>
             </Select>

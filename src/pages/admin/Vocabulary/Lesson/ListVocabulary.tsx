@@ -235,7 +235,11 @@ const ListVocabulary = (props: Props) => {
       key: "image",
       render: (record) => (
         <div className="">
-          <Image width={100} height={100} src={record.image} />
+          <Image
+            width={60}
+            height={60}
+            src={record.image ? record.image : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
+          />
         </div>
       ),
     },

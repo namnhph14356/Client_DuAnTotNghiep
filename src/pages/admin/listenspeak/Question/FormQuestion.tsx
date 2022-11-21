@@ -42,6 +42,8 @@ const FormQuestionListenSpeak = (props: Props) => {
   ]
   const type = "listenspeak"
   const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
+  console.log(prative);
+  
   let quizLength = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "listenspeak")
 
   const { id } = useParams();
