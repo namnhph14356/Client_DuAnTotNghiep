@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { editUser, getUserById } from '../../api/user'
+import { getUserById } from '../../api/user'
 import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
 import { currentUserSlice, editAuthSilce } from '../../features/Slide/auth/authSlide'
@@ -29,8 +29,8 @@ const EditInformationUser = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInput>()
 
   const onSubmit: SubmitHandler<FormInput> = async (user) => {
-    
-    const { payload } = await dispatch(editAuthSilce(user))
+  
+    const { payload } = await dispatch(editAuthSilce({...user, _id:id}))
     if (payload.message === "Cập nhật thành công !") {
       message.success(payload.message);
       localStorage.setItem("tokenUser", JSON.stringify(payload.token))
@@ -67,8 +67,8 @@ const EditInformationUser = () => {
               <label htmlFor="">Giới tính :</label>
             </div>
             <div className='change__form__edit'>
-              <input className="form-check-input" type="radio"   {...register('sex')}  /> Nữ
-              <input className="form-check-input ml-3" type="radio"   {...register('sex')}  /> Nam
+              <input className="form-check-input" type="radio"  {...register('sex')} value={1} /> Nữ
+              <input className="form-check-input ml-3" type="radio"   {...register('sex')} value={0} /> Nam
             </div>
           </div>
           <div className='item__form__edit'>

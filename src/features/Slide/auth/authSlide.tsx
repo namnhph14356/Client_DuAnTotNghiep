@@ -1,6 +1,6 @@
 
 import { AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { changeOTP, getUserById, editUser, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle, newPasswordUser } from "../../../api/user";
+import { changeOTP, getUserById, forgotPass, getCurrenUser, login, newPassword, register, signInWidthFacebook, signInWidthGoogle, newPasswordUser, editAuth } from "../../../api/user";
 import { UserType } from "../../../types/user";
 
 export interface AuthSlice {
@@ -81,7 +81,7 @@ export const newPassSlice = createAsyncThunk(
 export const editAuthSilce:any = createAsyncThunk(
   "auth/editUser",
   async (user: UserType) => {
-    const { data } = await editUser(user);
+    const { data } = await editAuth(user);
     return data;
   }
 )

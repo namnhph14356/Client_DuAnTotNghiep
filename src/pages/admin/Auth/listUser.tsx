@@ -1,31 +1,31 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Button, Modal, Space, Table, Tag ,Image} from 'antd'
+import { Button, Modal, Space, Table, Tag, Image } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { removeUser } from '../../../api/user';
 import { AppDispatch } from '../../../app/store';
-import { getUserList, removeUserSlide } from '../../../features/Slide/user/userSlide';
+import { changeBreadcrumb, getUserList, removeUserSlide } from '../../../features/Slide/user/userSlide';
 import AdminPageHeader from '../../../components/AdminPageHeader';
-import breadcrumb from 'antd/lib/breadcrumb';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 const ListUser = () => {
-  // const breadcrumb = useAppSelector(data => data.user.breadcrumb)
+  const breadcrumb = useAppSelector(data => data.user.breadcrumb)
 
   const users = useSelector<any, any>(data => data.user.value);
-  const dispath = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispath(getUserList("Quản Lý User"))
-    
+    dispatch(changeBreadcrumb("Danh sách người dùng"))
+    dispatch(getUserList("Quản Lý User"))
+
   }, []);
 
   const onRemoveUser = (id: any) => {
     Modal.confirm({
       title: "You want to delete this user ?",
       onOk: () => {
-        dispath(removeUserSlide(id))
+        dispatch(removeUserSlide(id))
       }
 
     })
@@ -37,26 +37,24 @@ const ListUser = () => {
     { title: 'Họ Tên', dataIndex: 'username', key: 'username' },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Số điện thoại', dataIndex: 'phone', key: 'phone' },
-    { title: 'Ảnh', 
-    render: (record) => (
-      <div className="">
+    {
+      title: 'Ảnh', key: 'img',
+      render: (record) => (
+        <div className="">
           <Image
-              width={80}
-              height={80}
-              src={record.img}
+            width={80}
+            height={80}
+            src={record.img}
           />
-      </div>
-  )
-     , key: 'img' },
-
+        </div>
+      )
+    },
     {
       title: "Giới tính", dataIndex: "sex", key: "sex", render: (_: any, { sex }: any) => (
         <>
-          {sex == "male"
-            ? <Tag color="volcano">Male</Tag>
-            : sex == "female"
-              ? <Tag color="geekblue">Female</Tag>
-              : ""
+          {sex == 1
+            ? <Tag color="volcano">Nữ</Tag>
+            : <Tag color="geekblue">Nam</Tag>
           }
         </>
       ),
@@ -65,16 +63,14 @@ const ListUser = () => {
     {
       title: "Quyền", dataIndex: "role", key: "role", render: (_: any, { role }: any) => (
         <>
-          {role == "user"
-            ? <Tag color="volcano">User có quyền truy cập</Tag>
-            : role == "admin"
-              ? <Tag color="green">Admin có quyền truy cập</Tag>
-              : role == "teacher"
-                ? <Tag color="green">Teacher có quyền truy cập</Tag>
+          {role == "0"
+            ? <Tag color="blue">Học sinh</Tag>
+            : role == "1"
+              ? <Tag color="purple">Giảng viên</Tag>
+              : role == "2"
+                ? <Tag color="green">Admin</Tag>
                 : ""
           }
-
-
         </>),
     },
     {
@@ -106,17 +102,10 @@ const ListUser = () => {
     }
   })
   return (
-
     <div>
-      <h1>Quản Lý User</h1>
-      {/* <AdminPageHeader breadcrumb={breadcrumb} /> */}
+      <AdminPageHeader breadcrumb={breadcrumb} />
       <Table columns={headings} dataSource={dataSourd} bordered ></Table>
     </div>
   )
-//   changeBreadcrumb(state, action) {
-//     state.breadcrumb = action.payload
-//   }s
-//   export const { changeBreadcrumb } = user.actions
-// }
-  }
+}
 export default ListUser

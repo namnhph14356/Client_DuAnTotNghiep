@@ -14,16 +14,8 @@ import ListUser from "./pages/admin/Auth/listUser";
 import Store from "./pages/Store";
 import ForgotPassword from "./components/user/ForgotPassword";
 import NewPassword from "./components/user/NewPassword";
-import List from "./pages/admin/categories/List";
-import Add from "./pages/admin/categories/FormCategory";
 import User from "./pages/user/User";
 import Contact from "./pages/contact/Contact";
-import ListQuiz from "./pages/admin/quizz/quiz/ListQuiz";
-import FormQuiz from "./pages/admin/quizz/quiz/FormQuiz";
-import ListAnswerQuiz from "./pages/admin/quizz/answerQuiz/ListAnswerQuiz";
-import FormAnswerQuiz from "./pages/admin/quizz/answerQuiz/FormAnswerQuiz";
-import ListUserQuiz from "./pages/admin/quizz/userQuiz/ListUserQuiz";
-import FormUserQuiz from "./pages/admin/quizz/userQuiz/FormUserQuiz";
 import FormListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/FormListenWrite";
 
 import CategoryList from "./pages/teacher/category/category";
@@ -68,7 +60,7 @@ import LessonSentences from "./containers/Sentences/LessonSentences";
 import ExerciseSentences from "./containers/Sentences/ExerciseSentences";
 import ExamSentences from "./containers/Sentences/ExamSentences";
 import QuizTypeSelect from "./components/quiz/QuizTypeSelect";
-import {PrivateRouteHomePage,PrivateRouteLearning} from "./midlerware/PrivateRoute";
+import { PrivateRoute, PrivateRouteHomePage, PrivateRouteLearning } from "./midlerware/PrivateRoute";
 import DetailSentence from "./containers/Sentences/DetailSentence";
 import ListGrammar from "./pages/admin/grammar/ListGrammar";
 import FormGrammar from "./pages/admin/grammar/FormGrammar";
@@ -190,7 +182,7 @@ function App() {
                 <Route path="sentences" element={<Sentences />}>
                   <Route path="lesson">
                     <Route index element={<LessonSentences />} />
-                    <Route path=":idDetailSentence" element={<DetailSentence />}/>
+                    <Route path=":idDetailSentence" element={<DetailSentence />} />
                   </Route>
                   <Route path="exercise" element={<ExerciseSentences />} />
                   <Route path="exam" element={<ExamSentences />} />
@@ -259,13 +251,8 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="category" />} />
-          <Route path="category">
-            <Route index element={<List />} />
-            <Route path="add" element={<Add />} />
-            <Route path="edit/:id" element={<Add />} />
-          </Route>
+        <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
+          <Route index element={<Navigate to="user" />} />
 
           <Route path="contact">
             <Route index element={<ListContact />} />
@@ -275,25 +262,6 @@ function App() {
           <Route path="user">
             <Route index element={<ListUser />} />
             <Route path='edit/:id' element={<EditUser />} />
-          </Route>
-
-          {/* quizz */}
-          <Route path="quiz">
-            <Route index element={<ListQuiz />} />
-            <Route path="add" element={<FormQuiz />} />
-            <Route path=":id/edit" element={<FormQuiz />} />
-          </Route>
-
-          <Route path="answerQuiz">
-            <Route index element={<ListAnswerQuiz />} />
-            <Route path="add" element={<FormAnswerQuiz />} />
-            <Route path=":id/edit" element={<FormAnswerQuiz />} />
-          </Route>
-
-          <Route path="userQuiz">
-            <Route index element={<ListUserQuiz />} />
-            <Route path="add" element={<FormUserQuiz />} />
-            <Route path=":id/edit" element={<FormUserQuiz />} />
           </Route>
 
           <Route path="day">

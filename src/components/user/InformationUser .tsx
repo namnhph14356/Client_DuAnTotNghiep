@@ -83,7 +83,7 @@ const InformationUser = () => {
               </td>
               <td>
                 <a href="" className='text-blue-600'>
-                  {auth.role === '0' ? 'Blue Member' : 'Admin'}
+                  {auth.role === '0' ? 'Học sinh' : auth.role === '1' ? 'Giảng viên' : 'Admin'}
                 </a>
               </td>
             </tr>

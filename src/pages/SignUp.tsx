@@ -77,7 +77,7 @@ const SignUp = (props: Props) => {
         });
       } else {
         Modal.success({
-          title: "Đăng kí tài khoản thành công !",
+          title: "Đăng ký tài khoản thành công !",
           onOk: () => {
             navigate("/signin");
           },
@@ -101,7 +101,7 @@ const SignUp = (props: Props) => {
       <div className="signin__form  m-auto px-8">
         <div className="signin__main__left  w-full ">
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-8">Đăng kí </h1>
+            <h1 className="text-3xl font-bold mb-8">Đăng ký</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="field">
                 <div className="field__input">
