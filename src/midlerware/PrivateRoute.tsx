@@ -2,16 +2,18 @@ import { message, Modal } from 'antd';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { AppDispatch } from '../app/store';
+import { useAppSelector } from '../app/hooks';
+import { AppDispatch, RootState } from '../app/store';
 import { currentUserSlice } from '../features/Slide/auth/authSlide';
+import { UserType } from '../types/user';
 
 type PrivateRouteProps = {
   children: JSX.Element;
 }
 
 export const PrivateRoute = (props: PrivateRouteProps) => {
-  const isUser = localStorage.getItem("tokenUser") ? JSON.parse(String(localStorage.getItem("tokenUser"))).user.role : "";
-  if (isUser == 0) {
+  const auth = useAppSelector(((item: RootState) => item.auth.value)) as UserType
+  if (auth.role !== "2") {
     return <Navigate to="/" />
   }
   return props.children

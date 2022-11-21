@@ -37,8 +37,13 @@ export const addUser = (user:UserType) => {
 } 
 
 export const editUser = (user:UserType) => {
+  const url = `/users/${user._id}`;
+  return instance.put(url, user);
+} 
+
+export const editAuth = (user:UserType) => {
     const url = `/users/${user._id}`;
-    return instance.put(url, user);
+    return instance.patch(url, user);
 } 
 
 export const removeUser = (id:any) => {

@@ -58,9 +58,13 @@ const authSlide = createSlice({
   initialState: {
     value: [],
     otp: [],
-    isAuthticated: false
+    isAuthticated: false,
+    breadcrumb: ""
   },
   reducers: {
+    changeBreadcrumb(state, action) {
+      state.breadcrumb = action.payload
+ }
   },
 
   extraReducers: (builer) => {
@@ -79,4 +83,5 @@ const authSlide = createSlice({
   }
 })
 
+export const { changeBreadcrumb } = authSlide.actions
 export default authSlide.reducer;

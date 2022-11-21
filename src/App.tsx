@@ -60,7 +60,7 @@ import LessonSentences from "./containers/Sentences/LessonSentences";
 import ExerciseSentences from "./containers/Sentences/ExerciseSentences";
 import ExamSentences from "./containers/Sentences/ExamSentences";
 import QuizTypeSelect from "./components/quiz/QuizTypeSelect";
-import {PrivateRouteHomePage,PrivateRouteLearning} from "./midlerware/PrivateRoute";
+import { PrivateRoute, PrivateRouteHomePage, PrivateRouteLearning } from "./midlerware/PrivateRoute";
 import DetailSentence from "./containers/Sentences/DetailSentence";
 import ListGrammar from "./pages/admin/grammar/ListGrammar";
 import FormGrammar from "./pages/admin/grammar/FormGrammar";
@@ -182,7 +182,7 @@ function App() {
                 <Route path="sentences" element={<Sentences />}>
                   <Route path="lesson">
                     <Route index element={<LessonSentences />} />
-                    <Route path=":idDetailSentence" element={<DetailSentence />}/>
+                    <Route path=":idDetailSentence" element={<DetailSentence />} />
                   </Route>
                   <Route path="exercise" element={<ExerciseSentences />} />
                   <Route path="exam" element={<ExamSentences />} />
@@ -251,7 +251,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="admin" element={<AdminLayout />}>
+        <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Navigate to="user" />} />
 
           <Route path="contact">
