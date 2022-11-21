@@ -39,7 +39,7 @@ const Contact = () => {
       toas.success("Gửi biểu mẫu thành công");
       setTimeout(() => {
         navigate('/')
-     }, 1000); 
+      }, 1000);
 
 
     } catch (error: any) {
@@ -49,7 +49,7 @@ const Contact = () => {
   };
   return (
     <>
-      <div className="container">
+      <div className="w-10/12 m-auto">
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">
             Liên hệ với chúng tôi
@@ -59,14 +59,11 @@ const Contact = () => {
               Liên hệ với chúng tôi qua email bằng cách điền vào biểu mẫu trên
               trang này
             </span>
-            <br />
-            <div className="py-3">
-              <span className="text-[16px] py-3">
-                Bạn cũng có thể truy cập khu vực Chăm sóc khách hàng để tìm câu
-                trả lời cho những câu hỏi thường gặp nhất về các dịch vụ của
-                Voguie.
-              </span>
-            </div>
+            <p className="text-[16px] py-3">
+              Bạn cũng có thể truy cập khu vực Chăm sóc khách hàng để tìm câu
+              trả lời cho những câu hỏi thường gặp nhất về các dịch vụ của
+              Voguie.
+            </p>
           </div>
           <Form onFinish={onFinish} className="mt-[23px]">
             <Row className="form" >
@@ -144,43 +141,10 @@ const Contact = () => {
                 </div>
               </Col>
             </Row>
-            <div className="text pt-[35px]">
-              <p className="text-[16px] m-0">
-                Trang web này được bảo vệ bởi reCAPTCHA và Chính sách quyền
-                riêng tư và Điều khoản dịch vụ của Google sẽ được áp dụng.
-              </p>
-              <br />
-              <p className="text-[16px] m-0">
-                Dữ liệu cá nhân của bạn sẽ được Vogue sử dụng chỉ cho các mục
-                đích liên quan đến dịch vụ / liên hệ được yêu cầu.
-              </p>
-              <br />
-              <p className="text-[16px] m-0">
-                Tham khảo Chính sách quyền riêng tư của chúng tôi để biết thêm
-                thông tin và liên hệ với Valentino nếu có các mối quan tâm và
-                yêu cầu về quyền riêng tư
-              </p>
-              <br />
-              <p className="text-[16px] m-0">
-                Hơn nữa, nếu bạn cũng muốn giữ liên lạc với Vogue khi nhận các
-                thông tin liên lạc thương mại được cá nhân hóa, vui lòng cho
-                phép chúng tôi:
-              </p>
-            </div>
-            <div className="check-box">
-              <div className="flex items-center pt-5">
-                <Form.Item name={['contact', 'sendAds']} valuePropName="checked">
-                  <Checkbox>xử lý dữ liệu của bạn cho mục đích tiếp thị và khuyến mại
-                    (thông báo được gửi qua bưu điện, email hoặc SMS về bộ sưu tập
-                    hoặc lời mời tham gia sự kiện, v.v.)</Checkbox>
-                </Form.Item>
-
-              </div>
-            </div>
             <div className="submit flex justify-center items-center pt-[36px] mb-[60px]">
-              
+
               <Form.Item >
-                <Button className="py-[2px] px-[40px] bg-[#4A235A] w-[337px] h-[52px] text-white font-bold border"  type="primary" htmlType="submit">
+                <Button className="py-[2px] px-[40px] bg-[#4A235A] w-[337px] h-[52px] text-white font-bold border" type="primary" htmlType="submit">
                   Gửi phản hồi
                 </Button>
               </Form.Item>

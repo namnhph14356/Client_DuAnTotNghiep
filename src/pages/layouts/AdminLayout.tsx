@@ -84,8 +84,8 @@ const AdminLayout = () => {
     }
   }, [location, current])
   return (
-    <Layout className='h-full' style={{ width: "100%" }}>
-      <Sider className='sider__bar__admin' collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} style={{ background: "#001529", height: "unset" }}>
+    <Layout style={{ width: "100%" }}>
+      <Sider  collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
         <div className="logo  bg-[#001529]">
           <NavLink aria-current="page" className="active text-[#fff] " to="/">
             <img
@@ -95,17 +95,19 @@ const AdminLayout = () => {
             />
           </NavLink>
         </div>
-        <Menu className='menu__bar__admin'
+        <Menu 
+         className="bg-[#001529]"
           theme="dark"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
-          style={{ background: "#001529", height: "unset" }}
+          style={{ background: "#001529", height: "100%", width: "100%" }}
         >
           <SubMenu key="sub11" icon={<FolderFilled />} title="Quản lí ngày học">
             <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>
           </SubMenu>
-          <SubMenu key="sub1" icon={<FolderFilled />} title="Categories">
+
+          {/* <SubMenu key="sub1" icon={<FolderFilled />} title="Categories">
             <Menu.Item key="/admin/category"><NavLink to='/admin/category'>List Categories</NavLink></Menu.Item>
             <Menu.Item key="/admin/category/add"><NavLink to='/admin/category/add'>Add Category</NavLink></Menu.Item>
           </SubMenu>
@@ -116,8 +118,8 @@ const AdminLayout = () => {
           <SubMenu key="sub3" icon={<ReadOutlined />} title="AnswerQuiz">
             <Menu.Item key="/admin/answerQuiz"><NavLink to='/admin/answerQuiz'>List Answer Quiz</NavLink></Menu.Item>
             <Menu.Item key="/admin/answerQuiz/add"><NavLink to='/admin/answerQuiz/add'>Add Answer Quiz</NavLink></Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub4" icon={<ReadOutlined />} title="UserQuiz">
+          </SubMenu> */}
+          <SubMenu key="sub4" icon={<FolderFilled />} title="Quản lí người dùng">
             <Menu.Item key="/admin/userQuiz"><NavLink to='/admin/userQuiz'>List User Quiz</NavLink></Menu.Item>
             <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
           </SubMenu>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addMonth, editMonth, listMonth, removeMonth } from "../../../api/month";
+import { addMonth, editMonth, listMonth, monthBiggest, removeMonth } from "../../../api/month";
 import { MonthType } from "../../../types/month";
 
 
@@ -12,6 +12,14 @@ export const getListMonthSlice = createAsyncThunk(
           const { data } = await listMonth()
           return data
      }
+)
+
+export const getMonthBiggestSlice = createAsyncThunk(
+  "days/getMonthBiggestSlice",
+  async () => {
+       const {data} = await monthBiggest();
+       return data
+  }
 )
 
 export const addMonthSlice = createAsyncThunk(
@@ -55,6 +63,7 @@ const monthSlice = createSlice({
      name: "Months",
      initialState: {
           value: [],
+          bigMonth:[],
           breadcrumb: ""
      },
      reducers: {
@@ -66,6 +75,10 @@ const monthSlice = createSlice({
           
           builder.addCase(getListMonthSlice.fulfilled, (state, action) => {
                state.value = action.payload
+
+          })
+          builder.addCase(getMonthBiggestSlice.fulfilled, (state, action) => {
+            state.bigMonth = action.payload
 
           })
           builder.addCase(addMonthSlice.fulfilled, (state: any, action) => {

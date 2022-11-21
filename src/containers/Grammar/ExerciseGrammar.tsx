@@ -9,7 +9,7 @@ import { addHistory } from '../../api/history'
 import { detailLearningProgressByUser } from '../../api/learningProgress'
 import { addUserQuiz } from '../../api/userQuiz'
 import { RootState } from '../../app/store'
-import { AnswerQuizType, AnswerType } from '../../types/answerQuiz'
+import { AnswerQuizType } from '../../types/answerQuiz'
 import { LearningProgressType } from '../../types/learningProgress'
 import { UserType } from '../../types/user'
 import { message } from 'antd';
@@ -157,6 +157,14 @@ const ExerciseGrammar = () => {
       setOpenExplainAnswer(openExplainAnswer.map((item: OpenSuggestions) => String(item.id) === statusId ? { open: open, id: item.id } : item))
     }
   }
+  const checkOpen2 = (findWordMeaning, findExplainAnswer) => {
+
+    if (openWordMeaning.length > 0 && findWordMeaning[0].open && openExplainAnswer.length > 0 && findExplainAnswer[0].open) {
+      return 'grid grid-cols-3 gap-4'
+    } else if (openWordMeaning.length > 0 && findWordMeaning[0].open || openExplainAnswer.length > 0 && findExplainAnswer[0].open) {
+      return 'grid grid-cols-2 gap-4'
+    }
+  }
 
   const arrayVietNamMeaning = (question: QuizType[]) => {
     let arr: OpenSuggestions[] = [];
@@ -293,9 +301,9 @@ const ExerciseGrammar = () => {
                             return (
                               <div key={e._id} className='even:bg-slate-100 '>
                                 <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""} font-sans`} >
-                                  <div className='grid grid-cols-3 gap-4 divide-x-8 divide-gray-400'>
+                                  <div className={`${checkOpen2(findWordMeaning, findExplainAnswer)}  divide-x-8 divide-gray-400`}>
                                     <div className='flex gap-2 py-2 px-5'>
-                                      <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" />
+                                      <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" disabled={check ? true : false} />
                                       <label className='align-middle mt-[-2px] hover:cursor-pointer w-full' htmlFor={e.answer}>{e.answer}</label>
                                     </div>
 
@@ -342,7 +350,7 @@ const ExerciseGrammar = () => {
           </div>
 
           <div className="flex px-8 space-x-4" >
-            <button className='px-4 py-1 bg-[#4F46E5] text-white rounded'>Nộp bài</button>
+            <button className={`${check ? 'bg-[#7873d7]' : 'bg-[#4F46E5]'} px-4 py-1 text-white rounded `} disabled={check ? true : false}>Nộp bài</button>
             <div className='px-4 py-1 bg-[#4F46E5] text-white rounded cursor-pointer' onClick={remake}>Làm lại </div>
           </div>
         </form>

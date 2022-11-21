@@ -1,100 +1,136 @@
-import React from 'react'
-import './../css/course.css'
+import React from "react";
+import "./../css/course.css";
 
-
-type Props = {}
+type Props = {};
 
 const CoursePage = (props: Props) => {
-    return (
-        <div>
-            <div>
-                <img width={'100%'} src="https://www.mshoagiaotiep.com/uploads/images/userfiles/2020/03/09/Banner_Hoc_truc_tuyen_-_mang_lop_ve_nha_ban-01.jpg" alt="" />
+  return (
+    <div className=" w-8/12 m-auto">
+      <div className=" flex justify-center m-auto text-center mt-16">
+        <div className="mt-2">
+          <div className="probootstrap-pricing border-[1px] p-8">
+            <h3 className="text-2xl">Gói thường</h3>
+            <div className="probootstrap-price-wrap my-6 ">
+              <div className="probootstrap-price text-3xl text-[#6078EA]">
+                200.000 VND
+              </div>
+              <span className="probootstrap-price-per-month mt-2 text-gray-400">
+                / tháng
+              </span>
             </div>
-            {/* START: section */}
-            <section className="probootstrap-section">
-                <div className="container">
-                    <div className="row probootstrap-gutter0 mb80" style={{ marginTop: '-120px' }}>
-                        <div className="col-md-4 probootstrap-pricing-wrap">
-                            <div className="probootstrap-pricing">
-                                <h3>Personal</h3>
-                                <div className="probootstrap-price-wrap">
-                                    <span className="probootstrap-price">$19.99</span>
-                                    <span className="probootstrap-price-per-month">per month</span>
-                                </div>
-                                <ul>
-                                    <li>100 invoices</li>
-                                    <li>Custom scripting &amp; scheduling</li>
-                                    <li>Payment &amp; accounting software integration</li>
-                                </ul>
-                                <button className='btn__buy__coures'>
-                                    Start Free Trial
-                                </button>
-                              
-                            </div>
-                        </div>
-                        <div className="col-md-4 probootstrap-pricing-wrap">
-                            <div className="probootstrap-pricing popular">
-                                <h3>Advance <span>Most popular</span></h3>
-                                <div className="probootstrap-price-wrap">
-                                    <span className="probootstrap-price">$49.99</span>
-                                    <span className="probootstrap-price-per-month">per month</span>
-                                </div>
-                                <ul>
-                                    <li>500 invoices</li>
-                                    <li>Custom scripting &amp; scheduling</li>
-                                    <li>Payment &amp; accounting software integration</li>
-                                </ul>
-                                  <button className='btn__buy__coures'>
-                                    Start Free Trial
-                                </button>
-                            </div>
-                        </div>
-                        <div className="col-md-4 probootstrap-pricing-wrap">
-                            <div className="probootstrap-pricing">
-                                <h3>Business</h3>
-                                <div className="probootstrap-price-wrap">
-                                    <span className="probootstrap-price">$99.99</span>
-                                    <span className="probootstrap-price-per-month">per month</span>
-                                </div>
-                                <ul>
-                                    <li>Unlimtted invoices</li>
-                                    <li>Custom scripting &amp; scheduling</li>
-                                    <li>Payment &amp; accounting software integration</li>
-                                </ul>
-                                  <button className='btn__buy__coures'>
-                                    Start Free Trial
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    {/* END row */}
-                    <div className="row mb50">
-                        <div className="col-md-12 section-heading text-center">
-                            <h2>Frequently Ask Question</h2>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <h3>What is sublime?</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                            <h3>Can I use this template?</h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                            <h3>What is the license?</h3>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                        </div>
-                        <div className="col-md-6">
-                            <h3>Is it free?</h3>
-                            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                            <h3>Do you do a custom work?</h3>
-                            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* END: section */}
-
+            <ul className="flex flex-col gap-6 mt-12">
+              <li>Học thường</li>
+              <li>Học thường học thường</li>
+              <li>Học thường học thường Học thường học thường</li>
+            </ul>
+            <button className="btn__buy__coures mt-12">Thử miễn phí</button>
+          </div>
         </div>
-    )
-}
+        <div className="bg-[#fffdfd]">
+          <div className="probootstrap-pricing popular border-[1px] p-10">
+            <h3 className="text-2xl">Gói nâng cao</h3>
+            <div className="probootstrap-price-wrap my-6 ">
+              <div className="probootstrap-price text-3xl text-[#6078EA]">
+                1.000.000 VND
+              </div>
+              <span className="probootstrap-price-per-month mt-2 text-gray-400">
+                / tháng
+              </span>
+            </div>
+            <ul className="flex flex-col gap-6 mt-12">
+              <li>Học thường</li>
+              <li>Học thường học thường</li>
+              <li>Học thường học thường Học thường học thường</li>
+            </ul>
+            <button className="btn__buy__coures mt-12">Thử miễn phí</button>
+          </div>
+        </div>
+        <div className="mt-2">
+          <div className="probootstrap-pricing border-[1px] p-8">
+            <h3 className="text-2xl">Gói doanh nghiệp</h3>
+            <div className="probootstrap-price-wrap my-6 ">
+              <div className="probootstrap-price text-3xl text-[#6078EA]">
+                2.000.000 VND
+              </div>
+              <span className="probootstrap-price-per-month mt-2 text-gray-400">
+                / tháng
+              </span>
+            </div>
+            <ul className="flex flex-col gap-6 mt-12">
+              <li>Học thường</li>
+              <li>Học thường học thường</li>
+              <li>Học thường học thường Học thường học thường</li>
+            </ul>
+            <button className="btn__buy__coures mt-12">Thử miễn phí</button>
+          </div>
+        </div>
 
-export default CoursePage
+        {/* END row */}
+      </div>
+
+      <div className="mt-12">
+        <h1 className="text-center text-3xl">Câu hỏi thường gặp?</h1>
+
+        <div className="mt-8 flex gap-4">
+            <div className="w-[50%] flex flex-col gap-4">
+          <div className="">
+            <h3 className="font-bold">
+              1. Để thanh toán đảm bảo, tôi có cần đăng ký một tài khoản thanh
+              toán đảm bảo?
+            </h3>
+            <span>
+              Bạn không cần phải tạo tài khoản thanh toán đảm bảo. Hiện tại, bạn
+              có thể thanh toán qua thẻ Visa, MasterCard, online bằng thẻ ATM
+              nội địa hoặc chuyển khoản qua Ngân hàng. Những hình thức thanh
+              toán khác sẽ được cung cấp trên SenPay.vn trong thời gian sớm
+              nhất.
+            </span>
+          </div>
+
+          <div className="">
+            <h3 className="font-bold">2. Thanh toán đảm bảo là gì?</h3>
+            <span>
+              Thanh toán đảm bảo cho phép người mua thanh toán trực tuyến an
+              toàn. Số tiền sẽ chỉ được chuyển cho nhà cung cấp sau khi người
+              mua xác nhận đã nhận được hàng. Thanh toán đảm bảo giúp cho việc
+              giao dịch được thực hiện nhanh chóng, an toàn và dễ dàng hơn. Đối
+              với người mua: Tiền chỉ được chuyển cho nhà cung cấp sau khi người
+              mua xác nhận đã nhận được hàng. Đối với nhà cung cấp: Mọi thông
+              tin thanh toán đều được xác minh trước khi thực hiện giao dịch, và
+              bên bán chỉ chuyển hàng sau khi bên mua đã thực hiện thanh toán.
+              Hướng dẫn thanh toán đảm bảo, bạn xem thêm tại đây nhé!
+            </span>
+          </div>
+          </div>
+{/* ======================================================= */}
+        <div className="w-[50%] flex flex-col gap-4">
+          <div className="">
+            <h3 className="font-bold">
+              {" "}
+              3. Tôi có phải trả phí để sử dụng dịch vụ Thanh toán đảm bảo?
+            </h3>
+            <span>
+              Người mua hoàn toàn được miễn phí sử dụng dịch vụ thanh toán đảm
+              bảo.
+            </span>
+          </div>
+
+          <div className="">
+            <h3 className="font-bold"> 4. Tại sao phải chọn Thanh toán đảm bảo?</h3>
+            <span>
+              Thanh toán đảm bảo an toàn, dễ sử dụng và MIỄN PHÍ. Đặc biệt, bạn
+              không cần phải tạo tài khoản thanh toán đảm bảo Những tính năng
+              quan trọng của thanh toán đảm bảo: • Thanh toán an toàn với hệ
+              thống bảo mật VeriSign • Theo dõi được việc giao nhận hàng • Tiền
+              chỉ được chuyển cho nhà cung cấp sau khi bạn xác nhận đã nhận được
+              hàng.
+            </span>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CoursePage;

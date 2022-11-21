@@ -7,13 +7,15 @@ export type SentenceType = {
   soundCombinations: any;
   structuralAnalysis: string;
   grammarAnalysis: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type SentenceResult = {
-  quiz: string,
-  answerQuiz?: string,
-  isCorrect: boolean,
-  point: number,
-  time: string,
-  answer?: string
+  quiz: string;
+  answerQuiz?: string;
+  isCorrect: boolean;
+  point: number;
+  time: string;
+  answer?: string;
 };

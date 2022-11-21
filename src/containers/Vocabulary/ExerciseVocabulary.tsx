@@ -79,6 +79,7 @@ const ExerciseVocabulary = () => {
     setOnReset(!onReset)
     if (questionIndex >= quizList.length - 1) {
       setDone(true)
+      setCheck(true)
     } else {
       setQuestionIndex(questionIndex + 1)
     }
@@ -103,6 +104,7 @@ const ExerciseVocabulary = () => {
     const score = Math.round(10 / quizList.length * totalCorrect)
     setPoint(score)
     setFinish(true)
+    setCheck(true)
     const { data: data2 } = await addHistory({
       user: user._id,
       learningProgress: learningProgress?._id,
@@ -182,6 +184,7 @@ const ExerciseVocabulary = () => {
         setFinish(false)
         setResult([])
         setDone(false)
+        setCheck(false)
       }
     })
   }
@@ -205,7 +208,7 @@ const ExerciseVocabulary = () => {
 
               <div className="flex my-4 justify-center space-x-4 w-full" >
                 <div className='px-4 py-1 bg-[#4F46E5] cursor-pointer text-white rounded ' onClick={remake}>Làm lại </div>
-                <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#4F46E5]' : 'bg-[#7873d7]'}`} onClick={onFinish} disabled={done ? false : true}>Nộp bài</button>
+                <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#7873d7]' : 'bg-[#4F46E5]'}`} onClick={onFinish} disabled={done ? true : false}>Nộp bài</button>
               </div>
 
               <div className='flex flex-row gap-4'>

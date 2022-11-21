@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import reactStringReplace from 'react-string-replace';
-import { SpeechContext } from '../../context/GoogleSpeechContext';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import '../../css/writeAndListen.css'
 
 type QuizType5Props = {
@@ -19,9 +19,12 @@ type QuizType5Props = {
 
 const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, onHanldeSetSelect }: QuizType5Props) => {
 
+  const transcript = useAppSelector(item => item.googleSpeech.transcript)
+  const dispatch = useAppDispatch()
   const [show, setShow] = useState<boolean>(false)
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-  const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+  // const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
+
   const [convertValues, setConvertValues] = useState<any>([])
   const { register, handleSubmit, reset } = useForm();
 

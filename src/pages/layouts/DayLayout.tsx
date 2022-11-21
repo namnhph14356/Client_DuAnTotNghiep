@@ -23,6 +23,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from "../../types/user";
 import PopupChange from "../../components/AdminDayConponent/PopupChange";
+import AdminPageHeader from "../../components/AdminPageHeader";
 
 const notification = (
   <Menu
@@ -246,12 +247,12 @@ const DayLayout = () => {
             </SubMenu>
           </SubMenu>
           <div className="text-center">
-            <button
+            {/* <button
               className="p-4 bg-blue-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600"
               onClick={() => handlonClick()}
             >
               Đổi ngày
-            </button>
+            </button> */}
 
           </div>
 
@@ -301,10 +302,10 @@ const DayLayout = () => {
             </div>
           </div>
         </Header>
-        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+        <Content style={{ margin: "24px 16px", overflow: "initial" }}>
           <div
             className="site-layout-background"
-            style={{ padding: 24, textAlign: "center" }}
+            style={{ padding: 24 }}
           >
             <Outlet />
           </div>
