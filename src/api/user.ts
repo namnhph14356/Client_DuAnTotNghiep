@@ -55,6 +55,10 @@ export const newPassword = (user:any) => {
     const url = `/newPassword`;
     return instance.put(url, user);
 } 
+export const newPasswordUser = (user:any) => {
+    const url = `/users/${user._id}`;
+    return instance.patch(url, user);
+} 
 
 export const changeOTP = (user:any) => {
     const url = `/changeOTP`;

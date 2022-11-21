@@ -115,10 +115,19 @@ import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
 import SearchDirectory from "./pages/SearchDirectory";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
+
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
+import EditImage from "./components/user/EditImage";
 import AboutUs from "./pages/AboutUs";
+import UserLayout from "./pages/layouts/UserLayout";
+import InformationUser from "./components/user/InformationUser ";
+import EditInformationUser from "./components/user/EditInformationUser ";
+import PrivateUser from "./components/user/PrivateUser ";
+import EditEmailUser from "./components/user/EmailUser";
+import EditPasswordUser from "./components/user/EditPasswordUser ";
+
 
 
 function App() {
@@ -234,7 +243,14 @@ function App() {
           <Route path="comment" element={<CommentBox />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
-          <Route path="user" element={<User />} />
+          <Route path="user" element={<UserLayout />} >
+            <Route index element={<InformationUser />} />
+            <Route path="settingUser/:id" element={<EditInformationUser />} />
+            <Route path="privateUser" element={<PrivateUser />} />
+            <Route path="editEmailUser/:id" element={<EditEmailUser />} />
+            <Route path="editImage/:id" element={<EditImage />} />
+            <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
+          </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
           <Route path="directory" element={<SearchDirectory />}></Route>
