@@ -19,6 +19,7 @@ import { UserType } from '../../types/user';
 import { getUser, getUserList } from '../../features/Slide/user/userSlide';
 import { getListUser, getUserById } from '../../api/user';
 import Loading from '../../components/Loading';
+import { ReplyCommentType } from '../../types/replycomment';
 
 const { TextArea } = Input;
 interface CommentItem {
@@ -33,21 +34,22 @@ const CommentList = ({ comments, dayId, postId }: { comments: CommentType[], day
   useEffect(() => {
     dispath(getReplyCommentList())
   }, []);
-  const filterComment = comments.filter((item: CommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)  
-  
+  const filterComment:any = comments.filter((item: CommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)
+  const filterReply = replyy.filter((item: ReplyCommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)
+
   return (
     <>
       {filterComment.length > 0
         ?
         <div className="w-fullbg-white border rounded-md">
-          <h3 className="font-semibold p-1">{`${filterComment.length + replyy.length} ${filterComment.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
+          <h3 className="font-semibold p-1">{`${filterComment.length + filterReply.length} ${filterComment.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
           <div className="flex flex-col gap-5 m-3">
             <List
               dataSource={filterComment}
               itemLayout="horizontal"
               renderItem={(item: CommentType) => {
                 return (
-                  <CommentItem item={item} />
+                  <CommentItem item={item} dayId={dayId} postId={postId} />
                 )
               }
               }
@@ -62,7 +64,7 @@ const CommentList = ({ comments, dayId, postId }: { comments: CommentType[], day
   )
 }
 
-const CommentItem = ({ item }: any) => {
+const CommentItem = ({ item, dayId, postId }: any) => {
   const [cmt, setCmt] = useState<any>();
   const dispath = useDispatch();
   const [reply, setReply] = React.useState(false)
@@ -175,7 +177,9 @@ const CommentItem = ({ item }: any) => {
             userId: user._id,
             avatar: user.img,
             content: values.replycomment.content,
-            commentId: Newcomment._id
+            commentId: Newcomment._id,
+            dayId: dayId,
+            postId: postId
           }
         ))
         toas.success("Bình luận thành công");
@@ -238,7 +242,7 @@ const CommentItem = ({ item }: any) => {
                   <div>
                     <Form onFinish={onFinish}>
                       <Form.Item name={['replycomment', 'content']}>
-                        <ReactQuill theme="snow" />
+                      <TextArea rows={2} value={value} />
                       </Form.Item>
                       <Form.Item>
                         <Button loading={submitting} htmlType="submit" type="primary">
@@ -387,7 +391,7 @@ const QuestionAnswer = () => {
   const users = useSelector<any, any>(data => data.user.value);
   const comment = useSelector<any, any>(data => data.comment.value);
   const { id, dayId }: any = useParams()
-
+  
   useEffect(() => {
     dispath(getCommentList())
   }, []);
@@ -430,7 +434,7 @@ const QuestionAnswer = () => {
                 <Rate onChange={setRating} value={rating} defaultValue={3} />
               </Form.Item>
               <Form.Item name={['comment', 'content']}>
-                <ReactQuill theme="snow" style={{ backgroundColor: 'white' }} />
+                <TextArea rows={4} value={value} />
               </Form.Item>
               <Form.Item>
                 <Button loading={submitting} htmlType="submit" type="primary">

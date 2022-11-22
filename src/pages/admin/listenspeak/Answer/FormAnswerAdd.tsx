@@ -29,11 +29,9 @@ const FormAnswerListenSpeak = (props: Props) => {
   const { dayId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
-  const filterQuizAnswer: any = quizs.find((item: QuizType) => item._id === answerQuiz?.quiz)
-
-
-
   const { id } = useParams();
+  const filterQuizAnswer: any = quizs.find((item: QuizType) => item._id === id)
+  
   const filterAnswer = listAnswer.filter((item) => item.quiz === id)
   const filterIsCorrect = filterAnswer.find((item) => item.isCorrect === true)
 
