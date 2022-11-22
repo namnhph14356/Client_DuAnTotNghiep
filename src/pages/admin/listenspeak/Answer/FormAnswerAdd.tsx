@@ -160,33 +160,12 @@ const FormAnswerListenSpeak = (props: Props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item>
-            {
-              filterQuizAnswer?.type === 'selectImage' ?
-                <div>
-                  <Form.Item
-                    label="Upload ảnh"
-                    tooltip="Ảnh dành cho Quiz"
-                  >
-                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
-                  </Form.Item>
-
-                  <Form.Item name="image" valuePropName="src" label="ImagePreview" >
-                    <img id="img-preview" style={{ width: "100px" }} />
-                  </Form.Item>
-                </div>
-                :
-                <Form.Item label="_id" name="_id" hidden={true}>
-                  <Input />
-                </Form.Item>
-            }
-          </Form.Item>
           <Form.Item
             label="Trạng Thái"
             name="isCorrect"
             tooltip="Trạng Thái Đáp Án"
             rules={[{ required: true, message: 'Không để Trống!' }]}
-          >
+            >
             <Select>
               <Option key={1} value={false}>
                 Sai
@@ -196,9 +175,27 @@ const FormAnswerListenSpeak = (props: Props) => {
               </Option>
             </Select>
           </Form.Item>
-
-
-
+            <Form.Item>
+              {
+                filterQuizAnswer?.type === 'selectImage' ?
+                  <div>
+                    <Form.Item
+                      label="Upload ảnh"
+                      tooltip="Ảnh dành cho Quiz"
+                    >
+                      <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
+                    </Form.Item>
+  
+                    <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                      <img id="img-preview" style={{ width: "100px" }} />
+                    </Form.Item>
+                  </div>
+                  :
+                  <Form.Item label="_id" name="_id" hidden={true}>
+                    <Input />
+                  </Form.Item>
+              }
+            </Form.Item>
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               Thêm

@@ -52,7 +52,7 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
         return message.error('Không để trống Ảnh!');
       }
     }
-    
+
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
     if (id) {
@@ -87,7 +87,7 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
     }
 
   }
-  
+
   useEffect(() => {
     if (id) {
       const getQuiz = async () => {
@@ -121,27 +121,6 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item>
-            {
-              filterQuizAnswer?.type === 'selectImage' ?
-                <div>
-                  <Form.Item
-                    label="Upload ảnh"
-                    tooltip="Ảnh dành cho Quiz"
-                  >
-                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
-                  </Form.Item>
-
-                  <Form.Item name="image" valuePropName="src" label="ImagePreview" >
-                    <img id="img-preview" style={{ width: "100px" }} />
-                  </Form.Item>
-                </div>
-                :
-                <Form.Item label="_id" name="_id" hidden={true}>
-                  <Input />
-                </Form.Item>
-            }
-          </Form.Item>
           <Form.Item
             label="Trạng Thái"
             name="isCorrect"
@@ -168,6 +147,28 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
               </Select>
             }
           </Form.Item>
+          <Form.Item>
+            {
+              filterQuizAnswer?.type === 'selectImage' ?
+                <div>
+                  <Form.Item
+                    label="Upload ảnh"
+                    tooltip="Ảnh dành cho Quiz"
+                  >
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
+                  </Form.Item>
+
+                  <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                    <img id="img-preview" style={{ width: "100px" }} />
+                  </Form.Item>
+                </div>
+                :
+                <Form.Item label="_id" name="_id" hidden={true}>
+                  <Input />
+                </Form.Item>
+            }
+          </Form.Item>
+
 
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
