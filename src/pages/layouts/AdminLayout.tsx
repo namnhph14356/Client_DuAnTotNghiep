@@ -4,12 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import {
   UserOutlined,
-  CommentOutlined,
-  DollarOutlined,
-  LaptopOutlined,
   FolderFilled,
+  TeamOutlined,
   BellOutlined,
-  ReadOutlined,
+  BankOutlined,
+  ContactsOutlined ,
+  HighlightOutlined 
 } from "@ant-design/icons";
 import "../../css/admin.css";
 import { useSelector } from "react-redux";
@@ -85,7 +85,7 @@ const AdminLayout = () => {
   }, [location, current])
   return (
     <Layout style={{ width: "100%" }}>
-      <Sider  collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
+      <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
         <div className="logo  bg-[#001529]">
           <NavLink aria-current="page" className="active text-[#fff] " to="/">
             <img
@@ -95,41 +95,31 @@ const AdminLayout = () => {
             />
           </NavLink>
         </div>
-        <Menu 
-         className="bg-[#001529]"
+        <Menu
+          className="bg-[#001529]"
           theme="dark"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
           style={{ background: "#001529", height: "100%", width: "100%" }}
         >
-          <SubMenu key="sub11" icon={<FolderFilled />} title="Quản lí ngày học">
-            <Menu.Item key="/admin/day"><NavLink to='/admin/day'>Danh sách ngày</NavLink></Menu.Item>
-          </SubMenu>
+          <Menu.Item key="/admin/dashboard" icon={<BankOutlined />} ><NavLink to='/admin/dashboard'>Dashboard</NavLink></Menu.Item>
 
-          {/* <SubMenu key="sub1" icon={<FolderFilled />} title="Categories">
-            <Menu.Item key="/admin/category"><NavLink to='/admin/category'>List Categories</NavLink></Menu.Item>
-            <Menu.Item key="/admin/category/add"><NavLink to='/admin/category/add'>Add Category</NavLink></Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<ReadOutlined />} title="Quiz">
-            <Menu.Item key="/admin/quiz"><NavLink to='/admin/quiz'>List Quiz</NavLink></Menu.Item>
-            <Menu.Item key="/admin/quiz/add"><NavLink to='/admin/quiz/add'>Add Quiz</NavLink></Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" icon={<ReadOutlined />} title="AnswerQuiz">
-            <Menu.Item key="/admin/answerQuiz"><NavLink to='/admin/answerQuiz'>List Answer Quiz</NavLink></Menu.Item>
-            <Menu.Item key="/admin/answerQuiz/add"><NavLink to='/admin/answerQuiz/add'>Add Answer Quiz</NavLink></Menu.Item>
-          </SubMenu> */}
-          <SubMenu key="sub4" icon={<FolderFilled />} title="Quản lí người dùng">
-            <Menu.Item key="/admin/userQuiz"><NavLink to='/admin/userQuiz'>List User Quiz</NavLink></Menu.Item>
-            <Menu.Item key="/admin/userQuiz/add"><NavLink to='/admin/userQuiz/add'>Add User Quiz</NavLink></Menu.Item>
-          </SubMenu>
+          {/* <SubMenu key="sub11" icon={<HighlightOutlined />} title="Quản lí ngày học"> */}
+            <Menu.Item  key="/admin/day" icon={<HighlightOutlined />}><NavLink to='/admin/day'>Quản lí ngày học</NavLink></Menu.Item>
+          {/* </SubMenu> */}
 
-          <SubMenu key="sub6" icon={<FolderFilled />} title="Liên hệ">
-            <Menu.Item key="/admin/contact"><NavLink to='/admin/contact'>Danh sách</NavLink></Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub7" icon={<FolderFilled />} title="User">
-            <Menu.Item key="/admin/user"><NavLink to='/admin/user'>Danh sách</NavLink></Menu.Item>
-          </SubMenu>
+          {/* <SubMenu key="sub6" icon={<ContactsOutlined />} title="Liên hệ"> */}
+            <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Liên hệ</NavLink></Menu.Item>
+          {/* </SubMenu> */}
+
+          {/* <SubMenu key="sub7" icon={<UserOutlined />} title="Quản lí người dùng"> */}
+            <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lí người dùng</NavLink></Menu.Item>
+          {/* </SubMenu> */}
+
+          {/* <SubMenu key="sub8" icon={<UserOutlined />} title="Quản lí lớp học"> */}
+            <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lí lớp học</NavLink></Menu.Item>
+          {/* </SubMenu> */}
 
         </Menu>
       </Sider>
@@ -165,7 +155,10 @@ const AdminLayout = () => {
 
         </Header>
 
-        <Content className=" main__content__admin  p-8" >
+        <Content className=" main__content__admin" style={{
+          margin: '24px 16px',
+          padding: 24,
+        }}>
           <Outlet />
         </Content>
       </Layout>

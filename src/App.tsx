@@ -110,6 +110,9 @@ import InformationUser from "./components/user/InformationUser ";
 import EditInformationUser from "./components/user/EditInformationUser ";
 import EditEmailUser from "./components/user/EmailUser";
 import EditPasswordUser from "./components/user/EditPasswordUser ";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ClassList from "./pages/admin/class/ClassList";
+import DetailClassAdmin from "./pages/admin/class/Detail";
 
 
 function App() {
@@ -252,13 +255,13 @@ function App() {
         </Route>
 
         <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
-          <Route index element={<Navigate to="user" />} />
-
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />
             <Route path="edit/:id" element={<EditContact />} />
           </Route>
-
+          
           <Route path="user">
             <Route index element={<ListUser />} />
             <Route path='edit/:id' element={<EditUser />} />
@@ -267,6 +270,13 @@ function App() {
           <Route path="day">
             <Route index element={<ListDay />} />
           </Route>
+
+          <Route path="class">
+            <Route index element={<ClassList />} />
+            <Route path='edit/:id' element={<EditUser />} />
+            <Route path="detail/:id" element={<DetailClassAdmin />} />
+          </Route>
+
         </Route>
 
         {/* ---Day Manage */}
