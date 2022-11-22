@@ -11,6 +11,7 @@ import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../..
 import { detailAnswerQuiz, listAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { editPracticeActivitylice } from '../../../../features/Slide/practiceActivity/PracticeActivitySlice';
+import axios from 'axios';
 
 
 
@@ -24,9 +25,12 @@ const FormAnswerListenSpeak = (props: Props) => {
   const quizs = useAppSelector(data => data.quiz.value)
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
   const [listAnswer, setListAnswer] = useState<any>([])
+  const [fileList, setfileList] = useState<any>();
   const { dayId } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
+  const filterQuizAnswer: any = quizs.find((item: QuizType) => item._id === answerQuiz?.quiz)
+
 
 
   const { id } = useParams();
@@ -64,6 +68,28 @@ const FormAnswerListenSpeak = (props: Props) => {
   }
 
   const onFinish = async (value) => {
+    if (fileList) {
+      const CLOUDINARY_PRESET = "ypn4yccr";
+      const CLOUDINARY_API_URL =
+        "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
+      const formData = new FormData();
+      formData.append("file", fileList);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
+
+      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
+        headers: {
+          "Content-Type": "application/form-data"
+        }
+      });
+      value.image = data.url;
+      setfileList(null);
+    }
+
+    if (value.type === 'selectImage') {
+      if (!value.image) {
+        return message.error('Không để trống Ảnh!');
+      }
+    }
     const key = 'updatable';
     const detailQuiz = quizs.find((e: QuizType) => e._id === id)
 
@@ -98,6 +124,20 @@ const FormAnswerListenSpeak = (props: Props) => {
     }
   }
 
+  const onChangeImage = async (e) => {
+    if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
+      setfileList(e.target.files[0])
+      const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+
+      imgPreview.src = await URL.createObjectURL(e.target.files[0])
+
+
+    } else {
+      message.error('File không hợp lệ!');
+    }
+
+  }
+
   useEffect(() => {
     dispatch(changeBreadcrumb("Thêm đáp án"))
     dispatch(getListQuizSlide())
@@ -122,7 +162,27 @@ const FormAnswerListenSpeak = (props: Props) => {
           >
             <Input />
           </Form.Item>
+          <Form.Item>
+            {
+              filterQuizAnswer?.type === 'selectImage' ?
+                <div>
+                  <Form.Item
+                    label="Upload ảnh"
+                    tooltip="Ảnh dành cho Quiz"
+                  >
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
+                  </Form.Item>
 
+                  <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                    <img id="img-preview" style={{ width: "100px" }} />
+                  </Form.Item>
+                </div>
+                :
+                <Form.Item label="_id" name="_id" hidden={true}>
+                  <Input />
+                </Form.Item>
+            }
+          </Form.Item>
           <Form.Item
             label="Trạng Thái"
             name="isCorrect"

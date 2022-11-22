@@ -8,5 +8,6 @@ export type AnswerQuizType = {
     wordMeaning?: string,
     explainAnswer?: string,
     createdAt?: string,
-    updatedAt?: string
+    updatedAt?: string,
+    image?: string
 }
