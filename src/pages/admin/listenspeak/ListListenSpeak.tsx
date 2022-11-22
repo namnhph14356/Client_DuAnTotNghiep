@@ -342,7 +342,7 @@ const ListListenSpeak = (props: Props) => {
           <Image
             width={60}
             height={60}
-            src={record.image}
+            src={record.image ? record.image : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
           />
         </div>
       )
