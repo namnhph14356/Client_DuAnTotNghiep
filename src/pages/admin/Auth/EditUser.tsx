@@ -48,7 +48,7 @@ const EditUser = () => {
       getListUser(id);
     }
     dispath(getUserList())
-    dispath(changeBreadcrumb("Danh sách người dùng"))
+    dispath(changeBreadcrumb("Sửa thông tin người dùng"))
   }, [id])
 
 
