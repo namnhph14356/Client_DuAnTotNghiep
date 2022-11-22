@@ -9,6 +9,8 @@ import { AnswerQuizType } from '../../../../types/answerQuiz';
 import { changeBreadcrumb, addAnswerQuizSlide, editAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import { detailAnswerQuiz } from '../../../../api/answerQuiz';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
+import { detailQuiz } from '../../../../api/quiz';
+import axios from 'axios';
 
 type Props = {}
 
@@ -19,11 +21,37 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
   const breadcrumb = useAppSelector(data => data.answerQuiz.breadcrumb)
   const quizs = useAppSelector(data => data.quiz.value)
   const [answerQuiz, setAnswerQuiz] = useState<AnswerQuizType>()
+  const [fileList, setfileList] = useState<any>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const { dayId } = useParams();
   const { id } = useParams();
+  const filterQuizAnswer: any = quizs.find((item: QuizType) => item._id === answerQuiz?.quiz)
+
+
   const onFinish = async (value) => {
+    if (fileList) {
+      const CLOUDINARY_PRESET = "ypn4yccr";
+      const CLOUDINARY_API_URL =
+        "https://api.cloudinary.com/v1_1/vintph16172/image/upload"
+      const formData = new FormData();
+      formData.append("file", fileList);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
+
+      const { data } = await axios.post(CLOUDINARY_API_URL, formData, {
+        headers: {
+          "Content-Type": "application/form-data"
+        }
+      });
+      value.image = data.url;
+      setfileList(null);
+    }
+
+    if (value.type === 'selectImage') {
+      if (!value.image) {
+        return message.error('Không để trống Ảnh!');
+      }
+    }
 
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
@@ -45,6 +73,20 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
   const onReset = () => {
     form.resetFields();
   };
+
+  const onChangeImage = async (e) => {
+    if (e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg") {
+      setfileList(e.target.files[0])
+      const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+
+      imgPreview.src = await URL.createObjectURL(e.target.files[0])
+
+
+    } else {
+      message.error('File không hợp lệ!');
+    }
+
+  }
 
   useEffect(() => {
     if (id) {
@@ -85,26 +127,49 @@ const FormAnswerListenSpeakEdit = (props: Props) => {
             tooltip="Trạng Thái Đáp Án"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            {answerQuiz?.isCorrect === 0
+            {answerQuiz?.isCorrect === false
               ? <Select>
-                <Option key={1} value={0}>
+                <Option key={1} value={false}>
                   Sai
                 </Option>
-                <Option key={2} value={1}>
+                <Option key={2} value={true}>
                   Đúng
                 </Option>
               </Select>
 
               : <Select>
-                <Option key={1} value={1}>
+                <Option key={1} value={true}>
                   Đúng
                 </Option>
-                <Option key={2} value={0}>
+                <Option key={2} value={false}>
                   Sai
                 </Option>
               </Select>
             }
           </Form.Item>
+          <Form.Item>
+            {
+              filterQuizAnswer?.type === 'selectImage' ?
+                <div>
+                  <Form.Item
+                    label="Upload ảnh"
+                    tooltip="Ảnh dành cho Quiz"
+                  >
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
+                  </Form.Item>
+
+                  <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                    <img id="img-preview" style={{ width: "100px" }} />
+                  </Form.Item>
+                </div>
+                :
+                <Form.Item label="_id" name="_id" hidden={true}>
+                  <Input />
+                </Form.Item>
+            }
+          </Form.Item>
+
+
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               {id ? "Sửa" : "Thêm"}
