@@ -3,7 +3,7 @@ import { CommentSection } from 'react-comments-section'
 import 'react-comments-section/dist/index.css'
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { addCommentSlide, editdCommentSlide, getCommentList, removeCommentSlice, updateLikeSlice } from '../../features/Slide/comment/CommentSlice';
 import toas from 'toastr';
 import { DislikeFilled, DislikeOutlined, LikeFilled, LikeOutlined, CommentOutlined, EnterOutlined } from '@ant-design/icons';
@@ -27,23 +27,23 @@ interface CommentItem {
   content: React.ReactNode;
   datetime: string;
 }
-const CommentList = ({ comments }: { comments: CommentType[] }) => {
+const CommentList = ({ comments, dayId, postId }: { comments: CommentType[], dayId: CommentType, postId: CommentType }) => {
   const dispath = useDispatch();
   const replyy = useSelector<any, any>(data => data.reply.value);
   useEffect(() => {
     dispath(getReplyCommentList())
   }, []);
-  console.log("comments", comments);
-
+  const filterComment = comments.filter((item: CommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)  
+  
   return (
     <>
-      {comments.length > 0
+      {filterComment.length > 0
         ?
         <div className="w-fullbg-white border rounded-md">
-          <h3 className="font-semibold p-1">{`${comments.length + replyy.length} ${comments.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
+          <h3 className="font-semibold p-1">{`${filterComment.length + replyy.length} ${filterComment.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
           <div className="flex flex-col gap-5 m-3">
             <List
-              dataSource={comments}
+              dataSource={filterComment}
               itemLayout="horizontal"
               renderItem={(item: CommentType) => {
                 return (
@@ -187,7 +187,6 @@ const CommentItem = ({ item }: any) => {
     }
 
   };
-  console.log(value);
 
   return (
     <div>
@@ -387,10 +386,11 @@ const QuestionAnswer = () => {
   const [form] = Form.useForm();
   const users = useSelector<any, any>(data => data.user.value);
   const comment = useSelector<any, any>(data => data.comment.value);
+  const { id, dayId }: any = useParams()
+
   useEffect(() => {
     dispath(getCommentList())
   }, []);
-  console.log(user);
   const onFinish = async (values: any) => {
 
     try {
@@ -403,7 +403,9 @@ const QuestionAnswer = () => {
             avatar: user.img,
             content: values.comment.content,
             rating: rating,
-            userId: user._id
+            userId: user._id,
+            postId: id,
+            dayId: dayId
           }
         ))
         toas.success("Bình luận thành công");
@@ -419,7 +421,7 @@ const QuestionAnswer = () => {
 
   return (
     <>
-      < CommentList comments={comment} />
+      < CommentList comments={comment} postId={id} dayId={dayId} />
       <Comment
         content={
           <div>

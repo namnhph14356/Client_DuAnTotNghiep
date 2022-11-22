@@ -9,6 +9,7 @@ export type CommentType = {
     rating: number;
     userId: string;
     postId: string;
+    dayId:string,
     like: [
         {
             userId: string,
