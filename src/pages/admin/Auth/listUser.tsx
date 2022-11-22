@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Button, Modal, Space, Table, Tag, Image, Row, Col, Card, Typography } from 'antd'
-import React, { useEffect } from 'react'
+import { Button, Modal, Space, Table, Tag, Image, Row, Col, Card, Typography, Input, InputRef } from 'antd'
+import { SearchOutlined } from '@ant-design/icons';
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { removeUser } from '../../../api/user';
@@ -9,9 +10,26 @@ import { AppDispatch } from '../../../app/store';
 import { changeBreadcrumb, getUserList, removeUserSlide } from '../../../features/Slide/user/userSlide';
 import AdminPageHeader from '../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import type { ColumnsType, ColumnType } from 'antd/es/table';
+import { FilterConfirmProps } from 'antd/lib/table/interface';
+
+interface TypeRole {
+  id?: number,
+  type: string,
+  text: string
+}
+
+const typeRole = [
+  { id: 1, type: "0", text: 'Học sinh' },
+  { id: 2, type: "1", text: 'Giảng viên' },
+  { id: 3, type: "2", text: 'Admin' }
+]
+
 const ListUser = () => {
   const breadcrumb = useAppSelector(data => data.user.breadcrumb)
-
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
   const users = useSelector<any, any>(data => data.user.value);
   const dispatch = useAppDispatch();
 
@@ -27,16 +45,83 @@ const ListUser = () => {
       onOk: () => {
         dispatch(removeUserSlide(id))
       }
-
     })
-
   }
+
+  const getColumnSearchProps = (dataIndex: any): ColumnType<any> => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Tìm Kiếm ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Tìm
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Xóa
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Lọc
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+    ),
+    onFilter: (value, record: any) => {
+      return record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase())
+    }
+
+  });
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: any,
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
   // title 
   const headings = [
     { title: 'STT', dataIndex: 'stt', key: 'stt' },
-    { title: 'Họ Tên', dataIndex: 'username', key: 'username' },
-    { title: 'Email', dataIndex: 'email', key: 'email' },
-    { title: 'Số điện thoại', dataIndex: 'phone', key: 'phone' },
+    {
+      title: 'Họ Tên', dataIndex: 'username', key: 'username',
+      ...getColumnSearchProps('username'),
+    },
     {
       title: 'Ảnh', key: 'img',
       render: (record) => (
@@ -50,6 +135,12 @@ const ListUser = () => {
       )
     },
     {
+      title: 'Email', dataIndex: 'email', key: 'email',
+      ...getColumnSearchProps('email'),
+    },
+    { title: 'Số điện thoại', dataIndex: 'phone', key: 'phone' },
+    { title: 'Địa chỉ', dataIndex: 'address', key: 'address' },
+    {
       title: "Giới tính", dataIndex: "sex", key: "sex", render: (_: any, { sex }: any) => (
         <>
           {sex == 1
@@ -59,7 +150,6 @@ const ListUser = () => {
         </>
       ),
     },
-    { title: 'Địa chỉ', dataIndex: 'address', key: 'address' },
     {
       title: "Vai trò", dataIndex: "role", key: "role", render: (_: any, { role }: any) => (
         <>
@@ -72,6 +162,10 @@ const ListUser = () => {
                 : ""
           }
         </>),
+      filters: typeRole.map((item: TypeRole) => { return { text: item.text, value: item.type } }),
+      onFilter: (value, record) => {
+        return record.role === value
+      }
     },
     {
       title: 'Hành động',
