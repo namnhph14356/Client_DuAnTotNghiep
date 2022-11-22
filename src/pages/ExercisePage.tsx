@@ -10,9 +10,9 @@ const ExercisePage = () => {
                 {/* <HeaderDetail /> */}
                 <div className="nav__speaking">
                     <div className="count__question">
-                        <p>
+                        {/* <p>
                             câu số 1 / <span>10</span>
-                        </p>
+                        </p> */}
                     </div>
                     <div>
                         <button className="btn__start__speaking">

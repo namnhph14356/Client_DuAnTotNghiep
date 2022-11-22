@@ -536,9 +536,9 @@ const QuizTypeSelect = () => {
 
             </div>
 
-            <Button type="primary" onClick={showModal}>
+            {/* <Button type="primary" onClick={showModal}>
               Open Modal
-            </Button>
+            </Button> */}
 
 
             <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={'60%'}>

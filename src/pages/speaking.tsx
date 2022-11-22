@@ -42,9 +42,9 @@ const SpeakingPage = () => {
         </div>
         <div className="nav__speaking">
           <div className="count__question">
-            <div>
+            {/* <div>
               Câu số 1 / <span>10</span>
-            </div>
+            </div> */}
           </div>
           <div>
 

@@ -8,8 +8,8 @@ import {
   TeamOutlined,
   BellOutlined,
   BankOutlined,
-  ContactsOutlined ,
-  HighlightOutlined 
+  ContactsOutlined,
+  HighlightOutlined
 } from "@ant-design/icons";
 import "../../css/admin.css";
 import { useSelector } from "react-redux";
@@ -49,29 +49,27 @@ const AdminLayout = () => {
   );
 
   const menu = (
-    <Menu
-      items={[
-        {
-          key: '1',
-          icon: <BellOutlined />,
-          label: (
-            <span>
-              Hồ sơ của bạn
-            </span>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <span>
-              Đăng xuất
-            </span>
-          ),
-          icon: <BellOutlined />,
-          danger: true,
-        }
-      ]}
-    />
+    <Menu>
+      <Menu.Item>
+        <Link to="/user" className='text-white my-auto'>
+          Hồ sơ của bạn
+        </Link>
+      </Menu.Item>
+      {
+        auth && auth.role === "2" &&
+        <Menu.Item>
+          <Link to="/admin" className='text-white my-auto'>
+            Admin
+          </Link>
+        </Menu.Item>
+      }
+      <Menu.Item danger={true}>
+        {/* <span onClick={onLogout}> */}
+          Đăng xuất
+        {/* </span> */}
+      </Menu.Item>
+
+    </Menu>
   );
   function handleClick(e: any) {
     setCurrent(e.key);
@@ -104,55 +102,26 @@ const AdminLayout = () => {
           style={{ background: "#001529", height: "100%", width: "100%" }}
         >
           <Menu.Item key="/admin/dashboard" icon={<BankOutlined />} ><NavLink to='/admin/dashboard'>Dashboard</NavLink></Menu.Item>
-
-          {/* <SubMenu key="sub11" icon={<HighlightOutlined />} title="Quản lí ngày học"> */}
-            <Menu.Item  key="/admin/day" icon={<HighlightOutlined />}><NavLink to='/admin/day'>Quản lí ngày học</NavLink></Menu.Item>
-          {/* </SubMenu> */}
-
-          {/* <SubMenu key="sub6" icon={<ContactsOutlined />} title="Liên hệ"> */}
-            <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Liên hệ</NavLink></Menu.Item>
-          {/* </SubMenu> */}
-
-          {/* <SubMenu key="sub7" icon={<UserOutlined />} title="Quản lí người dùng"> */}
-            <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lí người dùng</NavLink></Menu.Item>
-          {/* </SubMenu> */}
-
-          {/* <SubMenu key="sub8" icon={<UserOutlined />} title="Quản lí lớp học"> */}
-            <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lí lớp học</NavLink></Menu.Item>
-          {/* </SubMenu> */}
-
+          <Menu.Item key="/admin/day" icon={<HighlightOutlined />}><NavLink to='/admin/day'>Quản lí ngày học</NavLink></Menu.Item>
+          <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Liên hệ</NavLink></Menu.Item>
+          <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lí người dùng</NavLink></Menu.Item>
+          <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lí lớp học</NavLink></Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout" >
         <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >
 
           <div className="flex justify-end">
-            <div className="px-4 ">
-              <Dropdown
-                overlay={notification}
-                trigger={["click"]}
-                placement="bottomRight"
-              >
-                <Badge dot>
-                  <BellOutlined
-                    style={{ fontSize: 24, color: "white" }}
-                    className="cursor-pointer"
-                  />
-                </Badge>
-              </Dropdown>
-            </div>
             <div className="px-4 my-auto">
               <Dropdown overlay={menu} trigger={["click"]}>
                 <img
                   src={auth.img}
-                  width={"40"}
                   alt=""
-                  className="rounded-full cursor-pointer"
+                  className="rounded-full w-10 h-10 my-3 m-auto cursor-pointer"
                 />
               </Dropdown>
             </div>
           </div>
-
         </Header>
 
         <Content className=" main__content__admin" style={{
