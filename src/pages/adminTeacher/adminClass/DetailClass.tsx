@@ -22,7 +22,7 @@ const DetailClass = (props) => {
       render: (row, item, index) => `${index + 1}`,
     },
     {
-      title: "Name Student",
+      title: "Tên học sinh",
       dataIndex: "Name Student",
       key: "Name Student",
       render: (row, item) => (
@@ -38,19 +38,19 @@ const DetailClass = (props) => {
       render: (row, item) => `${item?.userId?.email}`,
     },
     {
-      title: "Address",
+      title: "Địa chỉ",
       dataIndex: "address",
       key: "address",
       render: (row, item) => `${item?.userId?.address}`,
     },
     {
-      title: "Phone",
+      title: "Điện thoại",
       dataIndex: "phone",
       key: "phone",
       render: (row, item) => `${item?.userId?.phone}`,
     },
     {
-      title: "Time Join Class",
+      title: "Ngày vào lớp",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (row, item) =>
@@ -58,19 +58,17 @@ const DetailClass = (props) => {
     },
   ];
   return (
-    <div className="p-2">
-      <div className="d-flex align-items-center justify-between">
-        <Typography.Title className="m-0 py-4" level={3}>
-          Detail Class
+    <div className="h-screen">
+      <div className=" align-items-center justify-between">
+        <Typography.Title className="m-0 pb-4" level={3}>
+          Chi tiết lớp học
         </Typography.Title>
-        <Typography.Title className="m-0 py-4" level={3}>
-          Name Class: {classDeatail?.nameClass}
-        </Typography.Title>
-        <Typography.Title className="m-0 py-4" level={3}>
-          Link Join Class: {classDeatail?.linkJoinClass}
-        </Typography.Title>
+        <div className="flex justify-between mb-2">
+          <div className="font-medium text-base"> Tên lớp: {classDeatail?.nameClass}</div>
+          <div className="font-medium text-base">Mã lớp: {classDeatail?.linkJoinClass}</div>
+        </div>
       </div>
-      <Table dataSource={classDeatail?.userOfClass} columns={columns} />
+      <Table bordered dataSource={classDeatail?.userOfClass} columns={columns} />
     </div>
   );
 };

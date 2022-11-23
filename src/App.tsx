@@ -174,7 +174,6 @@ function App() {
                     <Route path=":idDetailSentence" element={<DetailSentence />} />
                   </Route>
                   <Route path="exercise" element={<ExerciseSentences />} />
-                  <Route path="exam" element={<ExamSentences />} />
                   <Route path="note" element={<Note />} />
                   <Route
                     path="questionAndAnswer"
