@@ -5,6 +5,7 @@ import { useSpeechSynthesis } from "react-speech-kit";
 import { listVocabulary } from '../../api/vocabulary';
 import Loading from '../../components/Loading';
 import { VocabulatyType } from '../../types/vocabularyType';
+import parse from "html-react-parser";
 
 const WordForm = [
   { id: "1", wordForm: 'Nouns' },
@@ -27,20 +28,21 @@ const LessonVocabulary = () => {
 
   const { speaking, supported, voices, speak, resume, cancel, stop, pause } =
     useSpeechSynthesis();
-
+   
   return (
     <div className='voabulary__page'>
       <div className="main__voacbulary">
         <div className="content__vocabualry">
           {dataVocab.length > 0 ?
             dataVocab.map((item, index) => {
+          
               return <div className="list__item__vocabulary">
                 <div className="img__vocabulary">
                   <img src={item.image} alt="" />
                 </div>
                 <div className="info__vocabulary">
                   <div className="item__vocabulary">
-                    <button className='title__vocabulary__item' onClick={() =>
+                    <button className='text-xl' onClick={() =>
                       speak({
                         text: item.words,
                         rate: 0.5,
@@ -49,19 +51,32 @@ const LessonVocabulary = () => {
                       })
                     }>
 
-                      <i className="fa-solid fa-volume-high"></i>
-                      {item.words} <span>{WordForm.map((e) => e.id === item.wordForm ? e.wordForm : "")}</span>
+                      <i className="fa-solid fa-volume-high mr-2"></i>
+                     <span className='text-4xl'>{item.words}</span> <i className='ml-4'>{item.pa}</i>
                     </button>
                     <p>
                       {item.meaning}
                     </p>
-                    <span>{item.pa}</span>
+                  <span className='text-red-500'>{item.wordForm}</span>
                   </div>
-                  <div className="item__exemple__vocabulary flex space-x-1">
-                    <i className="fa-solid fa-volume-high my-auto">
-                      </i>
-                    <span dangerouslySetInnerHTML={{ __html: `${item.example}` }}></span>
+                  
+                  <div className="item__exemple__vocabulary flex space-x-1 mt-2">
+                      <button className='text-xl' onClick={() =>
+                      speak({
+                        text: item.example,
+                        rate: 0.5,
+                        pitch: 0.7,
+                        voice: voices[2],
+                      })
+                    }>
+
+                      <i className="fa-solid fa-volume-high"></i>
+                    </button>
+                    <span className=''>{item?.example}</span>
                   </div>
+                  <div className='mt-[4px] ml-[36px]'>
+                    <span className='' dangerouslySetInnerHTML={{ __html: `${item.exampleDirection}` }}></span>
+                    </div>
                 </div>
               </div>
             })

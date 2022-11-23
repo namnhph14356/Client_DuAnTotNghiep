@@ -15,6 +15,7 @@ export type VocabulatyType = {
   category: string;
   pa: string;
   example: string;
+  exampleDirection:string;
   place: number;
   dayId?: DayType;
   createdAt: string;

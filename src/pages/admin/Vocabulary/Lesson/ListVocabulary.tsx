@@ -209,16 +209,16 @@ const ListVocabulary = (props: Props) => {
       className: 'w-[110px]',
       render: (record: any) => (
         <div className="">
-          {record.wordForm === "1" ? (
-            <Tag color="green">Nouns</Tag>
-          ) : record.wordForm === "2" ? (
+          {record.wordForm === "Noun" ? (
+            <Tag color="green">Noun</Tag>
+          ) : record.wordForm === "Adj" ? (
             <Tag color="blue">Adj</Tag>
-          ) : record.wordForm === "3" ? (
+          ) : record.wordForm === "Adv" ? (
             <Tag color="purple">Adv</Tag>
-          ) : record.wordForm === "4" ? (
-            <Tag color="purple">Verbs</Tag>
+          ) : record.wordForm === "Verb" ? (
+            <Tag color="purple">Verb</Tag>
           ) : (
-            <Tag color="red">ERROR</Tag>
+            <p className="text-red-500">{record.wordForm}</p>
           )}
         </div>
       ),
