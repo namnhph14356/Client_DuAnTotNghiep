@@ -35,8 +35,8 @@ const QuizType5 = ({ questionQuiz, data, check, select, onHanldeSetSelect }: Qui
           <h3 className={`${show ? "text-base" : "text-2xl"} m-0 group-hover:text-indigo-600`}>Click để {show ? "ẩn" : "hiện"} câu</h3>
         </button>
 
-        <div className={`${show ? "" : "hidden"} `}>
-          <span className={`text-center text-2xl font-medium m-0 `}>{questionQuiz.question}</span>
+        <div className={`${show ? "" : "hidden"} text-center`}>
+          <span className={`text-center text-2xl font-medium m-0`}>{questionQuiz.question}</span>
           <img className='text-center mx-auto mt-2' src={questionQuiz.image} width={120} alt="" />
         </div>
 

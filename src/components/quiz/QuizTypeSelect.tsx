@@ -522,13 +522,13 @@ const QuizTypeSelect = () => {
                   <div className='mt-8 md:basis-1/4'>
                     <div className={`answer__question`}>
                       <button
-                        disabled={select === null && quizCompound.length === 0 ? true : false}
+                        disabled={select === null && quizCompound.length === 0 || done ? true : false}
                         className={`${check === true
                           ? select?.isCorrect === true || check2 === true
                             ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
                             : "!bg-[#C0392B] !text-white"
-                          : "hover:bg-purple-800 "}  
-                                            font-bold text-lg rounded-md float-right cursor-pointer transition duration-700`}
+                          : "hover:bg-purple-800 "}
+                                            font-bold text-lg rounded-md float-right cursor-pointer transition duration-700 `}
                         onClick={() => { onCheck() }}
                       >
                         Kiểm tra
