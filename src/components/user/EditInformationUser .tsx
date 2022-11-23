@@ -66,8 +66,8 @@ const EditInformationUser = () => {
               <label htmlFor="">Giới tính :</label>
             </div>
             <div className='change__form__edit'>
-              <input className="form-check-input" type="radio"  {...register('sex')}  /> Nữ
-              <input className="form-check-input ml-3" type="radio"   {...register('sex')} /> Nam
+              <input className="form-check-input" type="radio"  {...register('sex')} value={1}  /> Nữ
+              <input className="form-check-input ml-3" type="radio"   {...register('sex')} value={0} /> Nam
             </div>
           </div>
           <div className='item__form__edit'>
