@@ -1,7 +1,7 @@
-import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space } from "antd";
+import { Breadcrumb, Layout, Menu, Avatar, Badge, Dropdown, Space, Modal, message } from "antd";
 import SubMenu from "antd/lib/menu/SubMenu";
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   UserOutlined,
   FolderFilled,
@@ -9,44 +9,34 @@ import {
   BellOutlined,
   BankOutlined,
   ContactsOutlined,
-  HighlightOutlined
+  HighlightOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined
 } from "@ant-design/icons";
 import "../../css/admin.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { UserType } from "../../types/user";
+import { logout } from "../../features/Slide/auth/authSlide";
 const AdminLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { Header, Content, Footer, Sider } = Layout;
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
   let location = useLocation();
   const [current, setCurrent] = useState(location.pathname)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const notification = (
-    <Menu
-      items={[
-        {
-          key: '1',
-          icon: <BellOutlined />,
-          label: (
-            <span>
-              Profile
-            </span>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <span>
-              Log out
-            </span>
-          ),
-          icon: <BellOutlined />,
-          danger: true,
-        }
-      ]}
-    />
-  );
+  const onLogout = () => {
+    Modal.confirm({
+      title: "Bạn có chắc muốn đăng xuất không ?",
+      onOk: () => {
+        dispatch(logout(auth))
+        message.success("Đăng xuất thành công")
+        navigate('/')
+      }
+    })
+  }
 
   const menu = (
     <Menu>
@@ -64,9 +54,9 @@ const AdminLayout = () => {
         </Menu.Item>
       }
       <Menu.Item danger={true}>
-        {/* <span onClick={onLogout}> */}
+        <span onClick={onLogout}>
           Đăng xuất
-        {/* </span> */}
+        </span>
       </Menu.Item>
 
     </Menu>
@@ -83,23 +73,26 @@ const AdminLayout = () => {
   }, [location, current])
   return (
     <Layout style={{ width: "100%" }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
-        <div className="logo  bg-[#001529]">
-          <NavLink aria-current="page" className="active text-[#fff] " to="/">
-            <img
-              src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png"
-              width={70}
-              alt=""
-            />
-          </NavLink>
+      <Sider collapsed={collapsed} onCollapse={value => setCollapsed(value)} >
+        <div className="logo my-2 text-black">
+          {collapsed ?
+            <NavLink to="/">
+              <img src="https://res.cloudinary.com/chanh-thon/image/upload/v1669194120/Layer_2_xzvkpt.png" width={30} className="mx-auto" alt="" />
+            </NavLink>
+            :
+            <NavLink aria-current="page" className={`text-lg text-center active flex px-4 font-semibold text-black space-x-2`} to="/">
+              <span className="my-auto"><img src="https://res.cloudinary.com/chanh-thon/image/upload/v1669194120/Layer_2_xzvkpt.png" width={20} alt="" /></span>
+              <span className="text-black">Vian English</span>
+            </NavLink>
+          }
         </div>
         <Menu
-          className="bg-[#001529]"
-          theme="dark"
+          className="bg-[#fff]"
+          theme="light"
           mode="inline"
           onClick={handleClick}
           selectedKeys={[current]}
-          style={{ background: "#001529", height: "100%", width: "100%" }}
+          style={{ background: "#fff", height: "100%", width: "100%", color: 'black' }}
         >
           <Menu.Item key="/admin/dashboard" icon={<BankOutlined />} ><NavLink to='/admin/dashboard'>Dashboard</NavLink></Menu.Item>
           <Menu.Item key="/admin/day" icon={<HighlightOutlined />}><NavLink to='/admin/day'>Quản lí ngày học</NavLink></Menu.Item>
@@ -109,18 +102,20 @@ const AdminLayout = () => {
         </Menu>
       </Sider>
       <Layout className="site-layout" >
-        <Header className="site-layout-background header__top__admin" style={{ padding: 0 }} >
-
-          <div className="flex justify-end">
-            <div className="px-4 my-auto">
-              <Dropdown overlay={menu} trigger={["click"]}>
-                <img
-                  src={auth.img}
-                  alt=""
-                  className="rounded-full w-10 h-10 my-3 m-auto cursor-pointer"
-                />
-              </Dropdown>
-            </div>
+        <Header className="site-layout-background " style={{ padding: 15, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            className: 'trigger',
+            onClick: () => setCollapsed(!collapsed),
+          })}
+          <div className="px-4 my-auto">
+            <Dropdown overlay={menu} trigger={["click"]}>
+              <img
+                src={auth.img}
+                width={"30"}
+                alt=""
+                className="rounded-full cursor-pointer"
+              />
+            </Dropdown>
           </div>
         </Header>
 

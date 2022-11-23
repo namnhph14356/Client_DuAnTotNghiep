@@ -40,7 +40,7 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
             }}
         >
             <div className="self-center img__result__question__item">
-                <img src={`../../../../../assets/image/water.png`} />
+                <img src={`${data.image}`} />
             </div>
             <div className="self-center block w-full text-center title__result__question__item">
                 <span className="block text-base font-bold">{data.answer}</span>

@@ -193,6 +193,7 @@ const ExerciseVocabulary = () => {
     <>
       {quizList ?
         <div>
+          <div className='font-bold'>Câu số {questionIndex + 1} / {quizList.length}</div>
           <div className='content__speaking'>
             {finish &&
               <div className='text-center font-bold mt-5'>
