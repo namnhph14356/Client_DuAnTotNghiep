@@ -225,15 +225,7 @@ const FormVocabulary = (props: Props) => {
             tooltip="dạng từ"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
-            <Select
-              placeholder="Chọn một tùy chọn và thay đổi văn bản nhập ở trên"
-              allowClear
-            >
-              <Option value="1">nouns</Option>
-              <Option value="2">adj</Option>
-              <Option value="3">verbs</Option>
-              <Option value="4">adv</Option>
-            </Select>
+             <Input />
           </Form.Item>
 
           <Form.Item
@@ -263,12 +255,22 @@ const FormVocabulary = (props: Props) => {
             tooltip="ví dụ"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
+           <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Nghĩa ví dụ"
+            name="exampleDirection"
+            tooltip="Nghĩa ví dụ"
+            rules={[{ required: true, message: "Không để Trống!" }]}
+          >
             <ReactQuill
               className="form-control rounded"
               theme="snow"
               style={{ background: "#fff" }}
             />
           </Form.Item>
+
           <Form.Item className="float-right">
             <Button
               className="inline-block mr-2"
