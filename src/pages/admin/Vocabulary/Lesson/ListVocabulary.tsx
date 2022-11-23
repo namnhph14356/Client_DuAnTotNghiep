@@ -306,7 +306,7 @@ const ListVocabulary = (props: Props) => {
   ];
   
   return (
-    <div>
+    <div className="h-screen">
       <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkAnswer()}>
         {/* <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}> */}

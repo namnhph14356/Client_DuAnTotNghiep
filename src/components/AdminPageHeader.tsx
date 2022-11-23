@@ -59,13 +59,13 @@ const AdminPageHeader = ({ breadcrumb, day, activity, class1, type }: AdminPageH
           }
 
           {activity &&
-            <Breadcrumb.Item href={`/manageDay/6346cf1741f714cfb435594b/${activity.route}`}>
+            <Breadcrumb.Item href={`/manageDay/${day}/${activity.route}`}>
               <span>{activity.title}</span>
             </Breadcrumb.Item>
           }
 
           {type && activity &&
-            <Breadcrumb.Item href={`/manageDay/6346cf1741f714cfb435594b/${activity?.route}/${type.route}`}>
+            <Breadcrumb.Item href={`/manageDay/${day}/${activity?.route}/${type.route}`}>
               <span>{type.title}</span>
             </Breadcrumb.Item>
           }
