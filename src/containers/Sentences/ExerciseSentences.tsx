@@ -298,8 +298,9 @@ const ExerciseSentences = () => {
   return (
     <>
       <div>
-        <div>
-          {quizList ?
+        {quizList ?
+          <div>
+            <div className='font-bold'>Câu số {questionIndex + 1} / {quizList.length}</div>
             <div className='content__speaking'>
               <div className="flex flex-col qustion__content__speaking">
                 <div className="">
@@ -342,10 +343,10 @@ const ExerciseSentences = () => {
                 </div>
               </div>
             </div>
-            :
-            <Loading />
-          }
-        </div>
+          </div>
+          :
+          <Loading />
+        }
       </div>
     </>
   )

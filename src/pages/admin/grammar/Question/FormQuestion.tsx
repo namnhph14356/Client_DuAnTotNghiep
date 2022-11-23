@@ -138,7 +138,7 @@ const FormQuestion = () => {
   }, [])
 
   return (
-    <div className="">
+    <div className="h-screen">
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6 ">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>

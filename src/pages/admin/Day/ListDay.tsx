@@ -298,7 +298,6 @@ const ListDay = (props: Props) => {
           action: item2
         };
       }).sort((a, b) => a.order - b.order)
-    console.log("dâtaaa", data);
 
     return (
       <Table
