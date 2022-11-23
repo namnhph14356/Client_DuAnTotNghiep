@@ -44,6 +44,14 @@ const HeaderComponent = () => {
           </Link>
         </Menu.Item>
       }
+      {
+        auth && auth.role === "1" &&
+        <Menu.Item>
+          <Link to="/manageteacher" className='text-white my-auto'>
+            Danh sách lớp học
+          </Link>
+        </Menu.Item>
+      }
       <Menu.Item danger={true}>
         <span onClick={onLogout}>
           Đăng xuất
