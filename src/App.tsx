@@ -110,6 +110,11 @@ import InformationUser from "./components/user/InformationUser ";
 import EditInformationUser from "./components/user/EditInformationUser ";
 import EditEmailUser from "./components/user/EmailUser";
 import EditPasswordUser from "./components/user/EditPasswordUser ";
+import OralVocabulary from "./pages/OralVocabulary";
+import OralSaying from "./pages/OralSaying";
+import LayoutOral from "./pages/layouts/LayoutOral";
+import ExemVocabulary from "./components/Oral/ExemVocabulary";
+import ExemSaying from "./components/Oral/ExemSaying";
 
 
 function App() {
@@ -153,8 +158,18 @@ function App() {
                 <Route index element={<OralPage />} />
                 <Route path="exam" element={<OralSeven />} />
               </Route>
-              {/* <Route path=':dayId' element={<OralPage />} />
-              <Route path=':dayId/exam' element={<OralSeven />} /> */}
+            </Route>
+            <Route path="oralWeekVocabulary" >
+              <Route path=":dayId" element={<LayoutOral />}>
+                <Route index element={<OralVocabulary />} />
+                <Route path="exam" element={<ExemVocabulary />} />
+              </Route>
+            </Route>
+            <Route path="oralWeekSaying" >
+              <Route path=":dayId" element={<LayoutOral />}>
+                <Route index element={<OralSaying />} />
+                <Route path="exam" element={<ExemSaying />} />
+              </Route>
             </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
