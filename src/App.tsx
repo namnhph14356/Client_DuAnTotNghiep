@@ -115,6 +115,10 @@ import OralSaying from "./pages/OralSaying";
 import LayoutOral from "./pages/layouts/LayoutOral";
 import ExemVocabulary from "./components/Oral/ExemVocabulary";
 import ExemSaying from "./components/Oral/ExemSaying";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ClassList from "./pages/admin/class/ClassList";
+import DetailClassAdmin from "./pages/admin/class/Detail";
+
 
 
 function App() {
@@ -134,24 +138,10 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRouteHomePage>
-              <WebsiteLayout />
-            </PrivateRouteHomePage>
-          }
-        >
+        <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage> }>
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route
-              index
-              element={
-                <PrivateRouteLearning>
-                  <Learning />
-                </PrivateRouteLearning>
-              }
-            />
+            <Route index  element={ <PrivateRouteLearning><Learning /></PrivateRouteLearning>}/>
 
             <Route path="oral">
               <Route path=":dayId" element={<ExamLayout />}>
@@ -267,13 +257,13 @@ function App() {
         </Route>
 
         <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
-          <Route index element={<Navigate to="user" />} />
-
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />
             <Route path="edit/:id" element={<EditContact />} />
           </Route>
-
+          
           <Route path="user">
             <Route index element={<ListUser />} />
             <Route path='edit/:id' element={<EditUser />} />
@@ -282,6 +272,13 @@ function App() {
           <Route path="day">
             <Route index element={<ListDay />} />
           </Route>
+
+          <Route path="class">
+            <Route index element={<ClassList />} />
+            <Route path='edit/:id' element={<EditUser />} />
+            <Route path="detail/:id" element={<DetailClassAdmin />} />
+          </Route>
+
         </Route>
 
         {/* ---Day Manage */}

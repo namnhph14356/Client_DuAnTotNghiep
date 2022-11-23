@@ -73,6 +73,8 @@ const ListExerciseVocabulary = (props: Props) => {
   //------------------STATE--------------------
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "vocabulary")
   const tableWithType = quizs.filter((item: QuizType) => item.type === 'selectAuto' && item.practiceActivity?.day === dayId && item.practiceActivity?.type === "vocabulary")
+  console.log(tableWithType);
+  
   const dataTable = tableWithType.map((item: QuizType, index) => {
     return {
       key: index + 1,
@@ -304,7 +306,7 @@ const ListExerciseVocabulary = (props: Props) => {
           <Image
             width={60}
             height={60}
-            src={record.image}
+            src={record.image ? record.image : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
           />
         </div>
       )

@@ -274,7 +274,7 @@ const ListGrammar = (props: Props) => {
   ];
 
   return (
-    <div>
+    <div className="h-screen">
       <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkQuestion()}>
         {/* <Link to={`/manageDay/${dayId}/grammar/addLesson`}> */}

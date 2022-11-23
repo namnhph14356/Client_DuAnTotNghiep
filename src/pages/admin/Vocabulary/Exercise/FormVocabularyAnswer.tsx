@@ -95,10 +95,10 @@ const FormAnswerListenSpeak = (props: Props) => {
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
             <Select>
-              <Option key={1} value={0}>
+              <Option key={1} value={false}>
                 Sai
               </Option>
-              <Option key={2} value={1}>
+              <Option key={2} value={true}>
                 Đúng
               </Option>
             </Select>

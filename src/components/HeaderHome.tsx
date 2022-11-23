@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useRoutes } from 'react-router-dom'
-import { message, Modal } from "antd";
+import { Dropdown, Menu, message, Modal } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
@@ -29,9 +29,32 @@ const HeaderComponent = () => {
       }
     })
   }
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/user" className='text-white my-auto'>
+          Hồ sơ của bạn
+        </Link>
+      </Menu.Item>
+      {
+        auth && auth.role === "2" &&
+        <Menu.Item>
+          <Link to="/admin" className='text-white my-auto'>
+            Admin
+          </Link>
+        </Menu.Item>
+      }
+      <Menu.Item danger={true}>
+        <span onClick={onLogout}>
+          Đăng xuất
+        </span>
+      </Menu.Item>
+
+    </Menu>
+  );
 
   return (
-    <div className="relative bg-gray-50">
+    <div className="relative bg-gray-50 ">
       <header className="bg-indigo-600">
         <nav className="mx-auto w-10/12 " aria-label="Top">
           <div className="flex w-full items-center justify-between border-b border-indigo-500 py-4 lg:border-none">
@@ -45,22 +68,17 @@ const HeaderComponent = () => {
                     {link.name}
                   </NavLink>
                 ))}
-                {auth?.role === "2" &&
-                  <NavLink to={'/admin'} className="text-base font-medium text-white hover:text-indigo-50">
-                    Admin
-                  </NavLink>
-                }
               </div>
             </div>
             {
-              auth && auth?.username ?
-                <div className='text-white flex space-x-2 '>
-                  <Link to="/user" className='text-white my-auto'>
-                    <Avatar image={String(auth.img)} className="text-sm w-10 h-10 text-white" />
-                  </Link>
-                  <span className='my-auto'> / </span>
-                  <button className='my-auto' onClick={onLogout}>Đăng xuất</button>
-                </div>
+              auth ?
+                <Dropdown overlay={menu} trigger={["click"]}>
+                  <img
+                    src={auth.img}
+                    className="text-sm w-10 h-10 text-white rounded-full cursor-pointer"
+                    alt=""
+                  />
+                </Dropdown>
                 :
                 <div className=" ml-10 space-x-4">
                   <NavLink to={'/signin'}

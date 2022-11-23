@@ -15,10 +15,14 @@ type AdminPageHeaderProps = {
   type?: {
     title: string,
     route: string
+  },
+  class1?: {
+    title: string,
+    route: string
   }
 }
 
-const AdminPageHeader = ({ breadcrumb, day, activity, type }: AdminPageHeaderProps) => {
+const AdminPageHeader = ({ breadcrumb, day, activity, class1, type }: AdminPageHeaderProps) => {
   const days: any = useAppSelector(item => item.day.value)
   const [detailDay, setdetailDay] = useState<DayType>();
   useEffect(() => {
@@ -48,15 +52,20 @@ const AdminPageHeader = ({ breadcrumb, day, activity, type }: AdminPageHeaderPro
               <span>{detailDay?.title}</span>
             </Breadcrumb.Item>
           }
+          {class1 &&
+            <Breadcrumb.Item href={`/admin/${class1.route}`}>
+              <span>{class1.title}</span>
+            </Breadcrumb.Item>
+          }
 
           {activity &&
-            <Breadcrumb.Item href={`/manageDay/6346cf1741f714cfb435594b/${activity.route}`}>
+            <Breadcrumb.Item href={`/manageDay/${day}/${activity.route}`}>
               <span>{activity.title}</span>
             </Breadcrumb.Item>
           }
 
           {type && activity &&
-            <Breadcrumb.Item href={`/manageDay/6346cf1741f714cfb435594b/${activity?.route}/${type.route}`}>
+            <Breadcrumb.Item href={`/manageDay/${day}/${activity?.route}/${type.route}`}>
               <span>{type.title}</span>
             </Breadcrumb.Item>
           }
@@ -67,7 +76,7 @@ const AdminPageHeader = ({ breadcrumb, day, activity, type }: AdminPageHeaderPro
       <PageHeader
         className="site-page-header text-indigo-600"
         title={`${day ? `${detailDay?.title} / ${breadcrumb}` : `${breadcrumb}`}`}
-        style={{ paddingLeft: 0 }} 
+        style={{ paddingLeft: 0 }}
       />
     </div>
   )

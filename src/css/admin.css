@@ -1,5 +1,5 @@
 .sider__bar__admin{
-    background-color:#001529 !important ;
+    background-color:#fff !important ;
     /* height: 0 !important; */
     /* position: fixed !important;
      top: 0 !important;
@@ -8,7 +8,7 @@
     z-index: 10 !important; */
 }
 .header__top__admin{
-    background-color: #001529 !important;
+    background-color: #fff !important;
     /* position: fixed !important;
     top: 0 !important;
     left: 200px !important;

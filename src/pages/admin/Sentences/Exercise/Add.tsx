@@ -314,7 +314,7 @@ const AddSentencesExercise = (props: Props) => {
 
 
   return (
-    <div>
+    <div className='h-screen'>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinishFailed={onFinishFailed} onFinish={selected === "selectAuto" ? onFinish : () => { }} onChange={onChange}>

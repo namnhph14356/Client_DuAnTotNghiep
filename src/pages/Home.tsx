@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import BannerPage from "../components/BannerPage";
 import Message from "../components/Message";
 
-// import Count from '../features/count/Count'
-// import Product from '../features/product/Product'
 import "./../css/home.css";
 
 const Home = () => {
@@ -13,7 +11,6 @@ const Home = () => {
     const existUser = localStorage.getItem("user")
       ? localStorage.getItem("user")
       : "";
-    //    console.log(localStorage.getItem("user"));
 
     if (!existUser) {
       navigate("/login");
@@ -24,9 +21,6 @@ const Home = () => {
   return (
     <div>
       <BannerPage />
-      {/* START: section */}
-      
-      
       <section className="our-product">
         <div className="w-10/12 m-auto">
           <div className="row">
@@ -190,7 +184,7 @@ const Home = () => {
       </div>
       {/* teacher  */}
       <section className="box__teacher">
-        <h2 className="title__lecturers mt-8 mb-8">Giảng Viên Của Vogue</h2>
+        <h2 className="title__lecturers mt-16">Giảng Viên Của Vogue</h2>
         <div className="list__teacher">
           <div className="item__teacher">
             <div className="">
@@ -224,143 +218,6 @@ const Home = () => {
             </div>
             <h3 className="name__teacher">Bùi Hồng Hạnh</h3>
             <p>Thạc sỹ Giáo Dục & Quản Trị Kinh Doanh từ Đại Học StanFord</p>
-          </div>
-        </div>
-      </section>
-
-      {/* buy course  */}
-
-      <section className="box__main__course">
-        <h2 className="title__course__main">ĐĂNG KÝ KHÓA HỌC</h2>
-        <div className="distance__course">
-          <div className="box__course">
-            <h2 className="title__course__sale">GÓI ƯU ĐÃI NHẤT</h2>
-            <p className="title__course">GÓI VOGUE PRO TRỌN ĐỜI</p>
-            <p className="price__course__old">2,435,500 vnd</p>
-            <p className="price__course">1,435,500 vnd</p>
-            <ul className="nav__info__course">
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-            </ul>
-            <button className="btn__buy__course">Mua ngay</button>
-            <div className="price__sale-off__course">
-              <span>Giảm</span>
-              <span> 30%</span>
-            </div>
-          </div>
-          <div className="box__course item__sale__year">
-            <p className="title__course">GÓI VOGUE PRO 1 NĂM</p>
-            <p className="price__course__old">2,435,500 vnd</p>
-            <p className="price__course">1,435,500 vnd</p>
-            <ul className="nav__info__course">
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-            </ul>
-            <button className="btn__buy__course">Mua ngay</button>
-            <div className="price__sale__year">
-              <span>Giảm</span>
-              <span> 20%</span>
-            </div>
-          </div>
-          <div className="box__course item__sale__year">
-            <p className="title__course">GÓI VOGUE PRO 6 THÁNG</p>
-            <p className="price__course__old">2,435,500 vnd</p>
-            <p className="price__course">1,435,500 vnd</p>
-            <ul className="nav__info__course">
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-            </ul>
-            <button className="btn__buy__course">Mua ngay</button>
-            <div className="price__sale__year">
-              <span>Giảm</span>
-              <span> 10%</span>
-            </div>
-          </div>
-          <div className="box__course item__sale__year">
-            <p className="title__course">GÓI VOGUE PRO 3 THÁNG</p>
-            <p className="price__course__old">2,435,500 vnd</p>
-            <p className="price__course">1,435,500 vnd</p>
-            <ul className="nav__info__course">
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-              <li>
-                {" "}
-                <i className="fa-solid fa-circle-check"></i>Nội dung bài học cập
-                nhật liên tục
-              </li>
-            </ul>
-            <button className="btn__buy__course">Mua ngay</button>
-            <div className="price__sale__year">
-              <span>Giảm</span>
-              <span> 10%</span>
-            </div>
           </div>
         </div>
       </section>

@@ -193,6 +193,7 @@ const ExerciseVocabulary = () => {
     <>
       {quizList ?
         <div>
+          <div className='font-bold'>Câu số {questionIndex + 1} / {quizList.length}</div>
           <div className='content__speaking'>
             {finish &&
               <div className='text-center font-bold mt-5'>
@@ -208,7 +209,7 @@ const ExerciseVocabulary = () => {
 
               <div className="flex my-4 justify-center space-x-4 w-full" >
                 <div className='px-4 py-1 bg-[#4F46E5] cursor-pointer text-white rounded ' onClick={remake}>Làm lại </div>
-                <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#7873d7]' : 'bg-[#4F46E5]'}`} onClick={onFinish} disabled={done ? true : false}>Nộp bài</button>
+                <button className={`px-4 py-1 cursor-pointer  text-white rounded ${done ? 'bg-[#4F46E5]' : 'bg-[#7873d7]'}`} onClick={onFinish} disabled={done ? false : true}>Nộp bài</button>
               </div>
 
               <div className='flex flex-row gap-4'>
