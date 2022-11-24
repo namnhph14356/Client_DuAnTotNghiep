@@ -1,4 +1,5 @@
 import { Table, Typography } from "antd";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { listHistoryByUser } from "../../../api/history";
@@ -25,7 +26,7 @@ const HistoryUser = (props) => {
       render: (row, item, index) => `${index + 1}`,
     },
     {
-      title: "Name Student",
+      title: "Tên học sinh",
       dataIndex: "Name Student",
       key: "Name Student",
       render: (row, item) => `${item?.user?.username}`,
@@ -36,11 +37,11 @@ const HistoryUser = (props) => {
       key: "Email",
       render: (row, item) => `${item?.user?.email}`,
     },
-    {
-      title: "Loại bài tập",
-      dataIndex: "type",
-      key: "type",
-    },
+    // {
+    //   title: "Loại bài tập",
+    //   dataIndex: "type",
+    //   key: "type",
+    // },
     {
       title: "Tên bài tập",
       dataIndex: "practiceActivity",
@@ -51,22 +52,29 @@ const HistoryUser = (props) => {
       title: "Điểm",
       dataIndex: "score",
       key: "score",
+      render: (row, item) => <span className={`${item?.score >= 8 ? 'text-green-500' : 'text-red-500' } font-semibold`}>{item?.score}</span>,
     },
     {
-        title: "Tiến độ học tập",
-        dataIndex: "learningProgress",
-        key: "learningProgress",
-        render: (row, item) => `${item?.learningProgress?.isPass ? 'Hoàn thành' : 'Chưa hoàn thành'}`,
-      },
+      title: "Tiến độ học tập",
+      dataIndex: "learningProgress",
+      key: "learningProgress",
+      render: (row, item) => `${item?.learningProgress?.isPass ? 'Hoàn thành' : 'Chưa hoàn thành'}`,
+    },
+    {
+      title: "Thời gian làm",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (row, item) => `${moment(item.createdAt).format("hh:mm:ss, Do/MM/YYYY")}`,
+    }
   ];
   return (
-    <div className="p-2">
+    <div className="p-2 h-screen">
       <div className="d-flex align-items-center justify-between">
         <Typography.Title className="m-0 py-4" level={3}>
           Lịch sử làm bài
         </Typography.Title>
       </div>
-      <Table dataSource={listHistory} columns={columns} />
+      <Table bordered dataSource={listHistory} columns={columns} />
     </div>
   );
 };

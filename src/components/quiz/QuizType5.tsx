@@ -40,7 +40,7 @@ const QuizType5 = ({ questionQuiz, data, check, select, onHanldeSetSelect }: Qui
           <img className='text-center mx-auto mt-2' src={questionQuiz.image} width={120} alt="" />
         </div>
 
-        <button className='text-xl' onClick={() => speak({ text: questionQuiz.question, voice: voices[2] })}>
+        <button className='text-xl' onClick={() => speak({ text: questionQuiz.question,rate: 0.8, pitch: 2, voice: voices[1] })}>
           <span><i className="fa-solid fa-volume-high"></i></span>
         </button>
       </div>
@@ -86,7 +86,7 @@ const QuizType5 = ({ questionQuiz, data, check, select, onHanldeSetSelect }: Qui
                 <div className="flex items-center h-5 ml-3"
                   onClick={() => speak({ text: item2.answer, voice: voices[2] })}
                 >
-                  <i className="mr-3 fa-solid fa-volume-high"></i>
+                  {/* <i className="mr-3 fa-solid fa-volume-high"></i> */}
 
                 </div>
                 <div className="flex-1 min-w-0 text-sm">

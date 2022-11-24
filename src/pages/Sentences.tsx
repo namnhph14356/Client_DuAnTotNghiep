@@ -17,9 +17,6 @@ const Sentences = () => {
       case `/learning/${dayId}/detailLearning/${id}/sentences/exercise`:
         setColor('exercise')
         break;
-      case `/learning/${dayId}/detailLearning/${id}/sentences/exam`:
-        setColor('exam')
-        break;
       case `/learning/${dayId}/detailLearning/${id}/sentences/note`:
         setColor('note')
         break;
@@ -63,12 +60,6 @@ const Sentences = () => {
             <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/exercise`} className="text-black hover:text-black" >
               <button className={`${color === 'exercise' ? 'bg-blue-600 text-gray-100 ' : 'bg-slate-200 hover:bg-slate-300 '}  btn__comment__speaking`}>
                 <i className="fa-solid fa-pen-to-square mr-1"></i>Bài tập
-              </button>
-            </NavLink>
-
-            <NavLink to={`/learning/${dayId}/detailLearning/${id}/sentences/exam`} className="text-black hover:text-black" >
-              <button className={`${color === 'exam' ? 'bg-blue-600 text-gray-100 ' : 'bg-slate-200 hover:bg-slate-300 '}  btn__comment__speaking`}>
-                <i className="fa-solid fa-pen-to-square mr-1"></i>Thi Oral
               </button>
             </NavLink>
 
