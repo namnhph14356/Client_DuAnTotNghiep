@@ -130,8 +130,8 @@ const QuizTypeSelect = () => {
   const [check, setCheck] = useState(false)
   const [check2, setCheck2] = useState<any>()
   const [done, setDone] = useState<any>()
-  const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
-  const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
+  const audioCorrect = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284317/duolingo_correct_sound_effect_6597352924678955563_gafjie.mp3")
+  const audioWrong = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284427/duolingo_wrong_answer_sound_effect_8056506950931993212_th5bf7.mp3")
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
   const [quiz2, setQuiz2] = useState<any>([])
   const [quizList, setQuizList] = useState<any>()
@@ -208,8 +208,8 @@ const QuizTypeSelect = () => {
       }])
     }
 
-    speak({ text: `${select?.isCorrect === true || checkFlag === true ? "Correct" : "Wrong"}`, voice: voices[2] })
-    // select?.isCorrect === 1 ? audioCorrect.play() : audioWrong.play()
+    // speak({ text: `${select?.isCorrect === true || checkFlag === true ? "Correct" : "Wrong"}`, voice: voices[2] })
+    select?.isCorrect === true || checkFlag === true ? audioCorrect.play() : audioWrong.play()
   }
 
   //---Check---
@@ -298,11 +298,11 @@ const QuizTypeSelect = () => {
 
       return data
     }))
-    
+
     setHistory(test2)
     console.log("test2", test2)
     dispatch(resetSpeechValue(""))
-   
+
     setIsModalOpen(true);
   }
 
@@ -473,31 +473,36 @@ const QuizTypeSelect = () => {
                 }
 
                 <div className='flex flex-row gap-4'>
-                  <div className='md:basis-3/4 '>
+                  <div className='w-full '>
 
                     {check === true && select?.isCorrect === true || check === true && check2 === true && select === null
-                      ? <section className='w-full mx-auto md:py-[30px]'>
-                        <div className="">
-                          <div className="bg-[#D6EAF8] border-[#5DADE2]  px-[15px] py-[10px] rounded-md">
-                            <p className="text-[#2E86C1] font-bold ">Câu trả lời chính xác</p>
-                            <button onClick={onContinute} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
+                      ? <section className='mx-auto md:mt-[30px] bg-[#D6EAF8] rounded-md '>
+                        <div className="flex justify-between w-[60%]  m-auto">
+                          <div className="">
+                            <p className=" py-[15px] text-[#2E86C1] font-bold">Câu trả lời chính xác</p>
+                            <button onClick={onContinute} className="text-white px-12 py-[8px] rounded-2xl bg-[#2E86C1] mb-[20px] font-bold">
                               Tiếp tục
                             </button>
+                          </div>
+                          <div className='my-auto'>
+                            <i className="fa-solid fa-check text-4xl p-6 px-8 rounded-full text-[#2E86C1] bg-white"></i>
                           </div>
                         </div>
                       </section>
                       : ""}
 
 
-
                     {check === true && select?.isCorrect === false || check === true && check2 === false && select === null
-                      ? <section className='w-full mx-auto md:py-[30px]'>
-                        <div className="">
-                          <div className="bg-[#F9EBEA]  px-[15px] rounded-md">
-                            <p className=" py-[10px] text-[#C0392B] font-bold">Đó chưa phải đáp án đúng</p>
-                            <button onClick={onContinute} className="text-white w-full py-[10px] rounded-md bg-[#C0392B] mb-[20px] font-bold">
+                      ? <section className='mx-auto md:mt-[30px] bg-[#F9EBEA] rounded-md'>
+                        <div className="flex justify-between w-[60%]  m-auto">
+                          <div className="">
+                            <p className=" py-[15px] text-[#C0392B] font-bold">Đó chưa phải đáp án đúng</p>
+                            <button onClick={onContinute} className="text-white px-12 py-[8px] rounded-2xl bg-[#C0392B] mb-[20px] font-bold">
                               Tiếp tục
                             </button>
+                          </div>
+                          <div className='my-auto'>
+                            <i className="fa-solid fa-xmark text-4xl p-6 px-8 rounded-full font-bold text-[#C0392B] bg-white"></i>
                           </div>
                         </div>
                       </section>
@@ -516,25 +521,23 @@ const QuizTypeSelect = () => {
                       </section>
                       : ""}
 
-
                   </div>
 
-                  <div className='mt-8 md:basis-1/4'>
-                    <div className={`answer__question`}>
-                      <button
-                        disabled={select === null && quizCompound.length === 0 || done ? true : false}
-                        className={`${check === true
-                          ? select?.isCorrect === true || check2 === true
-                            ? "!bg-[#D6EAF8] !text-[#5DADE2] !border-[#5DADE2] "
-                            : "!bg-[#C0392B] !text-white"
-                          : "hover:bg-purple-800 "}
-                                            font-bold text-lg rounded-md float-right cursor-pointer transition duration-700 `}
-                        onClick={() => { onCheck() }}
-                      >
-                        Kiểm tra
-                      </button>
+                  {
+                    check === false &&
+                    <div className='mt-8 md:basis-1/4'>
+                      <div className={`answer__question`}>
+                        <button
+                          disabled={select === null && quizCompound.length === 0 || done ? true : false}
+                          className={`font-bold text-lg rounded-md float-right cursor-pointer transition duration-700 `}
+                          onClick={() => { onCheck() }}
+                        >
+                          Kiểm tra
+                        </button>
+                      </div>
                     </div>
-                  </div>
+                  }
+
                 </div>
               </div>
 

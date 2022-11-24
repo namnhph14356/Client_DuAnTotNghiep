@@ -58,12 +58,12 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
 
             </div>
             <div className="ml-3 flex h-5 items-center"
-                onClick={() => speak({ text: data.answer, voice: voices[2] })}
+                onClick={() => speak({ text: data.answer, rate: 1.2, pitch: 2, voice: voices[2] })}
             >
                 <i className="fa-solid fa-volume-high mr-3"></i>
 
             </div>
-            <div className="min-w-0 flex-1 text-sm">
+            <div className="min-w-0 flex-1 text-sm" onClick={() => speak({ text: data.answer,rate: 1.2, pitch: 2, voice: voices[2] })}>
                 <label htmlFor="comments" className="font-medium text-gray-700">
                     {data.answer}
                 </label>

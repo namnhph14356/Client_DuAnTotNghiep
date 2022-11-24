@@ -118,6 +118,7 @@ import ExemSaying from "./components/Oral/ExemSaying";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
+import HistoryLearning from "./components/user/HistoryLearning";
 
 
 
@@ -232,6 +233,7 @@ function App() {
             <Route path="editEmailUser/:id" element={<EditEmailUser />} />
             <Route path="editImage/:id" element={<EditImage />} />
             <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
+            <Route path="historyLerning/:id" element={<HistoryLearning />} />
           </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />

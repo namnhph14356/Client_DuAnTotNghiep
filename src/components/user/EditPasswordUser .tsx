@@ -81,6 +81,17 @@ const EditPasswordUser = () => {
 
   return (
     <div className='edit__password__page'>
+      <div className="header__info__user">
+        <ul className='breadcrumbs__user'>
+          <div>
+            <li>{auth.username}</li>
+            <li>/</li>
+            <li>Profile</li>
+            <li>/</li>
+            <li>Thông tin cá nhân</li>
+          </div>
+        </ul>
+      </div>
       <MenuSettingUser />
       <div className="">
         <form onSubmit={handleSubmit(onSubmit)} >
