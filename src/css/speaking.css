@@ -56,7 +56,7 @@
   @apply text-center pb-3
 }
 .answer__question button{
-  @apply bg-indigo-600 text-white font-semibold px-4 py-1
+  @apply bg-indigo-600 text-white font-semibold px-8 py-2 rounded-2xl
 }
 .chosse__learning{
   @apply col-span-3 shadow px-3 py-2 max-h-[300px]

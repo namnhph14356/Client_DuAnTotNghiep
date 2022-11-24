@@ -43,19 +43,19 @@ const EditImage = () => {
   const [preview, setPreview] = useState<string>();
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  
+
   const handlePreview = async (e: any) => {
     const imgLink = await uploadImage(e.target);
     setPreview(imgLink);
   }
 
   const onSubmit: SubmitHandler<any> = async data => {
-    
+
     if (!preview) {
       return message.error("Bạn chưa chọn ảnh !")
     }
-    
-    const { payload } = await dispatch(editAuthSilce({...auth, img:preview}));
+
+    const { payload } = await dispatch(editAuthSilce({ ...auth, img: preview }));
 
     if (payload.message === "Cập nhật thành công !") {
       message.success(payload.message);
@@ -69,24 +69,38 @@ const EditImage = () => {
 
   useEffect(() => {
     dispatch(currentUserSlice())
-  },[])
+  }, [])
 
   return (
-    <div className='box__img__user'>
-      <div className="form__edit__img">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <p>Chọn ảnh cần upload từ máy của bạn ( Tối đa 2MB):</p>
-          <input type="file" {...register('img')} onChange={e => handlePreview(e)} id='file-upload' />
-
-          <button type='submit' className='btn__edit__img'>
-            Lưu ảnh
-          </button>
-
-
-        </form>
+    <div>
+      <div className="header__info__user">
+        <ul className='breadcrumbs__user'>
+          <div>
+            <li>{auth.username}</li>
+            <li>/</li>
+            <li>Profile</li>
+            <li>/</li>
+            <li>Thông tin cá nhân</li>
+          </div>
+        </ul>
       </div>
-      <div className="from__review__img">
-        <img src={preview || auth?.img} id='img-preview' alt="" />
+      <div className='box__img__user'>
+
+        <div className="form__edit__img">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <p>Chọn ảnh cần upload từ máy của bạn ( Tối đa 2MB):</p>
+            <input type="file" {...register('img')} onChange={e => handlePreview(e)} id='file-upload' />
+
+            <button type='submit' className='btn__edit__img'>
+              Lưu ảnh
+            </button>
+
+
+          </form>
+        </div>
+        <div className="from__review__img">
+          <img src={preview || auth?.img} id='img-preview' alt="" />
+        </div>
       </div>
     </div>
   )
