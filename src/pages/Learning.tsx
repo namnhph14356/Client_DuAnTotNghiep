@@ -23,6 +23,7 @@ import { RootState } from '../app/store'
 import { UserType } from '../types/user'
 import { detailHistory, listHistoryByUser } from '../api/history'
 import { HistoryType } from '../types/history'
+import BoxPayment from '../components/Payment/BoxPayment'
 
 
 
@@ -455,17 +456,7 @@ const Learning = () => {
         </div>
       </div>
 
-      <div className="box__buy__source">
-        <h3 className="title__buy__source">
-          <ShoppingBag className='w-5 h-5' />  Lớp học tiếng Anh giao tiếp 360
-        </h3>
-        <p>
-          350,000 ĐỒNG / <span>360 ngày sử dụng</span>
-        </p>
-        <button className='btn__buy__coures__cart'>
-          thanh toán
-        </button>
-      </div>
+        <BoxPayment/>
     </div>
   )
 }
