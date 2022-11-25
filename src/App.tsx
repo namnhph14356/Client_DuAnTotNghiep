@@ -345,7 +345,6 @@ function App() {
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />
 
-            <Route path="listListenRead" element={<ListListenRead />} />
             <Route path="addListenRead" element={<FormListenRead />} />
             <Route path=":id/editListenRead" element={<FormListenRead />} />
           </Route>
