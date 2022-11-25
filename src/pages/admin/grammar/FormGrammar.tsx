@@ -34,8 +34,8 @@ const FormGrammar = (props: Props) => {
   }
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
   let gram = grammars.filter((e: GrammarType) => e.dayId === dayId)
-  let listQuiz = quizs.filter((e: QuizType) => e.practiceActivity?._id === activity._id)
-
+  let listQuiz = quizs.filter((e: QuizType) => e.practiceActivity?._id === activity._id && e.status === true)
+  
   const checkActivity = () => {
     if (gram.length === 0 && listQuiz.length === 10) {
       dispatch(editPracticeActivitylice({ ...activity, status: true }))
