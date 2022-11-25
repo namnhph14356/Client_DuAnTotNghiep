@@ -15,7 +15,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
     const dispatch = useAppDispatch()
     
     const onHandleSpeakSelect = ()=>{
-        if (data.answer.replace(',', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
+        if (data.answer.replace(',', '').replace('.', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
         }
     }

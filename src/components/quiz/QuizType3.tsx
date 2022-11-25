@@ -17,7 +17,7 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
   const onHandleSpeakSelect = () => {
     for (let i = 0, a = transcript.split(' '); i < a.length; i++) {
       data.forEach((item: any) => {
-        if (a[i].replace(',', '').toLowerCase().trim() === item.answer.toLowerCase().trim()) {
+        if (a[i].replace(',', '').replace('.', '').toLowerCase().trim() === item.answer.toLowerCase().trim()) {
           onHanldeSetSelect({ id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }, check)
         }
       })

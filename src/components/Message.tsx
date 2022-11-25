@@ -146,7 +146,7 @@ const Message = (props) => {
             <Popover
               placement="topLeft"
               content={content2}
-              open={clicked1}
+              // open={clicked1}
               trigger="click"
             >
               <div className="option-message">
@@ -172,7 +172,7 @@ const Message = (props) => {
   return (
     <div className="positon-messgae">
       <Popover
-        open={clicked}
+        // open={clicked}
         placement="topRight"
         content={content}
         trigger="click"

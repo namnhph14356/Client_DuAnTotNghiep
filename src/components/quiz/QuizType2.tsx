@@ -12,7 +12,7 @@ const QuizType2 = ({ data, check, select, onHanldeSetSelect }: QuizType2Props) =
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
     const dispatch = useAppDispatch()
     const onHandleSpeakSelect = ()=>{
-        if (data.answer.replace(',', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
+        if (data.answer.replace(',', '').replace('.', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
         }
     }
