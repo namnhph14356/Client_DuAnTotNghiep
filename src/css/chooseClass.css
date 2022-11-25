@@ -1,0 +1,17 @@
+* {box-sizing:border-box}
+/* thiết lập style thẻ chứa skillbar */
+ .container22 {
+   width: 100%; /* Toàn màn hình */
+   background-color: #ddd; /* thiết lập background */
+   border-radius: 100rem;
+ }
+.skills {
+   text-align: right; /* canh chữ cho chữ */
+   border-radius: 100rem;
+   padding-right: 8px;
+   padding-left: 8px;
+ }
+
+ /* .html { } 
+ .css {width: 80%; background-color: DodgerBlue;padding-right: 5px;} 
+ .js {width: 65%; background-color: Yellow;padding-right: 5px;} */
