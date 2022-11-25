@@ -40,11 +40,12 @@ const dataFrequentlyAskedQuestion = [
   },
 ];
 
-const Message = (props) => {
+const Message: React.FC = (props) => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
+  const bottomRef = React.useRef<HTMLDivElement>(null);
   const [dataQuestion, setDataQuestion] = useState<any>([]);
-  const [clicked, setClicked] = useState(false);
-  const [clicked1, setClicked1] = useState(false);
+  const [clicked, setClicked] = useState<boolean>(false);
+  const [clicked1, setClicked1] = useState<boolean>(false);
   const onClose = () => {
     setClicked(!clicked);
   };
@@ -63,6 +64,9 @@ const Message = (props) => {
       };
       const dataNew = [...dataQuestion, dataMessage];
       setDataQuestion(dataNew);
+      setTimeout(() => {
+        bottomRef.current?.scrollTo({ top: 1000000, behavior: "smooth" });
+      }, 500);
       // if (inputRef.current) {
       //   inputRef.current.value = '';
       // }
@@ -80,6 +84,9 @@ const Message = (props) => {
       const dataNew = [...dataQuestion, dataMessage];
       setDataQuestion(dataNew);
       onClose1();
+      setTimeout(() => {
+        bottomRef.current?.scrollTo({ top: 1000000, behavior: "smooth" });
+      }, 500);
       // if (inputRef.current) {
       //   inputRef.current.value = '';
       // }
@@ -115,8 +122,8 @@ const Message = (props) => {
           <CloseOutlined style={{ fontSize: "14px", color: "#fff" }} />
         </div>
       </div>
-      {auth?.username ? (
-        <div className="message-content">
+      {auth && auth?.username ? (
+        <div className="message-content" ref={bottomRef}>
           <p className="text-repmessage">Chào bạn {auth.username}</p>
           <p className="text-repmessage">Bạn cần chúng tôi giúp gì nhỉ?</p>
           <p className="text-repmessage">
@@ -140,7 +147,7 @@ const Message = (props) => {
         </div>
       )}
 
-      {auth?.username && (
+      {auth && auth?.username && (
         <div className="message-send">
           <div onClick={onClose1} className="cusound">
             <Popover

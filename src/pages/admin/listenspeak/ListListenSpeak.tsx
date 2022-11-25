@@ -342,7 +342,7 @@ const ListListenSpeak = (props: Props) => {
           <Image
             width={60}
             height={60}
-            src={record.image}
+            src={record.image ? record.image : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
           />
         </div>
       )
@@ -464,6 +464,16 @@ const ListListenSpeak = (props: Props) => {
       { title: 'STT', dataIndex: 'stt', key: 'stt' },
       { title: 'Đáp án', dataIndex: 'answer', key: 'answer' },
       {
+        title: 'Hình ảnh', dataIndex: 'image', key: 'image',
+        render: (record) => (
+          <div className="">
+            {record ?
+              <Image width={60} height={60} src={record} />
+              : ""}
+          </div>
+        )
+      },
+      {
         title: 'Đáp án đúng',
 
         key: 'isCorrect',
@@ -512,6 +522,7 @@ const ListListenSpeak = (props: Props) => {
         stt: index + 1,
         _id: item2._id,
         answer: item2.answer,
+        image: item2.image,
         quiz: item2.quiz,
         isCorrect: item2.isCorrect
       }

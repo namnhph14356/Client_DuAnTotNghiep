@@ -174,3 +174,92 @@
 .btn__close__open{
     @apply bg-orange-500 
 }
+
+
+/* css thi tu vung */
+.layout__page__oral{
+    @apply w-8/12 m-auto border shadow mt-5 px-3 py-5
+}
+.route__page__oral p{
+    @apply bg-[#3dae48] w-24 font-medium text-white text-center py-1
+}
+.menu__exem__layout{
+    @apply px-5 
+}
+.menu__exem__layout button{
+    @apply mx-2 border px-7 shadow py-2 text-xl font-medium bg-gray-100 
+}
+
+
+.content__exem__vocabulary{
+    @apply  px-7
+}
+.table__info__exem__vocabulary{
+    @apply shadow border px-5 py-2
+}
+.first__col__oral__voca{
+    @apply w-32 text-sm mr-3
+}
+.btn__start__oral__voca{
+    @apply text-center mt-4 
+}
+.btn__start__oral__voca button{
+    @apply border rounded-full px-6 py-1 bg-[#71b131]  text-white font-medium
+}
+.exem__vocabulary__quiz{
+    @apply px-5 mt-2
+}
+.node__excem__quiz{
+    @apply border  px-3 py-5 bg-[#ebf3e4] shadow 
+}
+.node__excem__quiz h1{
+    @apply text-xl 
+}
+.first__col__voca{
+    @apply w-52  bg-[#f5f5f5] font-bold text-gray-500
+}
+.exam__content__quiz input {
+    @apply w-full  outline-none border-b-2 border-dashed py-3
+}
+.status__exem__quiz{
+    @apply flex
+}
+.bnt__control__exem__quiz button{
+    @apply mr-3  px-5 border rounded py-1
+}
+.btn__next__quiz__voca{
+    @apply bg-[#71b131] text-white
+}
+.status__exem__quiz p{
+    @apply ml-3
+}
+.status__exem__quiz span{
+    @apply text-[#71b131] text-lg font-medium
+}
+.lst__answered__oral__vocabulary{
+    @apply mt-4
+}
+.header__list__ansered__oral{
+    @apply border-b-2 border-black
+}
+.header__list__ansered__oral p{
+    @apply text-lg font-semibold text-gray-500 mb-0
+}
+.item__result__answerd h2{
+    @apply text-xl font-mono font-semibold
+}
+.item__result__answerd span{
+    @apply text-sm
+}
+.result__exam__info{
+    @apply w-6/12 m-auto border px-6 py-3 shadow
+}
+.result__exam__info h1{
+    @apply text-xl
+}
+.btn__control__result__exem{
+    @apply mt-3
+}
+.btn__control__result__exem button{
+    @apply  font-semibold px-3 border py-1 mr-2 bg-[#82ad17] rounded text-white
+}

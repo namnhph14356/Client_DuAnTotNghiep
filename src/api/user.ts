@@ -37,6 +37,11 @@ export const addUser = (user:UserType) => {
 } 
 
 export const editUser = (user:UserType) => {
+  const url = `/users/${user._id}`;
+  return instance.put(url, user);
+} 
+
+export const editAuth = (user:UserType) => {
     const url = `/users/${user._id}`;
     return instance.patch(url, user);
 } 
@@ -54,6 +59,10 @@ export const forgotPass = (email:any) => {
 export const newPassword = (user:any) => {
     const url = `/newPassword`;
     return instance.put(url, user);
+} 
+export const newPasswordUser = (user:any) => {
+    const url = `/users/editPass/${user._id}`;
+    return instance.patch(url, user);
 } 
 
 export const changeOTP = (user:any) => {

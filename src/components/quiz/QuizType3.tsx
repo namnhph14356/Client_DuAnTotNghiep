@@ -60,28 +60,30 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
               </button>
             </div>
           }
-          return <div key={index + 1}
-            className={`border-2 ${item._id == select?.id
-              ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
-              : "border-[#CCCCCC]"} 
+          return <div onClick={() => speak({ text: item.answer,rate: 1.2, pitch: 2, voice: voices[1] })}>
+            <div key={index + 1}
+              className={`border-2 ${item._id == select?.id
+                ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
+                : "border-[#CCCCCC]"} 
                       ${check === true
-                ? item._id == select?.id
-                  ? select?.isCorrect === true
-                    ? "bg-[#D6EAF8] border-[#5DADE2] "
-                    : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
-                  : ""
-                : ""} item__btn__choose `
-            }
-            onClick={() => {
-              if (check !== true) {
-
-                onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }], check)
+                  ? item._id == select?.id
+                    ? select?.isCorrect === true
+                      ? "bg-[#D6EAF8] border-[#5DADE2] "
+                      : "bg-[#F9EBEA] !border-[#C0392B] !text-[#C0392B]"
+                    : ""
+                  : ""} item__btn__choose `
               }
-            }}
-          >
-            <button>
-              {item.answer}
-            </button>
+              onClick={() => {
+                if (check !== true) {
+
+                  onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }], check)
+                }
+              }}
+            >
+              <button>
+                {item.answer}
+              </button>
+            </div>
           </div>
         })}
       </div>

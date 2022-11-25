@@ -209,16 +209,16 @@ const ListVocabulary = (props: Props) => {
       className: 'w-[110px]',
       render: (record: any) => (
         <div className="">
-          {record.wordForm === "1" ? (
-            <Tag color="green">Nouns</Tag>
-          ) : record.wordForm === "2" ? (
+          {record.wordForm === "Noun" ? (
+            <Tag color="green">Noun</Tag>
+          ) : record.wordForm === "Adj" ? (
             <Tag color="blue">Adj</Tag>
-          ) : record.wordForm === "3" ? (
+          ) : record.wordForm === "Adv" ? (
             <Tag color="purple">Adv</Tag>
-          ) : record.wordForm === "4" ? (
-            <Tag color="purple">Verbs</Tag>
+          ) : record.wordForm === "Verb" ? (
+            <Tag color="purple">Verb</Tag>
           ) : (
-            <Tag color="red">ERROR</Tag>
+            <p className="text-red-500">{record.wordForm}</p>
           )}
         </div>
       ),
@@ -235,7 +235,11 @@ const ListVocabulary = (props: Props) => {
       key: "image",
       render: (record) => (
         <div className="">
-          <Image width={100} height={100} src={record.image} />
+          <Image
+            width={60}
+            height={60}
+            src={record.image ? record.image : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
+          />
         </div>
       ),
     },
@@ -302,7 +306,7 @@ const ListVocabulary = (props: Props) => {
   ];
   
   return (
-    <div>
+    <div className="h-screen">
       <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkAnswer()}>
         {/* <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}> */}

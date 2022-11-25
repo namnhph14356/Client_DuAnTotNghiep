@@ -1,5 +1,5 @@
-import React from "react";
 
+import React from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import WebsiteLayout from "./pages/layouts/WebsiteLayout";
 import Home from "./pages/Home";
@@ -11,58 +11,44 @@ import FileUser from "./pages/FileUser";
 import SignUp from "./pages/SignUp";
 import ExeWriteAndListen from "./containers/Conversation/ExeWriteAndListen";
 import ListUser from "./pages/admin/Auth/listUser";
-import AddUser from "./pages/admin/Auth/AddUser";
 import Store from "./pages/Store";
 import ForgotPassword from "./components/user/ForgotPassword";
 import NewPassword from "./components/user/NewPassword";
-import List from "./pages/admin/categories/List";
-import Add from "./pages/admin/categories/FormCategory";
 import User from "./pages/user/User";
 import Contact from "./pages/contact/Contact";
-import ListQuiz from "./pages/admin/quizz/quiz/ListQuiz";
-import FormQuiz from "./pages/admin/quizz/quiz/FormQuiz";
-import ListAnswerQuiz from "./pages/admin/quizz/answerQuiz/ListAnswerQuiz";
-import FormAnswerQuiz from "./pages/admin/quizz/answerQuiz/FormAnswerQuiz";
-import ListUserQuiz from "./pages/admin/quizz/userQuiz/ListUserQuiz";
-import FormUserQuiz from "./pages/admin/quizz/userQuiz/FormUserQuiz";
 import FormListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/FormListenWrite";
 
-// import TeacherPage from './pages/teacher/TeacherPage';
-// import ManageTeacher from './pages/teacher/ManagementTeacher';
 import CategoryList from "./pages/teacher/category/category";
 import AddCategory from "./pages/teacher/category/createCategory";
 import AdminTeacher from "./pages/adminTeacher/AdminTeacher";
 import AdminLearn from "./pages/adminTeacher/AdminLearn";
 import FileTeacher from "./pages/fileTeacher/FileTeacher";
 
-// import AdminTeacher from './pages/adminTeacher/AdminTeacher';
-// import AdminLearn from './pages/adminTeacher/AdminLearn';
 
-import TeacherPage from "./pages/TeacherPage";
-import AdminLearnAdd from "./pages/adminTeacher/AdminLearnAdd";
-import CoursePage from "./pages/CoursePage";
-import QuizPage from "./pages/QuizPage";
-import ListContact from "./pages/admin/contact/ListContact";
-import EditContact from "./pages/admin/contact/EditContact";
-import CommentBox from "./pages/comment/Comment";
-import TestPage from "./pages/Test";
-import TestPage2 from "./pages/Test2";
-import ExeQuiz from "./pages/ExeQuiz";
-import TeacherLayout from "./pages/layouts/TeacherLayout";
-import LessonListTeacher from "./pages/adminTeacher/AdminLearn";
-import Grammar from "./pages/Grammar";
-import ExerciseVocabAndGrammar from "./pages/ExerciseVocabAndGrammar";
-import Dashboard from "./pages/adminTeacher/adminClass/Dashboard";
-import AdminClassList from "./pages/adminTeacher/adminClass/AdminClassList";
-
-import Vocabulary from "./pages/Vocabulary";
-import ConversationPage from "./pages/ConversationPage";
-import ExercisePage from "./pages/ExercisePage";
-import SignIn from "./pages/SignIn";
-import DetailLearningLayout from "./pages/layouts/DetailLearningLayout";
-import SpeakingPage from "./pages/speaking";
-import ExeListenAndRead from "./containers/Conversation/ExeListenAndRead";
-import Note from "./containers/Note";
+import TeacherPage from './pages/TeacherPage';
+import AdminLearnAdd from './pages/adminTeacher/AdminLearnAdd';
+import CoursePage from './pages/CoursePage';
+import QuizPage from './pages/QuizPage';
+import ListContact from './pages/admin/contact/ListContact';
+import EditContact from './pages/admin/contact/EditContact';
+import CommentBox from './pages/comment/Comment';
+import TestPage from './pages/Test';
+import TestPage2 from './pages/Test2';
+import ExeQuiz from './pages/ExeQuiz';
+import TeacherLayout from './pages/layouts/TeacherLayout';
+import LessonListTeacher from './pages/adminTeacher/AdminLearn';
+import Grammar from './pages/Grammar';
+import ExerciseVocabAndGrammar from './pages/ExerciseVocabAndGrammar';
+import Dashboard from './pages/adminTeacher/adminClass/Dashboard';
+import AdminClassList from './pages/adminTeacher/adminClass/AdminClassList';
+import Vocabulary from './pages/Vocabulary';
+import ConversationPage from './pages/ConversationPage';
+import ExercisePage from './pages/ExercisePage';
+import SignIn from './pages/SignIn';
+import DetailLearningLayout from './pages/layouts/DetailLearningLayout';
+import SpeakingPage from './pages/speaking';
+import ExeListenAndRead from './containers/Conversation/ExeListenAndRead';
+import Note from './containers/Note';
 import QuestionAnswer from "./containers/QuestionAnswer";
 import StartUp from "./containers/Speak/StartUp";
 import LessonVocabulary from "./containers/Vocabulary/LessonVocabulary";
@@ -74,10 +60,7 @@ import LessonSentences from "./containers/Sentences/LessonSentences";
 import ExerciseSentences from "./containers/Sentences/ExerciseSentences";
 import ExamSentences from "./containers/Sentences/ExamSentences";
 import QuizTypeSelect from "./components/quiz/QuizTypeSelect";
-import {
-  PrivateRouteHomePage,
-  PrivateRouteLearning,
-} from "./midlerware/PrivateRoute";
+import { PrivateRoute, PrivateRouteHomePage, PrivateRouteLearning } from "./midlerware/PrivateRoute";
 import DetailSentence from "./containers/Sentences/DetailSentence";
 import ListGrammar from "./pages/admin/grammar/ListGrammar";
 import FormGrammar from "./pages/admin/grammar/FormGrammar";
@@ -112,13 +95,35 @@ import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
 import FormVocabularyAnswer from "./pages/admin/Vocabulary/Exercise/FormVocabularyAnswer";
 import FormVocabularyEdit from "./pages/admin/Vocabulary/Exercise/FormVocabularyEdit";
 import FormAnswer from "./pages/admin/grammar/Answer/FormAnswer";
+import EditUser from "./pages/admin/Auth/EditUser";
 import SearchDirectory from "./pages/SearchDirectory";
 import HistoryUser from "./pages/adminTeacher/adminClass/HistoryUser";
 import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerciseVocabulary";
+
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
+
 import Test3 from "./pages/Test3";
+
+import EditImage from "./components/user/editimage";
+import AboutUs from "./pages/AboutUs";
+import UserLayout from "./pages/layouts/userlayout";
+import InformationUser from "./components/user/informationuser ";
+import EditInformationUser from "./components/user/EditInformationUser ";
+import EditEmailUser from "./components/user/emailuser";
+import EditPasswordUser from "./components/user/editpassworduser ";
+import OralVocabulary from "./pages/OralVocabulary";
+import OralSaying from "./pages/OralSaying";
+import LayoutOral from "./pages/layouts/layoutoral";
+import ExemVocabulary from "./components/Oral/exemvocabulary";
+import ExemSaying from "./components/Oral/exemsaying";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import ClassList from "./pages/admin/class/classlist";
+import DetailClassAdmin from "./pages/admin/class/detail";
+import HistoryLearning from "./components/user/historylearning";
+
+
 
 
 function App() {
@@ -138,32 +143,28 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRouteHomePage>
-              <WebsiteLayout />
-            </PrivateRouteHomePage>
-          }
-        >
+        <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage> }>
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route
-              index
-              element={
-                <PrivateRouteLearning>
-                  <Learning />
-                </PrivateRouteLearning>
-              }
-            />
+            <Route index  element={ <PrivateRouteLearning><Learning /></PrivateRouteLearning>}/>
 
             <Route path="oral">
               <Route path=":dayId" element={<ExamLayout />}>
                 <Route index element={<OralPage />} />
                 <Route path="exam" element={<OralSeven />} />
               </Route>
-              {/* <Route path=':dayId' element={<OralPage />} />
-              <Route path=':dayId/exam' element={<OralSeven />} /> */}
+            </Route>
+            <Route path="oralWeekVocabulary" >
+              <Route path=":dayId" element={<LayoutOral />}>
+                <Route index element={<OralVocabulary />} />
+                <Route path="exam" element={<ExemVocabulary />} />
+              </Route>
+            </Route>
+            <Route path="oralWeekSaying" >
+              <Route path=":dayId" element={<LayoutOral />}>
+                <Route index element={<OralSaying />} />
+                <Route path="exam" element={<ExemSaying />} />
+              </Route>
             </Route>
             <Route path=":dayId/detailLearning">
               <Route index element={<DetailLearning />} />
@@ -191,13 +192,9 @@ function App() {
                 <Route path="sentences" element={<Sentences />}>
                   <Route path="lesson">
                     <Route index element={<LessonSentences />} />
-                    <Route
-                      path=":idDetailSentence"
-                      element={<DetailSentence />}
-                    />
+                    <Route path=":idDetailSentence" element={<DetailSentence />} />
                   </Route>
                   <Route path="exercise" element={<ExerciseSentences />} />
-                  <Route path="exam" element={<ExamSentences />} />
                   <Route path="note" element={<Note />} />
                   <Route
                     path="questionAndAnswer"
@@ -234,10 +231,18 @@ function App() {
           <Route path="comment" element={<CommentBox />} />
           <Route path="course" element={<CoursePage />} />
           <Route path="fileuser" element={<FileUser />} />
-          <Route path="user" element={<User />} />
+          <Route path="user" element={<UserLayout />} >
+            <Route index element={<InformationUser />} />
+            <Route path="settingUser/:id" element={<EditInformationUser />} />
+            <Route path="editEmailUser/:id" element={<EditEmailUser />} />
+            <Route path="editImage/:id" element={<EditImage />} />
+            <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
+            <Route path="historyLerning/:id" element={<HistoryLearning />} />
+          </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
           <Route path="directory" element={<SearchDirectory />}></Route>
+          <Route path="aboutUs" element={<AboutUs />}></Route>
         </Route>
 
         <Route path="manageteacher" element={<TeacherLayout />}>
@@ -256,46 +261,29 @@ function App() {
           </Route>
         </Route>
 
-        <Route path="admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="category" />} />
-          <Route path="category">
-            <Route index element={<List />} />
-            <Route path="add" element={<Add />} />
-            <Route path="edit/:id" element={<Add />} />
-          </Route>
-
+        <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />
             <Route path="edit/:id" element={<EditContact />} />
           </Route>
-
+          
           <Route path="user">
             <Route index element={<ListUser />} />
-            <Route path="add" element={<AddUser />} />
-          </Route>
-
-          {/* quizz */}
-          <Route path="quiz">
-            <Route index element={<ListQuiz />} />
-            <Route path="add" element={<FormQuiz />} />
-            <Route path=":id/edit" element={<FormQuiz />} />
-          </Route>
-
-          <Route path="answerQuiz">
-            <Route index element={<ListAnswerQuiz />} />
-            <Route path="add" element={<FormAnswerQuiz />} />
-            <Route path=":id/edit" element={<FormAnswerQuiz />} />
-          </Route>
-
-          <Route path="userQuiz">
-            <Route index element={<ListUserQuiz />} />
-            <Route path="add" element={<FormUserQuiz />} />
-            <Route path=":id/edit" element={<FormUserQuiz />} />
+            <Route path='edit/:id' element={<EditUser />} />
           </Route>
 
           <Route path="day">
             <Route index element={<ListDay />} />
           </Route>
+
+          <Route path="class">
+            <Route index element={<ClassList />} />
+            <Route path='edit/:id' element={<EditUser />} />
+            <Route path="detail/:id" element={<DetailClassAdmin />} />
+          </Route>
+
         </Route>
 
         {/* ---Day Manage */}

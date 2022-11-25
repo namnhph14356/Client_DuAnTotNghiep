@@ -10,6 +10,10 @@ import { PracticeActivityType } from "../../../types/practiceActivity";
 import { addDaySlice, changeBreadcrumb, getDayBiggest, getListDaySlice, } from "../../../features/Slide/day/DaySlice";
 import { addPracticeActivitylice, getListPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { getListVocabularySlice } from "../../../features/Slide/vocabulary/vocabulary";
+import { RootState } from "../../../app/store";
+import { addWeekSlice, getListWeekSlice, getWeekBiggestSlice } from "../../../features/Slide/week/WeekSlice";
+import { addMonthSlice, getMonthBiggestSlice } from "../../../features/Slide/month/MonthSlice";
+import { WeekType } from "../../../types/week";
 
 interface DataType {
   key: React.Key;
@@ -48,12 +52,25 @@ const typeActivity = [
 const ListDay = (props: Props) => {
   const breadcrumb = useAppSelector((item) => item.day.breadcrumb);
   const days = useAppSelector((item) => item.day.value);
+  const weeks = useAppSelector((item) => item.week.value);
   const dayBiggest = useAppSelector((item: any) => item.day.bigDay);
+  const weekBiggest = useAppSelector((item: any) => item.week.bigWeek);
+  const monthBiggest = useAppSelector((item: any) => item.month.bigMonth);
   const activity = useAppSelector((item) => item.practiceActivity.value);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  let listTuanTrongThang: any = weeks.filter((e: WeekType) => e.month === monthBiggest._id)
 
+  let soNgayTrongThang: DayType[] = [];
+  listTuanTrongThang.map((week: WeekType) => {
+    days.map((e: DayType) => {
+      if (e.week?._id === week._id) {
+        soNgayTrongThang.push(e)
+      }
+    })
+    return soNgayTrongThang
+  })
 
   const dataTable = days.map((item: DayType, index) => {
     const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
@@ -75,8 +92,17 @@ const ListDay = (props: Props) => {
     order: newOrder,
   };
 
-  const addDay = async () => {
+  let newWeek: { title: string, order: number } = {
+    title: `Tuần ${weekBiggest?.order + 1}`,
+    order: weekBiggest?.order + 1,
+  };
 
+  let newMonth: { title: string, order: number } = {
+    title: `Tháng ${monthBiggest?.order + 1}`,
+    order: monthBiggest?.order + 1,
+  };
+
+  const handlerAddDay = async () => {
     Modal.confirm({
       title: `Bạn có muốn thêm ngày thứ ${days.length + 1} không ?`,
       content: <div className=' text-sm'>
@@ -85,25 +111,77 @@ const ListDay = (props: Props) => {
       width: "30%",
       onOk: async () => {
         try {
-          const { payload } = await dispatch(addDaySlice(newDay));
-          typeActivity.map(async (item) => {
-            await dispatch(addPracticeActivitylice({
-              day: payload._id,
-              title: item.type,
-              type: item.title,
-              order: item.id
-            }))
-          })
-          navigate(`/manageDay/${payload?._id}`);
-          message.success("Thêm thành công " + payload.title);
+          // nếu soNgayTrongThang.length === 30 thì tạo tháng mới => tạo tuần mới =>  tạo ngày mới
+          if (soNgayTrongThang.length === 30) {
+
+            const { payload: monthNew } = await dispatch(addMonthSlice(newMonth))
+
+            // tạo tuần
+            const { payload: weekNew } = await dispatch(addWeekSlice({ ...newWeek, month: monthNew._id }))
+
+            // tạo ngày
+            const { payload: dayNew } = await dispatch(addDaySlice({ ...newDay, week: weekNew._id }));
+
+            // tạo activity
+            typeActivity.map(async (item) => {
+              await dispatch(addPracticeActivitylice({
+                day: dayNew._id,
+                title: item.type,
+                type: item.title,
+                order: item.id
+              }))
+            })
+
+            navigate(`/manageDay/${dayNew?._id}`);
+            message.success("Thêm ngày mới thành công " + dayNew.title);
+          } else {
+            let soNgayTrongTuan = days.filter((e: DayType) => e.week?._id === weekBiggest._id)
+            // nếu soNgayTrongTuan.length === 7 thì tạo tuần mới =>  tạo ngày mới
+            if (soNgayTrongTuan.length === 7) {
+              // tạo tuần
+              const { payload: weekNew } = await dispatch(addWeekSlice({ ...newWeek, month: monthBiggest._id }))
+
+              // tạo ngày
+              const { payload: dayNew } = await dispatch(addDaySlice({ ...newDay, week: weekNew._id }));
+
+              // tạo activity
+              typeActivity.map(async (item) => {
+                await dispatch(addPracticeActivitylice({
+                  day: dayNew._id,
+                  title: item.type,
+                  type: item.title,
+                  order: item.id
+                }))
+              })
+
+              navigate(`/manageDay/${dayNew?._id}`);
+              message.success("Thêm ngày mới thành công " + dayNew.title);
+            } else {
+              // tạo ngày
+              const { payload: dayNew } = await dispatch(addDaySlice({ ...newDay, week: weekBiggest._id }));
+
+              // tạo activity
+              typeActivity.map(async (item) => {
+                await dispatch(addPracticeActivitylice({
+                  day: dayNew._id,
+                  title: item.type,
+                  type: item.title,
+                  order: item.id
+                }))
+              })
+              navigate(`/manageDay/${dayNew?._id}`);
+              message.success("Thêm ngày mới thành công " + dayNew.title);
+            }
+          }
+
         } catch (error) {
           message.error("LỖI");
         }
       },
     })
-
-
   };
+
+
 
   //------------------REMOVE-CONFIRM-------------------
 
@@ -220,7 +298,6 @@ const ListDay = (props: Props) => {
           action: item2
         };
       }).sort((a, b) => a.order - b.order)
-    console.log("dâtaaa", data);
 
     return (
       <Table
@@ -238,13 +315,16 @@ const ListDay = (props: Props) => {
     dispatch(getDayBiggest());
     dispatch(changeBreadcrumb("Quản Lý Ngày Học"));
     dispatch(getListDaySlice());
+    dispatch(getListWeekSlice());
     dispatch(getListPracticeActivitylice());
+    dispatch(getWeekBiggestSlice())
+    dispatch(getMonthBiggestSlice())
   }, []);
 
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
-      <Button type="primary" className="my-6" onClick={() => addDay()}>
+      <Button type="primary" className="my-6" onClick={() => handlerAddDay()}>
         Thêm ngày
       </Button>
 

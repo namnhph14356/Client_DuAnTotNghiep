@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addUser, editUser, getListUser, getUserById, removeUser } from "../../../api/user";
+import { addUser, editUser,  getUserById, getListUser, removeUser } from "../../../api/user";
 import { UserType } from "../../../types/user";
 
 export interface UserSlice {
@@ -7,23 +7,21 @@ export interface UserSlice {
   otp: string[],
   isAuthticated: boolean
 }
-
 export const getUserList:any = createAsyncThunk(
   "user/getListUser",
   async () => {
-    const { data } = await getListUser();
-    return data
+      const {data} = await getListUser();
+      return data;
   }
 )
+// export const getUsersById:any = createAsyncThunk(
+//   "contact/getUserById",
+//   async (id:any) => {
+//       const {data} = await getUserById(id);
+//       return data;
 
-export const getUser:any = createAsyncThunk(
-  "user/getUserById",
-  async (id: string) => {
-    const { data } = await getUserById(id);
-    return data
-  }
-)
-
+//   }
+//   )
 export const addUserSlide = createAsyncThunk(
   "user/addUser",
   async (user: UserType) => {
@@ -31,8 +29,7 @@ export const addUserSlide = createAsyncThunk(
     return data
   }
 )
-
-export const editUserSlide = createAsyncThunk(
+export const editUserSlide:any = createAsyncThunk(
   "user/editUser",
   async (user: UserType) => {
     const { data } = await editUser(user);
@@ -47,15 +44,27 @@ export const removeUserSlide = createAsyncThunk(
     return data
   }
 )
+export const getUser:any = createAsyncThunk(
+  "user/getUserById",
+  async (id: string) => {
+    const { data } = await getUserById(id);
+    return data
+
+  }
+)
 
 const authSlide = createSlice({
   name: "user",
   initialState: {
     value: [],
     otp: [],
-    isAuthticated: false
+    isAuthticated: false,
+    breadcrumb: ""
   },
   reducers: {
+    changeBreadcrumb(state, action) {
+      state.breadcrumb = action.payload
+ }
   },
 
   extraReducers: (builer) => {
@@ -74,4 +83,5 @@ const authSlide = createSlice({
   }
 })
 
+export const { changeBreadcrumb } = authSlide.actions
 export default authSlide.reducer;

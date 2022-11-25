@@ -6,7 +6,7 @@ const Menu = () => {
     
     return (
         <div className="box__list__detail">
-            <ul>
+            {/* <ul>
                 <li>
                     <NavLink style={{ color: '#fff' }} to={`/learning/detailLearning/${id}/speak`}>
                         Khởi động
@@ -25,7 +25,7 @@ const Menu = () => {
                         <i className="fa-solid fa-angle-right"></i>
                     </NavLink>
                 </li>
-            </ul>
+            </ul> */}
         </div>
     )
 }

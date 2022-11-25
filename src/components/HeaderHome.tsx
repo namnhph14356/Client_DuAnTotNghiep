@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useRoutes } from 'react-router-dom'
-import { message, Modal } from "antd";
+import { Dropdown, Menu, message, Modal } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
@@ -11,12 +11,12 @@ const navigation = [
   { name: 'Giới thiệu', to: 'aboutUs' },
   { name: 'Liên hệ', to: '/contact' },
   { name: 'Khóa học', to: '/course' },
-  {name: 'Tra từ', to: '/directory'}
-
+  { name: 'Tra từ', to: '/directory' },
 ]
 
 const HeaderComponent = () => {
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogout = () => {
@@ -29,15 +29,46 @@ const HeaderComponent = () => {
       }
     })
   }
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/user" className='text-white my-auto'>
+          Hồ sơ của bạn
+        </Link>
+      </Menu.Item>
+      {
+        auth && auth.role === "2" &&
+        <Menu.Item>
+          <Link to="/admin" className='text-white my-auto'>
+            Admin
+          </Link>
+        </Menu.Item>
+      }
+      {
+        auth && auth.role === "1" &&
+        <Menu.Item>
+          <Link to="/manageteacher" className='text-white my-auto'>
+            Danh sách lớp học
+          </Link>
+        </Menu.Item>
+      }
+      <Menu.Item danger={true}>
+        <span onClick={onLogout}>
+          Đăng xuất
+        </span>
+      </Menu.Item>
+
+    </Menu>
+  );
 
   return (
-    <div className="relative bg-gray-50">
+    <div className="relative bg-gray-50 ">
       <header className="bg-indigo-600">
         <nav className="mx-auto w-10/12 " aria-label="Top">
           <div className="flex w-full items-center justify-between border-b border-indigo-500 py-4 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">
-               <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={100} alt="" />
+                <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={100} alt="" />
               </NavLink>
               <div className=" ml-10 space-x-8 lg:block">
                 {navigation.map((link) => (
@@ -49,32 +80,32 @@ const HeaderComponent = () => {
             </div>
             {
               auth ?
-                <div className='text-white flex space-x-2 '>
-                  <Link to="/user" className='text-white my-auto'>
-                    <Avatar image={String(auth.img)} className="text-sm w-10 h-10 text-white" />
-                  </Link>
-                  <span className='my-auto'> / </span>
-                  <button className='my-auto' onClick={onLogout}>Đăng xuất</button>
-                </div>
+                <Dropdown overlay={menu} trigger={["click"]}>
+                  <img
+                    src={auth.img}
+                    className="text-sm w-10 h-10 text-white rounded-full cursor-pointer"
+                    alt=""
+                  />
+                </Dropdown>
                 :
                 <div className=" ml-10 space-x-4">
                   <NavLink to={'/signin'}
-                    className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75"
+                    className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-opacity-75"
                   >
-                    Sign in
+                    Đăng nhập
                   </NavLink>
                   <NavLink to={'/signup'}
 
                     className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
                   >
-                    Sign up
+                    Đăng ký
                   </NavLink>
                 </div>
             }
           </div>
           <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
             {navigation.map((item) => (
-              <NavLink key={item.name} to='{item.to}' className="text-base font-medium text-white hover:text-indigo-50">
+              <NavLink key={item.name} to={item.to} className="text-base font-medium text-white hover:text-indigo-50">
                 {item.name}
               </NavLink>
             ))}

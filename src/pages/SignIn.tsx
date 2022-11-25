@@ -90,7 +90,7 @@ const SignIn = (props: Props) => {
   }
 
   //login width google 
-  const responseGoogle = async (response:any) => {
+  const responseGoogle = async (response: any) => {
     const { payload } = await dispatch(signInWidthGoogleSlice({
       id: response.profileObj.googleId,
       email: response.profileObj.email,
@@ -156,7 +156,7 @@ const SignIn = (props: Props) => {
                   render={renderProps => {
                     return (
                       <div onClick={renderProps.onClick} className="bg-white rounded m-auto py-2 w-full border shadow-sm  hover:cursor-pointer hover:bg-slate-100">
-                        <button ><Google /></button>
+                        <div ><Google /></div>
                       </div>
                     );
                   }}

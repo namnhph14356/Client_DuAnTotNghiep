@@ -213,9 +213,10 @@ const FormExerciseVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="practiceActivity" name="practiceActivity" hidden={true} >
-            <Input />
+          <Form.Item label="practiceActivity" name="practiceActivity" hidden={true}>
+            <Input value={prative?._id} />
           </Form.Item>
+
 
           <Form.Item className='float-right'>
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >

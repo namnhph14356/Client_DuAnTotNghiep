@@ -112,8 +112,8 @@ const ExerciseSentences = () => {
   const [check, setCheck] = useState(false)
   const [done, setDone] = useState(false)
 
-  const audioCorrect = new Audio("../public/assets/audio/Quiz-correct-sound-with-applause.mp3")
-  const audioWrong = new Audio("../public/assets/audio/Fail-sound-effect-2.mp3")
+  const audioCorrect = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284317/duolingo_correct_sound_effect_6597352924678955563_gafjie.mp3")
+  const audioWrong = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284427/duolingo_wrong_answer_sound_effect_8056506950931993212_th5bf7.mp3")
 
   const { speak, voices } = useSpeechSynthesis();
   const [quizList, setQuizList] = useState<any>()
@@ -155,7 +155,8 @@ const ExerciseSentences = () => {
       point: data.isCorrect ? Math.round(flag2) : 0,
       isCorrect: data.isCorrect,
     }])
-    speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
+    // speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
+    data.isCorrect === true ? audioCorrect.play() : audioWrong.play()
   }
 
   const onCheckType6 = (data) => {
@@ -168,7 +169,10 @@ const ExerciseSentences = () => {
       isCorrect: data.isCorrect,
       answer: data.answer
     }])
-    speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
+
+    // speak({ text: `${data.isCorrect === true ? "Correct" : "Wrong"}`, voice: voices[2] })
+    data.isCorrect === true ? audioCorrect.play() : audioWrong.play()
+
   }
 
   //---Countinute---
@@ -298,8 +302,9 @@ const ExerciseSentences = () => {
   return (
     <>
       <div>
-        <div>
-          {quizList ?
+        {quizList ?
+          <div>
+            <div className='font-bold'>Câu số {questionIndex + 1} / {quizList.length}</div>
             <div className='content__speaking'>
               <div className="flex flex-col qustion__content__speaking">
                 <div className="">
@@ -328,12 +333,12 @@ const ExerciseSentences = () => {
                 </div>
 
                 <div className='flex flex-row gap-4'>
-                  <div className='md:basis-3/4 '>
+                  <div className='w-full'>
                     {done === true
                       ? <section className='w-full mx-auto md:py-[30px]'>
                         <div className="">
                           <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
-                            <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc mừng bạn đã hoàn thành !</p>
+                            <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc mừng bạn đã hoàn thành bài kiểm tra !</p>
                           </div>
                         </div>
                       </section>
@@ -342,10 +347,10 @@ const ExerciseSentences = () => {
                 </div>
               </div>
             </div>
-            :
-            <Loading />
-          }
-        </div>
+          </div>
+          :
+          <Loading />
+        }
       </div>
     </>
   )
