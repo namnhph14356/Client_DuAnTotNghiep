@@ -52,7 +52,7 @@
     @apply col-span-3 mt-10 shadow border
 }
 .img__user img{
-    @apply w-full
+    @apply w-full h-72
 }
 .sitting__img{
     @apply bg-slate-100 py-1 text-center text-blue-500 hover:text-black font-sans text-base
@@ -166,5 +166,6 @@
 .from__review__img{
     @apply col-span-4
 }
-.from__review__img img{@apply w-full
+.from__review__img img{
+    @apply w-full h-72
 }
