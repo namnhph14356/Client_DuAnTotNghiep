@@ -14,6 +14,7 @@ import { QuizType } from '../../../../types/quiz';
 import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 import { string } from 'yup/lib/locale';
 import { PracticeActivityType } from '../../../../types/practiceActivity';
+import { uploadImage } from '../../../../utils/upload';
 
 type Props = {}
 
@@ -38,7 +39,10 @@ const FormExerciseVocabulary = (props: Props) => {
   const navigate = useNavigate()
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
+  const [preview, setPreview] = useState<string>();
+
   const { dayId } = useParams();
+  
 
   const typeQuiz = [
     { id: 1, name: "Chọn đáp án tự động", type: "selectAuto" },
@@ -47,7 +51,13 @@ const FormExerciseVocabulary = (props: Props) => {
   const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
   const voca = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "vocabulary")
   const { id } = useParams();
-
+  const handlePreview = async (e: any) => {
+    const imgLink = await uploadImage(e.target);
+    message.loading({ content: "Đang thêm ảnh" });
+    setPreview(imgLink);
+    const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+    imgPreview.src = URL.createObjectURL(e.target.files[0])
+  }
 
   const onFinish = async (value) => {
 
@@ -69,7 +79,7 @@ const FormExerciseVocabulary = (props: Props) => {
     }
 
     if (value.type === 'selectImage' && voca.length < 10) {
-      if (!value.image) {
+      if (!preview) {
         return message.error('Không để trống Ảnh!');
       }
     }
@@ -78,7 +88,7 @@ const FormExerciseVocabulary = (props: Props) => {
 
     if (id) {
       message.loading({ content: 'Loading...', key });
-      mutate(edit(value))
+      mutate(edit({...value, image: preview}))
       message.success({ content: 'Sửa Thành Công!', key });
       navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
     } else {
@@ -89,7 +99,7 @@ const FormExerciseVocabulary = (props: Props) => {
       }
 
       message.loading({ content: 'Loading...', key });
-      mutate(add({ ...value, practiceActivity: prative._id }))
+      mutate(add({ ...value, practiceActivity: prative._id, image: preview }))
       message.success({ content: 'Thêm Thành Công!', key });
       navigate(`/manageDay/${dayId}/vocabulary/listExercise`);
     }
@@ -204,7 +214,7 @@ const FormExerciseVocabulary = (props: Props) => {
               label="Upload ảnh"
               tooltip="Ảnh dành cho Quiz"
             >
-              <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
+              <Input type="file" accept='.png,.jpg' className="form-control" onChange={handlePreview} />
             </Form.Item>
 
           </div>
