@@ -334,13 +334,13 @@ const ListListenWrite = () => {
         {selectedRowKeys.length > 0 ? `Đã chọn ${selectedRowKeys.length} hàng` : ''}
       </span>
 
-      <Table
+      {/* <Table
         rowClassName={"break-words"}
         bordered
         footer={() => `Hiển thị 10 trên tổng ${listenWrite.length}`}
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={dataTable} />
+        dataSource={dataTable} /> */}
     </div>
   )
 }

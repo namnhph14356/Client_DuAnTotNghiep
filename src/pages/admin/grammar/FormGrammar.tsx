@@ -21,7 +21,7 @@ const FormGrammar = (props: Props) => {
 
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [grammar, setGrammar] = useState("");
+  const [description, setDescription] = useState("");
   const { id, dayId } = useParams();
   const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
   const dispatch = useAppDispatch();
@@ -34,8 +34,8 @@ const FormGrammar = (props: Props) => {
   }
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "grammar")
   let gram = grammars.filter((e: GrammarType) => e.dayId === dayId)
-  let listQuiz = quizs.filter((e: QuizType) => e.practiceActivity?._id === activity._id)
-
+  let listQuiz = quizs.filter((e: QuizType) => e.practiceActivity?._id === activity._id && e.status === true)
+  
   const checkActivity = () => {
     if (gram.length === 0 && listQuiz.length === 10) {
       dispatch(editPracticeActivitylice({ ...activity, status: true }))
@@ -84,7 +84,9 @@ const FormGrammar = (props: Props) => {
     if (id) {
       const getDetail = async () => {
         const { data } = await getGrammarDetail(id);
-        setGrammar(data);
+        console.log("data", data);
+        
+        setDescription(data.description);
         form.setFieldsValue(data);
       };
       getDetail();
@@ -133,7 +135,7 @@ const FormGrammar = (props: Props) => {
             tooltip="Chi tiết"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
-            <JoditEditor value={grammar} config={config} />
+            <JoditEditor value={description} config={config} />
           </Form.Item>
 
           <Form.Item label="Tóm tắt" name="summary" tooltip="Tóm tắt">

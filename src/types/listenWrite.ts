@@ -9,7 +9,8 @@ export type ListenWriteType = {
             answer?: string
         } | any
     ],
-    audio: string,
+    audio?: string,
+    structure: string,
     timeLimit?: string,
     createdAt?: string,
     updatedAt?: string

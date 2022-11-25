@@ -121,10 +121,8 @@ import ExemSaying from "./components/Oral/ExemSaying";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
-// import CheckoutPayment from "./components/Payment/CheckoutPayment";
+import CheckoutPayment from "./components/Payment/CheckoutPayment";
 import HistoryLearning from "./components/user/HistoryLearning";
-
-
 
 
 function App() {
@@ -350,7 +348,6 @@ function App() {
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />
 
-            <Route path="listListenRead" element={<ListListenRead />} />
             <Route path="addListenRead" element={<FormListenRead />} />
             <Route path=":id/editListenRead" element={<FormListenRead />} />
           </Route>
@@ -396,6 +393,7 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
+        <Route path="/payment" element={<CheckoutPayment/>}></Route>
       </Routes>
     </div>
   );
