@@ -103,6 +103,9 @@ import ListExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/ListExerci
 import FormAnswerSentences from "./pages/admin/Sentences/Exercise/Answer/FormAnswer";
 import FormAnswerSentencesEdit from "./pages/admin/Sentences/Exercise/Answer/FormAnswerEdit";
 import Message from "./components/Message";
+
+import Test3 from "./pages/Test3";
+
 import EditImage from "./components/user/EditImage";
 import AboutUs from "./pages/AboutUs";
 import UserLayout from "./pages/layouts/UserLayout";
@@ -379,6 +382,10 @@ function App() {
         <Route path="/test2" element={<TestPage2 />}>
           {" "}
         </Route>
+        <Route path="/test3" element={<Test3 />}>
+          {" "}
+        </Route>
+
         <Route path="/signin" element={<SignIn />}>
           {" "}
         </Route>

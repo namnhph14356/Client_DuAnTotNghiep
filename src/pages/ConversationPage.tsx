@@ -7,9 +7,16 @@ import './../css/conversation.css'
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom';
+import { UserType } from "../types/user";
+import { LearningProgressType } from "../types/learningProgress";
+import { useSelector } from "react-redux";
+import { detailLearningProgressByUser } from "../api/learningProgress";
+import { RootState } from "../app/store";
 
 const ConversationPage = () => {
-  const { dayId, id } = useParams();
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const [learningProgress, setLearningProgress] = useState<any>()
+  const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();
 
@@ -31,8 +38,13 @@ const ConversationPage = () => {
         break;
     }
   }
-  
+
   useEffect(() => {
+    const getPracticeActivity = async () => {
+      const { data } = await detailLearningProgressByUser(dayId, user._id)
+      setLearningProgress(data)
+    }
+    getPracticeActivity()
     checkRoute()
   }, [path.pathname])
 
@@ -46,7 +58,14 @@ const ConversationPage = () => {
             </NavLink>
             <div className='my-auto'>
               <div className='text-xl uppercase text-white'>Luyện hội thoại</div>
-              <div className='text-white'>00 Điểm</div>
+              {learningProgress
+                ? <div className='text-white'>
+                  {learningProgress.conversationScore >= 10
+                    ? learningProgress.conversationScore
+                    : `0${learningProgress?.conversationScore} `
+                  } Điểm
+                </div>
+                : ""}
             </div>
           </div>
         </div>

@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, useLocation, useParams } from 'react-router-dom'
+import { UserType } from "../../types/user";
+import { LearningProgressType } from "../../types/learningProgress";
+import { useSelector } from "react-redux";
+import { detailLearningProgressByUser } from "../../api/learningProgress";
+import { RootState } from '../../app/store';
 
 type Props = {}
 
 const MenuVocab = (props: Props) => {
-  const { id, dayId } = useParams()
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const [learningProgress, setLearningProgress] = useState<any>()
+  const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();
 
@@ -26,8 +33,13 @@ const MenuVocab = (props: Props) => {
         break;
     }
   }
-  
+
   useEffect(() => {
+    const getPracticeActivity = async () => {
+      const { data } = await detailLearningProgressByUser(dayId, user._id)
+      setLearningProgress(data)
+    }
+    getPracticeActivity()
     checkRoute()
   }, [path.pathname])
   return (
@@ -39,15 +51,19 @@ const MenuVocab = (props: Props) => {
           </NavLink>
           <div className='my-auto'>
             <div className='text-xl uppercase text-white'>Luyện Từ Vựng</div>
-            <div className='text-white'>00 Điểm</div>
+            {learningProgress
+              ? <div className='text-white'>
+                {learningProgress.vocabularyScore >= 10
+                  ? learningProgress
+                  : `0${learningProgress?.vocabularyScore} `
+                } Điểm
+              </div>
+              : ""}
           </div>
         </div>
       </div>
       <div className="nav__speaking">
         <div className="count__question">
-          {/* <div>
-              Câu số 1 / <span>10</span>
-            </div> */}
         </div>
         <div>
           <NavLink to={`/learning/${dayId}/detailLearning/${id}/vocabulary/lesson`} className="text-black hover:text-black">
@@ -67,7 +83,7 @@ const MenuVocab = (props: Props) => {
               <i className="fa-solid fa-notes-medical"></i> Ghi chú
             </button>
           </NavLink>
-          
+
           <NavLink to={`/learning/${dayId}/detailLearning/${id}/vocabulary/questionAndAnswer`} className="text-black hover:text-black" >
             <button className={`${color === 'questionAndAnswer' ? 'bg-blue-600 text-gray-100 ' : 'bg-slate-200 hover:bg-slate-300 '}  btn__comment__speaking`}>
               <i className="fa-solid fa-comments mr-2"></i> Hỏi và đáp

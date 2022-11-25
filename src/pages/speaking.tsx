@@ -1,11 +1,18 @@
 /* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import { detailLearningProgressByUser } from "../api/learningProgress";
+import { RootState } from "../app/store";
 import "../css/speaking.css";
-
+import { UserType } from "../types/user";
+import { LearningProgressType } from "../types/learningProgress";
 
 const SpeakingPage = () => {
-  const { dayId, id } = useParams()
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const [learningProgress, setLearningProgress] = useState<any>()
+  console.log("learningProgress", learningProgress)
+  const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();
 
@@ -21,8 +28,13 @@ const SpeakingPage = () => {
         break;
     }
   }
-  
+
   useEffect(() => {
+    const getPracticeActivity = async () => {
+      const { data } = await detailLearningProgressByUser(dayId, user._id)
+      setLearningProgress(data)
+    }
+    getPracticeActivity()
     checkRoute()
   }, [path.pathname])
 
@@ -36,7 +48,14 @@ const SpeakingPage = () => {
             </NavLink>
             <div className='my-auto'>
               <div className='text-xl uppercase text-white'>Luyện nghe nói phản xạ</div>
-              <div className='text-white'>00 Điểm</div>
+              {learningProgress
+                ? <div className='text-white'>
+                  {learningProgress.listeningSpeakingScore >= 10
+                    ? learningProgress.listeningSpeakingScore
+                    : `0${learningProgress?.listeningSpeakingScore} `
+                  } Điểm
+                </div>
+                : ""}
             </div>
           </div>
         </div>
