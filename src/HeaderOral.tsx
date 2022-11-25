@@ -6,18 +6,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks'
 import { DayType } from './types/day'
 import { Link, NavLink, useParams } from 'react-router-dom'
 import { getListDaySlice } from './features/Slide/day/DaySlice'
-// const month = [
-//     { id: 1, name: 'thi câu ngày' },
-//     { id: 2, name: 'thi câu tuần' },
-//     { id: 3, name: 'thi câu tháng' },
-//     { id: 4, name: 'thi câu quý' },
-// ]
-// const day = [
-//     { id: 1, name: 'ngày 1' },
-//     { id: 2, name: 'ngày 2' },
-//     { id: 3, name: 'ngày 3' },
-//     { id: 4, name: 'ngày 4' },
-// ]
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -27,39 +16,40 @@ const HeaderOral = () => {
         {
             id: 1,
             title: "Thi câu ngày",
-            value: "day"
+            value: 1
         },
         {
             id: 2,
             title: "Thi câu tuần",
-            value: "week"
+            value: 7
         },
         {
             id: 3,
             title: "Thi câu tháng",
-            value: "month"
+            value: 30
         },
         {
             id: 4,
             title: "Thi câu quý",
-            value: "quarterly"
+            value: 90
         }
     ])
     const days = useAppSelector<DayType[]>(item => item.day.value)
     const dispatch = useAppDispatch()
     const { dayId, id } = useParams();
-    const [filterSelect, setFilterSelect] = useState<any>(filterArr[0])
+    const [filterSelect, setFilterSelect] = useState<any>()
     const [daySelect, setDaySelect] = useState<DayType>()
     const [day, setDay] = useState<DayType>()
-    console.log("days", days)
-    console.log("daySelect", daySelect)
-    console.log("filterSelect", filterSelect)
 
+    const filter = filterSelect 
+    ? days.filter((item: DayType) => item.order % filterSelect?.value === 0)
+    :  days
 
     useEffect(() => {
         dispatch(getListDaySlice())
         const day: any = days.find((item: DayType) => item._id === dayId)
         setDaySelect(day)
+        setFilterSelect(filterArr[0])
         setDay(day)
     }, [dayId])
 
@@ -77,7 +67,7 @@ const HeaderOral = () => {
                             <>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full cursor-default  border border-gray-300 bg-white py-1 pl-5 pr-12 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                        <span className="block truncate">{filterSelect.title}</span>
+                                        <span className="block truncate">{filterSelect?.title}</span>
                                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                             <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                         </span>
@@ -136,7 +126,7 @@ const HeaderOral = () => {
                             <>
                                 <div className="relative mt-1">
                                     <Listbox.Button className="relative w-full cursor-default  border border-gray-300 bg-white py-1 pl-5 pr-12 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                                        <span className="block truncate">{daySelect?.title}</span>
+                                        <span className="block ">{daySelect?.title}</span>
                                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                             <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                         </span>
@@ -150,7 +140,7 @@ const HeaderOral = () => {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                            {days.map((item) => (
+                                            {filter.map((item) => (
                                                 <Listbox.Option
                                                     key={item._id}
                                                     className={({ active }) =>

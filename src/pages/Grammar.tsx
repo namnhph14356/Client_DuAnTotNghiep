@@ -3,9 +3,16 @@ import React, { useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import NavDeatil from "../components/NavDeatil";
 import '../css/grammar.css'
+import { UserType } from "../types/user";
+import { LearningProgressType } from "../types/learningProgress";
+import { useSelector } from "react-redux";
+import { detailLearningProgressByUser } from "../api/learningProgress";
+import { RootState } from "../app/store";
 
 const Grammar = () => {
-  const { dayId, id } = useParams();
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const [learningProgress, setLearningProgress] = useState<any>()
+  const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();
 
@@ -29,6 +36,11 @@ const Grammar = () => {
   }
   
   useEffect(() => {
+    const getPracticeActivity = async () => {
+      const { data } = await detailLearningProgressByUser(dayId, user._id)
+      setLearningProgress(data)
+    }
+    getPracticeActivity()
     checkRoute()
   }, [path.pathname])
 
@@ -42,7 +54,14 @@ const Grammar = () => {
             </NavLink>
             <div className='my-auto'>
               <div className='text-xl uppercase text-white'>Luyện ngữ pháp</div>
-              <div className='text-white'>00 Điểm</div>
+              {learningProgress
+                ? <div className='text-white'>
+                  {learningProgress.grammarScore >= 10
+                    ? learningProgress.grammarScore
+                    : `0${learningProgress?.grammarScore} `
+                  } Điểm
+                </div>
+                : ""}
             </div>
           </div>
         </div>

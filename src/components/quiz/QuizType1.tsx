@@ -13,15 +13,15 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
     const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
     const dispatch = useAppDispatch()
-    
-    const onHandleSpeakSelect = ()=>{
+
+    const onHandleSpeakSelect = () => {
         if (data.answer.replace(',', '').replace('.', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
-            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect },check)
+            onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect }, check)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         onHandleSpeakSelect()
-    },[transcript])
+    }, [transcript])
 
 
     return (
@@ -47,6 +47,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
 
             >
                 <input type="radio" checked={select?.id === data._id}
+                    onClick={() => {}}
                     className={`${check === true
                         ? data._id == select?.id
                             ? data?.isCorrect === true
@@ -63,7 +64,7 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 <i className="fa-solid fa-volume-high mr-3"></i>
 
             </div>
-            <div className="min-w-0 flex-1 text-sm" onClick={() => speak({ text: data.answer,rate: 1.2, pitch: 2, voice: voices[2] })}>
+            <div className="min-w-0 flex-1 text-sm" onClick={() => speak({ text: data.answer, rate: 1.2, pitch: 2, voice: voices[2] })}>
                 <label htmlFor="comments" className="font-medium text-gray-700">
                     {data.answer}
                 </label>

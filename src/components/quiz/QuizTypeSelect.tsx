@@ -39,6 +39,7 @@ import { addLearningProgressSlice, editLearningProgressSlice } from '../../featu
 import { resetSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
 import { shuffleArray } from '../../utils/shuffleArray';
 import Loading from '../Loading';
+import { DayType } from '../../types/day';
 
 
 
@@ -124,12 +125,12 @@ const MemoCountdown = React.memo(CountdownWrapper);
 const QuizTypeSelect = () => {
   const transcript = useAppSelector(item => item.googleSpeech.transcript)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const days = useAppSelector<DayType[]>(item => item.day.value)
   const dispatch = useAppDispatch()
-  const [learningProgress, setLearningProgress] = useState<number>(0)
   const [select, setSelect] = useState<any>(null)
   const [check, setCheck] = useState(false)
   const [check2, setCheck2] = useState<any>()
-  const [done, setDone] = useState<any>()
+  const [done, setDone] = useState<boolean>(false)
   const audioCorrect = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284317/duolingo_correct_sound_effect_6597352924678955563_gafjie.mp3")
   const audioWrong = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284427/duolingo_wrong_answer_sound_effect_8056506950931993212_th5bf7.mp3")
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
@@ -141,6 +142,7 @@ const QuizTypeSelect = () => {
   const { id, dayId }: any = useParams()
   const ref = useRef(null)
   const [result, setResult] = useState<any[]>([])
+  console.log("result", result)
   const [onReset, setOnReset] = useState<boolean>(false)
   const [point, setPoint] = useState<number>(0)
   const [finish, setFinish] = useState<boolean>(false)
@@ -266,10 +268,15 @@ const QuizTypeSelect = () => {
     })
     setTotalPoint(score)
     const { data: learningProgress } = await detailLearningProgressByUser(dayId, user._id)
+    // const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
     if (learningProgress.length === 0) {
       dispatch(addLearningProgressSlice({ day: dayId, user: user._id }))
     } else {
       dispatch(editLearningProgressSlice({ ...learningProgress, listeningSpeakingScore: Math.round(score) }))
+      // if (learningProgress.conversationScore >= 8 && learningProgress.listeningSpeakingScore >= 8 && learningProgress.structureSentencesScore >= 8 && learningProgress.vocabularyScore >= 8 && learningProgress.grammarScore >= 8 && learningProgress.isPass === false) {
+      //   dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+      //   dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+      // }
     }
 
     const { data: data2 } = await addHistory({
@@ -288,13 +295,13 @@ const QuizTypeSelect = () => {
     }
     const { data } = await detailPracticeActivity(id, user._id)
     setQuiz2(data)
-    const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
-      const { data } = await detailHistory(item._id)
+    // const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
+    //   const { data } = await detailHistory(item._id)
 
-      return data
-    }))
-    setHistory(test2)
-    console.log("test2", test2)
+    //   return data
+    // }))
+    // setHistory(test2)
+    // console.log("test2", test2)
     dispatch(resetSpeechValue(""))
     setIsModalOpen(true);
   }
@@ -338,19 +345,22 @@ const QuizTypeSelect = () => {
     dispatch(getListQuizSlide())
     dispatch(getListAnswerQuizSlide())
     dispatch(resetSpeechValue(""))
+    const nextDay: any = days.find((item: DayType) => item._id === dayId)
+    console.log("nextDay", nextDay)
     const getQuiz = async () => {
       const { data } = await detailPracticeActivity(id, user._id)
+      console.log("data", data)
       setQuiz2(data)
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)
         return data
       }))
       setQuizList(shuffleArray(test))
-      const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
-        const { data } = await detailHistory(item._id)
-        return data
-      }))
-      setHistory(test2)
+      // const test2 = await Promise.all(data?.history.map(async (item: HistoryType, index) => {
+      //   const { data } = await detailHistory(item._id)
+      //   return data
+      // }))
+      // setHistory(test2)
 
     }
     getQuiz()
@@ -362,29 +372,22 @@ const QuizTypeSelect = () => {
       <div>
         {quizList ?
           <div>
-            <div className='font-bold'>Câu số {quizIndex + 1} / {quizList.length}</div>
+            <div className={`${done ? "hidden" : ""} font-bold`}>Câu số {quizIndex + 1} / {quizList.length}</div>
             <div className='content__speaking'>
 
-              <div className={`${done ? "hidden" : "flex"}  flex-col qustion__content__speaking`}>
-
-                {finish &&
-                  <div className='text-center font-bold mt-5'>
-                    Kết quả của bạn: <span className={`px-2 py-1  text-white rounded ml-2 ${point >= 8 ? 'bg-green-500' : 'bg-red-500'}`}>{point} / 10</span>
-                  </div>
-                }
+              <div className={`flex  flex-col qustion__content__speaking`}>
                 <div className="flex flex-col qustion__content__speaking">
 
-
-                  <div className="">
+                  <div className={`${done ? "hidden" : ""}`}>
                     <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
                   </div>
 
-                  <div className="flex justify-between items-center ">
+                  <div className={`${done ? "hidden" : "flex"} justify-between items-center`}>
                     <div className="flex items-center gap-2">
                       <h3 className="m-0">
                         {quizList
                           ? quizList[quizIndex]?.quiz?.type !== 3
-                            ? quizList[quizIndex]?.quiz?.question + "?"
+                            ? quizList[quizIndex]?.quiz?.question
                             : ""
                           : ""
                         }
@@ -524,14 +527,9 @@ const QuizTypeSelect = () => {
                   <Menu />
 
                 </div>
-
-
-                {/* <Button type="primary" onClick={showModal}>
-              Open Modal
-            </Button> */}
               </div>
 
-              <Modal title="Basic Modal" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={'60%'}>
+              {/* <Modal title="Lịch Sử Làm Bài" visible={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={'60%'}>
                 <Collapse defaultActiveKey={history?.length} onChange={onChange}>
                   {history?.map((item: any, index: number) => {
                     return <Panel
@@ -585,7 +583,7 @@ const QuizTypeSelect = () => {
                     </Panel>
                   })}
                 </Collapse>
-              </Modal>
+              </Modal> */}
             </div>
           </div>
           :

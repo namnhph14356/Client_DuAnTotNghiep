@@ -106,22 +106,23 @@ import Message from "./components/Message";
 
 import Test3 from "./pages/Test3";
 
-import EditImage from "./components/user/editimage";
+import EditImage from "./components/user/EditImage";
 import AboutUs from "./pages/AboutUs";
-import UserLayout from "./pages/layouts/userlayout";
-import InformationUser from "./components/user/informationuser ";
+import UserLayout from "./pages/layouts/UserLayout";
+import InformationUser from "./components/user/InformationUser ";
 import EditInformationUser from "./components/user/EditInformationUser ";
-import EditEmailUser from "./components/user/emailuser";
-import EditPasswordUser from "./components/user/editpassworduser ";
+import EditEmailUser from "./components/user/EmailUser";
+import EditPasswordUser from "./components/user/EditPasswordUser ";
 import OralVocabulary from "./pages/OralVocabulary";
 import OralSaying from "./pages/OralSaying";
-import LayoutOral from "./pages/layouts/layoutoral";
-import ExemVocabulary from "./components/Oral/exemvocabulary";
-import ExemSaying from "./components/Oral/exemsaying";
+import LayoutOral from "./pages/layouts/LayoutOral";
+import ExemVocabulary from "./components/Oral/ExemVocabulary";
+import ExemSaying from "./components/Oral/ExemSaying";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import ClassList from "./pages/admin/class/classlist";
-import DetailClassAdmin from "./pages/admin/class/detail";
-import HistoryLearning from "./components/user/historylearning";
+import ClassList from "./pages/admin/class/ClassList";
+import DetailClassAdmin from "./pages/admin/class/Detail";
+// import CheckoutPayment from "./components/Payment/CheckoutPayment";
+import HistoryLearning from "./components/user/HistoryLearning";
 
 
 
