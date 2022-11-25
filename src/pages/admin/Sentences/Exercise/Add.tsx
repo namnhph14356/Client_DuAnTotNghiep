@@ -83,6 +83,7 @@ const AddSentencesExercise = (props: Props) => {
 
   const [fileList, setfileList] = useState<any>();
   const [selected, setSelected] = useState<any>();
+  const [preview, setPreview] = useState<string>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
   const { id, dayId } = useParams();
@@ -92,7 +93,13 @@ const AddSentencesExercise = (props: Props) => {
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
   };
-
+  const handlePreview = async (e: any) => {
+    const imgLink = await uploadImage(e.target);
+    message.loading({ content: "Đang thêm ảnh" });
+    setPreview(imgLink);
+    const imgPreview = document.getElementById("img-preview") as HTMLImageElement
+    imgPreview.src = URL.createObjectURL(e.target.files[0])
+  }
 
   const onFinish = async (value) => {
 
@@ -115,7 +122,7 @@ const AddSentencesExercise = (props: Props) => {
     if (id) {
       switch (selected) {
         case "selectAuto":
-          dispatch(editQuizSlide(value));
+          dispatch(editQuizSlide({...value, image:preview}));
           message.success({ content: 'Sửa Thành Công!' });
           navigate(`/manageDay/${dayId}/sentences/listExercise`)
           break;
@@ -156,10 +163,10 @@ const AddSentencesExercise = (props: Props) => {
       }
       switch (selected) {
         case "selectAuto":
-          if (!value.image) {
+          if (!preview) {
             return message.error('Không để trống Ảnh!');
           }
-          dispatch(addQuizSlide(value));
+          dispatch(addQuizSlide({...value, image:preview}));
           message.success('Thêm Thành Công!');
           navigate(`/manageDay/${dayId}/sentences/listExercise`)
           break;
@@ -410,8 +417,8 @@ const AddSentencesExercise = (props: Props) => {
                   tooltip="Hình ảnh"
                 >
                   {id ?
-                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} /> :
-                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} disabled={!selected} />
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={handlePreview} /> :
+                    <Input type="file" accept='.png,.jpg' className="form-control" onChange={handlePreview} disabled={!selected} />
                   }
                 </Form.Item>
 
