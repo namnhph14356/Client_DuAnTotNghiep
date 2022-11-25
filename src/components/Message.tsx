@@ -254,7 +254,7 @@ const Message: React.FC = (props) => {
     const { data } = await getListUser();
     if (data && data.length > 0) {
       let listUser: any = [];
-      data.map((item: any) => {
+      data.forEach((item: any) => {
         if (item.role === "0") {
           listUser.push({
             label: item.username,
