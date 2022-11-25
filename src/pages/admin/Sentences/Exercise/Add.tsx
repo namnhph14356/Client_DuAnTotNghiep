@@ -90,6 +90,10 @@ const AddSentencesExercise = (props: Props) => {
 
   let prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === "sentences" && item.day === dayId)
   let lengthQuiz = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "vocabulary")
+
+  const tableWithType = quizs.filter((item: QuizType) => item.practiceActivity?.type === "sentences" && item.type === 'selectAuto' || item.type === 'listenWrite')
+  const tableListenSpeak = tableWithType.filter((item: QuizType) => item.practiceActivity?.day === String(dayId))
+  
   const handleChange = () => {
     form.setFieldsValue({ sights: [] });
   };
@@ -157,7 +161,8 @@ const AddSentencesExercise = (props: Props) => {
           break;
       }
     } else {
-      if (lengthQuiz.length === 10) {
+
+      if (tableListenSpeak.length === 10) {
         message.warning("Đã đạt giới hạn câu hỏi !")
         return navigate(`/manageDay/${dayId}/sentences/listExercise`)
       }
