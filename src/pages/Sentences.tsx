@@ -3,9 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, NavLink, Outlet, useLocation, useParams, useRoutes } from 'react-router-dom'
 import '../css/grammar.css'
 import '../css/sentence.css'
-// import { hover } from '@testing-library/user-event/dist/types/convenience'
+import { UserType } from "../types/user";
+import { LearningProgressType } from "../types/learningProgress";
+import { useSelector } from "react-redux";
+import { detailLearningProgressByUser } from "../api/learningProgress";
+import { RootState } from "../app/store";
+
 const Sentences = () => {
-  const { dayId, id } = useParams();
+  const user = useSelector(((item: RootState) => item.auth.value)) as UserType
+  const [learningProgress, setLearningProgress] = useState<any>()
+  const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();
 
@@ -27,8 +34,13 @@ const Sentences = () => {
         break;
     }
   }
-  
+
   useEffect(() => {
+    const getPracticeActivity = async () => {
+      const { data } = await detailLearningProgressByUser(dayId, user._id)
+      setLearningProgress(data)
+    }
+    getPracticeActivity()
     checkRoute()
   }, [path.pathname])
 
@@ -42,7 +54,14 @@ const Sentences = () => {
             </NavLink>
             <div className='my-auto'>
               <div className='text-xl uppercase text-white'>Luyện cấu trúc & câu</div>
-              <div className='text-white'>00 Điểm</div>
+              {learningProgress
+                ? <div className='text-white'>
+                  {learningProgress.structureSentencesScore >= 10
+                    ? learningProgress.structureSentencesScore
+                    : `0${learningProgress?.structureSentencesScore} `
+                  } Điểm
+                </div>
+                : ""}
             </div>
           </div>
         </div>

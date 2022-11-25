@@ -26,6 +26,7 @@ const OralPage = () => {
     const [day, setDay] = useState<DayType>()
     const [sentencesIndex, setSentencesIndex] = useState<number>(0)
     const [history, setHistory] = useState<any>([])
+    console.log("history", history)
     const [dataSentences, setDataSentSentences] = useState<SentenceType[]>([])
     const [sentencesSplit, setSentencesSplit] = useState<string[]>([])
     const transcriptSplit = transcript.split(" ")
@@ -48,6 +49,7 @@ const OralPage = () => {
     }
 
     useEffect(() => {
+        setHistory([])
         const getSentences = async () => {
             dispatch(resetSpeechValue(""))
             const { data } = await listSentencesByIdDay(String(dayId))

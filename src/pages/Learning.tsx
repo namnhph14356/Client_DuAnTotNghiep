@@ -63,10 +63,22 @@ const Learning = () => {
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
   const days2 = days?.filter((item: DayType) => item.week?._id === weekSelect?._id)
 
+  console.log("monthSelect", monthSelect);
+  console.log("weekSelect", weekSelect);
   console.log("daySelect", daySelect);
-  console.log("learningProgressSelect", learningProgressSelect);
+  // console.log("learningProgressSelect", learningProgressSelect);
   console.log("learningProgress", learningProgress);
 
+  const onHandleSelectWeek = (value: any) => {
+    setWeekSelect(value)
+    const day: any = days.find((item: DayType) => item.week?._id === value._id)
+    setDaySelect(day)
+    if (learningProgress.length === 0) {
+      setLearningProgressSelect(null)
+    } else {
+      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === day._id || item2.day?._id === day?._id))
+    }
+  }
 
   //---ModalResult---
   //Hiện Modal kết quả
@@ -91,8 +103,15 @@ const Learning = () => {
 
   const findSmallestOrder = (data, id) => {
     const temp = data?.filter((item: WeekType) => item.month === id)
-    const minPrice = Math.min(...temp.map(({ order }) => order))
-    const smallestOrder = temp.find(({ order }: any) => minPrice === order)
+    const minOrder = Math.min(...temp.map(({ order }) => order))
+    const smallestOrder = temp.find(({ order }: any) => minOrder === order)
+    const day: any = days.find((item: DayType) => item.week?._id === smallestOrder._id)
+    setDaySelect(day)
+    if (learningProgress.length === 0) {
+      setLearningProgressSelect(null)
+    } else {
+      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === day._id || item2.day?._id === day?._id))
+    }
     return smallestOrder
   }
 
@@ -138,13 +157,17 @@ const Learning = () => {
 
     const getHistoryUser = async () => {
       const { data } = await listHistoryByUser(user._id)
-      const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
-        const { data } = await detailHistory(item._id)
-        return data
-      }))
-      setUserHistory(test2.reverse())
+      console.log("data", data);
+
+      // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
+      //   const { data } = await detailHistory(item._id)
+      //   return data
+      // }))
+      // setUserHistory(test2.reverse())
+
+      setUserHistory(data)
     }
-    // getHistoryUser()
+    getHistoryUser()
   }, [])
 
   return (
@@ -157,7 +180,7 @@ const Learning = () => {
         </div>
         <div className="content__learning">
           <div className='desc__content__learning'>
-            30 ngày làm quen với giao tiếp tiếng Anh
+          360 ngày làm quen với giao tiếp tiếng Anh
           </div>
           <div className="learning__time">
             <div className='box__learning__time'>
@@ -179,7 +202,6 @@ const Learning = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-
                         {months.map((item: MonthType, index: number) => (
                           <Menu.Item key={index + 1}>
                             {({ active }) => (
@@ -199,8 +221,6 @@ const Learning = () => {
                             )}
                           </Menu.Item>
                         ))}
-
-
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -232,7 +252,7 @@ const Learning = () => {
                                   active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
                                   'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
                                 )}
-                                onClick={() => { setWeekSelect(item) }}
+                                onClick={() => { onHandleSelectWeek(item) }}
                               >
 
                                 {item.title}
@@ -279,10 +299,10 @@ const Learning = () => {
                                     if (learningProgress.length === 0) {
                                       setLearningProgressSelect(null)
                                     } else {
-                                      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
                                     }
                                   } else {
-                                    setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                    setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item?._id || item2.day?._id === item?._id))
                                   }
                                 }}
                               >
@@ -311,10 +331,10 @@ const Learning = () => {
                                 if (learningProgress.length === 0) {
                                   setLearningProgressSelect(null)
                                 } else {
-                                  setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                  setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
                                 }
                               } else {
-                                setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
                               }
                             }}
                           >
@@ -330,10 +350,10 @@ const Learning = () => {
                                 if (learningProgress.length === 0) {
                                   setLearningProgressSelect(null)
                                 } else {
-                                  setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                  setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
                                 }
                               } else {
-                                setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day._id === item._id))
+                                setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
                               }
                             }}
                           >
@@ -399,21 +419,27 @@ const Learning = () => {
             <p className='font-semibold text-cyan-700'>
               Lịch sử các nội dung bạn đã làm:
             </p>
-            {/* <Collapse defaultActiveKey={1} onChange={onChange}>
+            <Collapse defaultActiveKey={1} onChange={onChange}>
               {userHistory?.map((item: any, index: number) => {
                 return <Panel
                   key={index + 1}
                   showArrow={false}
+                  className={'w-full'}
                   header={
-                    <div key={index + 1} className="flex flex-row justify-between gap-4">
-                      <div className="">{moment(item.history.createdAt).format("H:mm:ss, Do/MM/YYYY")}</div>
-                      <div className="">{item.category?.title}</div>
-                      <div className="">{item.history?.totalCorrect}/9</div>
-                      <div className="">{item.history.result === 0 ? "Fail" : "Pass"}</div>
+                    <div key={index + 1} className="w-full flex flex-row items-center gap-8">
+                      <div className="basis-6/12">{moment(item.createdAt).format("H:mm:ss, Do/MM/YYYY")}</div>
+                      <div className="basis-2/12">{item.practiceActivity?.day.title}</div>
+                      <div className="">{item.practiceActivity?.title}</div>
+                      {/* <div className="">{item.score}</div> */}
+                      {/* <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div> */}
                     </div>
                   }
+                  extra={<div className="flex items-center gap-10">
+                    <div className="">{item.score}</div>
+                    <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div>
+                  </div>}
                 >
-                  <table className='table__list__result'>
+                  {/* <table className='table__list__result'>
                     <thead>
                       <tr>
                         <th className='m-auto'>Câu trả lời chính xác</th>
@@ -448,10 +474,10 @@ const Learning = () => {
                         <td>{item.history.result === 0 ? "Fail" : "Pass"}</td>
                       </tr>
                     </tfoot>
-                  </table>
+                  </table> */}
                 </Panel>
               })}
-            </Collapse> */}
+            </Collapse>
           </div>
         </div>
       </div>
