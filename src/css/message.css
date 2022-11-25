@@ -102,23 +102,36 @@
   text-align: left;
   color: white;
   margin-bottom: 10px;
+  line-height: 1.5;
   margin-right: 0;
   margin-left: auto;
   max-width: 70%;
+  word-break: break-word;
+  white-space: pre-wrap;
   width: fit-content;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .text-repmessage {
   cursor: pointer;
+  line-height: 1.5;
   width: fit-content;
   max-width: 70%;
+  white-space: pre-wrap;
   background-color: #e4e6eb;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 5px 10px;
   color: black;
+  word-break: break-word;
   margin-bottom: 10px;
   text-align: left;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper-message{
+  position: fixed;
+  right: 80px;
+  bottom: 100px;
+  background-color: white;
 }

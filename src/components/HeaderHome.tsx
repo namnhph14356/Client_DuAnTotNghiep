@@ -79,7 +79,7 @@ const HeaderComponent = () => {
               </div>
             </div>
             {
-              auth ?
+              auth && auth.username ?
                 <Dropdown overlay={menu} trigger={["click"]}>
                   <img
                     src={auth.img}

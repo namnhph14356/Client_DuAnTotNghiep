@@ -149,7 +149,7 @@ const Message: React.FC = (props) => {
 
       {auth && auth?.username && (
         <div className="message-send">
-          <div onClick={onClose1} className="cusound">
+          {/* <div onClick={onClose1} className="cusound">
             <Popover
               placement="topLeft"
               content={content2}
@@ -162,7 +162,7 @@ const Message: React.FC = (props) => {
                 />
               </div>
             </Popover>
-          </div>
+          </div> */}
 
           <Search
             ref={inputRef}
@@ -178,16 +178,10 @@ const Message: React.FC = (props) => {
   );
   return (
     <div className="positon-messgae">
-      <Popover
-        // open={clicked}
-        placement="topRight"
-        content={content}
-        trigger="click"
-      >
-        <div onClick={onClose} style={{ cursor: "pointer" }}>
+      <div onClick={onClose} style={{ cursor: "pointer" }}>
           <MessageOutlined style={{ fontSize: "24px", color: "#08c" }} />
         </div>
-      </Popover>
+        {clicked && content}
     </div>
   );
 };
