@@ -8,7 +8,7 @@ const AboutUs = (props: Props) => {
       <div className="container__learn flex justify-center gap-6 m-h-[400px] mt-12">
         <div className="learn__left ">
           <img
-            className="w-[100%] rounded"
+            className="w-[100%] rounded "
             src="../../assets/image/about-1.jpg"
             alt=""
           />
@@ -25,10 +25,10 @@ const AboutUs = (props: Props) => {
             đó có hiệu quả hay không và chi phí của khóa học đó thế nào. Hãy đến với chúng tôi Vian English.
           </span>
 
-          <div className="mt-4 flex gap-4">
+          <div className="mt-3 flex gap-4">
             <div className="">
               <img
-                className="w-[300px] rounded"
+                className="w-[300px] h-60 rounded"
                 src="../../assets/image/family.png"
                 alt=""
               />

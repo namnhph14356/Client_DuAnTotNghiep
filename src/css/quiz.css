@@ -65,7 +65,7 @@
   @apply font-bold text-lg text-center;
 }
 .img__result__question__item img {
-  @apply max-w-[100px] max-h-[100px];
+  @apply w-full h-44
 }
 .box__item__chosse__question{
   margin: 30px 0px;

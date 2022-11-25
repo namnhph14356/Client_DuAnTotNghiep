@@ -380,7 +380,6 @@ const QuizTypeSelect = () => {
     getQuiz()
   }, [id])
 
-
   return (
     <>
       <div>
@@ -442,7 +441,7 @@ const QuizTypeSelect = () => {
                   quizList[quizIndex]?.quiz?.type === "selectRadio"
                     ? <div className="main__content__spaeking">
                       <div className="img__question">
-                        <img src="https://i.pinimg.com/564x/23/6e/ad/236eadcccca3d08761bdf336d328ec43.jpg" alt="" />
+                        <img src={quizList[quizIndex]?.quiz?.image} alt="" />
                       </div>
                       <div className="choose__question">
                         <fieldset className="border-t border-b border-gray-200">

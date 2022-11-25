@@ -97,7 +97,7 @@ const FormVocabulary = (props: Props) => {
   const checkActivity = (voca: VocabulatyType[]) => {
     const vocaByDay = voca.filter((e) => e.dayId?._id === dayId)
     let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "vocabulary")
-    const listQuiz = quizs.filter((e) => e.practiceActivity?._id === activity._id)
+    const listQuiz = quizs.filter((e) => e.practiceActivity?._id === activity._id && e.status === true)
 
     if (vocaByDay.length === 4 && listQuiz.length === 10) {
       dispatch(editPracticeActivitylice({ ...activity, status: true }))
@@ -133,6 +133,8 @@ const FormVocabulary = (props: Props) => {
       message.success({ content: "Sửa Thành Công!", key, duration: 2 });
       navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     } else {
+      console.log("value.image", value.image);
+      
       const check = checkActivity(vocabularies);
       if (check === true) {
         message.warning("Đã đạt giới hạn đáp án !")
@@ -183,6 +185,7 @@ const FormVocabulary = (props: Props) => {
     }
     dispatch(getListVocabularySlice())
   }, []);
+    console.log(id);
 
   return (
     <div>
@@ -225,7 +228,7 @@ const FormVocabulary = (props: Props) => {
             tooltip="dạng từ"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
-             <Input />
+            <Input />
           </Form.Item>
 
           <Form.Item
@@ -237,15 +240,24 @@ const FormVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item name="image" valuePropName="src" label="ImagePreview">
+          <Form.Item name="image" valuePropName="src" label="ImagePreview"
+           >
             <img id="img-preview" style={{ width: "100px" }} />
           </Form.Item>
-          <Form.Item label="Upload image" tooltip="Image for Quiz">
+
+          <Form.Item
+            label="Upload image"
+            tooltip="Image for Quiz"
+            name="imageUpload"
+            rules={[{ required: id ? false : true, message: "Không để Trống!" }]}
+          >
             <Input
               type="file"
               accept=".png,.jpg"
               className="form-control"
               onChange={onChangeImage}
+
+
             />
           </Form.Item>
 
@@ -255,7 +267,7 @@ const FormVocabulary = (props: Props) => {
             tooltip="ví dụ"
             rules={[{ required: true, message: "Không để Trống!" }]}
           >
-           <Input />
+            <Input />
           </Form.Item>
 
           <Form.Item

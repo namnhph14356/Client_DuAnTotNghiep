@@ -67,6 +67,7 @@ const ListVocabulary = (props: Props) => {
       stt: index + 1,
       _id: items._id,
       words: items.words,
+      pa: items.pa,
       meaning: items.meaning,
       wordForm: items.wordForm,
       image: items.image,
@@ -204,6 +205,11 @@ const ListVocabulary = (props: Props) => {
       ...getColumnSearchProps("words"),
     },
     {
+      title: "Phiên âm",
+      dataIndex: "pa",
+      key: "pa",
+    },
+    {
       title: "Thuộc tính",
       key: "wordForm",
       className: 'w-[110px]',
@@ -218,7 +224,7 @@ const ListVocabulary = (props: Props) => {
           ) : record.wordForm === "Verb" ? (
             <Tag color="purple">Verb</Tag>
           ) : (
-            <p className="text-red-500">{record.wordForm}</p>
+            <p>{record.wordForm}</p>
           )}
         </div>
       ),
