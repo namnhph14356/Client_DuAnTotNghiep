@@ -54,7 +54,7 @@
   @apply bg-indigo-600 px-8 font-semibold py-1 text-white
 }
 .box__buy__source{
-  @apply col-span-3 p-2 text-center max-h-[200px]
+  @apply col-span-3 p-2 text-center max-h-[200px] pt-[20px]
 }
 .box__buy__source{
  border: 1px solid #ccc;
