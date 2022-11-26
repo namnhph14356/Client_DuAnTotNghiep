@@ -155,7 +155,7 @@ const QuizTypeSelect = () => {
   let answerType3 = 0
   if (quizList) {
     const flag = quizCompound?.map(u => u.answer).join(' ')
-    const checkFlag2 = quizList[quizIndex].quiz.question.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? true : false
+    const checkFlag2 = quizList[quizIndex].quiz.questionAfter?.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? true : false
     checkFlag = checkFlag2
     answerType3 = flag
 

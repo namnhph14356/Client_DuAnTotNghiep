@@ -261,7 +261,7 @@ function App() {
         </Route>
 
         <Route path="admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="dashboard" />} />
+          <Route index element={<Navigate to="day" />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />
