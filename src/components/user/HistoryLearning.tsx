@@ -30,7 +30,6 @@ const HistoryLearning = () => {
   useEffect(() => {
     getHistoryById();
   }, []);
-  console.log("listHistory", listHistory);
 
   const columns = [
     {
@@ -43,7 +42,7 @@ const HistoryLearning = () => {
       title: "Ngày",
       dataIndex: "Ngày",
       key: "Ngày",
-      render: (row, item) => `${getDayById(item?.practiceActivity?.day)}`,
+      render: (row, item) => `${getDayById(item?.practiceActivity?.day._id)}`,
     },
     // {
     //   title: "Email",

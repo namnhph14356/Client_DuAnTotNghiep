@@ -24,6 +24,7 @@ import { UserType } from '../types/user'
 import { detailHistory, listHistoryByUser } from '../api/history'
 import { HistoryType } from '../types/history'
 import BoxPayment from '../components/Payment/BoxPayment'
+import { async } from '@firebase/util'
 
 
 
@@ -63,11 +64,6 @@ const Learning = () => {
   const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
   const days2 = days?.filter((item: DayType) => item.week?._id === weekSelect?._id)
 
-  console.log("monthSelect", monthSelect);
-  console.log("weekSelect", weekSelect);
-  console.log("daySelect", daySelect);
-  // console.log("learningProgressSelect", learningProgressSelect);
-  console.log("learningProgress", learningProgress);
 
   const onHandleSelectWeek = (value: any) => {
     setWeekSelect(value)
@@ -115,9 +111,11 @@ const Learning = () => {
     return smallestOrder
   }
 
-  const onHandleAddProgress = () => {
-    dispatch(addLearningProgressSlice({ day: daySelect?._id, user: user._id }))
-    navigate(`/learning/${daySelect?._id}/detailLearning`)
+  const onHandleAddProgress = async () => {
+    const { payload } = await dispatch(addLearningProgressSlice({ day: daySelect?._id, user: user._id }))
+    if (payload) {
+      navigate(`/learning/${daySelect?._id}/detailLearning`)
+    }
   }
 
   useEffect(() => {
@@ -125,39 +123,46 @@ const Learning = () => {
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
     dispatch(getListDaySlice())
-    const flag = months.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    })
-    const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    })
-    const day: any = days.find((item: DayType) => item.week?._id === temp._id)
-    setMonthSelect(months?.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    }))
-    setWeekSelect(temp)
-    setDaySelect(day)
+    if (months) {
 
-    if (learningProgress.length === 0) {
-      setLearningProgressSelect(null)
-    } else {
-      setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
-    }
-    if (learningProgress.length !== 0) {
-      const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
-      const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
-      const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+      const flag = months?.reduce(function (prev, current) {
+        return (prev.order < current.order) ? prev : current
+      })
+      console.log("flag", flag);
 
-      if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
-        dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
-        dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+      const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
+        return (prev.order < current.order) ? prev : current
+      })
+      const day: any = days.find((item: DayType) => item.week?._id === temp._id)
+      setMonthSelect(months?.reduce(function (prev, current) {
+        return (prev.order < current.order) ? prev : current
+      }))
+      setWeekSelect(temp)
+      setDaySelect(day)
+
+      if (learningProgress.length === 0) {
+        setLearningProgressSelect(null)
+      } else {
+        setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
       }
+      if (learningProgress.length !== 0) {
+        const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
+        const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
+        const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+
+        if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
+          dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+          dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+        }
+      }
+
     }
+
+
 
 
     const getHistoryUser = async () => {
       const { data } = await listHistoryByUser(user._id)
-      console.log("data", data);
 
       // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
       //   const { data } = await detailHistory(item._id)
@@ -180,7 +185,7 @@ const Learning = () => {
         </div>
         <div className="content__learning">
           <div className='desc__content__learning'>
-          360 ngày làm quen với giao tiếp tiếng Anh
+            360 ngày làm quen với giao tiếp tiếng Anh
           </div>
           <div className="learning__time">
             <div className='box__learning__time'>
@@ -415,7 +420,7 @@ const Learning = () => {
             </div>
           </div>
 
-          <div className="total__learning">
+          {/* <div className="total__learning">
             <p className='font-semibold text-cyan-700'>
               Lịch sử các nội dung bạn đã làm:
             </p>
@@ -430,8 +435,6 @@ const Learning = () => {
                       <div className="basis-6/12">{moment(item.createdAt).format("H:mm:ss, Do/MM/YYYY")}</div>
                       <div className="basis-2/12">{item.practiceActivity?.day.title}</div>
                       <div className="">{item.practiceActivity?.title}</div>
-                      {/* <div className="">{item.score}</div> */}
-                      {/* <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div> */}
                     </div>
                   }
                   extra={<div className="flex items-center gap-10">
@@ -439,50 +442,15 @@ const Learning = () => {
                     <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div>
                   </div>}
                 >
-                  {/* <table className='table__list__result'>
-                    <thead>
-                      <tr>
-                        <th className='m-auto'>Câu trả lời chính xác</th>
-                        <th className='m-auto'>Câu trả lời của bạn</th>
-                        <th className='m-auto'>Thời gian</th>
-                        <th>Điểm</th>
-                        <th>Kết quả</th>
-                      </tr>
-                    </thead>
-                    <tbody className='body__table__result '>
-                      {item.userQuiz.map((item2: any, index: number) => {
-                        return <tr key={index + 1} className="">
-                          <td className="">{item2.answerQuiz ? item2.correctAnswer.answer : item2.quiz?.question?.toLowerCase().replace("?", "").trim()}</td>
-                          <td className="">{item2.answerQuiz ? item2.answerQuiz.answer : item2.answer}</td>
-                          <td className="">{item2.time}</td>
-                          <td className="">{Math.round(item2.point)}</td>
-                          <td>
-                            {item2.answerQuiz?.isCorrect === item2.correctAnswer?.isCorrect || item2.answer === item2.quiz?.question.toLowerCase().replace("?", "").trim()
-                              ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
-                              : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}
-                          </td>
-                        </tr>
-                      })}
-
-                    </tbody>
-                    <tfoot className='border-t'>
-                      <tr className='result__medium'>
-                        <td>Kết quả:</td>
-                        <td> </td>
-                        <td>{item.history?.totalCorrect}/9</td>
-                        <td>{item.history.totalPoint}</td>
-                        <td>{item.history.result === 0 ? "Fail" : "Pass"}</td>
-                      </tr>
-                    </tfoot>
-                  </table> */}
                 </Panel>
               })}
             </Collapse>
-          </div>
+          </div> */}
+
         </div>
       </div>
 
-        <BoxPayment/>
+      <BoxPayment />
     </div>
   )
 }

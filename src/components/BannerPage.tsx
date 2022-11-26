@@ -38,16 +38,16 @@ const BannerPage = () => {
         className="mySwiper"
       >
         <SwiperSlide>
-          <img width={"100%"} height={400} style={{ height: "600px", backgroundSize: "cover" }} src="https://dy7oszgl9a56g.cloudfront.net/wp-content/uploads/2020/04/09100810/100online-Banner-english.jpg" alt="" />
+          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://dy7oszgl9a56g.cloudfront.net/wp-content/uploads/2020/04/09100810/100online-Banner-english.jpg" alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img width={"100%"} height={400} style={{ height: "600px", backgroundSize: "cover" }} src="https://images.unsplash.com/photo-1542856391-010fb87dcfed?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="" />
+          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://img.freepik.com/free-vector/education-horizontal-typography-banner-set-with-learning-knowledge-symbols-flat-illustration_1284-29493.jpg?w=1380&t=st=1669396650~exp=1669397250~hmac=b622748b74f57e28f49793b733bccaac048b304c21f909484663ae449fe40138" alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img width={"100%"} height={400} style={{ height: "600px", backgroundSize: "cover" }} src="https://images.unsplash.com/photo-1542866530-1c8b35a57ca7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1856&q=80" alt="" />
+          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://img.freepik.com/free-vector/isometric-online-education-template-with-students-sitting-standing-books-globe-laptop-tablet-magnifier-certificate-graduation-cap-illustration_1284-51176.jpg?w=1480&t=st=1669396683~exp=1669397283~hmac=2b30e2b83e653278761759b8707cde1344f5b66a633f28b0fb1baeeab1c777d3" alt="" />
         </SwiperSlide>
         <SwiperSlide>
-          <img width={"100%"} height={400} style={{ height: "600px", backgroundSize: "cover" }} src="https://images.unsplash.com/photo-1542891973-afee23ae9770?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="" />
+          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="http://theme-stall.com/edupress/demos/wp-content/uploads/2016/10/demo.jpg" alt="" />
         </SwiperSlide>
       </Swiper>
     </div>

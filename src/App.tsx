@@ -260,8 +260,10 @@ function App() {
           </Route>
         </Route>
 
+
         <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Navigate to="dashboard" />} />
+
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />

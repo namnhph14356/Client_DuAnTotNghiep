@@ -109,7 +109,7 @@ const FormQuestionListenSpeak = (props: Props) => {
           const question = arrQuestion.map((item) => item.text).join(" ")
           const { payload } = await dispatch(editQuizSlide({
             _id: id,
-            question: question,
+            question: value.question,
             questionAfter: valueQuestion,
             type: "selectCompound",
             practiceActivity: prative._id,
@@ -160,7 +160,7 @@ const FormQuestionListenSpeak = (props: Props) => {
         case "selectCompound":
           const question = arrQuestion.map((item) => item.text).join(" ")
           const { payload } = await dispatch(addQuizSlide({
-            question: question,
+            question: value.question,
             questionAfter: valueQuestion,
             type: "selectCompound",
             practiceActivity: prative._id,
@@ -368,11 +368,21 @@ const FormQuestionListenSpeak = (props: Props) => {
                     rules={[{ required: true, message: 'Không để Trống!' }]}
                     className="py-4"
                   >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Đáp án"
+                    name="questionAfter"
+                    tooltip="Câu Hỏi dành cho Category"
+                    rules={[{ required: true, message: 'Không để Trống!' }]}
+                    className="py-4"
+                  >
                     <Input onChange={onChange} />
                   </Form.Item>
 
-                  <div className='grid grid-cols-12 gap-4 mb-4'>
-                    <div className='font-bold py-1 col-span-2'>Câu hỏi: </div>
+                  {/* <div className='grid grid-cols-12 gap-4 mb-4'>
+                    <div className='font-bold py-1 col-span-2'>Đáp án: </div>
                     <div className='flex col-span-10 space-x-1'>
                       {arrQuestion &&
                         arrQuestion.map((item: TypeArrQuestion) => (
@@ -393,7 +403,7 @@ const FormQuestionListenSpeak = (props: Props) => {
                       })
                       }
                     </ul>
-                  </div>
+                  </div> */}
 
                 </div> :
                 <div>
