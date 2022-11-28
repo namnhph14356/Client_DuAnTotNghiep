@@ -154,13 +154,13 @@ function App() {
               </Route>
             </Route>
             <Route path="oralWeekVocabulary" >
-              <Route path=":dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<LayoutOral />}>
                 <Route index element={<OralVocabulary />} />
                 <Route path="exam" element={<ExemVocabulary />} />
               </Route>
             </Route>
             <Route path="oralWeekSaying" >
-              <Route path=":dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<LayoutOral />}>
                 <Route index element={<OralSaying />} />
                 <Route path="exam" element={<ExemSaying />} />
               </Route>

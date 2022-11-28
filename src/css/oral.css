@@ -230,7 +230,7 @@
 .btn__next__quiz__voca{
     @apply bg-[#71b131] text-white
 }
-.status__exem__quiz p{
+.status__exem__quiz div{
     @apply ml-3
 }
 .status__exem__quiz span{
