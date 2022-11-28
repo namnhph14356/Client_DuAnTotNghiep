@@ -63,7 +63,7 @@ const ListSentencesLesson = () => {
   }, [dayId]);
 
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "sentences")
-  const tableListenSpeak = sentences.filter((item: SentenceType) => item?.practiceActivity === String(activity._id))
+  const tableListenSpeak = sentences.filter((item: SentenceType) => item?.practiceActivity._id === String(activity._id))
   const dataSources = tableListenSpeak?.map((items: SentenceType, index: number) => {
     return {
       key: index + 1,
@@ -112,7 +112,7 @@ const ListSentencesLesson = () => {
   };
 
   const checkSentences = () => {
-    const sen = sentences.filter((e: SentenceType) => e.practiceActivity === activity._id)
+    const sen = sentences.filter((e: SentenceType) => e.practiceActivity._id === activity._id)
 
     if (sen.length === 5) {
       message.warning("Đã đạt giới hạn bài học !")

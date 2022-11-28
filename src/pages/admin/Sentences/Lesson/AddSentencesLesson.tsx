@@ -44,8 +44,8 @@ const FormSentencesLesson = (props: Props) => {
   const dispatch = useAppDispatch();
 
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "sentences")
-  let sentencesByDay = senten.filter((e: SentenceType) => e.practiceActivity === activity._id)
-
+  let sentencesByDay = senten.filter((e: SentenceType) => e.practiceActivity._id === activity._id)
+  
   var titlePage: string = "";
   if (id) {
     titlePage = "Sửa bài học";
