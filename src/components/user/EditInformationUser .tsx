@@ -31,6 +31,8 @@ const EditInformationUser = () => {
   const onSubmit: SubmitHandler<FormInput> = async (user) => {
   
     const { payload } = await dispatch(editAuthSilce({...user, _id:id}))
+    
+    
     if (payload.message === "Cập nhật thành công !") {
       message.success(payload.message);
       localStorage.setItem("tokenUser", JSON.stringify(payload.token))
@@ -40,6 +42,7 @@ const EditInformationUser = () => {
 
     navigate('/user')
   }
+  console.log('user', auth);
 
   useEffect(() => {
     reset(auth)
@@ -77,8 +80,10 @@ const EditInformationUser = () => {
               <label htmlFor="">Giới tính :</label>
             </div>
             <div className='change__form__edit'>
-              <input className="form-check-input" type="radio"  {...register('sex')} value={1}  /> Nữ
-              <input className="form-check-input ml-3" type="radio"   {...register('sex')} value={0} /> Nam
+              <select id="" {...register('sex')} className=' outline-none border border-slate-400 pr-5 pl-1 py-1' >
+                <option  className='border ' value={0}>Nam </option>
+                <option  value={1}>Nữ</option>
+              </select>
             </div>
           </div>
           <div className='item__form__edit'>
