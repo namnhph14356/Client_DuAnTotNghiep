@@ -403,20 +403,39 @@ const Learning = () => {
               </div>
 
               <div className="btn__learning__statistical">
-                {learningProgressSelect
-                  ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='btn__start__statistical text-white hover:text-white'>
-                    Bắt đầu học
-                  </NavLink>
-                  : <button className='btn__start__statistical text-white hover:text-white' onClick={onHandleAddProgress}>
-                    Bắt đầu học
-                  </button>
-                }
-                <button className='btn__exam__statistical'>
+                <div>
+                  {learningProgressSelect
+                    ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='btn__start__statistical text-white hover:text-white'>
+                      Bắt đầu học
+                    </NavLink>
+                    : <button className='btn__start__statistical text-white hover:text-white' onClick={onHandleAddProgress}>
+                      Bắt đầu học
+                    </button>
+                  }
                   <NavLink to={`/learning/oral/${daySelect?._id}`} className='text-white hover:text-white'>
-                    Thi Oral ngày
+                    <button className='btn__exam__statistical'>
+                      Thi Oral ngày
+                    </button>
                   </NavLink>
-                </button>
+                </div>
+
+                <div className='mt-4'>
+                  <NavLink to={`/learning/oralWeekVocabulary/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white '>
+                    <button className='btn__exam__week'>
+                      Thi tuần (bắt buộc)
+                      <div>Từ vựng (35)</div>
+                    </button>
+                  </NavLink>
+
+                  <NavLink to={`/learning/oralWeekSaying/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white'>
+                    <button className='ml-4 btn__exam__week'>
+                      Thi tuần (bắt buộc)
+                      <div>Câu (35)</div>
+                    </button>
+                  </NavLink>
+                </div>
               </div>
+
             </div>
           </div>
 
