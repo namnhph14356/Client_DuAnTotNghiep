@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { getCategoryList } from '../features/Slide/category/CategorySlide'
 import '../css/learning.css'
-import moment from 'moment';
-import { ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon } from '@heroicons/react/20/solid'
 import { Progress, Button, Modal, Collapse } from 'antd';
 import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowPathIcon, CheckIcon, ChevronDownIcon, ChevronUpDownIcon, DocumentTextIcon, EllipsisHorizontalIcon, HomeIcon, LockClosedIcon, ShieldCheckIcon, UserPlusIcon } from '@heroicons/react/20/solid'
-import { ShoppingBag } from 'heroicons-react'
 import { getListMonthSlice } from '../features/Slide/month/MonthSlice'
 import { getListWeekSlice, getListWeekSliceByMonth } from '../features/Slide/week/WeekSlice'
 import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/DaySlice'
@@ -24,30 +20,12 @@ import { UserType } from '../types/user'
 import { detailHistory, listHistoryByUser } from '../api/history'
 import { HistoryType } from '../types/history'
 import BoxPayment from '../components/Payment/BoxPayment'
-import { async } from '@firebase/util'
+import { PracticeActivityType } from '../types/practiceActivity'
 
-
-
-
-const item = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
-]
-
-const people = [
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
 const Learning = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -60,10 +38,37 @@ const Learning = () => {
   const [monthSelect, setMonthSelect] = useState<MonthType | null>()
   const [weekSelect, setWeekSelect] = useState<WeekType | null>()
   const [daySelect, setDaySelect] = useState<DayType | null>()
-  const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
-  const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
-  const days2 = days?.filter((item: DayType) => item.week?._id === weekSelect?._id)
+  const [listDay, setListDay] = useState<DayType[]>([])
+  const [listWeek, setListWeek] = useState<WeekType[]>([])
 
+  const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
+  const weeks2 = listWeek.filter((item: WeekType) => item.month === monthSelect?._id)
+  let days2 = listDay?.filter((item: DayType) => item.week?._id === weekSelect?._id)
+  const activity = useAppSelector((item) => item.practiceActivity.value);
+
+  const getListDay = () => {
+    if (days) {
+      const arr: DayType[] = []
+      days.map((item) => {
+        const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
+        if (activityByDay.length === 4) {
+          arr.push(item)
+        }
+      })
+      const arrWeek: WeekType[] = []
+      weeks.map((item) => {
+        const lengthWeek = arr.filter((e) => e.week?._id === item._id)
+        if (lengthWeek.length > 0) {
+          arrWeek.push(item)
+        }
+      })
+
+
+      setListDay(arr)
+      setListWeek(arrWeek)
+
+    }
+  }
 
   const onHandleSelectWeek = (value: any) => {
     setWeekSelect(value)
@@ -123,20 +128,18 @@ const Learning = () => {
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
     dispatch(getListDaySlice())
+    getListDay()
     if (months) {
 
       const flag = months?.reduce(function (prev, current) {
         return (prev.order < current.order) ? prev : current
       })
-      console.log("flag", flag);
 
       const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
         return (prev.order < current.order) ? prev : current
       })
       const day: any = days.find((item: DayType) => item.week?._id === temp._id)
-      setMonthSelect(months?.reduce(function (prev, current) {
-        return (prev.order < current.order) ? prev : current
-      }))
+      setMonthSelect(flag)
       setWeekSelect(temp)
       setDaySelect(day)
 
@@ -207,25 +210,31 @@ const Learning = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {months.map((item: MonthType, index: number) => (
-                          <Menu.Item key={index + 1}>
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                                onClick={() => {
-                                  setMonthSelect(item)
-                                  setWeekSelect(findSmallestOrder(weeks, item?._id))
-                                }}
-                              >
+                        {months.map((item: MonthType, index: number) => {
+                          const listMonth = listWeek.filter((e: WeekType) => e.month === item._id)
+                          return <div>
+                            {
+                              listMonth.length > 0 &&
+                              <Menu.Item key={index + 1}>
+                                {({ active }) => (
+                                  <p
+                                    className={classNames(
+                                      active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                      'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                    )}
+                                    onClick={() => {
+                                      setMonthSelect(item)
+                                      setWeekSelect(findSmallestOrder(weeks, item?._id))
+                                    }}
+                                  >
 
-                                {`Chặng ${item?.order}`}
-                              </p>
-                            )}
-                          </Menu.Item>
-                        ))}
+                                    {`Chặng ${item?.order}`}
+                                  </p>
+                                )}
+                              </Menu.Item>
+                            }
+                          </div>
+                        })}
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -248,24 +257,24 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {weeks2.map((item: WeekType, indexWeek: number) => (
+                        {weeks2.map((item: WeekType, indexWeek: number) => {
+                          return <div>
+                            <Menu.Item key={indexWeek + 1}>
+                              {({ active }) => (
+                                <p
+                                  className={classNames(
+                                    active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                    'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                  )}
+                                  onClick={() => { onHandleSelectWeek(item) }}
+                                >
 
-                          <Menu.Item key={indexWeek + 1}>
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                                onClick={() => { onHandleSelectWeek(item) }}
-                              >
-
-                                {item.title}
-                              </p>
-                            )}
-                          </Menu.Item>
-
-                        ))}
+                                  {item.title}
+                                </p>
+                              )}
+                            </Menu.Item>
+                          </div>
+                        })}
 
 
                       </Menu.Items>
@@ -289,33 +298,36 @@ const Learning = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {days2.map((item: DayType, index: number) => (
-
-                          <Menu.Item >
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                        {days2.map((item: DayType, index: number) => {
+                          return <div>
+                            {
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <p
+                                    className={classNames(
+                                      active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                      'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                    )}
+                                    onClick={() => {
+                                      setDaySelect(item)
+                                      if (index === 0) {
+                                        if (learningProgress.length === 0) {
+                                          setLearningProgressSelect(null)
+                                        } else {
+                                          setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
+                                        }
+                                      } else {
+                                        setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item?._id || item2.day?._id === item?._id))
+                                      }
+                                    }}
+                                  >
+                                    {item.title}
+                                  </p>
                                 )}
-                                onClick={() => {
-                                  setDaySelect(item)
-                                  if (index === 0) {
-                                    if (learningProgress.length === 0) {
-                                      setLearningProgressSelect(null)
-                                    } else {
-                                      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
-                                    }
-                                  } else {
-                                    setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item?._id || item2.day?._id === item?._id))
-                                  }
-                                }}
-                              >
-                                {item.title}
-                              </p>
-                            )}
-                          </Menu.Item>
-                        ))}
+                              </Menu.Item>
+                            }
+                          </div>
+                        })}
                       </Menu.Items>
                     </Transition>
                   </Menu>
