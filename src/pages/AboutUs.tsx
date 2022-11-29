@@ -29,7 +29,7 @@ const AboutUs = (props: Props) => {
             <div className="">
               <img
                 className="w-[300px] h-60 rounded"
-                src="../../assets/image/family.png"
+                src="https://res.cloudinary.com/chanh-thon/image/upload/v1669733377/family_f7zrfe.png"
                 alt=""
               />
             </div>

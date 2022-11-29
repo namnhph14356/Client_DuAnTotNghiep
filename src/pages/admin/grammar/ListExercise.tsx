@@ -463,7 +463,7 @@ const ListExercise = () => {
 
     })
 
-    return <div className='h-screen'>
+    return <div className=''>
       <Space align="center" size="small">
         <Button style={{ background: "#E7975A" }} onClick={() => checkAnswer(row)}>
           <span className="text-white">Thêm đáp án</span>
