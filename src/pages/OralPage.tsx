@@ -11,7 +11,6 @@ import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import GoogleSpeechOral from '../components/GoogleSpeech/GoogleSpeechOral'
 import { changeSpeechValue, resetSpeechValue } from '../features/Slide/googleSpeech/GoogleSpeechSlice'
-
 import { XOutline, CheckOutline } from "heroicons-react"
 import { detailDay } from '../api/day'
 import { DayType } from '../types/day'
@@ -103,7 +102,7 @@ const OralPage = () => {
                             <tr className='row__body__table__oral '>
                                 <th className='w-24 border border-gray-200 '>
                                     Thu âm
-                                    <GoogleSpeechOral />
+                                    <div className='my-4'><GoogleSpeechOral /></div>
                                 </th>
                                 <td className={`${transcript !== "" ? "flex" : "hidden"} m-0 pr-6 justify-between items-center`}>
                                     <div className={`flex  gap-1`}>
@@ -171,7 +170,7 @@ const OralPage = () => {
                         return <li>
                             <div className="question__list__result">
                                 <p>
-                                    <i className="fa-solid fa-volume-high"></i>  {item.words}
+                                    <i className="fa-solid fa-volume-high" onClick={() => speak({ text: item.words, pitch: 2, voice: voices[2] })}></i>  {item.words}
                                 </p>
                             </div>
                             <div className='transe__answered__list'>

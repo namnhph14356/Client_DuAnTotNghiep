@@ -184,7 +184,7 @@ const Home = () => {
       </div>
       {/* teacher  */}
       <section className="box__teacher">
-        <h2 className="title__lecturers mt-16">Giảng Viên Của Vogue</h2>
+        <h2 className="title__lecturers mt-16">Giảng Viên Của Vian English</h2>
         <div className="list__teacher">
           <div className="item__teacher">
             <div className="">

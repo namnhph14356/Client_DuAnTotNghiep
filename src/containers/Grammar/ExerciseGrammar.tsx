@@ -112,7 +112,7 @@ const ExerciseGrammar = () => {
 
   const changeValueQuiz = (e: any, answer: AnswerQuizType) => {
     if (convertQuizz.length > 0) {
-      const exist = convertQuizz.find((item) => String(item.quiz) == answer.quiz)
+      const exist = convertQuizz.find((item) => String(item.quiz) == answer.quiz && item._id === answer._id)
       if (exist) {
         convertQuizz.map((element) => {
           if (element.quiz == answer.quiz && element.answer !== answer.answer) {
@@ -303,8 +303,8 @@ const ExerciseGrammar = () => {
                                 <li key={e._id} className={` ${answer.length > 0 && answer[0].quiz == e.quiz ? answer[0]._id == e._id && e.isCorrect == false ? "bg-[#FBE1DB]" : "" : ""} ${check == true && e.isCorrect == true ? "bg-[#CCF0A5]" : ""} font-sans`} >
                                   <div className={`${checkOpen2(findWordMeaning, findExplainAnswer)}  divide-x-8 divide-gray-400`}>
                                     <div className='flex gap-2 py-2 px-5'>
-                                      <input type="radio" id={e.answer} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" disabled={check ? true : false} />
-                                      <label className='align-middle mt-[-2px] hover:cursor-pointer w-full' htmlFor={e.answer}>{e.answer}</label>
+                                      <input type="radio" id={e._id} name={String(item._id)} onChange={(em) => changeValueQuiz(em, e)} value={e.answer} className="inputAnswer" disabled={check ? true : false} />
+                                      <label className='align-middle mt-[-2px] hover:cursor-pointer w-full' htmlFor={e._id}>{e.answer}</label>
                                     </div>
 
                                     {
