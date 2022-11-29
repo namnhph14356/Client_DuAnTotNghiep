@@ -21,6 +21,8 @@ import { detailHistory, listHistoryByUser } from '../api/history'
 import { HistoryType } from '../types/history'
 import BoxPayment from '../components/Payment/BoxPayment'
 import { PracticeActivityType } from '../types/practiceActivity'
+import { getListPracticeActivitylice } from '../features/Slide/practiceActivity/PracticeActivitySlice';
+import { currentUserSlice } from '../features/Slide/auth/authSlide';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -29,10 +31,11 @@ function classNames(...classes) {
 const Learning = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const months = useAppSelector<MonthType[]>(item => item.month.value)
-  const weeks = useAppSelector<WeekType[]>(item => item.week.value)
-  const days = useAppSelector<DayType[]>(item => item.day.value)
-  const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
+  let months = useAppSelector<MonthType[]>(item => item.month.value)
+  let weeks = useAppSelector<WeekType[]>(item => item.week.value)
+  let days = useAppSelector<DayType[]>(item => item.day.value)
+  let activity = useAppSelector((item) => item.practiceActivity.value);
+  let learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const [userHistory, setUserHistory] = useState<any>()
   const [monthSelect, setMonthSelect] = useState<MonthType | null>()
@@ -44,7 +47,6 @@ const Learning = () => {
   const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
   const weeks2 = listWeek.filter((item: WeekType) => item.month === monthSelect?._id)
   let days2 = listDay?.filter((item: DayType) => item.week?._id === weekSelect?._id)
-  const activity = useAppSelector((item) => item.practiceActivity.value);
 
   const getListDay = () => {
     if (days) {
@@ -62,7 +64,6 @@ const Learning = () => {
           arrWeek.push(item)
         }
       })
-
 
       setListDay(arr)
       setListWeek(arrWeek)
@@ -123,14 +124,31 @@ const Learning = () => {
     }
   }
 
+  const getHistoryUser = async () => {
+    const { data } = await listHistoryByUser(user._id)
+
+    // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
+    //   const { data } = await detailHistory(item._id)
+    //   return data
+    // }))
+    // setUserHistory(test2.reverse())
+
+    setUserHistory(data)
+  }
+
   useEffect(() => {
-    dispatch(getLearningProgressByUserSlice(user._id))
+    dispatch(currentUserSlice())
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
     dispatch(getListDaySlice())
-    getListDay()
-    if (months) {
+    dispatch(getListPracticeActivitylice())
+    getHistoryUser()
+  }, [])
 
+  useEffect(() => {
+    getListDay()
+
+    if (months.length > 0 && weeks.length > 0 && days.length > 0) {
       const flag = months?.reduce(function (prev, current) {
         return (prev.order < current.order) ? prev : current
       })
@@ -143,40 +161,30 @@ const Learning = () => {
       setWeekSelect(temp)
       setDaySelect(day)
 
-      if (learningProgress.length === 0) {
-        setLearningProgressSelect(null)
-      } else {
-        setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
-      }
-      if (learningProgress.length !== 0) {
-        const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
-        const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
-        const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+      if (user) {
+        const getLearning = async () => {
+          const { payload: learningProgress } = await dispatch(getLearningProgressByUserSlice(user._id))
 
-        if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
-          dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
-          dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+          if (learningProgress.length === 0) {
+            setLearningProgressSelect(null)
+          } else {
+            setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
+          }
+          if (learningProgress.length !== 0) {
+            const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
+            const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
+            const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+
+            if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
+              dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+              dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+            }
+          }
         }
+        getLearning()
       }
-
     }
-
-
-
-
-    const getHistoryUser = async () => {
-      const { data } = await listHistoryByUser(user._id)
-
-      // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
-      //   const { data } = await detailHistory(item._id)
-      //   return data
-      // }))
-      // setUserHistory(test2.reverse())
-
-      setUserHistory(data)
-    }
-    getHistoryUser()
-  }, [])
+  }, [months, weeks, days, activity, user])
 
   return (
     <div className='learning__page'>
@@ -212,7 +220,7 @@ const Learning = () => {
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {months.map((item: MonthType, index: number) => {
                           const listMonth = listWeek.filter((e: WeekType) => e.month === item._id)
-                          return <div>
+                          return <div key={index + 1}>
                             {
                               listMonth.length > 0 &&
                               <Menu.Item key={index + 1}>
@@ -258,7 +266,7 @@ const Learning = () => {
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
                         {weeks2.map((item: WeekType, indexWeek: number) => {
-                          return <div>
+                          return <div key={indexWeek + 1}>
                             <Menu.Item key={indexWeek + 1}>
                               {({ active }) => (
                                 <p
@@ -299,7 +307,7 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         {days2.map((item: DayType, index: number) => {
-                          return <div>
+                          return <div key={index + 1}>
                             {
                               <Menu.Item>
                                 {({ active }) => (
