@@ -2889,8 +2889,8 @@ const ExeWriteAndListen = () => {
                     quesToArr.forEach((item2: any, index2: number) => {
                       if (index2 < quesToArr.length - 1) {
                         tempQues.push(<span>{item2}</span>, check == true ?
-                          <input className={`inp__text ${checkAnswerIscorrect(index + 1, index2 + 1)}`} {...register(`ans.inputAnswer-${index + 1}-${index2 + 1}`)} disabled />
-                          : <input className="inp__text bg-transparent" {...register(`ans.inputAnswer-${index + 1}-${index2 + 1}`)} />)
+                          <input key={index2 + 1} className={`inp__text ${checkAnswerIscorrect(index + 1, index2 + 1)}`} {...register(`ans.inputAnswer-${index + 1}-${index2 + 1}`)} disabled />
+                          : <input key={index2 + 1} className="inp__text bg-transparent" {...register(`ans.inputAnswer-${index + 1}-${index2 + 1}`)} />)
                       } else {
                         tempQues.push(<span key={index2 + 1}>{item2}</span>)
                       }

@@ -295,7 +295,7 @@ const ListSentencesExercise = () => {
   const checkStatusActivity = () => {
     const quizStatus = quizs.filter((item: QuizType) => item.practiceActivity?.type === "sentences" && item.practiceActivity?.day === String(dayId) && item.status === false)
     const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "sentences" && item.practiceActivity?.day === String(dayId))
-    const senten = sentences.filter((e: SentenceType) => e.practiceActivity === prative._id)
+    const senten = sentences.filter((e: SentenceType) => e.practiceActivity._id === prative._id)
 
     if (quizStatus.length > 0 || lengthQuiz.length < 10 || senten.length < 5) {
       dispatch(editPracticeActivitylice({ ...prative, status: false }))
