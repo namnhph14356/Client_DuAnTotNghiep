@@ -130,7 +130,7 @@ function App() {
 
   const check =
     location.pathname.includes("admin") ||
-    location.pathname.includes("manageteacher");
+    location.pathname.includes("manageteacher") || location.pathname.includes("manageDay");
   return (
     <div>
       {!check && (

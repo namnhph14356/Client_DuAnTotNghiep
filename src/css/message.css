@@ -2,24 +2,30 @@
   height: 450px;
   width: 380px;
   display: flex;
-  justify-content: space-between;
   background-color: white;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .message-left{
+  width: 80px;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
+.message-right{
+  width: 300px;
+}
+
 .icon-header-message-left{
   height: 50px;
-  width: 80px;
   padding: 0 10px;
   margin: 0 !important;
   justify-content: center;
+  width: 80px;
   display: flex;
   cursor: pointer;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(59 130 246 / 1);
 }
 
 .header-message {
@@ -39,7 +45,7 @@
   width: 80px;
 }
 
-.text-header-message {
+.text-header-message { 
   margin: 0;
   color: white;
   font-weight: bold;
