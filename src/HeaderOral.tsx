@@ -56,7 +56,7 @@ const HeaderOral = () => {
     return (
         <div>
             <div className="header__oral__page">
-                <p>Thi oral ngày <span>{day?.order}</span></p>
+                <p>Thi Oral ngày <span>{day?.order}</span></p>
 
             </div>
             <div className="select__menu__oral">
@@ -199,7 +199,7 @@ const HeaderOral = () => {
                     </Link>
                     <Link to={`/learning/oral/${daySelect?._id}/exam`}>
                         <button className=' text-black'>
-                            <i className="fa-solid fa-microphone mr-2"></i>Thi oral phản xạ 7 giây
+                            <i className="fa-solid fa-microphone mr-2"></i>Thi Oral phản xạ 7 giây
                         </button>
                     </Link>
 

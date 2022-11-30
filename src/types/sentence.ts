@@ -1,6 +1,8 @@
+import { PracticeActivityType } from "./practiceActivity";
+
 export type SentenceType = {
   _id?: string;
-  practiceActivity?: string;
+  practiceActivity?: any;
   words: string;
   meaning: string;
   phoneticTranscription: string;

@@ -37,15 +37,14 @@ const LessonSentences = () => {
   useEffect(() => {
     getSents()
   }, [])
-  console.log("dataSent",dataSent);
-  
+
   return (
     <div className="">
       <div className='list__sentences '>
         {
           dataSent.length > 0 ?
-            dataSent.map((item) => (
-              <div className="item__list_sentences ">
+            dataSent.map((item, index: number) => (
+              <div className="item__list_sentences " key={index + 1}>
                 <div className="item__content__list">
                   <h3 className="title__item__content__list">
                     <i className="fa-solid fa-volume-high"></i> {item.words}

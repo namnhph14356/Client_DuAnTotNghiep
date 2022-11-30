@@ -29,7 +29,7 @@ const AboutUs = (props: Props) => {
             <div className="">
               <img
                 className="w-[300px] h-60 rounded"
-                src="../../assets/image/family.png"
+                src="https://res.cloudinary.com/chanh-thon/image/upload/v1669733377/family_f7zrfe.png"
                 alt=""
               />
             </div>
@@ -109,7 +109,7 @@ const AboutUs = (props: Props) => {
       </div>
 
       <section className="box__teacher">
-        <h2 className="title__lecturers mt-8 mb-8 text-[#00394f]">Giảng Viên Của Vogue</h2>
+        <h2 className="title__lecturers mt-8 text-[#00394f]">Giảng Viên Của Vian English</h2>
         <div className="list__teacher">
           <div className="item__teacher">
             <div className="">
