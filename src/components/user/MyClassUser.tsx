@@ -118,7 +118,7 @@ const MyClassUser = () => {
       render: (row, item, index) => `${index + 1}`,
     },
     {
-      title: "Lớp",
+      title: "Tên lớp",
       dataIndex: "nameClass",
       key: "nameClass",
       ...getColumnSearchProps('nameClass'),
@@ -150,7 +150,7 @@ const MyClassUser = () => {
           <div>
             <li>{auth.username}</li>
             <li>/</li>
-            <li>Lịch sử lớp học</li>
+            <li>Lớp học của tôi</li>
           </div>
         </ul>
       </div>
@@ -158,7 +158,7 @@ const MyClassUser = () => {
       <div>
         <div className="d-flex align-items-center justify-between">
           <Typography.Title className="m-0 py-4" level={3}>
-            Lịch sử làm bài
+            Lớp học của tôi
           </Typography.Title>
         </div>
         <Table bordered dataSource={userClass} columns={columns} />
