@@ -43,7 +43,7 @@ const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, 
       },]
     }
 
-    answerList.map((item: any, key: number) => {
+    answerList.sort((a, b) => a.order - b.order).map((item: any, key: number) => {
       if (item.answer.toLowerCase() === convertValue[key].answerUser.toLowerCase() && item.quiz._id === convertValue[key].idQuestion) {
         convertValue[key].isCorrect = true;
         convertValue[key].answerCorrect = convertValue[key].answerUser

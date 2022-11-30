@@ -126,7 +126,7 @@ const AddSentencesExercise = (props: Props) => {
     if (id) {
       switch (selected) {
         case "selectAuto":
-          dispatch(editQuizSlide({...value, image:preview}));
+          dispatch(editQuizSlide({ ...value, image: preview }));
           message.success({ content: 'Sửa Thành Công!' });
           navigate(`/manageDay/${dayId}/sentences/listExercise`)
           break;
@@ -145,11 +145,12 @@ const AddSentencesExercise = (props: Props) => {
           }))
 
           if (payload) {
-            arrAnswer.map(async (item) => {
+            arrAnswer.map(async (item, index: number) => {
               if (item.checkAnswer === true) {
                 await dispatch(addAnswerQuizSlide({
                   quiz: payload._id,
-                  answer: item.text
+                  answer: item.text,
+                  order: index + 1
                 }))
               }
             })
@@ -171,7 +172,7 @@ const AddSentencesExercise = (props: Props) => {
           if (!preview) {
             return message.error('Không để trống Ảnh!');
           }
-          dispatch(addQuizSlide({...value, image:preview}));
+          dispatch(addQuizSlide({ ...value, image: preview }));
           message.success('Thêm Thành Công!');
           navigate(`/manageDay/${dayId}/sentences/listExercise`)
           break;
@@ -186,11 +187,12 @@ const AddSentencesExercise = (props: Props) => {
           }))
           await dispatch(getListQuizSlide())
           if (payload) {
-            arrAnswer.map(async (item) => {
+            arrAnswer.map(async (item, index: number) => {
               if (item.checkAnswer === true) {
                 await dispatch(addAnswerQuizSlide({
                   quiz: payload._id,
-                  answer: item.text
+                  answer: item.text,
+                  order: index + 1
                 }))
               }
             })
@@ -393,10 +395,10 @@ const AddSentencesExercise = (props: Props) => {
 
                 <div className='grid grid-cols-12 gap-4'>
                   <div className='font-bold py-1 col-span-2'>Chọn đáp án: </div>
-                  <ul className='flex space-x-8 col-span-10'>
+                  <ul className='flex-auto space-x-8 col-span-10 w-full'>
                     {arrAnswer?.map((item: TypeArrAnswer, index: number) => {
                       return (
-                        <button key={item.id} onClick={(e) => changeAnswer(e, item.id, !item.checkAnswer)}><li className='border px-3 py-1 my-auto rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item.text}</li></button>
+                        <button key={item.id} onClick={(e) => changeAnswer(e, item.id, !item.checkAnswer)}><li className='border px-3 py-1 my-auto mb-4 rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item.text}</li></button>
                       );
                     })
                     }

@@ -7,6 +7,7 @@ export type AnswerQuizType = {
     isCorrect?: number | boolean,
     wordMeaning?: string,
     explainAnswer?: string,
+    order?:number,
     createdAt?: string,
     updatedAt?: string,
     image?: string
