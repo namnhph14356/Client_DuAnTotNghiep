@@ -75,10 +75,10 @@
  width: 100%;
 }
 .btn__choose__result{
-  @apply flex mt-3 justify-center 
+  @apply flex flex-wrap mt-3  space-x-4 w-full justify-center
 }
 .item__btn__choose{
-  @apply border-2 border-[#ccc] py-2 px-9 rounded-lg mx-[15px]
+  @apply border-2 border-[#ccc] py-2 px-9 rounded-lg my-3
 }
 
 
