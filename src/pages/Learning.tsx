@@ -135,14 +135,18 @@ const Learning = () => {
 
     setUserHistory(data)
   }
+  const getList = async () => {
+    const { payload: listDay } = await dispatch(getListDaySlice())
+    const { payload: user } = await dispatch(currentUserSlice())
+    getLearning(listDay, user)
+  }
 
   useEffect(() => {
-    dispatch(currentUserSlice())
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
-    dispatch(getListDaySlice())
     dispatch(getListPracticeActivitylice())
     getHistoryUser()
+    getList()
   }, [])
 
   useEffect(() => {
@@ -160,31 +164,26 @@ const Learning = () => {
       setMonthSelect(flag)
       setWeekSelect(temp)
       setDaySelect(day)
-
-      if (user) {
-        const getLearning = async () => {
-          const { payload: learningProgress } = await dispatch(getLearningProgressByUserSlice(user._id))
-
-          if (learningProgress.length === 0) {
-            setLearningProgressSelect(null)
-          } else {
-            setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
-          }
-          if (learningProgress.length !== 0) {
-            const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
-            const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
-            const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
-
-            if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
-              dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
-              dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
-            }
-          }
-        }
-        getLearning()
-      }
     }
   }, [months, weeks, days, activity, user])
+
+  const getLearning = async (listDay: DayType[], user: UserType) => {
+    if (listDay && user) {
+      const { payload: learningProgress } = await dispatch(getLearningProgressByUserSlice(user._id))
+      setLearningProgressSelect(learningProgress.find((item: any) => item.day === listDay[0]?._id || item.day._id === listDay[0]?._id))
+      
+      if (learningProgress.length !== 0) {
+        const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
+        const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
+        const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+
+        if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
+          dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+          dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+        }
+      }
+    }
+  }
 
   return (
     <div className='learning__page'>
