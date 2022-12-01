@@ -123,6 +123,7 @@ import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
 import CheckoutPayment from "./components/Payment/CheckoutPayment";
 import HistoryLearning from "./components/user/HistoryLearning";
+import MyClassUser from "./components/user/MyClassUser";
 
 
 function App() {
@@ -237,6 +238,7 @@ function App() {
             <Route path="editImage/:id" element={<EditImage />} />
             <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
             <Route path="historyLerning/:id" element={<HistoryLearning />} />
+            <Route path="myClassUser/:id" element={<MyClassUser />} />
           </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
