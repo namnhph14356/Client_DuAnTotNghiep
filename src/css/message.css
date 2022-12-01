@@ -37,9 +37,9 @@
   justify-content: space-between;
 }
 
-.ant-popover-inner-content {
+/* .ant-popover-inner-content {
   padding: 0 !important;
-}
+} */
 
 .message-content-group{
   width: 80px;

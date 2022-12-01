@@ -25,6 +25,7 @@ import { ClassType } from '../../types/Class';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import { ExclamationCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/lib/table/interface";
+import { NavLink } from "react-router-dom";
 type DataIndex = keyof ExpandedDataType;
 interface ExpandedDataType {
   key: React.Key;
@@ -73,7 +74,7 @@ const MyClassUser = () => {
     dispatch(getListClass())
     getClassListUser()
   }, [])
-
+  
   const getColumnSearchProps = (dataIndex: any): ColumnType<any> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
@@ -128,19 +129,20 @@ const MyClassUser = () => {
       title: "Giảng viên",
       dataIndex: "teacherOfClass",
       key: "teacherOfClass",
-      render: (row, item) => `${item?.teacherOfClass}`,
+      render: (row, item) => `${item?.teacherOfClass[0].userId.username}`,
     },
     {
       title: "Ngày vào lớp",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (row, item) =>
-      `${moment(item?.timeJoinClass).format("DD/MM/YYYY")}`,
+        `${moment(item?.timeJoinClass).format("DD/MM/YYYY")}`,
     },
     {
       title: "Link học trực tuyến",
       dataIndex: "linkJoinClass",
       key: "linkJoinClass",
+      render: (row, item) => <NavLink to={``}>${item?.linkJoinClass}</NavLink>
     }
   ];
   return (
