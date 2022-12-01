@@ -3,6 +3,7 @@ import { NavLink, useLocation, useParams } from 'react-router-dom'
 import { listSentencesByIdActivity } from '../../api/sentences'
 import Loading from '../../components/Loading'
 import { SentenceType } from '../../types/sentence'
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 
 const arraySentences = [
@@ -27,6 +28,7 @@ const arraySentences = [
 const LessonSentences = () => {
   const { dayId, id } = useParams();
   const [dataSent, setDataSent] = useState<any>([])
+  const { speak, voices } = useSpeechSynthesis();
 
   const getSents = async () => {
     if (id) {
@@ -37,18 +39,17 @@ const LessonSentences = () => {
   useEffect(() => {
     getSents()
   }, [])
-  console.log("dataSent",dataSent);
-  
+
   return (
     <div className="">
       <div className='list__sentences '>
         {
           dataSent.length > 0 ?
-            dataSent.map((item) => (
-              <div className="item__list_sentences ">
+            dataSent.map((item, index: number) => (
+              <div className="item__list_sentences " key={index + 1}>
                 <div className="item__content__list">
                   <h3 className="title__item__content__list">
-                    <i className="fa-solid fa-volume-high"></i> {item.words}
+                    <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: item.words,pitch: 2, voice: voices[2] })}></i> {item.words}
                   </h3>
                   <div className="phonetic__content">
                     {item.phoneticTranscription}

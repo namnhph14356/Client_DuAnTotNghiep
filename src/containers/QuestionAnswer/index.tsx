@@ -18,7 +18,6 @@ import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
 import { getUser, getUserList } from '../../features/Slide/user/userSlide';
 import { getListUser, getUserById } from '../../api/user';
-import Loading from '../../components/Loading';
 import { ReplyCommentType } from '../../types/replycomment';
 
 const { TextArea } = Input;
@@ -34,31 +33,26 @@ const CommentList = ({ comments, dayId, postId }: { comments: CommentType[], day
   useEffect(() => {
     dispath(getReplyCommentList())
   }, []);
-  const filterComment:any = comments.filter((item: CommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)
+  const filterComment: any = comments.filter((item: CommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)
   const filterReply = replyy.filter((item: ReplyCommentType) => item.dayId === `${dayId}` && item.postId === `${postId}`)
 
   return (
     <>
-      {filterComment.length > 0
-        ?
-        <div className="w-fullbg-white border rounded-md">
-          <h3 className="font-semibold p-1">{`${filterComment.length + filterReply.length} ${filterComment.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
-          <div className="flex flex-col gap-5 m-3">
-            <List
-              dataSource={filterComment}
-              itemLayout="horizontal"
-              renderItem={(item: CommentType) => {
-                return (
-                  <CommentItem item={item} dayId={dayId} postId={postId} />
-                )
-              }
-              }
-            />
-          </div>
+      <div className="w-fullbg-white border rounded-md">
+        <h3 className="font-semibold p-1">{`${filterComment.length + filterReply.length} ${filterComment.length > 1 ? 'Bình Luận' : 'Bình Luận'}`}</h3>
+        <div className="flex flex-col gap-5 m-3">
+          <List
+            dataSource={filterComment}
+            itemLayout="horizontal"
+            renderItem={(item: CommentType) => {
+              return (
+                <CommentItem item={item} dayId={dayId} postId={postId} />
+              )
+            }
+            }
+          />
         </div>
-        :
-        <Loading />
-      }
+      </div>
     </>
 
   )
@@ -242,7 +236,7 @@ const CommentItem = ({ item, dayId, postId }: any) => {
                   <div>
                     <Form onFinish={onFinish}>
                       <Form.Item name={['replycomment', 'content']}>
-                      <TextArea rows={2} value={value} />
+                        <TextArea rows={2} value={value} />
                       </Form.Item>
                       <Form.Item>
                         <Button loading={submitting} htmlType="submit" type="primary">
@@ -391,7 +385,7 @@ const QuestionAnswer = () => {
   const users = useSelector<any, any>(data => data.user.value);
   const comment = useSelector<any, any>(data => data.comment.value);
   const { id, dayId }: any = useParams()
-  
+
   useEffect(() => {
     dispath(getCommentList())
   }, []);

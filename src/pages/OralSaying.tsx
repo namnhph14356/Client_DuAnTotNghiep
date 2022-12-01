@@ -4,15 +4,12 @@ import MenuOralSaying from '../components/Oral/MenuOralSaying'
 import '../css/oral.css'
 
 const OralSaying = () => {
-    return (
-
-        <div>
-         <MenuOralSaying/>
-          <InfoOralSaying/>
-
-          
-        </div>
-    )
+  return (
+    <div>
+      <MenuOralSaying />
+      <InfoOralSaying />
+    </div>
+  )
 }
 
 export default OralSaying

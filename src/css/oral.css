@@ -180,8 +180,8 @@
 .layout__page__oral{
     @apply w-8/12 m-auto border shadow mt-5 px-3 py-5
 }
-.route__page__oral p{
-    @apply bg-[#3dae48] w-24 font-medium text-white text-center py-1
+.route__page__oral div{
+    @apply bg-[#3dae48] w-24 font-medium text-white text-center py-1 mb-4
 }
 .menu__exem__layout{
     @apply px-5 
@@ -230,7 +230,7 @@
 .btn__next__quiz__voca{
     @apply bg-[#71b131] text-white
 }
-.status__exem__quiz p{
+.status__exem__quiz div{
     @apply ml-3
 }
 .status__exem__quiz span{

@@ -14,8 +14,6 @@ const ChooseClass = () => {
   const dispatch = useAppDispatch();
   const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   let listLearningProgressByDay = learningProgress?.find((e: any) => e.day?._id === dayId)
-  console.log("listLearningProgressByDay", listLearningProgressByDay);
-
 
   const colorProgress = (percent: number) => {
     let html = ""
