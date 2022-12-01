@@ -323,9 +323,9 @@ const Message: React.FC = (props) => {
 
   const content = (
     <div className="wrapper-message">
-      <div className="message-left">
+      {auth && auth?.username && <div className="message-left">
         <div className="icon-header-message-left">
-          <MenuOutlined style={{ fontSize: "24px", color: "#000" }} />
+          <MenuOutlined style={{ fontSize: "24px", color: "#fff" }} />
         </div>
         <div className="message-content-group">
           {groupMessages &&
@@ -361,25 +361,18 @@ const Message: React.FC = (props) => {
                 </div>
               </div>
             ))}
-          <div className="icon-message-add-group" onClick={onShowAddGroup}>
-            <EditOutlined style={{ fontSize: "24px", color: "#fff" }} />
-          </div>
         </div>
-      </div>
+      </div>}
+      
       <div className="message-right">
-        <div className="header-message">
+        {auth && auth?.username && <div className="header-message">
           <p className="text-header-message">{groupSelect?.name}</p>
           <div onClick={onClose} className="icon-cancel-message">
             <CloseOutlined style={{ fontSize: "14px", color: "#fff" }} />
           </div>
-        </div>
+        </div> } 
         {auth && auth?.username ? (
           <div className="message-content" ref={bottomRef}>
-            <p className="text-repmessage">Chào bạn {auth.username}</p>
-            <p className="text-repmessage">Bạn cần chúng tôi giúp gì nhỉ?</p>
-            <p className="text-repmessage">
-              Chúng tôi sẽ trả lời bạn sớm nhất khi có thể
-            </p>
             {dataQuestion.map((item: any) => (
               <div key={item.id}>
                 {item.isAdmin ? (
@@ -393,7 +386,7 @@ const Message: React.FC = (props) => {
         ) : (
           <div className="message-content">
             <p className="text-center">
-              Bạn cần đăng ký hoặc đăng nhập để chat với quản trị viên{" "}
+              Bạn cần đăng ký hoặc đăng nhập để chat nhóm
             </p>
           </div>
         )}
