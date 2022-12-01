@@ -6,9 +6,8 @@ import '../css/footer.css'
 const navigation = {
   VianEnglish: [
     { name: 'Trang chủ', href: '#' },
-    { name: 'Các Kỳ Thi', href: '#' },
-    { name: 'Học Tiếng anh', href: '#' },
-    { name: 'Dạy tiếng anh', href: '#' },
+    { name: 'Các Kỳ Thi', href: '/learning' },
+    { name: 'Học Tiếng anh', href: '/learning' },
   ],
   support: [
     { name: 'Trợ giúp', href: '#' },
@@ -19,12 +18,6 @@ const navigation = {
   company: [
     { name: 'Lớp học tiếng Anh giao tiếp 360', href: '#' },
     { name: '30 ngày làm quen với giao tiếp tiếng Anh', href: '#' },
-  ],
-  legal: [
-    { name: 'Từ vựng', href: '#' },
-    { name: 'Cấu trúc và câu', href: '#' },
-    { name: 'Hội thoại', href: '#' },
-    { name: 'Ngữ pháp', href: '#' },
   ],
   social: [
     {
@@ -54,15 +47,6 @@ const navigation = {
       ),
     },
     {
-      name: 'Twitter',
-      href: '#',
-      icon: (props) => (
-        <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-          <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-        </svg>
-      ),
-    },
-    {
       name: 'GitHub',
       href: '#',
       icon: (props) => (
@@ -81,7 +65,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#4F46E5] text-white mt-16" aria-labelledby="footer-heading">
       <div className="mx-auto w-10/12 py-16 ">
-        <div className="xl:flex xl:grid-cols-4 xl:gap-16">
+        <div className="xl:grid xl:grid-cols-4 ">
           <div className="space-y-16 xl:col-span-1">
             <Link to='/'>
               <img
@@ -99,8 +83,8 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="mt-12 grid grid-cols-2  xl:col-span-3 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-4">
+          <div className="mt-12 grid grid-cols-3  xl:col-span-3 xl:mt-0">
+            <div className="md:grid md:grid-cols-2 col-span-2 md:gap-8">
               <div>
                 <h3 className="text-base font-medium text-orange-500">Giới thiệu về VianEnglish</h3>
                 <ul role="list" className="mt-4 space-y-4">
@@ -126,7 +110,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="md:grid md:grid-cols-2 md:gap-4">
+            <div>
               <div>
                 <h3 className="text-base font-medium text-orange-500">Lớp học tiếng anh giao tiếp 360</h3>
                 <ul role="list" className="mt-4 space-y-4">
@@ -139,25 +123,13 @@ const Footer = () => {
                   ))}
                 </ul>
               </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-base font-medium text-orange-500">Làm quen với tiếng anh</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.legal.map((item) => (
-                    <li key={item.name}>
-                      <a href={item.href} className="text-base text-white hover:text-orange-500">
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           </div>
 
         </div>
-        <div className="mt-12 border-t border-gray-200 pt-8">
+        {/* <div className="mt-12 border-t border-gray-200 pt-8">
           <p className="text-base text-white xl:text-center">&copy; Copyright 2022 VianEnglish.com</p>
-        </div>
+        </div> */}
       </div>
     </footer>
   )
