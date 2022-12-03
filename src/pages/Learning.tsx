@@ -137,7 +137,6 @@ const Learning = () => {
   }
   const getList = async () => {
     const { payload: listDay } = await dispatch(getListDaySlice())
-    const { payload: user } = await dispatch(currentUserSlice())
     getLearning(listDay, user)
   }
 
@@ -146,6 +145,7 @@ const Learning = () => {
     dispatch(getListWeekSlice())
     dispatch(getListPracticeActivitylice())
     getHistoryUser()
+    dispatch(currentUserSlice())
     getList()
   }, [])
 
