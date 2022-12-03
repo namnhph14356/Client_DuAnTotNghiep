@@ -60,7 +60,7 @@ const ListDay = (props: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  let listTuanTrongThang: any = weeks.filter((e: WeekType) => e.month === monthBiggest._id)
+  let listTuanTrongThang: any = weeks.filter((e: WeekType) => e.month === monthBiggest?._id)
 
   let soNgayTrongThang: DayType[] = [];
   listTuanTrongThang.map((week: WeekType) => {
