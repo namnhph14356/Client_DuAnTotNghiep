@@ -26,3 +26,8 @@ export const getClassById = (id:number) => {
     return instance.get(url);
 }
 
+export const getClassByUser = (userId) => {
+    const url = `/class/get-class-by-user/${userId}`;
+    return instance.get(url);
+}
+
