@@ -20,6 +20,7 @@ import { listAnswerListenWriteById } from '../../../../../api/answerListenWrite'
 import { async } from '@firebase/util';
 import { QuizType } from '../../../../../types/quiz';
 import useQuiz from '../../../../../features/Slide/quiz/use_quiz';
+import { uploadAudio } from '../../../../../api/googleCloud';
 
 type Props = {}
 
@@ -183,6 +184,73 @@ const FormListenWrite = (props: Props) => {
     form.resetFields();
   };
 
+  function convertFile(audioFileData, targetFormat) {
+    try {
+      targetFormat = targetFormat.toLowerCase();
+      let reader = new FileReader();
+      return new Promise(resolve => {
+        reader.onload = function (event: any) {
+          let contentType = 'audio/' + targetFormat;
+          let data = event.target.result.split(',');
+          let b64Data = data[1];
+          let blob = getBlobFromBase64Data(b64Data, contentType);
+          let blobUrl = URL.createObjectURL(blob);
+          let convertedAudio = {
+            name: audioFileData.name.substring(0, audioFileData.name.lastIndexOf(".")),
+            format: targetFormat,
+            data: blobUrl
+          }
+          resolve(convertedAudio);
+        }
+        reader.readAsDataURL(audioFileData);
+      });
+
+    } catch (e) {
+      console.log("Error occurred while converting : ", e);
+    }
+  }
+
+  function getBlobFromBase64Data(b64Data, contentType, sliceSize = 512) {
+    const byteCharacters = atob(b64Data);
+    const byteArrays: any = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
+  function uuidv4() {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  }
+
+  const onHandleChangeAudio = async (data: any) => {
+    const audioPreview = document.getElementById("audio-preview") as any;
+    audioPreview.src = URL.createObjectURL(data.target.files[0])
+    const postid = uuidv4();
+    const file: any = await convertFile(data.target.files[0], "wav")
+    const blob2 = await fetch(file.data)
+      .then(r => r.blob())
+      .then(blobFile => new File([blobFile], `${postid}_${file.name}.wav`, { type: "audio/wav" }))
+      const formData = new FormData();
+    formData.append("audiofile", blob2);
+    const { data: data2 } = await uploadAudio(formData)
+    console.log("data2", data2);
+  }
+
   useEffect(() => {
     if (id) {
       const getListenAndWrite = async () => {
@@ -227,11 +295,6 @@ const FormListenWrite = (props: Props) => {
     const imgPreview = document.getElementById("img-preview") as any;
     console.log(e.target.files[0]);
     imgPreview.src = URL.createObjectURL(e.target.files[0])
-  }
-
-  const onChangeAudio = (e: any) => {
-    const audioPreview = document.getElementById("audio-preview") as any;
-    audioPreview.src = URL.createObjectURL(e.target.files[0])
   }
 
   return (
@@ -421,7 +484,7 @@ const FormListenWrite = (props: Props) => {
                       tooltip="Audio"
                       rules={[{ required: true, message: 'Không để Trống!' }]}
                     >
-                      <Input type={'file'} id={'upload_audio'} name="listenWrite.audio" onChange={(e) => onChangeAudio(e)} />
+                      <Input type={'file'} id={'upload_audio'} name="listenWrite.audio" accept="audio/*" onChange={(e) => onHandleChangeAudio(e)} />
 
 
                     </Form.Item>
