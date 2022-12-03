@@ -93,7 +93,7 @@ const AdminDashboard = () => {
       value: totalStudent.length
     },
     {
-      type: "Giáo viên",
+      type: "Giảng viên",
       value: totalTeacher.length,
     },
     {
@@ -128,9 +128,9 @@ const AdminDashboard = () => {
   }, [])
   return (
     <div className=''>
-      <h1 className='p-1 text-2xl'>Dashboard</h1>
-      <Row className='justify-between'>
-        <Col xs={5} sm={5} md={5} lg={5} xl={5} className="p-1">
+      {/* <h1 className='p-1 text-2xl'>Dashboard</h1> */}
+      <Row className='justify-between' >
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +162,7 @@ const AdminDashboard = () => {
             </div>
           </Card>
         </Col>
-        <Col xs={5} sm={5} md={5} lg={5} xl={5} className="p-1">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
             <div className='text-xl py-2 text-orange-500'>
               <BsCalendar2Day />
@@ -187,7 +187,7 @@ const AdminDashboard = () => {
             </div>
           </Card>
         </Col>
-        <Col xs={5} sm={5} md={5} lg={5} xl={5} className="p-1">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
             <div className='text-xl py-2 text-orange-500'>
               <BsCalendar2Day />
@@ -212,7 +212,7 @@ const AdminDashboard = () => {
             </div>
           </Card>
         </Col>
-        <Col xs={5} sm={5} md={5} lg={5} xl={5} className="p-1">
+        <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
             <div className='text-xl py-2 text-orange-500'>
               <BsClockHistory />
@@ -242,13 +242,13 @@ const AdminDashboard = () => {
         <List className='w-[700px] mr-10'>
           <Card hoverable>
             <Typography.Title level={5} className="text-center">
-              Số lượng người dùng làm bài trong 7 ngày
+              Số lượt làm bài trong 7 ngày gần nhất
             </Typography.Title>
             <Line width={100} data={setDataChart} {...config} />
           </Card>
         </List>
         <List className='w-[500px]'>
-          <Card>
+          <Card hoverable>
             <Typography.Title level={5} className="text-center">
               Số lượng người dùng
             </Typography.Title>
