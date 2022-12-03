@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { RootState } from '../../app/store'
 import '../../css/chooseClass.css'
+import { addLearningProgressSlice, getLearningProgressByUserSlice } from '../../features/Slide/learningProgress/LearningProgress'
 import { LearningProgressType } from '../../types/learningProgress'
+import { UserType } from '../../types/user'
 
 const ChooseClass = () => {
   const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
   const { dayId } = useParams();
+  const dispatch = useAppDispatch();
+  const auth = useSelector(((item: RootState) => item.auth.value)) as UserType
   let listLearningProgressByDay = learningProgress?.find((e: any) => e.day?._id === dayId)
-  console.log("listLearningProgressByDay", listLearningProgressByDay);
-
 
   const colorProgress = (percent: number) => {
     let html = ""
@@ -63,6 +67,10 @@ const ChooseClass = () => {
     // }
     return html
   }
+
+  useEffect(() => {
+    dispatch(getLearningProgressByUserSlice(auth._id))
+  }, [])
 
   const checkPoint = (point: number) => {
     if (point === 0) {

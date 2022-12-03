@@ -142,7 +142,6 @@ const QuizTypeSelect = () => {
   const { id, dayId }: any = useParams()
   const ref = useRef(null)
   const [result, setResult] = useState<any[]>([])
-  console.log("result", result)
   const [onReset, setOnReset] = useState<boolean>(false)
   const [point, setPoint] = useState<number>(0)
   const [finish, setFinish] = useState<boolean>(false)
@@ -155,7 +154,7 @@ const QuizTypeSelect = () => {
   let answerType3 = 0
   if (quizList) {
     const flag = quizCompound?.map(u => u.answer).join(' ')
-    const checkFlag2 = quizList[quizIndex].quiz.question.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? true : false
+    const checkFlag2 = quizList[quizIndex].quiz.questionAfter?.toLowerCase().replace("?", "").trim() === flag.toLowerCase() ? true : false
     checkFlag = checkFlag2
     answerType3 = flag
 
@@ -346,10 +345,8 @@ const QuizTypeSelect = () => {
     dispatch(getListAnswerQuizSlide())
     dispatch(resetSpeechValue(""))
     const nextDay: any = days.find((item: DayType) => item._id === dayId)
-    console.log("nextDay", nextDay)
     const getQuiz = async () => {
       const { data } = await detailPracticeActivity(id, user._id)
-      console.log("data", data)
       setQuiz2(data)
       const test = await Promise.all(data?.quizs.map(async (item: any, index) => {
         const { data } = await detailQuiz(item._id)

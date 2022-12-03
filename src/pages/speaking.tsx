@@ -11,7 +11,6 @@ import { LearningProgressType } from "../types/learningProgress";
 const SpeakingPage = () => {
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const [learningProgress, setLearningProgress] = useState<any>()
-  console.log("learningProgress", learningProgress)
   const { dayId, id }: any = useParams()
   const [color, setColor] = useState('');
   const path = useLocation();

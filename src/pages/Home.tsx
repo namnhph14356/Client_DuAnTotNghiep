@@ -182,46 +182,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      {/* teacher  */}
-      <section className="box__teacher">
-        <h2 className="title__lecturers mt-16">Giảng Viên Của Vogue</h2>
-        <div className="list__teacher">
-          <div className="item__teacher">
-            <div className="">
-              <img
-                className="img__teacher"
-                src="https://i.pinimg.com/564x/40/13/74/4013749a8693c2ac0e3a8a3326a99240.jpg"
-                alt=""
-              />
-            </div>
-            <h3 className="name__teacher">Bùi Hồng Hạnh</h3>
-            <p>Thạc sỹ Giáo Dục & Quản Trị Kinh Doanh từ Đại Học StanFord</p>
-          </div>
-          <div className="item__teacher">
-            <div className="">
-              <img
-                className="img__teacher"
-                src="https://i.pinimg.com/564x/58/44/1a/58441a96ff4480dbae3779ec75ef87a4.jpg"
-                alt=""
-              />
-            </div>
-            <h3 className="name__teacher">Bùi Hồng Hạnh</h3>
-            <p>Thạc sỹ Giáo Dục & Quản Trị Kinh Doanh từ Đại Học StanFord</p>
-          </div>
-          <div className="item__teacher">
-            <div className="">
-              <img
-                className="img__teacher"
-                src="https://i.pinimg.com/564x/cb/72/2c/cb722cc4a9a425e604c911957f9b2f93.jpg"
-                alt=""
-              />
-            </div>
-            <h3 className="name__teacher">Bùi Hồng Hạnh</h3>
-            <p>Thạc sỹ Giáo Dục & Quản Trị Kinh Doanh từ Đại Học StanFord</p>
-          </div>
-        </div>
-      </section>
-
+    
       {/*form by course  */}
       <section className="form__information">
         <h2 className="title__form">NHẬP THÔNG TIN ĐỂ ĐĂNG KÝ</h2>

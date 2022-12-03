@@ -247,7 +247,7 @@ const ListUser = () => {
               GIẢNG VIÊN
             </Typography.Title>
             <Typography.Title level={2} className="m-0 ">
-              {totalTeacher.length}
+              {totalTeacher?.length}
             </Typography.Title>
           </Card>
         </Col>
@@ -267,7 +267,7 @@ const ListUser = () => {
               ADMIN
             </Typography.Title>
             <Typography.Title level={2} className="m-0 ">
-              {totalAdmin.length}
+              {totalAdmin?.length}
             </Typography.Title>
           </Card>
         </Col>

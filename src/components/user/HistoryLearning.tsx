@@ -30,7 +30,6 @@ const HistoryLearning = () => {
   useEffect(() => {
     getHistoryById();
   }, []);
-  console.log("listHistory", listHistory);
 
   const columns = [
     {
@@ -43,19 +42,13 @@ const HistoryLearning = () => {
       title: "Ngày",
       dataIndex: "Ngày",
       key: "Ngày",
-      render: (row, item) => `${getDayById(item?.practiceActivity?.day)}`,
+      render: (row, item) => `${getDayById(item?.learningProgress?.day)}`,
     },
-    // {
-    //   title: "Email",
-    //   dataIndex: "Email",
-    //   key: "Email",
-    //   render: (row, item) => `${item?.user?.email}`,
-    // },
     {
       title: "Tên bài tập",
       dataIndex: "practiceActivity",
       key: "practiceActivity",
-      render: (row, item) => `${item?.practiceActivity?.title}`,
+      render: (row, item) => `${item?.practiceActivity?.title || item?.type}`,
     },
     {
       title: "Điểm",

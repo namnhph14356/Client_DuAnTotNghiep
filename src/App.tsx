@@ -123,6 +123,7 @@ import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
 import CheckoutPayment from "./components/Payment/CheckoutPayment";
 import HistoryLearning from "./components/user/HistoryLearning";
+import MyClassUser from "./components/user/MyClassUser";
 
 
 function App() {
@@ -130,7 +131,7 @@ function App() {
 
   const check =
     location.pathname.includes("admin") ||
-    location.pathname.includes("manageteacher");
+    location.pathname.includes("manageteacher") || location.pathname.includes("manageDay");
   return (
     <div>
       {!check && (
@@ -154,13 +155,13 @@ function App() {
               </Route>
             </Route>
             <Route path="oralWeekVocabulary" >
-              <Route path=":dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<LayoutOral />}>
                 <Route index element={<OralVocabulary />} />
                 <Route path="exam" element={<ExemVocabulary />} />
               </Route>
             </Route>
             <Route path="oralWeekSaying" >
-              <Route path=":dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<LayoutOral />}>
                 <Route index element={<OralSaying />} />
                 <Route path="exam" element={<ExemSaying />} />
               </Route>
@@ -237,6 +238,7 @@ function App() {
             <Route path="editImage/:id" element={<EditImage />} />
             <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
             <Route path="historyLerning/:id" element={<HistoryLearning />} />
+            <Route path="myClassUser/:id" element={<MyClassUser />} />
           </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />
@@ -260,8 +262,10 @@ function App() {
           </Route>
         </Route>
 
+
         <Route path="admin" element={<PrivateRoute><AdminLayout /></PrivateRoute>}>
           <Route index element={<Navigate to="dashboard" />} />
+
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="contact">
             <Route index element={<ListContact />} />

@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { getCategoryList } from '../features/Slide/category/CategorySlide'
 import '../css/learning.css'
-import moment from 'moment';
-import { ChevronLeftIcon, ChevronRightIcon, ShoppingCartIcon } from '@heroicons/react/20/solid'
 import { Progress, Button, Modal, Collapse } from 'antd';
 import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ArrowPathIcon, CheckIcon, ChevronDownIcon, ChevronUpDownIcon, DocumentTextIcon, EllipsisHorizontalIcon, HomeIcon, LockClosedIcon, ShieldCheckIcon, UserPlusIcon } from '@heroicons/react/20/solid'
-import { ShoppingBag } from 'heroicons-react'
 import { getListMonthSlice } from '../features/Slide/month/MonthSlice'
 import { getListWeekSlice, getListWeekSliceByMonth } from '../features/Slide/week/WeekSlice'
 import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/DaySlice'
@@ -24,50 +20,56 @@ import { UserType } from '../types/user'
 import { detailHistory, listHistoryByUser } from '../api/history'
 import { HistoryType } from '../types/history'
 import BoxPayment from '../components/Payment/BoxPayment'
+import { PracticeActivityType } from '../types/practiceActivity'
+import { getListPracticeActivitylice } from '../features/Slide/practiceActivity/PracticeActivitySlice';
+import { currentUserSlice } from '../features/Slide/auth/authSlide';
 
-
-
-
-const item = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
-]
-
-const people = [
-  { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-]
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+
 const Learning = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const months = useAppSelector<MonthType[]>(item => item.month.value)
-  const weeks = useAppSelector<WeekType[]>(item => item.week.value)
-  const days = useAppSelector<DayType[]>(item => item.day.value)
-  const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
+  let months = useAppSelector<MonthType[]>(item => item.month.value)
+  let weeks = useAppSelector<WeekType[]>(item => item.week.value)
+  let days = useAppSelector<DayType[]>(item => item.day.value)
+  let activity = useAppSelector((item) => item.practiceActivity.value);
+  let learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
   const user = useSelector(((item: RootState) => item.auth.value)) as UserType
   const [userHistory, setUserHistory] = useState<any>()
   const [monthSelect, setMonthSelect] = useState<MonthType | null>()
   const [weekSelect, setWeekSelect] = useState<WeekType | null>()
   const [daySelect, setDaySelect] = useState<DayType | null>()
-  const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
-  const weeks2 = weeks.filter((item: WeekType) => item.month === monthSelect?._id)
-  const days2 = days?.filter((item: DayType) => item.week?._id === weekSelect?._id)
+  const [listDay, setListDay] = useState<DayType[]>([])
+  const [listWeek, setListWeek] = useState<WeekType[]>([])
 
-  console.log("monthSelect", monthSelect);
-  console.log("weekSelect", weekSelect);
-  console.log("daySelect", daySelect);
-  // console.log("learningProgressSelect", learningProgressSelect);
-  console.log("learningProgress", learningProgress);
+  const [learningProgressSelect, setLearningProgressSelect] = useState<LearningProgressType | null>()
+  const weeks2 = listWeek.filter((item: WeekType) => item.month === monthSelect?._id)
+  let days2 = listDay?.filter((item: DayType) => item.week?._id === weekSelect?._id)
+
+  const getListDay = () => {
+    if (days) {
+      const arr: DayType[] = []
+      days.map((item) => {
+        const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
+        if (activityByDay.length === 4) {
+          arr.push(item)
+        }
+      })
+      const arrWeek: WeekType[] = []
+      weeks.map((item) => {
+        const lengthWeek = arr.filter((e) => e.week?._id === item._id)
+        if (lengthWeek.length > 0) {
+          arrWeek.push(item)
+        }
+      })
+
+      setListDay(arr)
+      setListWeek(arrWeek)
+
+    }
+  }
 
   const onHandleSelectWeek = (value: any) => {
     setWeekSelect(value)
@@ -115,60 +117,79 @@ const Learning = () => {
     return smallestOrder
   }
 
-  const onHandleAddProgress = () => {
-    dispatch(addLearningProgressSlice({ day: daySelect?._id, user: user._id }))
-    navigate(`/learning/${daySelect?._id}/detailLearning`)
+  const onHandleAddProgress = async () => {
+    const { payload } = await dispatch(addLearningProgressSlice({ day: daySelect?._id, user: user._id }))
+    if (payload) {
+      navigate(`/learning/${daySelect?._id}/detailLearning`)
+    }
+  }
+
+  const getHistoryUser = async () => {
+    const { data } = await listHistoryByUser(user._id)
+
+    // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
+    //   const { data } = await detailHistory(item._id)
+    //   return data
+    // }))
+    // setUserHistory(test2.reverse())
+
+    setUserHistory(data)
+  }
+  const getList = async () => {
+    const { payload: listDay } = await dispatch(getListDaySlice())
+    getLearning(listDay, user)
   }
 
   useEffect(() => {
-    dispatch(getLearningProgressByUserSlice(user._id))
     dispatch(getListMonthSlice())
     dispatch(getListWeekSlice())
-    dispatch(getListDaySlice())
-    const flag = months.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    })
-    const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    })
-    const day: any = days.find((item: DayType) => item.week?._id === temp._id)
-    setMonthSelect(months?.reduce(function (prev, current) {
-      return (prev.order < current.order) ? prev : current
-    }))
-    setWeekSelect(temp)
-    setDaySelect(day)
+    dispatch(getListPracticeActivitylice())
+    getHistoryUser()
+    dispatch(currentUserSlice())
+    getList()
+  }, [])
 
-    if (learningProgress.length === 0) {
-      setLearningProgressSelect(null)
-    } else {
-      setLearningProgressSelect(learningProgress.find((item: any) => item.day === day?._id || item.day._id === day?._id))
+  useEffect(() => {
+    getListDay()
+
+    if (months.length > 0 && weeks.length > 0 && days.length > 0) {
+      const flag = months?.reduce(function (prev, current) {
+        return (prev.order < current.order) ? prev : current
+      })
+
+      const temp = weeks?.filter((item: WeekType) => item.month === flag._id).reduce(function (prev, current) {
+        return (prev.order < current.order) ? prev : current
+      })
+      const day: any = days.find((item: DayType) => item.week?._id === temp._id)
+      setMonthSelect(flag)
+      setWeekSelect(temp)
+      setDaySelect(day)
     }
-    if (learningProgress.length !== 0) {
-      const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
-      const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
-      const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+  }, [months, weeks, days, activity, user])
 
-      if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
-        dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
-        dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+  const getLearning = async (listDay: DayType[], user: UserType) => {
+    if (listDay && user) {
+      const { payload: learningProgress } = await dispatch(getLearningProgressByUserSlice(user._id))
+      setLearningProgressSelect(learningProgress.find((item: any) => item.day === listDay[0]?._id || item.day._id === listDay[0]?._id))
+
+      if (learningProgress.length !== 0) {
+        const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
+        const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
+        const nextDay: any = days.find((item: DayType) => item.order === lastDay?.order + 1)
+
+        if (lastLearningProgress.conversationScore >= 8 && lastLearningProgress.listeningSpeakingScore >= 8 && lastLearningProgress.structureSentencesScore >= 8 && lastLearningProgress.vocabularyScore >= 8 && lastLearningProgress.grammarScore >= 8 && lastLearningProgress.isPass === false) {
+          dispatch(editLearningProgressSlice({ ...lastLearningProgress, isPass: true }))
+          dispatch(addLearningProgressSlice({ day: nextDay?._id, user: user._id }))
+        }
       }
     }
+  }
 
+  const checkDay7 = (weekId: string) => {
+    const listDays = days.filter((item: DayType) => item.week?._id === weekId)
+    return listDays[listDays.length - 1]
+  }
 
-    const getHistoryUser = async () => {
-      const { data } = await listHistoryByUser(user._id)
-      console.log("data", data);
-
-      // const test2 = await Promise.all(data.map(async (item: HistoryType, index) => {
-      //   const { data } = await detailHistory(item._id)
-      //   return data
-      // }))
-      // setUserHistory(test2.reverse())
-
-      setUserHistory(data)
-    }
-    getHistoryUser()
-  }, [])
 
   return (
     <div className='learning__page'>
@@ -180,7 +201,7 @@ const Learning = () => {
         </div>
         <div className="content__learning">
           <div className='desc__content__learning'>
-          360 ngày làm quen với giao tiếp tiếng Anh
+            360 ngày làm quen với giao tiếp tiếng Anh
           </div>
           <div className="learning__time">
             <div className='box__learning__time'>
@@ -202,25 +223,31 @@ const Learning = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {months.map((item: MonthType, index: number) => (
-                          <Menu.Item key={index + 1}>
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                                onClick={() => {
-                                  setMonthSelect(item)
-                                  setWeekSelect(findSmallestOrder(weeks, item?._id))
-                                }}
-                              >
+                        {months.map((item: MonthType, index: number) => {
+                          const listMonth = listWeek.filter((e: WeekType) => e.month === item._id)
+                          return <div key={index + 1}>
+                            {
+                              listMonth.length > 0 &&
+                              <Menu.Item key={index + 1}>
+                                {({ active }) => (
+                                  <p
+                                    className={classNames(
+                                      active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                      'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                    )}
+                                    onClick={() => {
+                                      setMonthSelect(item)
+                                      setWeekSelect(findSmallestOrder(weeks, item?._id))
+                                    }}
+                                  >
 
-                                {`Chặng ${item?.order}`}
-                              </p>
-                            )}
-                          </Menu.Item>
-                        ))}
+                                    {`Chặng ${item?.order}`}
+                                  </p>
+                                )}
+                              </Menu.Item>
+                            }
+                          </div>
+                        })}
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -243,24 +270,24 @@ const Learning = () => {
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 
-                        {weeks2.map((item: WeekType, indexWeek: number) => (
+                        {weeks2.map((item: WeekType, indexWeek: number) => {
+                          return <div key={indexWeek + 1}>
+                            <Menu.Item key={indexWeek + 1}>
+                              {({ active }) => (
+                                <p
+                                  className={classNames(
+                                    active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                    'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                  )}
+                                  onClick={() => { onHandleSelectWeek(item) }}
+                                >
 
-                          <Menu.Item key={indexWeek + 1}>
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
-                                )}
-                                onClick={() => { onHandleSelectWeek(item) }}
-                              >
-
-                                {item.title}
-                              </p>
-                            )}
-                          </Menu.Item>
-
-                        ))}
+                                  {item.title}
+                                </p>
+                              )}
+                            </Menu.Item>
+                          </div>
+                        })}
 
 
                       </Menu.Items>
@@ -284,33 +311,36 @@ const Learning = () => {
                       leaveTo="transform opacity-0 scale-95"
                     >
                       <Menu.Items className="absolute left-0 z-10 mt-[2px] mr-2 w-56 origin-top-right divide-y divide-gray-100  bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {days2.map((item: DayType, index: number) => (
-
-                          <Menu.Item >
-                            {({ active }) => (
-                              <p
-                                className={classNames(
-                                  active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
-                                  'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                        {days2.map((item: DayType, index: number) => {
+                          return <div key={index + 1}>
+                            {
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <p
+                                    className={classNames(
+                                      active ? 'bg-green-100 text-gray-900' : 'text-gray-700',
+                                      'group flex items-center px-5 mb-0 pr-3 py-2 text-sm cursor-pointer'
+                                    )}
+                                    onClick={() => {
+                                      setDaySelect(item)
+                                      if (index === 0) {
+                                        if (learningProgress.length === 0) {
+                                          setLearningProgressSelect(null)
+                                        } else {
+                                          setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
+                                        }
+                                      } else {
+                                        setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item?._id || item2.day?._id === item?._id))
+                                      }
+                                    }}
+                                  >
+                                    {item.title}
+                                  </p>
                                 )}
-                                onClick={() => {
-                                  setDaySelect(item)
-                                  if (index === 0) {
-                                    if (learningProgress.length === 0) {
-                                      setLearningProgressSelect(null)
-                                    } else {
-                                      setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item._id || item2.day?._id === item?._id))
-                                    }
-                                  } else {
-                                    setLearningProgressSelect(learningProgress.find((item2: any) => item2.day === item?._id || item2.day?._id === item?._id))
-                                  }
-                                }}
-                              >
-                                {item.title}
-                              </p>
-                            )}
-                          </Menu.Item>
-                        ))}
+                              </Menu.Item>
+                            }
+                          </div>
+                        })}
                       </Menu.Items>
                     </Transition>
                   </Menu>
@@ -398,24 +428,48 @@ const Learning = () => {
               </div>
 
               <div className="btn__learning__statistical">
-                {learningProgressSelect
-                  ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='btn__start__statistical text-white hover:text-white'>
-                    Bắt đầu học
-                  </NavLink>
-                  : <button className='btn__start__statistical text-white hover:text-white' onClick={onHandleAddProgress}>
-                    Bắt đầu học
-                  </button>
-                }
-                <button className='btn__exam__statistical'>
+                <div>
+                  {learningProgressSelect
+                    ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} >
+                      <button className='btn__start__statistical text-white hover:text-white'>
+                        Bắt đầu học
+                      </button>
+                    </NavLink>
+                    : <button className='btn__start__statistical text-white hover:text-white' onClick={onHandleAddProgress}>
+                      Bắt đầu học
+                    </button>
+                  }
                   <NavLink to={`/learning/oral/${daySelect?._id}`} className='text-white hover:text-white'>
-                    Thi Oral ngày
+                    <button className='btn__exam__statistical'>
+                      Thi Oral ngày
+                    </button>
                   </NavLink>
-                </button>
+                </div>
+
+                {
+                  daySelect === checkDay7(String(weekSelect?._id)) &&
+                  <div className='mt-4'>
+                    <NavLink to={`/learning/oralWeekVocabulary/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white '>
+                      <button className='btn__exam__week'>
+                        Thi tuần (bắt buộc)
+                        <div>Từ vựng (35)</div>
+                      </button>
+                    </NavLink>
+
+                    <NavLink to={`/learning/oralWeekSaying/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white'>
+                      <button className='ml-4 btn__exam__week'>
+                        Thi tuần (bắt buộc)
+                        <div>Câu (35)</div>
+                      </button>
+                    </NavLink>
+                  </div>
+                }
               </div>
+
             </div>
           </div>
 
-          <div className="total__learning">
+          {/* <div className="total__learning">
             <p className='font-semibold text-cyan-700'>
               Lịch sử các nội dung bạn đã làm:
             </p>
@@ -430,8 +484,6 @@ const Learning = () => {
                       <div className="basis-6/12">{moment(item.createdAt).format("H:mm:ss, Do/MM/YYYY")}</div>
                       <div className="basis-2/12">{item.practiceActivity?.day.title}</div>
                       <div className="">{item.practiceActivity?.title}</div>
-                      {/* <div className="">{item.score}</div> */}
-                      {/* <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div> */}
                     </div>
                   }
                   extra={<div className="flex items-center gap-10">
@@ -439,50 +491,15 @@ const Learning = () => {
                     <div className={`${item.result === 0 ? "text-red-500" : "text-green-500"}`}>{item.result === 0 ? "Fail" : "Pass"}</div>
                   </div>}
                 >
-                  {/* <table className='table__list__result'>
-                    <thead>
-                      <tr>
-                        <th className='m-auto'>Câu trả lời chính xác</th>
-                        <th className='m-auto'>Câu trả lời của bạn</th>
-                        <th className='m-auto'>Thời gian</th>
-                        <th>Điểm</th>
-                        <th>Kết quả</th>
-                      </tr>
-                    </thead>
-                    <tbody className='body__table__result '>
-                      {item.userQuiz.map((item2: any, index: number) => {
-                        return <tr key={index + 1} className="">
-                          <td className="">{item2.answerQuiz ? item2.correctAnswer.answer : item2.quiz?.question?.toLowerCase().replace("?", "").trim()}</td>
-                          <td className="">{item2.answerQuiz ? item2.answerQuiz.answer : item2.answer}</td>
-                          <td className="">{item2.time}</td>
-                          <td className="">{Math.round(item2.point)}</td>
-                          <td>
-                            {item2.answerQuiz?.isCorrect === item2.correctAnswer?.isCorrect || item2.answer === item2.quiz?.question.toLowerCase().replace("?", "").trim()
-                              ? <i className="fa-solid fa-thumbs-up result__correct__icon"></i>
-                              : <i className="fa-solid fa-circle-xmark result__wrong__icon"></i>}
-                          </td>
-                        </tr>
-                      })}
-
-                    </tbody>
-                    <tfoot className='border-t'>
-                      <tr className='result__medium'>
-                        <td>Kết quả:</td>
-                        <td> </td>
-                        <td>{item.history?.totalCorrect}/9</td>
-                        <td>{item.history.totalPoint}</td>
-                        <td>{item.history.result === 0 ? "Fail" : "Pass"}</td>
-                      </tr>
-                    </tfoot>
-                  </table> */}
                 </Panel>
               })}
             </Collapse>
-          </div>
+          </div> */}
+
         </div>
       </div>
 
-        <BoxPayment/>
+      <BoxPayment />
     </div>
   )
 }

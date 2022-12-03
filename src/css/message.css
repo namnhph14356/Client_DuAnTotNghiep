@@ -1,10 +1,35 @@
 .wrapper-message {
-  width: 300px;
   height: 450px;
+  width: 380px;
+  display: flex;
+  background-color: white;
+  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-left{
+  width: 80px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+.message-right{
+  width: 300px;
+}
+
+.icon-header-message-left{
+  height: 50px;
+  padding: 0 10px;
+  margin: 0 !important;
+  justify-content: center;
+  width: 80px;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(59 130 246 / 1);
 }
 
 .header-message {
-  height: 40px;
+  height: 50px;
   background-color: rgb(59 130 246 / 1);
   padding: 10px 15px;
   display: flex;
@@ -12,11 +37,15 @@
   justify-content: space-between;
 }
 
-.ant-popover-inner-content {
+/* .ant-popover-inner-content {
   padding: 0 !important;
+} */
+
+.message-content-group{
+  width: 80px;
 }
 
-.text-header-message {
+.text-header-message { 
   margin: 0;
   color: white;
   font-weight: bold;
@@ -41,8 +70,13 @@
   color: black !important;
 }
 
+.message-content-group{
+  height: 400px;
+  overflow: auto;
+}
+
 .message-content {
-  height: 350px;
+  height: 340px;
   overflow: auto;
   padding: 10px;
 }
@@ -102,23 +136,72 @@
   text-align: left;
   color: white;
   margin-bottom: 10px;
+  line-height: 1.5;
   margin-right: 0;
   margin-left: auto;
   max-width: 70%;
+  word-break: break-word;
+  white-space: pre-wrap;
   width: fit-content;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .text-repmessage {
   cursor: pointer;
+  line-height: 1.5;
   width: fit-content;
   max-width: 70%;
+  white-space: pre-wrap;
   background-color: #e4e6eb;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 5px 10px;
   color: black;
+  word-break: break-word;
   margin-bottom: 10px;
   text-align: left;
   box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper-message{
+  position: fixed;
+  right: 80px;
+  bottom: 100px;
+  background-color: white;
+  display: flex;
+}
+
+.group-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.w-100{
+  width: 30px;
+}
+
+.message-content-group{
+  position: relative !important;
+}
+
+.icon-message-add-group{
+  position: absolute;
+  bottom: 5px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: rgb(74, 132, 234);
+  right: 15px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.active-group{
+  background-color: rgb(74, 132, 234);
 }

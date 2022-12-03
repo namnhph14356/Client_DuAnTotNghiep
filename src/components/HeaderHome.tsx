@@ -10,7 +10,7 @@ const navigation = [
   { name: 'Học thử', to: '/learning' },
   { name: 'Giới thiệu', to: 'aboutUs' },
   { name: 'Liên hệ', to: '/contact' },
-  { name: 'Khóa học', to: '/course' },
+  // { name: 'Khóa học', to: '/course' },
   { name: 'Tra từ', to: '/directory' },
 ]
 
@@ -62,24 +62,24 @@ const HeaderComponent = () => {
   );
 
   return (
-    <div className="relative bg-gray-50 ">
+    <div className="relative">
       <header className="bg-indigo-600">
         <nav className="mx-auto w-10/12 " aria-label="Top">
-          <div className="flex w-full items-center justify-between border-b border-indigo-500 py-4 lg:border-none">
+          <div className="flex w-full items-center justify-between border-b border-indigo-500 py-3 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">
-                <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={100} alt="" />
+                <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={90} alt="" />
               </NavLink>
               <div className=" ml-10 space-x-8 lg:block">
                 {navigation.map((link) => (
-                  <NavLink key={link.name} to={link.to} className="text-base font-medium text-white hover:text-indigo-50">
+                  <NavLink key={link.name} to={link.to} className="text-base font-medium text-white hover:text-orange-500">
                     {link.name}
                   </NavLink>
                 ))}
               </div>
             </div>
             {
-              auth ?
+              auth && auth.username ?
                 <Dropdown overlay={menu} trigger={["click"]}>
                   <img
                     src={auth.img}
@@ -90,13 +90,13 @@ const HeaderComponent = () => {
                 :
                 <div className=" ml-10 space-x-4">
                   <NavLink to={'/signin'}
-                    className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-opacity-75"
+                    className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-opacity-75"
                   >
                     Đăng nhập
                   </NavLink>
                   <NavLink to={'/signup'}
 
-                    className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
+                    className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
                   >
                     Đăng ký
                   </NavLink>
