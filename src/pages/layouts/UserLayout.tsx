@@ -30,7 +30,7 @@ const UserLayout = () => {
         <div className="nav__profile">
           <ul className='list__link'>
             <li> <i className="fa-solid fa-user"></i> <NavLink to={''}>Thông tin cá nhân</NavLink></li>
-            <li> <i className="fa-solid fa-newspaper"></i><NavLink to={''}>Lớp học của tôi</NavLink></li>
+            <li> <i className="fa-solid fa-newspaper"></i><NavLink to={`/user/myClassUser/${auth._id}`}>Lớp học của tôi</NavLink></li>
             <li> <i className="fa-solid fa-clock-rotate-left"></i><NavLink to={`/user/historyLerning/${auth._id}`}>Lịch sử làm bài</NavLink></li>
             <li> <i className="fa-solid fa-clock-rotate-left"></i><NavLink to={''}>Lịch sử thanh toán</NavLink></li>
           </ul>

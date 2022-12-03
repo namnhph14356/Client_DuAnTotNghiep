@@ -112,7 +112,7 @@ const ListVocabulary = (props: Props) => {
   };
 
   const checkAnswer = () => {
-    const voca = vocabulary.filter((e:VocabulatyType) => e.dayId?._id === dayId)
+    const voca = vocabulary.filter((e: VocabulatyType) => e.dayId?._id === dayId)
     if (voca.length === 5) {
       message.warning("Đã đạt giới hạn từ vựng !")
     } else {
@@ -205,32 +205,6 @@ const ListVocabulary = (props: Props) => {
       ...getColumnSearchProps("words"),
     },
     {
-      title: "Phiên âm",
-      dataIndex: "pa",
-      key: "pa",
-    },
-    {
-      title: "Thuộc tính",
-      key: "wordForm",
-      className: 'w-[110px]',
-      render: (record: any) => (
-        <div className="">
-          {record.wordForm === "Noun" ? (
-            <Tag color="green">Noun</Tag>
-          ) : record.wordForm === "Adj" ? (
-            <Tag color="blue">Adj</Tag>
-          ) : record.wordForm === "Adv" ? (
-            <Tag color="purple">Adv</Tag>
-          ) : record.wordForm === "Verb" ? (
-            <Tag color="purple">Verb</Tag>
-          ) : (
-            <p>{record.wordForm}</p>
-          )}
-        </div>
-      ),
-      // ...getColumnSearchProps('wordForm'),
-    },
-    {
       title: "Nghĩa",
       dataIndex: "meaning",
       key: "meaning",
@@ -239,8 +213,9 @@ const ListVocabulary = (props: Props) => {
     {
       title: "Hình ảnh",
       key: "image",
+      className: 'w-[100px]',
       render: (record) => (
-        <div className="">
+        <div className="mx-auto">
           <Image
             width={60}
             height={60}
@@ -250,10 +225,25 @@ const ListVocabulary = (props: Props) => {
       ),
     },
     {
+      title: "Phiên âm",
+      className: 'w-[100px]',
+      dataIndex: "pa",
+      key: "pa",
+    },
+    {
+      title: "Thuộc tính",
+      key: "wordForm",
+      className: 'w-[250px]',
+      render: (record: any) => <p>{record.wordForm}</p>,
+      // ...getColumnSearchProps('wordForm'),
+    },
+
+
+    {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
-      className: 'w-[130px]',
+      className: 'w-[100px]',
       sortDirections: ['descend'],
       ellipsis: {
         showTitle: false,
@@ -310,14 +300,12 @@ const ListVocabulary = (props: Props) => {
       ),
     },
   ];
-  
+
   return (
-    <div className="h-screen">
+    <div >
       <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkAnswer()}>
-        {/* <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}> */}
         Thêm Từ Vựng
-        {/* </Link> */}
       </Button>
       <Table
         bordered

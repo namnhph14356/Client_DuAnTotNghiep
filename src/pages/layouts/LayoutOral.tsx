@@ -5,7 +5,7 @@ const LayoutOral = () => {
     return (
         <div className='layout__page__oral'>
             <div className='route__page__oral'>
-                <p>Kiểm tra</p>
+                <div>Kiểm tra</div>
             </div>
             <Outlet />
         </div>
