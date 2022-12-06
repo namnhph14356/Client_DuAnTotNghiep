@@ -21,12 +21,12 @@ const PopupPayment = ({closeModal}: IModalProps) => {
       <div className="mt-4">
         <p className='text__modal'>Chọn hình thức thanh toán</p>
         <div className='my-8'>
-            <NavLink className="p-3 rounded bg-blue-500 text-white font-bold" to={""}>Thanh toán qua VnPay</NavLink>
+            <NavLink className="p-3 rounded bg-blue-500 text-white font-bold" to={"/payment/vnpay"}>Thanh toán qua VnPay</NavLink>
         </div>
         <div className='flex justify-center gap-3'>
             <div><CreditCardOutlined className='text-3xl'/></div>
             
-            <NavLink className="p-2 rounded bg-blue-500 text-white font-bold" to={"/payment"}>Thanh toán qua chuyển khoản</NavLink>
+            <NavLink className="p-2 rounded bg-blue-500 text-white font-bold" to={"/payment/qrCode"}>Thanh toán qua chuyển khoản</NavLink>
         </div>
         
       </div>

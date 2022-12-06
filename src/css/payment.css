@@ -1,0 +1,34 @@
+.fomt-element{
+    width: 100%;
+    margin-top: 12px;
+}
+
+.fomt-element input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid rgb(112, 108, 108);
+    border-radius: 8px;
+    padding: 5px;
+}
+.fomt-element textarea{
+    width: 100%;
+    border: 1px solid rgb(112, 108, 108);
+    border-radius: 8px;
+    padding: 5px;
+}
+.fomt-element select{
+    width: 100%;
+    border: 1px solid rgb(112, 108, 108);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.form_payment button{
+    width: 150px;
+    height: 35px;
+    background-color: #167AC6;
+    margin-top: 32px;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+}
