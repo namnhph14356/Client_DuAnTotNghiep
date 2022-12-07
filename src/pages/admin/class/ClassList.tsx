@@ -331,10 +331,10 @@ const ClassList = () => {
   let totalStudent = 0;
   let totalTeacher = 0;
   if (listClass && listClass.length > 0) {
-    listClass.forEach((item) => (totalStudent += item.userOfClass.length));
+    listClass.forEach((item) => (totalStudent += item.userOfClass?.length));
   }
   if (listClass && listClass.length > 0) {
-    listClass.forEach((item) => (totalTeacher += item.teacherOfClass.length));
+    listClass.forEach((item) => (totalTeacher += item.teacherOfClass?.length));
   }
 
   return (

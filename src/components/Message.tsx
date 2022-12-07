@@ -17,7 +17,7 @@ const Message: React.FC = (props) => {
   const { classByUser } = useSelector((item: RootState) => item.class);
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const [dataQuestion, setDataQuestion] = useState<any>([]);
-  const [groupSelect, setGroupSelect] = useState<any>(classByUser[0]);
+  const [groupSelect, setGroupSelect] = useState<any>(classByUser && classByUser[0]);
   const [clicked, setClicked] = useState<boolean>(false);
   const [clicked1, setClicked1] = useState<boolean>(false);
   const [optionsUser, setOptionUser] = useState<any[]>([]);
@@ -109,7 +109,7 @@ const Message: React.FC = (props) => {
                 <div
                   key={item._id}
                   onClick={() => onSelectGroup(item)}
-                  className={item._id === groupSelect._id ? "active-group" : ""}
+                  className={item._id === groupSelect?._id ? "active-group" : ""}
                 >
                   <div className="group-icon">
                     <Avatar.Group

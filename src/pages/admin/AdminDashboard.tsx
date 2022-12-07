@@ -90,15 +90,15 @@ const AdminDashboard = () => {
   const dataPie = [
     {
       type: "Học sinh",
-      value: totalStudent.length
+      value: totalStudent?.length
     },
     {
       type: "Giảng viên",
-      value: totalTeacher.length,
+      value: totalTeacher?.length,
     },
     {
       type: "Admin",
-      value: totalAdmin.length
+      value: totalAdmin?.length
     }
   ]
   console.log(dataPie);
