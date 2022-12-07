@@ -336,6 +336,7 @@ const ClassList = () => {
   if (listClass && listClass.length > 0) {
     listClass.forEach((item) => (totalTeacher += item.teacherOfClass?.length));
   }
+  
 
   return (
     <div>
