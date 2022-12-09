@@ -3,6 +3,7 @@ import {
   addClass,
   editClass,
   getClassById,
+  getClassByUser,
   listClass,
   removeClass,
 } from "../../../api/class";
@@ -47,11 +48,20 @@ export const getClassByIdSlide: any = createAsyncThunk(
   }
 );
 
+export const getListClassByUserSlide: any = createAsyncThunk(
+  "class/getClassByUser",
+  async (userId: any) => {
+    const { data } = await getClassByUser(userId);
+    return data;
+  }
+);
+
 interface InitialState {
   listClass: any[];
   class: object;
   error: String;
   loading: boolean;
+  classByUser: any[]
 }
 
 const initialState: InitialState = {
@@ -59,6 +69,7 @@ const initialState: InitialState = {
   class: {},
   error: "",
   loading: false,
+  classByUser: []
 };
 
 const classSlide = createSlice({
@@ -114,6 +125,16 @@ const classSlide = createSlice({
       state.loading = false;
     });
     builder.addCase(getClassByIdSlide.rejected, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(getListClassByUserSlide.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getListClassByUserSlide.fulfilled, (state, action) => {
+      state.classByUser = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getListClassByUserSlide.rejected, (state) => {
       state.loading = false;
     });
   },

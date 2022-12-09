@@ -1,11 +1,21 @@
 import { ShoppingBag } from 'heroicons-react'
 import { StarOutlined } from '@ant-design/icons';
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
+import PopupPayment from './PopupPayment';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { UserType } from '../../types/user';
+
 
 type Props = {}
 
 const BoxPayment = (props: Props) => {
+  const [isModal, setIsModal] = useState(false)
+  const auth = useSelector((item: RootState) => item.auth.value) as UserType;  
+  const handlonClick = () => {
+    setIsModal((prevState) => !prevState);
+  }
   return (
     <div className="box__buy__source">
     <h3 className="title__buy__source">
@@ -31,9 +41,14 @@ const BoxPayment = (props: Props) => {
     <p className='my-4'>
       350,000 ĐỒNG / <span className='font-bold text-orange-500'>360 ngày sử dụng</span>
     </p>
-    <NavLink to={'/payment'} className="p-2 bg-red-500 text-white font-bold rounded hover:p-3 hover:text-white mt-2">
-        Thanh toán
-    </NavLink>
+    <div className="text-center">
+      {auth.pay == 1 ? <span>Đã thanh toán</span> : <button className="p-1 bg-red-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600" onClick={()=>handlonClick()}>Thanh toán</button>}
+           
+          </div>
+    <div>
+       {isModal && <PopupPayment closeModal={setIsModal} />}
+       
+    </div>
   </div>
   )
 }

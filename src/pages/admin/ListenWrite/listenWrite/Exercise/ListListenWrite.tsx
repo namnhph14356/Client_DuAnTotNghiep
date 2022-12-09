@@ -1,61 +1,97 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Image, Tag } from 'antd';
+import { Table, Breadcrumb, Button, Space, Popconfirm, message, Input, Badge, Image, Tag, Tooltip } from 'antd';
 import type { Key, TableRowSelection } from 'antd/es/table/interface';
-import { Link, useParams } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, CheckCircleOutlined, CloseCircleOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import moment from 'moment'
-import ReactAudioPlayer from 'react-audio-player';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
-import { ListenWriteType } from '../../../../../types/listenWrite';
-import { CategoryType } from '../../../../../types/category';
-import { changeBreadcrumb, getListListenWrite, removeListenSlide } from '../../../../../features/Slide/listenWrite/ListenWriteSlice';
-import { getListQuestionListenWriteById } from '../../../../../api/questionListenWrite';
-import { removeQuestionListenSlide } from '../../../../../features/Slide/questionListenWrite/questionListenWrite';
-import { listAnswerListenWriteById } from '../../../../../api/answerListenWrite';
-import { removeAnswerListenWriteSlide } from '../../../../../features/Slide/answerListenWrite/answerListenWrite';
-import { getListAnswerQuizSlide } from '../../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { PracticeActivityType } from '../../../../../types/practiceActivity';
+import { QuizType } from '../../../../../types/quiz';
+import { AnswerQuizType } from '../../../../../types/answerQuiz';
+import { GrammarType } from '../../../../../types/grammar';
+import { editPracticeActivitylice } from '../../../../../features/Slide/practiceActivity/PracticeActivitySlice';
+import { getListAnswerQuizSlide, removeAnswerQuizSlide } from '../../../../../features/Slide/answerQuiz/AnswerQuizSlide';
+import { changeBreadcrumb, editQuizSlide, getListQuizSlide, removeQuizSlide } from '../../../../../features/Slide/quiz/QuizSlide';
 import { getCategoryList } from '../../../../../features/Slide/category/CategorySlide';
 import AdminPageHeader from '../../../../../components/AdminPageHeader';
+import { ListenWriteType } from '../../../../../types/listenWrite';
 
 
 interface DataType {
   key: React.Key;
-  _id?: string,
-  category: string,
-  audio: string,
-  timeLimit: any,
+  category?: string;
+  question: string;
+  questionAfter?: string;
+  image?: string;
+  meaning?: string,
+  timeLimit?: string;
+  type?: string;
+  practiceActivity?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-type DataIndex = keyof DataType;
+interface ExpandedDataType {
+  key: React.Key;
+  _id?: string,
+  quiz: string;
+  answer: string;
+  isCorrect: number;
+}
+
+
+type DataIndex = keyof ExpandedDataType;
+type DataIndex2 = keyof DataType;
+
+type Props = {}
 
 const ListListenWrite = () => {
-  const breadcrumb = useAppSelector(item => item.listenWrite.breadcrumb)
+
+  const breadcrumb = useAppSelector(item => item.answerQuiz.breadcrumb)
+  const quizs = useAppSelector(item => item.quiz.value)
+  const answerQuizs = useAppSelector(item => item.answerQuiz.value)
+  const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const listenWrite = useAppSelector(item => item.listenWrite.value)
-  const categories = useAppSelector(item => item.category.value)
+  const grammar = useAppSelector(item => item.grammar.value)
+
   const dispatch = useAppDispatch();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [selected, setSelected] = useState<{ key: number, id: string | undefined }[]>([]);
+  const [selected, setSelected] = useState<{ key: string, id: string | undefined }[]>([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const { dayId } = useParams();
-  //------------------STATE--------------------
+  const navigate = useNavigate();
 
-  const dataTable = listenWrite.map((item: ListenWriteType, index) => {
+  //------------------STATE--------------------
+  let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "conversation")
+  const tableWithType = quizs.filter((item: QuizType) => item.practiceActivity?.type === "conversation" && item.type === 'selectRadio')
+  const tableListenSpeak = tableWithType.filter((item: QuizType) => item.practiceActivity?.day === String(dayId))
+  const dataTable = tableListenSpeak.map((item: QuizType, index) => {
     return {
       key: index + 1,
       _id: item._id,
-      category: categories.filter((cate: CategoryType) => { return cate._id == item.category }).reduce((result, item: CategoryType) => {
-        return `${result}${item.title}`
-      }, ""),
-      audio: item.audio,
-      timeLimit: item.timeLimit,
+      question: item.question,
+      type: item.type,
+      meaning: item.meaning,
+      status: item.status,
       createdAt: moment(item.createdAt).format("h:mm:ss a, MMM Do YYYY"),
-      updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY")
+      updatedAt: moment(item.updatedAt).format("h:mm:ss a, MMM Do YYYY"),
+    }
+  })
+  const childrenTable = answerQuizs.map((item: AnswerQuizType, index) => {
+    return {
+      key: item._id,
+      _id: item._id,
+      quiz: item.quiz,
+      answer: item.answer,
+      isCorrect: item.isCorrect,
+      wordMeaning: item.wordMeaning,
+      explainAnswer: item.explainAnswer,
     }
   })
 
@@ -76,7 +112,7 @@ const ListListenWrite = () => {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
+  const getColumnSearchProps = (dataIndex: any): ColumnType<DataType> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -128,19 +164,17 @@ const ListListenWrite = () => {
   });
 
   //------------------SEARCH--------------------
+
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    let rowSelected: { key: number, id: string | undefined }[] = []
+    let rowSelected: { key: string, id: string | undefined }[] = []
     newSelectedRowKeys.map((item) => {
-      dataTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
+      childrenTable.map((item2) => item2.key === item ? rowSelected.push({ key: item2.key, id: item2._id }) : "")
     })
-    console.log('rowSelected', rowSelected);
-    console.log('newSelectedRowKeys', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys)
     setSelected(rowSelected);
-    // console.log('selectedRowKeys changed: ', selectedRowKeys);
   };
 
-  const rowSelection: TableRowSelection<DataType> = {
+  const rowSelection: TableRowSelection<ExpandedDataType> = {
     selectedRowKeys,
     onChange: onSelectChange,
     selections: [
@@ -179,112 +213,157 @@ const ListListenWrite = () => {
   }
   //------------------SELECT-ROW-------------------
 
-  const handleOk = (id: string) => {
+  const checkQuestion = () => {
+    const quizLength = quizs.filter((e: QuizType) => e.practiceActivity?.day === dayId && e.practiceActivity?.type === "grammar")
+
+    if (quizLength.length === 5) {
+      message.warning("Đã đạt giới hạn câu hỏi !")
+    } else {
+      navigate(`/manageDay/${dayId}/conversation/addExercise`)
+    }
+  }
+
+  const checkAnswer = (question: QuizType) => {
+    let lengthAns = answerQuizs.filter((e: AnswerQuizType) => e.quiz === question._id)
+    if (lengthAns.length === 4) {
+      message.warning("Đã đạt giới hạn đáp án !")
+    } else {
+      navigate(`/manageDay/${dayId}/conversation/answer/${question._id}/add`)
+    }
+  }
+
+  const checkStatusActivity = () => {
+    const quizStatus = quizs.filter((item: QuizType) => item.practiceActivity?.type === "conversation" && item.practiceActivity?.day === String(dayId) && item.status === false)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "conversation" && item.practiceActivity?.day === String(dayId))
+    const listen = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === activity._id)
+
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "conversation")
+
+    if (quizStatus.length > 0 || lengthQuiz.length < 2 || listen.length < 1) {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    } else {
+      dispatch(editPracticeActivitylice({ ...detailActivity, status: true }))
+    }
+  }
+
+  const handleOk = async (id) => {
     const key = 'updatable';
     setConfirmLoading(true);
     message.loading({ content: 'Loading...', key });
 
-    setTimeout(() => {
-      if (Array.isArray(id)) {
-        const deleteList = async () => {
-          const { payload } = await dispatch(removeListenSlide(id))
-        }
-        deleteList();
-      } else {
-        const deleteList = async () => {
-          const { payload } = await dispatch(removeListenSlide(id))
-          if (payload) {
-            const { data: question } = await getListQuestionListenWriteById(String(payload._id))
-            for (let i = 0; i < question.length; i++) {
-              await dispatch(removeQuestionListenSlide(question[i]._id))
-              const { data: answer } = await listAnswerListenWriteById(question[i]._id)
-              await dispatch(removeAnswerListenWriteSlide(answer._id))
-            }
-          }
-        }
-        deleteList();
-      }
-      setConfirmLoading(false);
-      message.success({ content: 'Xóa Thành Công!', key });
-    }, 2000);
+    const { payload } = await dispatch(removeAnswerQuizSlide(id))
+    if (payload) {
+      const detailQuestion: any = quizs.find((e: QuizType) => e._id === payload.quiz)
+      await dispatch(editQuizSlide({ ...detailQuestion, status: false }))
+      await dispatch(getListQuizSlide())
+      dispatch(editPracticeActivitylice({ ...activity, status: false }))
+    }
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
   };
+  const handleOk1 = async (id) => {
+    const key = 'updatable';
+    setConfirmLoading(true);
+    message.loading({ content: 'Loading...', key });
 
+    const { payload } = await dispatch(removeQuizSlide(id))
+    const detailActivity: any = practiceActivity.find((e: PracticeActivityType) => e._id === payload.practiceActivity)
+    const lengthQuiz = quizs.filter((item: QuizType) => item.practiceActivity?.type === "grammar" && item.practiceActivity?._id === detailActivity._id)
+    if (lengthQuiz.length - 1 < 10) {
+      await dispatch(editPracticeActivitylice({ ...detailActivity, status: false }))
+    }
+    setConfirmLoading(false);
+    message.success({ content: 'Xóa Thành Công!', key, duration: 2 });
+  };
   const handleCancel = () => {
     message.error('Hủy Hành Động!');
   };
 
-
   //------------------REMOVE-CONFIRM-------------------
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<any> = [
     {
       title: 'STT',
       dataIndex: 'key',
       key: "key",
+      className: 'w-[70px]',
       sorter: (a: any, b: any) => a.key - b.key,
       sortDirections: ['descend'],
     },
     {
-      title: 'ID',
-      dataIndex: '_id',
-      key: "_id",
-      ...getColumnSearchProps('_id'),
-      sorter: (a: any, b: any) => a._id - b._id,
-      sortDirections: ['descend'],
+      title: 'Câu hỏi',
+      dataIndex: 'question',
+      key: "question",
+      className: 'w-[300px]',
+      ...getColumnSearchProps('question'),
     },
     {
-      title: 'Audio',
-      dataIndex: 'audio',
-      key: "audio",
-      render: (recore: any) => (
-        <Space>
-
-          <ReactAudioPlayer
-            src={recore}
-            controls
-          />
-
-        </Space>
+      title: 'Ý nghĩa',
+      dataIndex: 'meaning',
+      key: "meaning",
+      ...getColumnSearchProps('meaning'),
+    },
+    {
+      title: "Trạng thái", dataIndex: "status", key: "status",
+      className: 'w-[100px]',
+      render: (record: any) => (
+        <div >
+          {record === true ?
+            <Tag color="green">Đã đủ</Tag>
+            :
+            <Tag color="red">Chưa đủ</Tag>
+          }
+        </div>
       ),
-      sortDirections: ['descend'],
     },
-    {
-      title: 'Category',
-      dataIndex: 'category',
-      key: "category",
-      filters: categories.map((item: CategoryType) => { return { text: item.title, value: item.title } }),
-      onFilter: (value, record) => {
-        return record.category == value
-      }
-    },
-
-
     {
       title: 'Ngày Tạo',
       dataIndex: 'createdAt',
       key: "createdAt",
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
 
     },
     {
-      title: 'Ngày Update',
+      title: 'Ngày cập nhật',
       dataIndex: 'updatedAt',
       key: "updatedAt",
+      sortDirections: ['descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: ((value) => (
+        <Tooltip title={value}>
+          <span>{value}</span>
+        </Tooltip>
+      ))
 
     },
     {
-      title: "Hành Động", key: "action", render: (text, record) => (
+      title: 'Hành Động',
+      fixed: "right",
+      key: "action", render: (text, record) => (
         <Space align="center" size="middle">
           <Button style={{ background: "#198754" }} >
-            <Link to={`/manageDay/${dayId}/conversation/${record._id}/editExercise`}>
+            <Link to={`/manageDay/${dayId}/conversation/${record._id}/editExercise`} >
               <span className="text-white">Sửa</span>
             </Link>
+
           </Button>
+
           <Popconfirm
             placement="topRight"
             title="Bạn Có Muốn Xóa?"
             okText="Có"
             cancelText="Không"
-            onConfirm={() => { handleOk(record._id as string) }}
+            onConfirm={() => { handleOk1(record._id) }}
             okButtonProps={{ loading: confirmLoading }}
             onCancel={handleCancel}
           >
@@ -292,27 +371,100 @@ const ListListenWrite = () => {
               Xóa
             </Button>
           </Popconfirm>
-
         </Space>
       ),
-    }
+    },
   ];
 
+  const expandedRowRender = (row: QuizType) => {
+
+    const columns2: ColumnsType<ExpandedDataType> = [
+      { title: 'Key', dataIndex: 'key', key: 'key', className: "hidden" },
+      { title: 'STT', dataIndex: 'stt', key: 'stt' },
+      { title: 'Đáp án', dataIndex: 'answer', key: 'answer' },
+      {
+        title: 'Đáp án đúng',
+
+        key: 'isCorrect',
+        render: (record) => (
+          <span>
+            {record.isCorrect === true
+              ? <Badge status="success" text={<CheckCircleOutlined />} />
+              : <Badge status="error" text={<CloseCircleOutlined />} />
+            }
+          </span>
+        ),
+      },
+      {
+        title: 'Hành động',
+        key: "action", render: (text, record) => (
+          <Space align="center" size="middle">
+            <Button style={{ background: "#198754" }} >
+              <Link to={`/manageDay/${dayId}/conversation/answer/${record._id}/edit`} >
+                <span className="text-white">Sửa</span>
+              </Link>
+
+            </Button>
+
+            <Popconfirm
+              placement="topRight"
+              title="Bạn Có Muốn Xóa?"
+              okText="Có"
+              cancelText="Không"
+              onConfirm={() => { handleOk(record._id) }}
+              okButtonProps={{ loading: confirmLoading }}
+              onCancel={handleCancel}
+            >
+              <Button type="primary" danger >
+                Xóa
+              </Button>
+            </Popconfirm>
+
+          </Space>
+        ),
+
+      },
+
+
+    ];
+
+    let data: any = answerQuizs.filter((item: AnswerQuizType) => item.quiz === row._id).map((item2: AnswerQuizType, index) => {
+      return {
+        key: item2._id,
+        stt: index + 1,
+        _id: item2._id,
+        answer: item2.answer,
+        quiz: item2.quiz,
+        isCorrect: item2.isCorrect,
+      }
+
+    })
+
+    return <div className=''>
+      <Space align="center" size="small">
+        <Button style={{ background: "#E7975A" }} onClick={() => checkAnswer(row)}>
+          <span className="text-white">Thêm đáp án</span>
+        </Button>
+      </Space>
+      <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+    </div>
+
+  }
   //------------------TABLE-COLUMM-------------------
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Danh sách bài tập"))
-    dispatch(getListListenWrite())
+    dispatch(changeBreadcrumb("Danh sách bài tập ngữ pháp"))
     dispatch(getListAnswerQuizSlide())
     dispatch(getCategoryList())
+    dispatch(getListQuizSlide())
+    checkStatusActivity()
   }, [])
 
   return (
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Bài tập", route: "listExercise" }} />
-
-      <Button type="primary" className="my-6" >
-        <Link to={`/manageDay/${dayId}/conversation/addExercise`}>Thêm bài tập nghe và viết</Link>
+      <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
+        Thêm câu hỏi
       </Button>
 
       {selectedRowKeys.length > 1
@@ -320,7 +472,7 @@ const ListListenWrite = () => {
           title="Bạn Có Muốn Xóa Hết?"
           okText="Có"
           cancelText="Không"
-          onConfirm={() => { handleOk(String(selected)) }}
+          onConfirm={() => { handleOk(selected) }}
           okButtonProps={{ loading: confirmLoading }}
           onCancel={handleCancel}
         >
@@ -334,15 +486,16 @@ const ListListenWrite = () => {
         {selectedRowKeys.length > 0 ? `Đã chọn ${selectedRowKeys.length} hàng` : ''}
       </span>
 
-      {/* <Table
-        rowClassName={"break-words"}
+      <Table
         bordered
-        footer={() => `Hiển thị 10 trên tổng ${listenWrite.length}`}
-        rowSelection={rowSelection}
+        footer={() => `Hiển thị 10 trên tổng ${tableListenSpeak.length}`}
+        expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
         columns={columns}
-        dataSource={dataTable} /> */}
+        dataSource={dataTable}
+      />
+
     </div>
   )
 }
 
-export default ListListenWrite
+export default ListListenWrite 
