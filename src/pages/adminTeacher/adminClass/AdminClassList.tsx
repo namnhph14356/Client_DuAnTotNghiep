@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getClassById } from "../../../api/class";
 import { getListUser } from "../../../api/user";
-import type { ColumnsType, ColumnType } from 'antd/es/table';
+import type { ColumnsType, ColumnType } from "antd/es/table";
 import {
   createClass,
   getClassByIdSlide,
@@ -40,31 +40,30 @@ const { Option } = Select;
 
 interface ExpandedDataType {
   key: React.Key;
-  _id?: string,
+  _id?: string;
   nameClass: string;
   linkJoinClass: string;
   numberOfStudents: number | string;
   numberOfTeachers: number | string;
-  lever: string,
-  createdAt: string,
+  lever: string;
+  createdAt: string;
 }
 
 type DataIndex = keyof ExpandedDataType;
 
-
 const AdminClassList = (props) => {
   const dispatch = useDispatch();
   const { listClass } = useSelector((state: any) => state.class);
-  const auth = useAppSelector(((item: RootState) => item.auth.value)) as UserType
+  
+  const auth = useAppSelector((item: RootState) => item.auth.value) as UserType;
   const [idUpdate, setIdUpdate] = useState("");
   const [objectUpdate, setObjectUpdate] = useState({});
   const searchInput = useRef<InputRef>(null);
   const [teacherClass, setTeacherClass] = useState<ClassType[]>([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
 
   const onUpdateClass = async (data) => {
-
     const { data: dataUp } = await getClassById(data._id);
     if (dataUp && dataUp.class) {
       setObjectUpdate({
@@ -111,7 +110,7 @@ const AdminClassList = (props) => {
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex,
+    dataIndex: DataIndex
   ) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -120,18 +119,27 @@ const AdminClassList = (props) => {
 
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
 
   const getColumnSearchProps = (dataIndex: any): ColumnType<any> => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
       <div style={{ padding: 8 }}>
         <Input
           ref={searchInput}
           placeholder={`Tìm kiếm với tên lớp`}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
           style={{ marginBottom: 8, width: "200px" }}
           className="flex"
           prefix={<SearchOutlined className="site-form-item-icon" />}
@@ -140,7 +148,9 @@ const AdminClassList = (props) => {
           <Space>
             <Button
               type="primary"
-              onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+              onClick={() =>
+                handleSearch(selectedKeys as string[], confirm, dataIndex)
+              }
               size="small"
               className="my-auto flex"
             >
@@ -168,12 +178,14 @@ const AdminClassList = (props) => {
       </div>
     ),
     filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+      <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record: any) => {
-      return record[dataIndex].toString().toLowerCase().includes((value as string).toLowerCase())
-    }
-
+      return record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase());
+    },
   });
 
   const columns = [
@@ -181,20 +193,28 @@ const AdminClassList = (props) => {
       title: "STT",
       dataIndex: "index",
       key: "index",
-      className: 'w-[70px]',
+      className: "w-[70px]",
       render: (row, item, index) => `${index + 1}`,
     },
     {
       title: "Tên lớp",
       dataIndex: "nameClass",
       key: "nameClass",
-      ...getColumnSearchProps('nameClass'),
-      render: (row, item) => <Link to={`detail/${item?._id}`}>{item.nameClass}</Link>,
+      ...getColumnSearchProps("nameClass"),
+      render: (row, item) => (
+        <Link to={`detail/${item?._id}`}>{item.nameClass}</Link>
+      ),
     },
     {
       title: "Mã lớp",
       dataIndex: "linkJoinClass",
       key: "linkJoinClass",
+    },
+    {
+      title: "Link google meet",
+      dataIndex: "linkGoogleMeet",
+      key: "linkGoogleMeet",
+      render: (row, item) => <a target="_blank" href={item.linkGoogleMeet}></a>,
     },
     {
       title: "Số học sinh",
@@ -206,27 +226,30 @@ const AdminClassList = (props) => {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (row, item) => `${moment(item?.createdAt).format('DD/MM/YYYY')}`,
+      render: (row, item) => `${moment(item?.createdAt).format("DD/MM/YYYY")}`,
     },
     {
       title: "Hành động",
       dataIndex: "Action",
-      className: 'w-[200px]',
+      className: "w-[200px]",
       key: "action",
       render: (row, item) => (
-        <Space align="center" size="middle" >
-
-          <Button style={{ background: "#616160" }} onClick={() => onUpdateClass(item)}>
-            <Link to={`/manageteacher/class/detail/${item?._id}`} >
+        <Space align="center" size="middle">
+          <Button
+            style={{ background: "#616160" }}
+            onClick={() => onUpdateClass(item)}
+          >
+            <Link to={`/manageteacher/class/detail/${item?._id}`}>
               <span className="text-white">Xem</span>
             </Link>
-
           </Button>
-          <Button style={{ background: "#198754" }} onClick={() => onUpdateClass(item)}>
+          <Button
+            style={{ background: "#198754" }}
+            onClick={() => onUpdateClass(item)}
+          >
             {/* <Link to={`/manageDay/${dayId}/listenspeak/question/${record._id}/edit`} >
             </Link> */}
             <span className="text-white">Sửa</span>
-
           </Button>
 
           <Popconfirm
@@ -234,13 +257,14 @@ const AdminClassList = (props) => {
             title="Bạn Có Muốn Xóa?"
             okText="Có"
             cancelText="Không"
-            onConfirm={() => { onRemoveClass(item._id) }}
+            onConfirm={() => {
+              onRemoveClass(item._id);
+            }}
           >
-            <Button type="primary" danger >
+            <Button type="primary" danger>
               Xóa
             </Button>
           </Popconfirm>
-
         </Space>
       ),
     },
@@ -266,13 +290,14 @@ const AdminClassList = (props) => {
       }));
       dispatch(updateClass({ ...value, _id: idUpdate })).then((res) => {
         if (res) {
-          message.success("Cập nhật lớp học thành công")
+          message.success("Cập nhật lớp học thành công");
+          dispatch(getListClass());
+          setIdUpdate('');
         } else {
-          message.error("Cập nhật lớp học thất bại")
+          message.error("Cập nhật lớp học thất bại");
         }
       });
     } else {
-
       value.userOfClass = value.userOfClass?.map((item) => ({
         userId: item,
         timeJoinClass: new Date(),
@@ -285,9 +310,10 @@ const AdminClassList = (props) => {
 
       dispatch(createClass(value)).then((res) => {
         if (res) {
-          message.success("Thêm mới lớp học thành công")
+          message.success("Thêm mới lớp học thành công");
+          dispatch(getListClass());
         } else {
-          message.error("Thêm mới lớp học thất bại")
+          message.error("Thêm mới lớp học thất bại");
         }
       });
     }
@@ -305,31 +331,34 @@ const AdminClassList = (props) => {
           listUser.push({
             label: item.username,
             value: item._id,
-          })
+          });
         }
-      })
-      setOptionUser(listUser)
+      });
+      setOptionUser(listUser);
     }
   };
 
   const getClassList = () => {
-    let myClass: any = []
+    let myClass: any = [];
     listClass?.map(async (e: any) => {
       e.teacherOfClass?.map((item) => {
         if (item.userId === auth._id) {
           // return e
-          myClass.push(e)
+          myClass.push(e);
         }
-      })
-    })
-    setTeacherClass(myClass)
-  }
+      });
+    });
+    setTeacherClass(myClass);
+  };
 
   useEffect(() => {
     dispatch(getListClass());
-    getClassList()
     getDataUser();
   }, []);
+
+  useEffect(() => {
+    getClassList();
+  }, [listClass])
 
   let totalStudent = 0;
   if (teacherClass && teacherClass.length > 0) {
@@ -339,7 +368,7 @@ const AdminClassList = (props) => {
   return (
     <div>
       {isShowModal && (
-        <div >
+        <div>
           <Modal
             className="admin-class-wrapper"
             title={idUpdate !== "" ? "Chỉnh sửa lớp học" : "Thêm mới lớp học"}
@@ -368,10 +397,17 @@ const AdminClassList = (props) => {
               </Form.Item>
 
               <Form.Item
-                label="Học sinh"
+                label="Link google meet"
                 labelAlign="left"
-                name="userOfClass"
+                name="linkGoogleMeet"
+                rules={[
+                  { required: true, message: "Please input your link google meet of Class!" },
+                ]}
               >
+                <Input />
+              </Form.Item>
+
+              <Form.Item label="Học sinh" labelAlign="left" name="userOfClass">
                 {optionsUser && optionsUser.length > 0 && (
                   <Select
                     mode="multiple"
@@ -436,11 +472,16 @@ const AdminClassList = (props) => {
 
       <div className="p-2">
         <div className="py-2 ">
-          <Button type="primary" onClick={onShowAdd} >
+          <Button type="primary" onClick={onShowAdd}>
             Thêm mới lớp học
           </Button>
         </div>
-        <Table bordered dataSource={teacherClass} columns={columns} footer={() => `Hiển thị 10 trên tổng ${teacherClass.length}`} />
+        <Table
+          bordered
+          dataSource={teacherClass}
+          columns={columns}
+          footer={() => `Hiển thị 10 trên tổng ${teacherClass.length}`}
+        />
       </div>
     </div>
   );

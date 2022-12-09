@@ -148,37 +148,6 @@ p{
 
 /* end study */
 
-
-/* teacher */
-
-.box__teacher{
-    @apply w-10/12 m-auto
-}
-.title__lecturers{
-    @apply text-center text-[32px]	font-bold	text-3xl	
-}
-.list__teacher{
-    @apply grid grid-cols-3 gap-4
-}
-.item__teacher{
-    text-align: center;
-}
-.img__teacher{
-    @apply rounded-full mt-[78px]
-}
-.img__teacher{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 200px;
-}
-.name__teacher{
-    @apply text-base	font-bold	mt-[22px]
-}
-.item__teacher p{
-    @apply text-base p-[30px]
-}
-
 /* .box__main__course {
     @apply bg-[#EAF2F8]
 } */
@@ -284,7 +253,7 @@ p{
 /* form  */
 
 .form__information{
-    @apply w-8/12 m-auto shadow-lg mb-[100px]
+    @apply w-8/12 m-auto shadow-lg mb-[100px] mt-16
 
 
 }

@@ -31,7 +31,9 @@ const CheckoutPayment = (props: Props) => {
           </h1>
         </div>
       </header>
-      <NavLink to={"/learning"} className="p-2 bg-red-500 rounded text-white font-bold hover:text-red-500 hover:bg-white hover:border-2 my-8">Quay về</NavLink>
+      <div className="my-8 w-8/12 m-auto">
+      <NavLink to={"/learning"} className="px-4 py-2 bg-red-500 rounded text-white font-bold hover:text-red-500 hover:bg-white hover:border-2">Quay về</NavLink>
+      </div>
      
         <Outlet/>
    

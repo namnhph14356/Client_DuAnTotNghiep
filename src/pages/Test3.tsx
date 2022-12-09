@@ -1,132 +1,131 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { uploadAudio } from '../api/googleCloud'
+import { getAudio, getAudioDetail, getTranscriptAudio, uploadAudio, uploadAudio2 } from '../api/googleCloud'
+
 
 type Props = {}
 
 const Test3 = (props: Props) => {
+    const [dataAudio, setDataAudio] = useState<any>()
+    const [url, setUrl] = useState<any>()
+    const [ggSpeech, setGgSpeech] = useState<any>()
+    let postid = uuidv4();
+    console.log("dataAudio", dataAudio);
+    console.log("url", url);
+    console.log("ggSpeech", ggSpeech);
 
-    function abc (audioFileData, targetFormat) {
+    function convertFile(audioFileData, targetFormat) {
         try {
             targetFormat = targetFormat.toLowerCase();
             let reader = new FileReader();
             return new Promise(resolve => {
                 reader.onload = function (event: any) {
-                    let contentType = 'audio/'+targetFormat;
+                    let contentType = 'audio/' + targetFormat;
                     let data = event.target.result.split(',');
                     let b64Data = data[1];
                     let blob = getBlobFromBase64Data(b64Data, contentType);
                     let blobUrl = URL.createObjectURL(blob);
-    
                     let convertedAudio = {
                         name: audioFileData.name.substring(0, audioFileData.name.lastIndexOf(".")),
                         format: targetFormat,
                         data: blobUrl
                     }
-                    // console.log("convertedImage: ", convertedImage);
+                    console.log("convertedAudio: ", convertedAudio);
                     resolve(convertedAudio);
                 }
                 reader.readAsDataURL(audioFileData);
             });
-    
+
         } catch (e) {
             console.log("Error occurred while converting : ", e);
         }
     }
-    
-    function getBlobFromBase64Data(b64Data, contentType, sliceSize=512) {
+
+    function getBlobFromBase64Data(b64Data, contentType, sliceSize = 512) {
         const byteCharacters = atob(b64Data);
         const byteArrays: any = [];
-    
+
         for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
             const slice = byteCharacters.slice(offset, offset + sliceSize);
-    
+
             const byteNumbers = new Array(slice.length);
             for (let i = 0; i < slice.length; i++) {
                 byteNumbers[i] = slice.charCodeAt(i);
             }
-    
+
             const byteArray = new Uint8Array(byteNumbers);
             byteArrays.push(byteArray);
         }
-    
-        const blob = new Blob(byteArrays, {type: contentType});
+
+        const blob = new Blob(byteArrays, { type: contentType });
         return blob;
     }
 
-    const { register, handleSubmit, formState: { errors }, reset, control } = useForm()
-
-    // const uuidv4 = () => {
-    //     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-    //       (
-    //         c ^
-    //         (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    //       ).toString(16)
-    //     );
-    //   }
-
-    // const onHandleSubmit = (data: any) => {
-    //     console.log("data",data);
-        
-    //     let postid = "uuidv4";
-
-    //     let file = data.img.files[0];
-    //     let blob = file.slice(0, file.size, "audio/mp3");
-    //     let newFile = new File([blob], `${postid}_audio.mp3`, { type: "audio/mp3" });
-    //     let formData = new FormData();
-    //     formData.append("audiofile", newFile);
-    //     fetch("/upload", {
-    //         method: "POST",
-    //         body: formData,
-    //     })
-    //         .then((res) => res.text())
-            
-    // }
+    function uuidv4() {
+        var S4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+    }
 
     const onHandleChange = async (data: any) => {
-        console.log("data",data);
-        
-        let postid = "uuidv999";
-
-        let file = data.target.files[0];
-        let blob = file.slice(0, file.size, "audio/mp3");
-          console.log("blob",blob);
-        let newFile = new File([blob], data.target.files[0].name, { type: "audio/mp3" });
-        let formData = new FormData();
-        formData.append("audiofile", newFile);
-        const flag = await uploadAudio(formData)
-        console.log("flag",flag);
-
-        // console.log("data",data);
-        
-        // let postid = "uuidv3";
+        let file: any = await convertFile(data.target.files[0], "wav")
+        console.log("data.target.files[0]", data.target.files[0]);
+        console.log("file", file);
+        let blob2 = await fetch(file.data)
+        .then(r => r.blob())
+        .then(blobFile => new File([blobFile], `${postid}_${file.name}.wav`, { type: "audio/wav" }))
+        console.log("blob2", blob2);
 
         // let file = data.target.files[0];
-        // let sourceAudioFile = file;
-        // let targetAudioFormat = 'wav'
-        // let convertedAudioDataObj: any = await abc(sourceAudioFile, targetAudioFormat);
-        // let blob = convertedAudioDataObj.slice(0, file.size, "audio/wav");
-        //   console.log("blob",blob);
-        // let newFile = new File([blob], data.target.files[0].name, { type: "audio/wav" });
+        // console.log("file", file)
+        // let blob = file.slice(0, file.size, file.type);
+        // const newFile = new File([blob], `${postid}_${file.name}`, { type: file.type });
         
-        // let formData = new FormData();
-        // formData.append("audiofile", newFile);
-        // console.log("formData",formData);
-
-        // const flag = await uploadAudio(formData)
-        // console.log("flag",flag);
-            
+        let formData = new FormData();
+        formData.append("audiofile", blob2);
+        const {data: data2} = await uploadAudio(formData)
+        console.log("data2", data2);
+        
+        // const {data: data2} = await getTranscriptAudio(`${postid}.wav`)
+        // setGgSpeech(data2)
     }
+
+    useEffect(() => {
+      const getDataAudio = async () =>{
+        const {data} = await getAudio()
+        setDataAudio(data)
+        setUrl(`https://storage.googleapis.com/vian_english/${data[0][0].id}`)
+        const filter = data[0].find((item: any)=> item.id === `0d853290-51a1-9e89-2b96-2fbc410ae9ee.wav`)
+        console.log("filter", filter);
+        // let blob3 = await fetch(`https://storage.googleapis.com/vian_english/${filter.id}`)
+        // .then(r => r.blob())
+        // .then(blobFile => new File([blobFile], `${postid}.wav`, { type: "audio/wav" }))
+        // console.log("blob3", blob3);
+        let blob3 = await getAudioDetail(filter.id)
+        console.log("blob3", blob3);
+      }
+      getDataAudio()
+    
+    }, [])
+    
 
 
     return (
         <div>
-            {/* <form action="" onSubmit={handleSubmit(onHandleSubmit)}>
-                <input {...register("img")} type="file" name="imgfile" accept="audio/*" id="imgfile" />
-                <button type="submit" >Submit</button>
-            </form> */}
             <input type="file" name="imgfile" accept="audio/*" id="imgfile" onChange={onHandleChange} />
+            <div className="block">
+                <audio id="beep" >
 
+                    <source
+                        // src="./mysound.mp3"
+                        src={url}
+                        // src="https://res.cloudinary.com/vintph16172/video/upload/v1667919067/Luy%E1%BB%87n_n%C3%B3i_Ti%E1%BA%BFng_Anh_qua_phim__Harry_Potter_v%C3%A0_h%C3%B2n_%C4%91%C3%A1_ph%C3%B9_th%E1%BB%A7y_grkiwv.mp3"
+                        type="audio/wav"
+                    />
+                    Your browser does not support the audio tag.
+                </audio>
+            </div>
         </div>
     )
 }

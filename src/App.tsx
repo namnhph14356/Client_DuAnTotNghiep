@@ -127,13 +127,15 @@ import CheckoutQr from "./components/Payment/CheckoutQr";
 import FormCreateVnPay from "./components/Payment/VnPay/FormCreate";
 import VnpayReturn from "./components/Payment/VnPay/VnpayReturn";
 
+import MyClassUser from "./components/user/MyClassUser";
+
 
 function App() {
   let location = useLocation();
 
   const check =
     location.pathname.includes("admin") ||
-    location.pathname.includes("manageteacher");
+    location.pathname.includes("manageteacher") || location.pathname.includes("manageDay");
   return (
     <div>
       {!check && (
@@ -240,6 +242,7 @@ function App() {
             <Route path="editImage/:id" element={<EditImage />} />
             <Route path="editPasswordUser/:id" element={<EditPasswordUser />} />
             <Route path="historyLerning/:id" element={<HistoryLearning />} />
+            <Route path="myClassUser/:id" element={<MyClassUser />} />
           </Route>
           <Route path="store" element={<Store />} />
           <Route path="teacher" element={<TeacherPage />} />

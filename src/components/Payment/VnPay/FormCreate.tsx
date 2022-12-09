@@ -16,6 +16,8 @@ type FormVnpay = {
 const FormCreateVnPay = (props: Props) => {
   const [bank, setBank] = useState("");
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
+  console.log(auth);
+  
   const handleChange = (event) => {
     setBank(event.target.value);
   };
