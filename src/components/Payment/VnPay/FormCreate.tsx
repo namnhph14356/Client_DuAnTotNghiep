@@ -70,7 +70,7 @@ const FormCreateVnPay = (props: Props) => {
             <input
               type="number"
               {...register("price")}
-              value={36000}
+              value={360000}
             />
           </div>
 
