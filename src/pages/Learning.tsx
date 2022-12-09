@@ -53,7 +53,7 @@ const Learning = () => {
       const arr: DayType[] = []
       days.map((item) => {
         const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
-        if (activityByDay.length === 4) {
+        if (activityByDay.length >= 4) {
           arr.push(item)
         }
       })

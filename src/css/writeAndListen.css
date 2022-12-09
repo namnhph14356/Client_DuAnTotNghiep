@@ -53,14 +53,9 @@
   @apply my-4 space-x-8 text-center;
 }
 .btn__Check__answer button {
-  @apply bg-[#ccc] text-[#fff] py-[5px] px-[70px] rounded-md;
+  @apply py-[5px] px-[70px] rounded-md;
 }
-.btn__Check__answer button {
-  @apply bg-indigo-600 text-white
-}
-.btn__Check__answer button:hover {
-  @apply bg-indigo-400 text-black
-}
+
 
 .btn__next_exe {
   @apply text-center;
