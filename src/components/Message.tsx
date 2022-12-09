@@ -109,7 +109,7 @@ const Message: React.FC = (props) => {
                 <div
                   key={item._id}
                   onClick={() => onSelectGroup(item)}
-                  className={item._id === groupSelect._id ? "active-group" : ""}
+                  className={item._id === groupSelect?._id ? "active-group" : ""}
                 >
                   <div className="group-icon">
                     <Avatar.Group
