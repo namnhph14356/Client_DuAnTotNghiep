@@ -123,6 +123,10 @@ import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
 import CheckoutPayment from "./components/Payment/CheckoutPayment";
 import HistoryLearning from "./components/user/HistoryLearning";
+import CheckoutQr from "./components/Payment/CheckoutQr";
+import FormCreateVnPay from "./components/Payment/VnPay/FormCreate";
+import VnpayReturn from "./components/Payment/VnPay/VnpayReturn";
+
 import MyClassUser from "./components/user/MyClassUser";
 
 
@@ -397,7 +401,11 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
-        <Route path="/payment" element={<CheckoutPayment/>}></Route>
+        <Route path="/payment" element={<CheckoutPayment/>}>
+            <Route path="qrCode" element={<CheckoutQr />}/>
+            <Route path="vnpay" element={<FormCreateVnPay />} />
+            <Route path="vnpay_return" element={<VnpayReturn />}/>
+        </Route>
       </Routes>
     </div>
   );
