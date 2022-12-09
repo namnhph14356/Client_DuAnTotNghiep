@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { getAudio, getAudioDetail, getTranscriptAudio, uploadAudio, uploadAudio2 } from '../api/googleCloud'
+import { getAudio, getAudioDetail, getTextToAudio, getTranscriptAudio, uploadAudio, uploadAudio2 } from '../api/googleCloud'
 
 
 type Props = {}
@@ -8,11 +8,21 @@ type Props = {}
 const Test3 = (props: Props) => {
     const [dataAudio, setDataAudio] = useState<any>()
     const [url, setUrl] = useState<any>()
+    const [speaker, setSpeaker] = useState<any>()
     const [ggSpeech, setGgSpeech] = useState<any>()
     let postid = uuidv4();
     console.log("dataAudio", dataAudio);
     console.log("url", url);
+    console.log("speaker", speaker);
     console.log("ggSpeech", ggSpeech);
+
+    
+    const abc = new File([speaker], `output.mp3`, { type: "audio/mp3" })
+    let flag = URL.createObjectURL(abc);
+    console.log("flag", flag);
+    console.log("abc", abc);
+    
+    const audioCorrect = new Audio(flag)
 
     function convertFile(audioFileData, targetFormat) {
         try {
@@ -72,6 +82,7 @@ const Test3 = (props: Props) => {
         let file: any = await convertFile(data.target.files[0], "wav")
         console.log("data.target.files[0]", data.target.files[0]);
         console.log("file", file);
+        console.log("file.data", file.data);
         let blob2 = await fetch(file.data)
         .then(r => r.blob())
         .then(blobFile => new File([blobFile], `${postid}_${file.name}.wav`, { type: "audio/wav" }))
@@ -84,8 +95,8 @@ const Test3 = (props: Props) => {
         
         let formData = new FormData();
         formData.append("audiofile", blob2);
-        const {data: data2} = await uploadAudio(formData)
-        console.log("data2", data2);
+        // const {data: data2} = await uploadAudio(formData)
+        // console.log("data2", data2);
         
         // const {data: data2} = await getTranscriptAudio(`${postid}.wav`)
         // setGgSpeech(data2)
@@ -94,6 +105,10 @@ const Test3 = (props: Props) => {
     useEffect(() => {
       const getDataAudio = async () =>{
         const {data} = await getAudio()
+        const flag2 = await getTextToAudio("hello world")
+        console.log("flag2",flag2);
+        setSpeaker(flag2.data)
+        
         setDataAudio(data)
         setUrl(`https://storage.googleapis.com/vian_english/${data[0][0].id}`)
         const filter = data[0].find((item: any)=> item.id === `0d853290-51a1-9e89-2b96-2fbc410ae9ee.wav`)
@@ -125,6 +140,21 @@ const Test3 = (props: Props) => {
                     />
                     Your browser does not support the audio tag.
                 </audio>
+
+                <audio id="beep" >
+
+                    <source
+                        // src="./mysound.mp3"
+                        src={speaker}
+                        // src="https://res.cloudinary.com/vintph16172/video/upload/v1667919067/Luy%E1%BB%87n_n%C3%B3i_Ti%E1%BA%BFng_Anh_qua_phim__Harry_Potter_v%C3%A0_h%C3%B2n_%C4%91%C3%A1_ph%C3%B9_th%E1%BB%A7y_grkiwv.mp3"
+                        type="audio/mp3"
+                    />
+                    Your browser does not support the audio tag.
+                </audio>
+
+                <button onClick={()=>{audioCorrect.play()}}>
+                    audio
+                </button>
             </div>
         </div>
     )

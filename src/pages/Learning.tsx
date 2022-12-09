@@ -23,12 +23,18 @@ import BoxPayment from '../components/Payment/BoxPayment'
 import { PracticeActivityType } from '../types/practiceActivity'
 import { getListPracticeActivitylice } from '../features/Slide/practiceActivity/PracticeActivitySlice';
 import { currentUserSlice } from '../features/Slide/auth/authSlide';
+import { checkAccents } from '../utils/checkAccents';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Learning = () => {
+  const flag ="á"
+  const flag2 = checkAccents(flag)
+  console.log("flag2", flag2);
+  
+
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   let months = useAppSelector<MonthType[]>(item => item.month.value)
