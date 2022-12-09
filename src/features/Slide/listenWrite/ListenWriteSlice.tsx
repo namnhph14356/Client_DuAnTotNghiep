@@ -1,7 +1,7 @@
 import { async } from "@firebase/util";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { start } from "repl";
-import { addListenWrite, detailListenWrite, detailListenWriteByIdCategory, editListenWrite, listListenWrite, removeListenWrite } from "../../../api/listenWrite";
+import { addListenWrite, detailListenWrite, detailListenWriteByActivity, editListenWrite, listListenWrite, removeListenWrite } from "../../../api/listenWrite";
 import { ListenWriteType } from "../../../types/listenWrite";
 
 
@@ -22,10 +22,10 @@ export const getListenWriteById = createAsyncThunk(
      }
 )
 
-export const getListenWriteByIdCategory:any = createAsyncThunk(
-     'listenWrite/getListenWriteByIdCategory',
+export const getListenWriteByActivitySlice:any = createAsyncThunk(
+     'listenWrite/getListenWriteByActivitySlice',
      async (id: string) => {
-          const { data } = await detailListenWriteByIdCategory(id);
+          const { data } = await detailListenWriteByActivity(id);
           return data
      }
 )
@@ -83,7 +83,7 @@ const listenWriteSlice = createSlice({
           builder.addCase(getListenWriteById.fulfilled, (state: any, action) => {
                state.value = action.payload
           })
-          builder.addCase(getListenWriteByIdCategory.fulfilled, (state: any, action) => {
+          builder.addCase(getListenWriteByActivitySlice.fulfilled, (state: any, action) => {
                state.value = action.payload
           })
           

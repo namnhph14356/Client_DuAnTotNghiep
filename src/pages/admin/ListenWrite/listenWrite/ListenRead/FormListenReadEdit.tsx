@@ -10,7 +10,7 @@ import { uploadAudio } from '../../../../../api/googleCloud'
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks'
 import AdminPageHeader from '../../../../../components/AdminPageHeader'
 import Loading from '../../../../../components/Loading'
-import { addAnswerListenWriteSlide } from '../../../../../features/Slide/answerListenWrite/answerListenWrite'
+import { addAnswerListenWriteSlide, editAnswerListenWriteSlide, getListAnswerListenWriteSlide, removeAnswerListenWriteSlide } from '../../../../../features/Slide/answerListenWrite/answerListenWrite'
 import { addListen, changeBreadcrumb, editListen, getListListenWrite, removeListenSlide } from '../../../../../features/Slide/listenWrite/ListenWriteSlice'
 import { editPracticeActivitylice, getListPracticeActivitylice } from '../../../../../features/Slide/practiceActivity/PracticeActivitySlice'
 import { ListenWriteType } from '../../../../../types/listenWrite'
@@ -24,101 +24,26 @@ interface TypeArrAnswer {
   checkAnswer: boolean
 }
 
-const FormListenRead = () => {
+const FormListenReadEdit = () => {
   const { id, dayId } = useParams()
   const breadcrumb = useAppSelector(data => data.listenWrite.breadcrumb)
   const practiceActivity = useAppSelector(item => item.practiceActivity.value)
   const listenWrite = useAppSelector(item => item.listenWrite.value)
+  const answerListenWrite = useAppSelector(item => item.answerListenWrite.value)
+
   const quizs = useAppSelector(item => item.quiz.value)
-  const [preview, setPreview] = useState<any>();
   const [arrAnswer, setArrAnswer] = useState<any>([])
+  const [preview, setPreview] = useState<any>();
   const [audio, setAudio] = useState<string>("");
   const [listConversation, setListConversation] = useState<any>([])
   const [checkUpload, setcCheckUpload] = useState(false)
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const type = "conversation"
-  console.log("listenWrite", listenWrite);
 
+  const type = "conversation"
   const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
   let detailListen: any = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === prative._id)
-  if (detailListen.length > 0) {
-    navigate(`/manageDay/${dayId}/conversation/${detailListen[0]._id}/editListenRead`);
-  }
-
-  function convertFile(audioFileData, targetFormat) {
-    try {
-      targetFormat = targetFormat.toLowerCase();
-      let reader = new FileReader();
-      return new Promise(resolve => {
-        reader.onload = function (event: any) {
-          let contentType = 'audio/' + targetFormat;
-          let data = event.target.result.split(',');
-          let b64Data = data[1];
-          let blob = getBlobFromBase64Data(b64Data, contentType);
-          let blobUrl = URL.createObjectURL(blob);
-          let convertedAudio = {
-            name: audioFileData.name.substring(0, audioFileData.name.lastIndexOf(".")),
-            format: targetFormat,
-            data: blobUrl
-          }
-          resolve(convertedAudio);
-        }
-        reader.readAsDataURL(audioFileData);
-      });
-
-    } catch (e) {
-      console.log("Error occurred while converting : ", e);
-    }
-  }
-
-  function getBlobFromBase64Data(b64Data, contentType, sliceSize = 512) {
-    const byteCharacters = atob(b64Data);
-    const byteArrays: any = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-  }
-
-  function uuidv4() {
-    var S4 = function () {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-  }
-
-  const onHandleChangeAudio = async (data: any) => {
-    setcCheckUpload(true)
-    const audioPreview = document.getElementById("audio-preview") as any;
-    // audioPreview.src = URL.createObjectURL(data.target.files[0])
-    const image = await uploadVideo(data.target)
-    setAudio(image)
-    const postid = uuidv4();
-    const file: any = await convertFile(data.target.files[0], "wav")
-    const blob2 = await fetch(file.data)
-      .then(r => r.blob())
-      .then(blobFile => new File([blobFile], `${postid}_${file.name}.wav`, { type: "audio/wav" }))
-    const formData = new FormData();
-    formData.append("audiofile", blob2);
-    const { data: data2 } = await uploadAudio(formData)
-    if (data2) {
-      setcCheckUpload(false)
-    }
-    setListConversation(data2)
-  }
 
   const convertText = (text: String) => {
     if (text.charAt(0) === " ") {
@@ -134,21 +59,10 @@ const FormListenRead = () => {
   const onFinish = async (value: any) => {
     const key = "updatable";
 
-    let arrText: any = []
-    for (const key in value.textList) {
-      arrText.push(value.textList[key])
-    }
-
-    let arrName: any = []
-    for (const key in value.nameList) {
-      arrName.push(value.nameList[key])
-    }
-
     const newValue = await convertValue(value)
-    console.log("newValue", newValue);
-    console.log("arrAnswer", arrAnswer.sort((a, b) => a.id - b.id));
 
-    const { payload } = await dispatch(addListen({
+    const { payload } = await dispatch(editListen({
+      _id: detailListen[0]._id,
       practiceActivity: prative._id,
       audio: audio,
       conversation: newValue,
@@ -156,6 +70,10 @@ const FormListenRead = () => {
     }))
 
     if (payload) {
+      answerListenWrite.map(async (e: any) => {
+        await dispatch(removeAnswerListenWriteSlide(e._id))
+      })
+
       arrAnswer.map(async (e, index: number) => {
         await dispatch(addAnswerListenWriteSlide({
           idListenWrite: payload._id,
@@ -165,10 +83,11 @@ const FormListenRead = () => {
         }))
       })
     }
-    message.loading({ content: "Loading...", key });
-    message.success({ content: "Thêm Thành Công!", key, duration: 2 });
 
+    message.loading({ content: "Loading...", key });
+    message.success({ content: "Sửa Thành Công!", key, duration: 2 });
     navigate(`/manageDay/${dayId}/conversation/${payload._id}/editListenRead`);
+
   };
 
   const convertValue = async (value: any) => {
@@ -185,23 +104,17 @@ const FormListenRead = () => {
 
     const newArr = await Promise.all(
       listConversation.response.results.map((item, index: number) => {
-        console.log("e", convertText(item.alternatives[0].transcript));
-        let before = convertText(item.alternatives[0].transcript);
-
-        arrAnswer.map((element, index2) => {
+        let before = convertText(item.alternatives[0].beforeQuestion);
+        let text = item.alternatives[0].beforeQuestion.split(" ");
+        arrAnswer.sort((a, b) => a.order - b.order).map((element, index2) => {
 
           if (item.alternatives[0].confidence === element.id) {
-            let text = convertText(item.alternatives[0].transcript).split(" ");
-            console.log("text", text);
-            
             for (const key in text) {
               if (Number(key) === element.order - 1) {
                 text[key] = "___"
               }
             }
 
-            console.log("aass", text.join(" "));
-            
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], transcript: text.join(" "), beforeQuestion: before }] });
           } else {
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], beforeQuestion: before }] });
@@ -217,8 +130,25 @@ const FormListenRead = () => {
     return newResponse
   }
 
+  const onFinishFailed = (errorInfo) => {
+    id
+      ? message.error("Sửa Không Thành Công!")
+      : message.error("Thêm Không Thành Công!");
+  };
+
+  const remove = (id: string) => {
+    Modal.confirm({
+      title: "Bạn có chắc muốn xóa không ?",
+      onOk: async () => {
+        await dispatch(removeListenSlide(id))
+        await dispatch(getListListenWrite())
+        message.success("Xóa thành công")
+        navigate(`/manageDay/${dayId}/conversation/addListenRead`);
+      }
+    })
+  }
+
   const changeAnswer = (value: any, confidence: any, index: number, checkAnswer: boolean, order: number) => {
-    console.log("đã vào đây");
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
@@ -235,11 +165,14 @@ const FormListenRead = () => {
       } else {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
-        console.log("chua tonf tai");
         setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
       }
     })
 
+  }
+
+  const getListAnswer = async (id: string) => {
+    const { payload } = await dispatch(getListAnswerListenWriteSlide(id))
   }
 
   const detailAnswer = (text: string) => {
@@ -254,12 +187,6 @@ const FormListenRead = () => {
     return arr
 
   }
-
-  const onFinishFailed = (errorInfo) => {
-    id
-      ? message.error("Sửa Không Thành Công!")
-      : message.error("Thêm Không Thành Công!");
-  };
 
   const checkStatusActivity = () => {
     const quizStatus = quizs.filter((item: QuizType) => item.practiceActivity?.type === "conversation" && item.practiceActivity?.day === String(dayId) && item.status === false)
@@ -276,12 +203,15 @@ const FormListenRead = () => {
   }
 
   useEffect(() => {
+    dispatch(changeBreadcrumb("Sửa cấu trúc"))
+    setListConversation(detailListen[0]?.conversation)
+    setAudio(detailListen[0]?.audio)
+    form.setFieldsValue({ ...detailListen[0], nameList: detailListen[0].conversation.response });
+    getListAnswer(detailListen[0]._id)
     dispatch(getListPracticeActivitylice())
     dispatch(getListListenWrite())
     checkStatusActivity()
-    dispatch(changeBreadcrumb("Thêm cấu trúc"))
-
-  }, [dayId])
+  }, [dayId, id])
 
   return (
     <div className=''>
@@ -306,7 +236,7 @@ const FormListenRead = () => {
             tooltip="Audio"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            <Input type={'file'} id={'upload_audio'} name="listenWrite.audio" accept="audio/*" onChange={(e) => onHandleChangeAudio(e)} disabled={audio ? true : false} />
+            <Input type={'file'} id={'upload_audio'} name="listenWrite.audio" accept="audio/*" disabled={true} />
 
 
           </Form.Item>
@@ -335,6 +265,7 @@ const FormListenRead = () => {
             >
               {listConversation &&
                 listConversation?.response?.results.map((item: any, index: number) => {
+
                   return (
                     <div key={index + 1} className="py-3 even:bg-slate-100">
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 "  >
@@ -355,7 +286,7 @@ const FormListenRead = () => {
                           <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]}   >
                             <ul className='flex-auto space-x-8 col-span-10 w-full'>
                               {item.alternatives[0].transcript &&
-                                detailAnswer(convertText(item.alternatives[0].transcript)).map((item2: TypeArrAnswer, index2: number) => (
+                                detailAnswer(convertText(item.alternatives[0].beforeQuestion)).map((item2: TypeArrAnswer, index2: number) => (
                                   <button key={item.id} type="button" onClick={(e) => changeAnswer(e, item.alternatives[0].confidence, index + 1, !item2.checkAnswer, index2 + 1)}><li className='border px-3 py-1 my-auto mb-4 rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item2.text}</li></button>
                                 ))
                               }
@@ -394,10 +325,22 @@ const FormListenRead = () => {
           >
             {breadcrumb === "Sửa cấu trúc" ? "Sửa" : "Thêm"}
           </Button>
+
+          {breadcrumb === "Sửa cấu trúc" &&
+            <Button
+              className="inline-block mr-2"
+              type="primary"
+              htmlType="button"
+              danger
+              onClick={() => remove(String(id))}
+            >
+              Xóa
+            </Button>
+          }
         </Form.Item>
       </Form>
     </div>
   )
 }
 
-export default FormListenRead
+export default FormListenReadEdit
