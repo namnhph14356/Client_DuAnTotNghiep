@@ -95,7 +95,7 @@ const ExeWriteAndListen = () => {
       },]
     }
     let numAnswer = 0;
-    answerListenWrite.sort((a, b) => b.confidence - a.confidence).map((item: any, key: number) => {
+    answerListenWrite.sort((a, b) => Number(a.confidence) - Number(b.confidence)).map((item: any, key: number) => {
       if (item.answer.toLowerCase() === convertValues2[key].answerUser.toLowerCase() && String(item.index) === convertValues2[key].keyQuestion && convertConfidence(item.confidence) === convertValues2[key].idQuestion) {
         convertValues2[key].isCorrect = true;
         convertValues2[key].answerCorrect = convertValues2[key].answerUser
@@ -110,7 +110,6 @@ const ExeWriteAndListen = () => {
     const score = pointResult(numAnswer + quizTrueAnswer.length, convertQuizz.length + answerListenWrite.length)
     setConvertValues(convertValues2)
     setCheck(true)
-
     const { data: history } = await addHistory({
       user: auth._id,
       learningProgress: learningProgress?._id,
@@ -406,11 +405,11 @@ const ExeWriteAndListen = () => {
               </div>
 
               <div className='float-right'>
-                <div className='border px-3 rounded bg-gray-200 font-medium cursor-pointer hover:border-slate-400' onClick={() => setCheckMeaning(!checkMeaning)}>
+                {/* <div className='border px-3 rounded bg-gray-200 font-medium cursor-pointer hover:border-slate-400' onClick={() => setCheckMeaning(!checkMeaning)}>
                   {
                     checkMeaning ? 'Ẩn tiếng việt' : 'Hiện tiếng việt'
                   }
-                </div>
+                </div> */}
               </div>
 
               <div className="content">
