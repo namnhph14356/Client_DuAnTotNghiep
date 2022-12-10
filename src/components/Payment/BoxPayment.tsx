@@ -1,21 +1,35 @@
 import { ShoppingBag } from 'heroicons-react'
 import { StarOutlined } from '@ant-design/icons';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import PopupPayment from './PopupPayment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
+import { currentUserSlice, getUserByIdSlice } from '../../features/Slide/auth/authSlide';
+
 
 
 type Props = {}
 
 const BoxPayment = (props: Props) => {
   const [isModal, setIsModal] = useState(false)
-  const auth = useSelector((item: RootState) => item.auth.value) as UserType;  
+  const dispatch = useDispatch();
+  const [currentUser, setCurrenUser] = useState<UserType>()  
+  const auth = useSelector((item: RootState) => item.auth.value) as UserType;
   const handlonClick = () => {
     setIsModal((prevState) => !prevState);
   }
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const {data} = await dispatch(getUserByIdSlice(auth._id))
+      setCurrenUser(data)
+    }
+    getCurrentUser()
+  },[])
+
+  console.log("current",currentUser);
+  
   return (
     <div className="box__buy__source">
     <h3 className="title__buy__source">
@@ -42,7 +56,7 @@ const BoxPayment = (props: Props) => {
       350,000 ĐỒNG / <span className='font-bold text-orange-500'>360 ngày sử dụng</span>
     </p>
     <div className="text-center">
-      {auth.pay == 1 ? <span>Đã thanh toán</span> : <button className="p-1 bg-red-500 rounded text-white hover:bg-white hover:text-blue-500     border-[1px] border-red-600 font-bold hover:text-red-500" onClick={()=>handlonClick()}>Thanh toán</button>}
+      {auth.pay == 1 ? <span className='font-bold text-[#ff9933]'>Đã thanh toán</span> : <button className="p-1 bg-red-500 rounded text-white hover:bg-white hover:text-blue-500 border-[1px] border-red-600 font-bold hover:text-red-500" onClick={()=>handlonClick()}>Thanh toán</button>}
            
           </div>
     <div>
