@@ -192,16 +192,14 @@ const FormListenRead = () => {
 
           if (item.alternatives[0].confidence === element.id) {
             let text = convertText(item.alternatives[0].transcript).split(" ");
-            console.log("text", text);
-            
+
             for (const key in text) {
               if (Number(key) === element.order - 1) {
                 text[key] = "___"
               }
             }
 
-            console.log("aass", text.join(" "));
-            
+
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], transcript: text.join(" "), beforeQuestion: before }] });
           } else {
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], beforeQuestion: before }] });
@@ -351,9 +349,9 @@ const FormListenRead = () => {
                       </div>
 
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4"  >
-                        <div className='col-span-8  gap-4 my-auto'>
-                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]}   >
-                            <ul className='flex-auto space-x-8 col-span-10 w-full'>
+                        <div className='col-span-12  gap-4 my-auto'>
+                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]} style={{ marginBottom: "0" }}  >
+                            <ul className='flex-auto space-x-8 col-span-10 w-full mb-0'>
                               {item.alternatives[0].transcript &&
                                 detailAnswer(convertText(item.alternatives[0].transcript)).map((item2: TypeArrAnswer, index2: number) => (
                                   <button key={item.id} type="button" onClick={(e) => changeAnswer(e, item.alternatives[0].confidence, index + 1, !item2.checkAnswer, index2 + 1)}><li className='border px-3 py-1 my-auto mb-4 rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item2.text}</li></button>
