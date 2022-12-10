@@ -91,8 +91,8 @@ const FormCreateVnPay = (props: Props) => {
             </label>
             <select value={bank} {...register("bank")} onChange={handleChange} >
               <option value="">Không có</option>
-              <option value="VIETCOMBANK">VietComBank</option>
-              <option value="ACB">ACB</option>
+              <option value="EXIMBANK">EXIMBANK</option>
+              <option value="VISA">VISA</option>
               <option value="NCB">NCB</option>
               <option value="TPBANK">TPBANK</option>
             </select>

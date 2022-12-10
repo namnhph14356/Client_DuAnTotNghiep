@@ -42,7 +42,7 @@ const BoxPayment = (props: Props) => {
       350,000 ĐỒNG / <span className='font-bold text-orange-500'>360 ngày sử dụng</span>
     </p>
     <div className="text-center">
-      {auth.pay == 1 ? <span>Đã thanh toán</span> : <button className="p-1 bg-red-500 rounded text-white hover:bg-white hover:text-blue-500 border-double border-4 border-indigo-600" onClick={()=>handlonClick()}>Thanh toán</button>}
+      {auth.pay == 1 ? <span>Đã thanh toán</span> : <button className="p-1 bg-red-500 rounded text-white hover:bg-white hover:text-blue-500     border-[1px] border-red-600 font-bold hover:text-red-500" onClick={()=>handlonClick()}>Thanh toán</button>}
            
           </div>
     <div>
