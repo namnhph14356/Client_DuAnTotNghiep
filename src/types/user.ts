@@ -9,6 +9,7 @@ export interface UserType {
     sex?: number,
     role?: string , // chuyển thành number (toDo)
     colorImage?:string,
+    pay?:Number,
     idFacebook?: string,
     idGoogle?: string
     createdAt?: string,

@@ -28,6 +28,7 @@ import GoogleSpeechSlice from "../features/Slide/googleSpeech/GoogleSpeechSlice"
 import vocabulary from "../features/Slide/vocabulary/vocabulary";
 import sentencesSlice from "../features/Slide/sentences/sentencesSlice";
 import grammarSlice from "../features/Slide/grammar/grammarSlice";
+import answerListenWrite from "../features/Slide/answerListenWrite/answerListenWrite";
 
 const rootReducer = combineReducers({
     count: CountSlide,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
     comment: CommentSlice,
     userListenWrite: UserListenWriteSlice,
     answerQuiz: AnswerQuizSlide,
+    answerListenWrite: answerListenWrite,
     user: userSlide,
     auth: authSlide,
     time: TimeLimitCountdownSlice,

@@ -88,7 +88,6 @@ import FormExerciseVoca from "./pages/admin/Vocabulary/Exercise/FormExerciseVoca
 import FormExerciseVocabulary from "./pages/admin/Vocabulary/Exercise/FormExerciseVocabulary";
 import ListVocabulary from "./pages/admin/Vocabulary/Lesson/ListVocabulary";
 import ListListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/ListListenWrite";
-import ListListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/ListListenRead";
 import FormListenRead from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenRead";
 import FormQuestion from "./pages/admin/grammar/Question/FormQuestion";
 import FormAnswerEdit from "./pages/admin/grammar/Answer/FormAnswerEdit";
@@ -123,7 +122,14 @@ import ClassList from "./pages/admin/class/ClassList";
 import DetailClassAdmin from "./pages/admin/class/Detail";
 import CheckoutPayment from "./components/Payment/CheckoutPayment";
 import HistoryLearning from "./components/user/HistoryLearning";
+import CheckoutQr from "./components/Payment/CheckoutQr";
+import FormCreateVnPay from "./components/Payment/VnPay/FormCreate";
+import VnpayReturn from "./components/Payment/VnPay/VnpayReturn";
+
 import MyClassUser from "./components/user/MyClassUser";
+import FormAnswerListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/Answer/FormAnswer";
+import FormAnswerEditListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/Answer/FormAnswerEdit";
+import FormListenReadEdit from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenReadEdit";
 
 
 function App() {
@@ -347,13 +353,19 @@ function App() {
 
           {/* listenWrite */}
           <Route path="conversation">
-            <Route index element={<Navigate to="listExercise" />} />
+            <Route index element={<Navigate to="addExercise" />} />
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
-            <Route path=":id/editExercise" element={<FormListenWrite />} />
+            
+            <Route path="add" element={<FormListenWrite />} />
+            <Route path="answer">
+              <Route path=":id/add" element={<FormAnswerListenWrite />} />
+              <Route path=":id/edit" element={<FormAnswerEditListenWrite />} />
+            </Route>
 
             <Route path="addListenRead" element={<FormListenRead />} />
-            <Route path=":id/editListenRead" element={<FormListenRead />} />
+            
+            <Route path=":id/editListenRead" element={<FormListenReadEdit />} />
           </Route>
 
           <Route path="grammar">
@@ -397,7 +409,11 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
-        <Route path="/payment" element={<CheckoutPayment/>}></Route>
+        <Route path="/payment" element={<CheckoutPayment/>}>
+            <Route path="qrCode" element={<CheckoutQr />}/>
+            <Route path="vnpay" element={<FormCreateVnPay />} />
+            <Route path="vnpay_return" element={<VnpayReturn />}/>
+        </Route>
       </Routes>
     </div>
   );

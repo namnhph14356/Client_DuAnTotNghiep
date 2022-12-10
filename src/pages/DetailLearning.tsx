@@ -21,8 +21,10 @@ const DetailLearning = () => {
   const { dayId } = useParams();
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
-  const practiceLearning = [...practiceActivity]
-  practiceLearning.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
+  console.log("practiceActivity", practiceActivity);
+  
+  const practiceLearning = practiceActivity && practiceActivity
+  // practiceLearning?.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
   const learningProgress = useAppSelector<LearningProgressType[]>(item => item.learningProgress.value)
   let listLearningProgressByDay = learningProgress?.find((e: any) => e.day?._id === dayId)
 
@@ -89,7 +91,7 @@ const DetailLearning = () => {
             CÁC PHẦN HỌC CHÍNH :
           </h3>
           <div className="list__main__learning">
-            {practiceLearning.map((item: PracticeActivityType, index: number) => {
+            {practiceLearning?.map((item: PracticeActivityType, index: number) => {
               return <div key={index + 1}>
                 <NavLink to={`/learning/${dayId}/detailLearning/${item._id}/${onChangeURL(item.order)}`}>
                   <div className="item__list__learning">

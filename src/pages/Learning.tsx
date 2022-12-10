@@ -53,7 +53,7 @@ const Learning = () => {
       const arr: DayType[] = []
       days.map((item) => {
         const activityByDay = activity.filter((e: PracticeActivityType) => e.day === item._id && e.status === true)
-        if (activityByDay.length === 4) {
+        if (activityByDay.length >= 4) {
           arr.push(item)
         }
       })
@@ -137,7 +137,6 @@ const Learning = () => {
   }
   const getList = async () => {
     const { payload: listDay } = await dispatch(getListDaySlice())
-    const { payload: user } = await dispatch(currentUserSlice())
     getLearning(listDay, user)
   }
 
@@ -146,6 +145,7 @@ const Learning = () => {
     dispatch(getListWeekSlice())
     dispatch(getListPracticeActivitylice())
     getHistoryUser()
+    dispatch(currentUserSlice())
     getList()
   }, [])
 
@@ -171,7 +171,7 @@ const Learning = () => {
     if (listDay && user) {
       const { payload: learningProgress } = await dispatch(getLearningProgressByUserSlice(user._id))
       setLearningProgressSelect(learningProgress.find((item: any) => item.day === listDay[0]?._id || item.day._id === listDay[0]?._id))
-      
+
       if (learningProgress.length !== 0) {
         const lastLearningProgress: any = learningProgress[learningProgress.length - 1]
         const lastDay: any = days.find((item: DayType) => item._id === lastLearningProgress.day || item._id === lastLearningProgress?.day?._id)
@@ -184,6 +184,12 @@ const Learning = () => {
       }
     }
   }
+
+  const checkDay7 = (weekId: string) => {
+    const listDays = days.filter((item: DayType) => item.week?._id === weekId)
+    return listDays[listDays.length - 1]
+  }
+
 
   return (
     <div className='learning__page'>
@@ -424,8 +430,10 @@ const Learning = () => {
               <div className="btn__learning__statistical">
                 <div>
                   {learningProgressSelect
-                    ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} className='btn__start__statistical text-white hover:text-white'>
-                      Bắt đầu học
+                    ? <NavLink to={`/learning/${daySelect?._id}/detailLearning`} >
+                      <button className='btn__start__statistical text-white hover:text-white'>
+                        Bắt đầu học
+                      </button>
                     </NavLink>
                     : <button className='btn__start__statistical text-white hover:text-white' onClick={onHandleAddProgress}>
                       Bắt đầu học
@@ -438,21 +446,24 @@ const Learning = () => {
                   </NavLink>
                 </div>
 
-                <div className='mt-4'>
-                  <NavLink to={`/learning/oralWeekVocabulary/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white '>
-                    <button className='btn__exam__week'>
-                      Thi tuần (bắt buộc)
-                      <div>Từ vựng (35)</div>
-                    </button>
-                  </NavLink>
+                {
+                  daySelect === checkDay7(String(weekSelect?._id)) &&
+                  <div className='mt-4'>
+                    <NavLink to={`/learning/oralWeekVocabulary/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white '>
+                      <button className='btn__exam__week'>
+                        Thi tuần (bắt buộc)
+                        <div>Từ vựng (35)</div>
+                      </button>
+                    </NavLink>
 
-                  <NavLink to={`/learning/oralWeekSaying/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white'>
-                    <button className='ml-4 btn__exam__week'>
-                      Thi tuần (bắt buộc)
-                      <div>Câu (35)</div>
-                    </button>
-                  </NavLink>
-                </div>
+                    <NavLink to={`/learning/oralWeekSaying/${weekSelect?._id}/${daySelect?._id}`} className='text-white hover:text-white'>
+                      <button className='ml-4 btn__exam__week'>
+                        Thi tuần (bắt buộc)
+                        <div>Câu (35)</div>
+                      </button>
+                    </NavLink>
+                  </div>
+                }
               </div>
 
             </div>

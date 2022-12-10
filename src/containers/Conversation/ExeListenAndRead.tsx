@@ -9,18 +9,20 @@ import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom';
-import { getListenWriteByIdCategory } from '../../features/Slide/listenWrite/ListenWriteSlice';
 import '../../css/writeAndListen.css'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { getListQuestionListenWriteById } from '../../api/questionListenWrite';
 import { listAnswerListenWriteById } from '../../api/answerListenWrite';
-import { QuestionAnswerListenWriteType } from '../../types/listenWrite';
+import { ListenWriteType, QuestionAnswerListenWriteType } from '../../types/listenWrite';
 import Loading from '../../components/Loading';
+import { getListenWriteByActivitySlice } from '../../features/Slide/listenWrite/ListenWriteSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 const ExeListenAndRead = () => {
   const listenWrite = useSelector((item: any) => item.listenWrite.value);
   const [listQuestionAnswer, setListQuestionAnswer] = useState<QuestionAnswerListenWriteType[]>([]);
-  const dispatch = useDispatch();
+  const [conversation, setConversation] = useState<ListenWriteType>()
+  const dispatch = useAppDispatch();
   const { id } = useParams();
   const [checkPause, setCheckPause] = useState(false)
   const [checkMeaning, setCheckMeaning] = useState(false)
@@ -29,19 +31,8 @@ const ExeListenAndRead = () => {
 
 
   const btListenWrite = async () => {
-    const { payload } = await dispatch(getListenWriteByIdCategory(id))
-    const avx = JSON.parse(payload.test);
-    setListText(avx)
-
-    if (payload) {
-      const { data: question } = await getListQuestionListenWriteById(String(payload._id))
-      let arr: any = [];
-      for (let i = 0; i < question.length; i++) {
-        const { data: answer } = await listAnswerListenWriteById(question[i]._id)
-        arr.push({ question: question[i], answer: answer })
-      }
-      setListQuestionAnswer(arr)
-    }
+    const { payload } = await dispatch(getListenWriteByActivitySlice(String(id)))
+    setConversation(payload)
   }
 
   useEffect(() => {
@@ -102,7 +93,7 @@ const ExeListenAndRead = () => {
     let speech: any = document.querySelectorAll("#speech");
     let iconAudio: any = document.querySelectorAll("#iconAudio");
 
-    if (convertText(text.alternatives[0].transcript).toLowerCase() === speech[index]?.innerHTML.toLowerCase()) {
+    if (convertText(text.alternatives[0].beforeQuestion).toLowerCase() === speech[index]?.innerHTML.toLowerCase()) {
       speech[index].style.color = "orange";
       iconAudio.forEach((element, i) => {
         if (i !== index) {
@@ -114,7 +105,7 @@ const ExeListenAndRead = () => {
 
   return (
     <div className='conversation__page'>
-      {listQuestionAnswer.length > 0 ?
+      {conversation ?
         <div className="main__conversation">
           <form className="content__conversation"  >
             <div className='mx-4 pb-8'>
@@ -130,47 +121,48 @@ const ExeListenAndRead = () => {
             </div>
 
             <div className='mx-4 pb-8'>
-              <div className='mb-4 float-right'>
+              {/* <div className='mb-4 float-right'>
                 <div className='border px-3 rounded bg-gray-200 font-medium cursor-pointer hover:border-slate-400' onClick={() => setCheckMeaning(!checkMeaning)}>
                   {
                     checkMeaning ? 'Ẩn tiếng việt' : 'Hiện tiếng việt'
                   }
                 </div>
-              </div>
+              </div> */}
               <div>
-                <div className="content">
-                  {
-                    listText?.response?.results.map((item: any, index: number) => {
-                      return (
-                        <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-3 even:bg-slate-100"  >
-                          <div className='col-span-2 flex justify-between gap-4 my-auto'>
-                            <strong className='my-auto'>Long: </strong>
-                            {
-                              checkPause ?
-                                <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
-                                :
-                                <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
-                            }
-                          </div>
-                          <div className='col-span-10 my-auto'>
-                            <span id='speech' key={index + 1} className='text-base'>{convertText(item.alternatives[0].transcript)}</span>
-                            {
-                              checkMeaning ?
-                                <div className='text-sm text-gray-500'>Nghĩa tiếng việt</div>
-                                : ""
-                            }
-                          </div>
+              <div className="content">
+                {
+                  conversation?.conversation?.response?.results.map((item: any, index: number) => {
+
+                    return (
+                      <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-3 even:bg-slate-100"  >
+                        <div className='col-span-2 flex justify-between gap-4 my-auto'>
+                          <strong className='my-auto'>Long: </strong>
+                          {
+                            checkPause ?
+                              <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
+                              :
+                              <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                          }
                         </div>
-                      )
-                    })
-                  }
-                </div>
+                        <div className='col-span-10 my-auto'>
+                          <span id='speech' key={index + 1} className='text-base'>{ (item.alternatives[0].beforeQuestion) }</span>
+                          {
+                            checkMeaning ?
+                              <div className='text-sm text-gray-500'>Nghĩa tiếng việt</div>
+                              : ""
+                          }
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
               </div>
             </div>
 
             <div className='mx-4 pb-8'>
               <div className='text-xl font-bold'>Phân tích cấu trúc</div>
-              <div className='px-4 mt-4'>Trong bài này, có các cụm từ sau cần lưu ý:</div>
+              <div className='px-4 mt-4' dangerouslySetInnerHTML={{ __html: `${conversation.structure}` }}></div>
             </div>
           </form>
 

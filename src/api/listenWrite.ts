@@ -10,7 +10,7 @@ export const detailListenWrite = (id: string) => {
     const url = `/listenWrite/${id}`
     return instance.get(url)
 }
-export const detailListenWriteByIdCategory = (id: string) => {
+export const detailListenWriteByActivity = (id: string) => {
     const url = `/listenWrite/${id}/writeAndListen`
     return instance.get(url)
 }

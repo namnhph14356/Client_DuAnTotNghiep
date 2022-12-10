@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { addAnswerListenWrite, editAnswerListenWrite, removeAnswerListenWrite } from '../../../api/answerListenWrite'
+import { addAnswerListenWrite, editAnswerListenWrite, listAnswerListenWriteById, removeAnswerListenWrite } from '../../../api/answerListenWrite'
 import { addAnswerQuiz, detailAnswerQuiz, editAnswerQuiz, listAnswerQuiz, removeAnswerQuiz } from '../../../api/answerQuiz'
 import { AnswerQuizType } from '../../../types/answerQuiz'
 
 
 export const getListAnswerListenWriteSlide = createAsyncThunk(
     'answerListenWrite/getListAnswerListenWriteSlide',
-    async () => {
-        const { data } = await listAnswerQuiz()
+    async (id:string) => {
+        const { data } = await listAnswerListenWriteById(id)
         return data
     }
 )
