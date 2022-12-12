@@ -39,7 +39,6 @@ const FormListenRead = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const type = "conversation"
-  console.log("listenWrite", listenWrite);
 
   const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
   let detailListen: any = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === prative._id)
@@ -145,8 +144,6 @@ const FormListenRead = () => {
     }
 
     const newValue = await convertValue(value)
-    console.log("newValue", newValue);
-    console.log("arrAnswer", arrAnswer.sort((a, b) => a.id - b.id));
 
     const { payload } = await dispatch(addListen({
       practiceActivity: prative._id,
@@ -161,7 +158,8 @@ const FormListenRead = () => {
           idListenWrite: payload._id,
           answer: e.text,
           order: e.order,
-          confidence: e.id
+          confidence: e.id,
+          stt:e.stt
         }))
       })
     }
@@ -220,7 +218,7 @@ const FormListenRead = () => {
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
-      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index  }])
     }
 
     arrAnswer.map((e) => {
@@ -234,7 +232,7 @@ const FormListenRead = () => {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
         console.log("chua tonf tai");
-        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index  }])
       }
     })
 
@@ -277,7 +275,7 @@ const FormListenRead = () => {
     dispatch(getListPracticeActivitylice())
     dispatch(getListListenWrite())
     checkStatusActivity()
-    dispatch(changeBreadcrumb("Thêm cấu trúc"))
+    dispatch(changeBreadcrumb("Thêm hội thoại"))
 
   }, [dayId])
 

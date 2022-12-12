@@ -95,8 +95,9 @@ const ExeWriteAndListen = () => {
       },]
     }
     let numAnswer = 0;
-    answerListenWrite.sort((a, b) => Number(a.confidence) - Number(b.confidence)).map((item: any, key: number) => {
-      if (item.answer.toLowerCase() === convertValues2[key].answerUser.toLowerCase() && String(item.index) === convertValues2[key].keyQuestion && convertConfidence(item.confidence) === convertValues2[key].idQuestion) {
+
+    answerListenWrite.map((item: any, key: number) => {
+      if (item.answer.toLowerCase().replaceAll(" ", "") === convertValues2[key].answerUser.toLowerCase().replaceAll(" ", "") && String(item.index) === convertValues2[key].keyQuestion && convertConfidence(item.confidence) === convertValues2[key].idQuestion) {
         convertValues2[key].isCorrect = true;
         convertValues2[key].answerCorrect = convertValues2[key].answerUser
         numAnswer += 1
@@ -180,8 +181,11 @@ const ExeWriteAndListen = () => {
   }
 
   const convertAnswer = (answerList: any) => {
-    const newLi = answerList.reduce((pre: any, next: any) => {
-      const index = pre.filter((item) => item.confidence === next.confidence)
+    const newAr: any = [...answerList]
+    newAr.sort((a, b) => Number(a.stt) - Number(b.stt) || a.order - b.order)
+
+    const newLi = newAr.reduce((pre: any, next: any) => {
+      const index = pre.filter((item) => item.stt === next.stt)
       if (index.length === 0) {
         pre.push({
           ...next, index: 1
@@ -193,7 +197,8 @@ const ExeWriteAndListen = () => {
       }
       return pre
     }, [])
-
+    console.log("newLi", newLi);
+    
     return newLi
 
   }
