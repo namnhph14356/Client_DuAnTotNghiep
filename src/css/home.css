@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap");
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
 p{
     font-weight: 400;
 }
@@ -66,6 +71,32 @@ p{
 
 
 /* end banner */
+
+.img-learning{
+  width: 100%;
+  animation: aboutImage 4s linear infinite;
+}
+
+@keyframes aboutImage {
+  0%, 100%{
+      transform: scale(.9);
+      
+      border-radius: 4% 95% 6% 95%/95% 4% 92% 5%;
+  }
+  50%{
+      transform: scale(.8);
+      border-radius: 95% 4% 97% 5%/4% 94% 3% 95%;
+  }
+}
+
+.img-learning2{
+  transition: all 0.3s ease-in-out;
+}
+
+.img-learning2:hover{
+  transform: scale(1.2);
+  transition: all 0.3s ease-in-out;
+}
 
 .vougue {
     @apply my-[100px] w-8/12 m-auto
