@@ -6,9 +6,9 @@
         .box-btn{
           @apply text-center mb-[150px] 
         }
-       .btn{
+       /* .btn{
           @apply bg-[#4A235A] text-[16px]  py-[17px] px-[60px] rounded-xl text-white  md:px-[80px] lg:px-[120px] md:text-[24px]
-        }
+        } */
 
 
       .section-1{

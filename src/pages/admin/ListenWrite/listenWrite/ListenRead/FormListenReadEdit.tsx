@@ -46,6 +46,9 @@ const FormListenReadEdit = () => {
   let detailListen: any = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === prative._id)
 
   const convertText = (text: String) => {
+    if (!text) {
+      return ""
+    }
     if (text.charAt(0) === " ") {
       return text.charAt(1).toUpperCase() + text.slice(2).toLowerCase();
     }
@@ -79,7 +82,8 @@ const FormListenReadEdit = () => {
           idListenWrite: payload._id,
           answer: e.text,
           order: e.order,
-          confidence: e.id
+          confidence: e.id,
+          stt:e.stt
         }))
       })
     }
@@ -152,7 +156,7 @@ const FormListenReadEdit = () => {
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
-      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
     }
 
     arrAnswer.map((e) => {
@@ -165,7 +169,7 @@ const FormListenReadEdit = () => {
       } else {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
-        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
       }
     })
 
@@ -203,7 +207,7 @@ const FormListenReadEdit = () => {
   }
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Sửa cấu trúc"))
+    dispatch(changeBreadcrumb("Sửa hội thoại"))
     setListConversation(detailListen[0]?.conversation)
     setAudio(detailListen[0]?.audio)
     form.setFieldsValue({ ...detailListen[0], nameList: detailListen[0].conversation.response });
@@ -270,8 +274,8 @@ const FormListenReadEdit = () => {
                     <div key={index + 1} className="py-3 even:bg-slate-100">
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 "  >
                         <div className='col-span-2 flex justify-between gap-4 my-auto ' >
-                          <Form.Item style={{ marginBottom: "5px" }} label="Tên nhân vật" name={[`nameList`, `name-${index + 1}`]} initialValue={breadcrumb === "Sửa cấu trúc" ? item.name : ""} rules={[{ required: true, message: "Không để Trống!" }]}>
-                            <Input defaultValue={breadcrumb === "Sửa cấu trúc" ? item.name : ""} placeholder='Tên nhân vật' className='w-full px-2 py-1 border' />
+                          <Form.Item style={{ marginBottom: "5px" }} label="Tên nhân vật" name={[`nameList`, `name-${index + 1}`]} initialValue={breadcrumb === "Sửa hội thoại" ? item.name : ""} rules={[{ required: true, message: "Không để Trống!" }]}>
+                            <Input defaultValue={breadcrumb === "Sửa hội thoại" ? item.name : ""} placeholder='Tên nhân vật' className='w-full px-2 py-1 border' />
                           </Form.Item>
                         </div>
                         <div className='col-span-10 my-auto' >
@@ -283,7 +287,7 @@ const FormListenReadEdit = () => {
 
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4"  >
                         <div className='col-span-12  gap-4 my-auto'>
-                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]} style={{marginBottom:"0"}}  >
+                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]} style={{ marginBottom: "0" }}  >
                             <ul className='flex-auto space-x-8 col-span-10 w-full mb-0'>
                               {item.alternatives[0].transcript &&
                                 detailAnswer(convertText(item.alternatives[0].beforeQuestion)).map((item2: TypeArrAnswer, index2: number) => (
@@ -323,10 +327,10 @@ const FormListenReadEdit = () => {
             type="primary"
             htmlType="submit"
           >
-            {breadcrumb === "Sửa cấu trúc" ? "Sửa" : "Thêm"}
+            {breadcrumb === "Sửa hội thoại" ? "Sửa" : "Thêm"}
           </Button>
 
-          {breadcrumb === "Sửa cấu trúc" &&
+          {breadcrumb === "Sửa hội thoại" &&
             <Button
               className="inline-block mr-2"
               type="primary"

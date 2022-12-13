@@ -4,6 +4,8 @@ import { Navigation, Pagination, Scrollbar, A11y, Autoplay, Parallax, EffectCove
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/bundle";
+import '../css/banner.css';
+import { Link, NavLink } from 'react-router-dom';
 
 const BannerPage = () => {
   return (
@@ -12,7 +14,7 @@ const BannerPage = () => {
         // style={{
         //   // "--swiper-pagination-color": "#fff",
         // }}
-        speed={1000}
+        speed={500}
         autoplay={{
           delay: 3000,
           disableOnInteraction: false,
@@ -34,20 +36,37 @@ const BannerPage = () => {
         }}
 
         effect={"fade"}
-        modules={[EffectCoverflow, EffectFade,Pagination, Autoplay]}
+        modules={[EffectCoverflow, Pagination, Autoplay]}
         className="mySwiper"
       >
         <SwiperSlide>
-          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://dy7oszgl9a56g.cloudfront.net/wp-content/uploads/2020/04/09100810/100online-Banner-english.jpg" alt="" />
+          <section className="swiper-slide slide" style={{ backgroundImage: "url(https://res.cloudinary.com/chanh-thon/image/upload/v1670926803/home-slide-1_dkeweb.jpg)", backgroundRepeat: "no-repeat" }}>
+            <div className="content-slide">
+              <h3>Học tiếng anh một cách tốt nhất</h3>
+              <p>Phương pháp học được tính toán khoa học, chặt chẽ, tạo động lực học tập và đo lường được tiến độ.</p>
+              <NavLink className='btn cursor-pointer' to="/learning">Bắt đầu học</NavLink>
+            </div>
+          </section>
         </SwiperSlide>
+
         <SwiperSlide>
-          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://img.freepik.com/free-vector/education-horizontal-typography-banner-set-with-learning-knowledge-symbols-flat-illustration_1284-29493.jpg?w=1380&t=st=1669396650~exp=1669397250~hmac=b622748b74f57e28f49793b733bccaac048b304c21f909484663ae449fe40138" alt="" />
+          <section className="swiper-slide slide" style={{ backgroundImage: "url(https://res.cloudinary.com/chanh-thon/image/upload/v1670926803/home-slide-2_lxo4jk.jpg)", backgroundRepeat: "no-repeat" }}>
+            <div className="content-slide">
+              <h3>Luyện phát âm xứ bản hoàn hảo</h3>
+              <p>Luyện phát âm bản xứ theo phương pháp Đọc-Tách-Ghép-Âm độc quyền trên thế giới chỉ có tại Vian English.</p>
+              <NavLink className='btn cursor-pointer' to="/learning">Bắt đầu học</NavLink>
+            </div>
+          </section>
         </SwiperSlide>
+
         <SwiperSlide>
-          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="https://img.freepik.com/free-vector/isometric-online-education-template-with-students-sitting-standing-books-globe-laptop-tablet-magnifier-certificate-graduation-cap-illustration_1284-51176.jpg?w=1480&t=st=1669396683~exp=1669397283~hmac=2b30e2b83e653278761759b8707cde1344f5b66a633f28b0fb1baeeab1c777d3" alt="" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img width={"100%"} style={{ height: "660px", backgroundSize: "cover" }} src="http://theme-stall.com/edupress/demos/wp-content/uploads/2016/10/demo.jpg" alt="" />
+          <section className="swiper-slide slide" style={{ backgroundImage: "url(https://res.cloudinary.com/chanh-thon/image/upload/v1670926803/home-slide-3_rjjowb.jpg)", backgroundRepeat: "no-repeat" }}>
+            <div className="content-slide">
+              <h3>Kiểm tra hàng ngày, tuần, tháng,...</h3>
+              <p>Bài kiểm tra giúp bạn tự đánh giá được trình độ, đảm bảo chất lượng và tiến độ học tập hàng ngày, hàng tuần, hàng tháng và hàng quý.</p>
+              <NavLink className='btn cursor-pointer' to="/learning">Bắt đầu học</NavLink>
+            </div>
+          </section>
         </SwiperSlide>
       </Swiper>
     </div>
