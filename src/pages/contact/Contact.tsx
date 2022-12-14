@@ -1,11 +1,10 @@
 import React from "react";
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import "./contact.css";
-
 import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
-
-
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addContactSlide } from "../../features/Slide/contact/ContactSlide";
 import toas from 'toastr';
@@ -37,10 +36,12 @@ const Contact = () => {
         }
       ))
 
-      toas.success("Gửi biểu mẫu thành công");
+      toast.success("Cảm ơn bạn đã gửi thông tin, chúng tôi sẽ liên hệ với bạn sớm nhất có thể", {
+        position: toast.POSITION.TOP_CENTER
+      });
       setTimeout(() => {
         navigate('/')
-      }, 1000);
+      }, 3000);
 
 
     } catch (error: any) {
@@ -88,16 +89,19 @@ const Contact = () => {
                   <h5 className="uppercase m-0 text-[14px] mb-[15px]">
                     Tên (*)
                   </h5>
-                  <Form.Item name={['contact', 'name']} rules={[{ required: true, message: 'Tên không được để trống' }]}>
+                  <Form.Item name={['contact', 'name']} rules={[
+                    { required: true, message: 'Tên không được để trống' }]}>
                     <Input placeholder="Nhập tên" />
-                  </Form.Item>                </div>
+                  </Form.Item>
+                </div>
               </Col>
               <Col xs={24} sm={12} md={12} lg={12} xl={12} className="mb-3">
                 <div className="pr-3">
                   <h5 className="uppercase m-0 text-[14px] mb-[15px]">
                     QUỐC GIA / VÙNG (*)
                   </h5>
-                  <Form.Item name={['contact', 'address']} rules={[{ required: true, message: 'Địa chỉ không được để trống' }]}>
+                  <Form.Item name={['contact', 'address']} rules={[{ required: true, message: 'Địa chỉ không được để trống' },
+                  { min: 5, message: 'Nhập ít nhất 5 ký tự' }]}>
                     <Input placeholder="Nhập địa chỉ" />
                   </Form.Item>
                 </div>
@@ -153,6 +157,7 @@ const Contact = () => {
                 <Button className="py-[2px] px-[40px] w-[337px] text-white font-bold border" style={{ background: '#1890ff', color: "#fff", border: "1px solid #1890ff" }} htmlType="submit">
                   Gửi phản hồi
                 </Button>
+                <ToastContainer />
               </Form.Item>
             </div>
           </Form>
