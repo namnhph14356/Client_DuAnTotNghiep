@@ -302,22 +302,30 @@ const AdminDashboard = () => {
         </Col>
       </Row>
       <Row className='justify-between'>
-        <List className='w-[700px] mr-10'>
-          <Card hoverable>
-            <Typography.Title level={5} className="text-center">
-              Số lượt làm bài trong 7 ngày gần nhất
-            </Typography.Title>
-            <Line width={100} data={setDataChart} {...config} />
-          </Card>
-        </List>
-        <List className='w-[500px]'>
-          <Card hoverable>
-            <Typography.Title level={5} className="text-center">
-              Số lượng người dùng
-            </Typography.Title>
-            <Pie data={dataPie} width={100} {...configPie} />
-          </Card>
-        </List>
+        <Col xs={16} sm={16} md={16} lg={16} xl={16} className="p-1">
+          <List >
+            <Card hoverable>
+              <Typography.Title level={5} className="text-center">
+                Số lượt làm bài trong 7 ngày gần nhất
+              </Typography.Title>
+              <Line width={100} data={setDataChart} {...config} />
+            </Card>
+          </List>
+        </Col>
+
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-1">
+          <List >
+            <Card hoverable>
+              <Typography.Title level={5} className="text-center">
+                Số lượng người dùng
+              </Typography.Title>
+              <Pie data={dataPie} width={100} {...configPie} />
+            </Card>
+          </List>
+        </Col>
+
+
+
       </Row>
       <div className='mt-5'>
         <List >
