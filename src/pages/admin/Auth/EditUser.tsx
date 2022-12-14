@@ -55,7 +55,7 @@ const EditUser = () => {
 
   const onFinish = async (values: UserType) => {
     console.log("va", values);
-    
+
     try {
       await dispath(editUserSlide(
         {
@@ -83,29 +83,9 @@ const EditUser = () => {
     <div>
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Form layout="vertical" name="nest-messages" form={form} onFinish={onFinish} >
-        <Form.Item name={'_id'} label="_id" hidden={true}>
-          <Input />
-        </Form.Item>
-        <Form.Item name={'username'} tooltip="Họ Tên" label="Họ Tên" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item name={'email'} tooltip="Email" label="Email" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item name={['image']} tooltip="Chọn Ảnh" label="Chọn Ảnh" >
-          <Input type="file" className="form-control" id="file-upload" onChange={handlePreview} />
-        </Form.Item>
 
-        <Form.Item name={'image2'} label="Hình ảnh">
-          <span className="inline-block  rounded-full overflow-hidden bg-gray-100">
-            <img id="img-preview" src={preview} style={{ width: "100px" }} />
-          </span>
-        </Form.Item>
-        <Form.Item name={'phone'} label="Điện Thoại">
-          <Input />
-        </Form.Item>
-        <Form.Item name={'address'} label="Địa chỉ">
-          <Input />
+        <Form.Item name={'_id'} label="_id" hidden={true}>
+          <Input disabled={true} />
         </Form.Item>
         <Form.Item name={'role'} label="Quyền">
           <Select>
@@ -114,8 +94,30 @@ const EditUser = () => {
             <Select.Option value={"2"}>Admin</Select.Option>
           </Select>
         </Form.Item>
+        <Form.Item name={'username'} tooltip="Họ Tên" label="Họ Tên" rules={[{ required: true }]}>
+          <Input disabled={true} />
+        </Form.Item>
+        <Form.Item name={'email'} tooltip="Email" label="Email" rules={[{ required: true }]}>
+          <Input disabled={true} />
+        </Form.Item>
+        <Form.Item name={['image']} tooltip="Chọn Ảnh" label="Chọn Ảnh" >
+          <Input disabled={true} type="file" className="form-control" id="file-upload" onChange={handlePreview} />
+        </Form.Item>
+
+        <Form.Item name={'image2'} label="Hình ảnh">
+          <span className="inline-block  rounded-full overflow-hidden bg-gray-100">
+            <img id="img-preview" src={preview} style={{ width: "100px" }} />
+          </span>
+        </Form.Item>
+        <Form.Item name={'phone'} label="Điện Thoại">
+          <Input disabled={true} />
+        </Form.Item>
+        <Form.Item name={'address'} label="Địa chỉ">
+          <Input disabled={true} />
+        </Form.Item>
+
         <Form.Item name={'sex'} label="Giới tính">
-          <Select>
+          <Select disabled={true}>
             <Select.Option value={0}>Nam</Select.Option>
             <Select.Option value={1}>Nữ</Select.Option>
           </Select>

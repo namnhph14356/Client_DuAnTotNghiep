@@ -462,7 +462,7 @@ const ListListenWrite = () => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Bài tập", route: "listExercise" }} />
+      <AdminPageHeader breadcrumb={"Danh sách bài tập"} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         Thêm câu hỏi
       </Button>

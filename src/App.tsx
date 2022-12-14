@@ -356,6 +356,7 @@ function App() {
             <Route index element={<Navigate to="addExercise" />} />
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
+            <Route path=":id/editExercise" element={<FormListenWrite />} />
             
             <Route path="add" element={<FormListenWrite />} />
             <Route path="answer">

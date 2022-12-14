@@ -13,7 +13,7 @@ type GoogleSpeechExamProps = {
     onHanldeResetSpeaker: (value: boolean) => void
 }
 
-const socket = io("http://localhost:8000", { transports: ['websocket'] });
+const socket = io("https://serverduantotnghiep-production-53a7.up.railway.app", { transports: ['websocket'] });
 
 
 

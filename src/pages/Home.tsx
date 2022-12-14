@@ -68,7 +68,89 @@ const Home = () => {
   return (
     <div>
       <BannerPage />
-      <section className="our-product">
+
+
+      <div>
+
+        {/* START: section */}
+        <section className="w-10/12 m-auto probootstrap-section probootstrap-section-extra grid grid-cols-2">
+          <div className="container-fluid probootstrap-absolute mt-[50px]">
+            <div className="row">
+              <div
+                className="col-md-8 col-md-pull-2 probootstrap-animate"
+                data-animate-effect="fadeInLeft"
+              >
+                <img
+                  w-full
+                  src="http://unicoach.wgl-demo.net/wp-content/uploads/2020/10/home1_1.jpg"
+                  width={"90%"}
+                  alt=""
+                  className="img-learning img-responsive "
+                />
+              </div>
+            </div>
+          </div>
+          <div className="my-auto ">
+            <div className="row ">
+              <div className="col-lg-5 col-md-5 col-md-push-6 section-heading probootstrap-animate">
+                <h2 className="text-3xl font-bold">Giao Tiếp Hiệu Quả</h2>
+                <blockquote className="probootstrap-quote">
+                  <p className="text-black">
+                    “ Miễn phí học thử và kiểm tra trình độ. Cùng VianEnglish
+                    chinh phục tiếng Anh,nói tiếng Anh cũng sẽ giúp bạn gặp gỡ
+                    rất nhiều người nước ngoài và từ đó kết bạn với họ, trở nên
+                    cởi mở hơn trong các mối quan hệ xã hội ,nói tiếng Anh cũng
+                    sẽ giúp bạn gặp gỡ rất nhiều người nước ngoài và từ đó kết
+                    bạn với họ, trở nên cởi mở hơn trong các mối quan hệ xã
+                    hội.”
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* START: section */}
+        <section className="grid grid-cols-2 mt-16 gap-16 w-10/12 m-auto">
+          <div className="my-auto">
+            <div className=" row my-auto">
+              <div className="col-lg-5 col-md-5 section-heading probootstrap-animate float-right ">
+                <h2 className="text-3xl font-bold ">Lợi Ích Khi Học Tiếng Anh</h2>
+
+                <blockquote className="probootstrap-quote">
+                  <p className="text-black">
+                    “ VianEnglish là website học tiếng Anh giao tiếp online cung
+                    cấp rất nhiều tài liệu tự học tiếng Anh trực tuyến hoàn toàn
+                    miễn phí, giúp bạn nâng cao vốn tiếng Anh của mình. Nguồn
+                    tài liệu tự học tiếng Anh online bao gồm video, các ứng dụng
+                    dành cho điện thoại di động, bài luyện nghe và các bài tập
+                    ngữ pháp.”
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div className="container-fluid probootstrap-absolute">
+            <div className="row">
+              <div
+                className="col-md-7 col-md-push-6 probootstrap-animate truncate rounded-lg"
+                data-animate-effect="fadeInRight"
+              >
+                <img
+                  src="http://unicoach.wgl-demo.net/wp-content/uploads/2020/10/courses_14-970x570.jpg"
+                  alt="Free Bootstrap Template by uicookies.com"
+                  width={"100%"}
+                  className="img-responsive  img-learning2"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* END: section */}
+
+      </div>
+
+      <section className="our-product mt-16">
         <div className="w-10/12 m-auto">
           <div className="row">
             <div className="col-md-8 col-md-offset-2 section-heading mb50 text-center probootstrap-animate pt-8 mb-8">
@@ -229,11 +311,11 @@ const Home = () => {
           </div>
         </section>
       </div>
-
+    
       {/*form by course  */}
       <section className="form__information">
-        <h2 className="title__form">Liên hệ với chúng tôi</h2>
-        <form action="" onSubmit={handleSubmit(onSubmit)}>
+        <h2 className="title__form">NHẬP THÔNG TIN ĐỂ ĐĂNG KÝ</h2>
+        <form action="">
           <div className="box__form">
             <div className="list__form">
               <div className="item__box__form">

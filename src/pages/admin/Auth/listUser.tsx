@@ -168,12 +168,11 @@ const ListUser = () => {
       }
     },
     {
-      title: 'Hành động',
+      title: 'Hoạt động',
       key: 'action',
       render: (recore: any) => (
         <Space size="middle">
           <NavLink type="primary" to={'/admin/user/edit/' + recore.id}><Button type="primary" style={{ background: "#198754" }}  >Sửa</Button></NavLink>
-          <Button type="primary" danger onClick={() => onRemoveUser(recore.id)}>Xóa</Button>
         </Space>
       )
     }
