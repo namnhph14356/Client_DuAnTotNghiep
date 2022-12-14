@@ -24,6 +24,7 @@ import AdminPageHeader from "../../../../components/AdminPageHeader";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { PracticeActivityType } from "../../../../types/practiceActivity";
+import { Helmet } from "react-helmet";
 
 type Props = {};
 
@@ -303,6 +304,12 @@ const ListVocabulary = (props: Props) => {
 
   return (
     <div >
+
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Từ Vựng | Vian English</title>
+      </Helmet>
+
       <AdminPageHeader breadcrumb={"Danh sách từ vựng"} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkAnswer()}>
         Thêm Từ Vựng

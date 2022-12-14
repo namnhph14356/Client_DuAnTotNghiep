@@ -243,7 +243,7 @@ const DayLayout = () => {
             <SubMenu key="sub8_2" title="Nghe và đọc">
               <Menu.Item key={`/manageDay/${dayId}/conversation/addListenRead`}>
                 <NavLink to={`/manageDay/${dayId}/conversation/addListenRead`}>
-                  Cấu trúc
+                  Hội thoại
                 </NavLink>
               </Menu.Item>
             </SubMenu>

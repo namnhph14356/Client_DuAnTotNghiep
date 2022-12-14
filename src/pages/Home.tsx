@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import BannerPage from "../components/BannerPage";
 import Message from "../components/Message";
-
+import { Helmet } from "react-helmet";
 import "./../css/home.css";
 
 const Home = () => {
@@ -20,6 +20,10 @@ const Home = () => {
   };
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Vian English</title>
+      </Helmet>
       <BannerPage />
 
 

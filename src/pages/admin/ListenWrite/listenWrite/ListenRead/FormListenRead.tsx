@@ -17,6 +17,7 @@ import { ListenWriteType } from '../../../../../types/listenWrite'
 import { PracticeActivityType } from '../../../../../types/practiceActivity'
 import { QuizType } from '../../../../../types/quiz'
 import { uploadImage, uploadVideo } from '../../../../../utils/upload'
+import { Helmet } from "react-helmet";
 
 interface TypeArrAnswer {
   id: number,
@@ -159,7 +160,7 @@ const FormListenRead = () => {
           answer: e.text,
           order: e.order,
           confidence: e.id,
-          stt:e.stt
+          stt: e.stt
         }))
       })
     }
@@ -218,7 +219,7 @@ const FormListenRead = () => {
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
-      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index  }])
+      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
     }
 
     arrAnswer.map((e) => {
@@ -232,7 +233,7 @@ const FormListenRead = () => {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
         console.log("chua tonf tai");
-        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index  }])
+        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
       }
     })
 
@@ -281,6 +282,10 @@ const FormListenRead = () => {
 
   return (
     <div className=''>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Hội Thoại | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Nghe và đọc", route: "listListenRead" }} />
       <Form
         layout="vertical"

@@ -19,6 +19,7 @@ import { editPracticeActivitylice, getListPracticeActivitySliceByDay } from '../
 import { getListVocabularySlice } from '../../../../features/Slide/vocabulary/vocabulary';
 import { PracticeActivityType } from '../../../../types/practiceActivity';
 import { VocabulatyType } from '../../../../types/vocabularyType';
+import { Helmet } from "react-helmet";
 
 
 
@@ -493,6 +494,10 @@ const ListExerciseVocabulary = (props: Props) => {
 
   return (
     <div>
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Từ Vựng | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         Thêm câu hỏi

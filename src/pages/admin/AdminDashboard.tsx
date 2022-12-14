@@ -14,6 +14,7 @@ import { getListWeekSlice } from '../../features/Slide/week/WeekSlice';
 import { Line, Pie, Column } from '@ant-design/plots';
 import { getListUser } from '../../api/user';
 import { getPaymentSlice } from '../../features/Slide/payment/PaymentSlice';
+import { Helmet } from "react-helmet";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -191,7 +192,10 @@ const AdminDashboard = () => {
   }, [])
   return (
     <div className=''>
-      {/* <h1 className='p-1 text-2xl'>Dashboard</h1> */}
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Dashboard | Vian English</title>
+      </Helmet>
       <Row className='justify-between' >
         <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>

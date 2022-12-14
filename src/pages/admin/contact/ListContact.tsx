@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import AdminPageHeader from '../../../components/AdminPageHeader'
 import { getContactList, removeContacts } from '../../../features/Slide/contact/ContactSlide'
+import { Helmet } from "react-helmet";
 
 const ListContact = () => {
   const contact = useSelector<any, any>(data => data.contact.value);
@@ -98,7 +99,11 @@ const ListContact = () => {
 
   return (
     <div>
-      <AdminPageHeader breadcrumb={"Danh sách liên hệ"}  />
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Quản Lí Liên Hệ | Vian English</title>
+      </Helmet>
+      <AdminPageHeader breadcrumb={"Danh sách liên hệ"} />
       <Table columns={headings} dataSource={dataSourd}></Table>
     </div>
   )

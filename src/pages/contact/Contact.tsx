@@ -3,6 +3,7 @@ import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from 
 import "./contact.css";
 
 import Footer from "../../components/Footer";
+import { Helmet } from "react-helmet";
 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -50,6 +51,11 @@ const Contact = () => {
   return (
     <>
       <div className="w-10/12 m-auto">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Liên Hệ | Vian English</title>
+        </Helmet>
+
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">
             Liên hệ với chúng tôi
@@ -144,7 +150,7 @@ const Contact = () => {
             <div className="submit flex justify-center items-center pt-[36px] mb-[60px]">
 
               <Form.Item >
-                <Button className="py-[2px] px-[40px] w-[337px] text-white font-bold border" style={{background:'#1890ff', color:"#fff", border:"1px solid #1890ff"}}  htmlType="submit">
+                <Button className="py-[2px] px-[40px] w-[337px] text-white font-bold border" style={{ background: '#1890ff', color: "#fff", border: "1px solid #1890ff" }} htmlType="submit">
                   Gửi phản hồi
                 </Button>
               </Form.Item>

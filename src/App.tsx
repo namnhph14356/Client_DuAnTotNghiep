@@ -353,7 +353,7 @@ function App() {
 
           {/* listenWrite */}
           <Route path="conversation">
-            <Route index element={<Navigate to="addExercise" />} />
+            <Route index element={<Navigate to="listExercise" />} />
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />

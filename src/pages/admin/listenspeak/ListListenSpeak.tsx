@@ -19,6 +19,7 @@ import { AnswerQuizType } from '../../../types/answerQuiz';
 import { async } from '@firebase/util';
 import { editPracticeActivitylice, getListPracticeActivitySliceByDay } from '../../../features/Slide/practiceActivity/PracticeActivitySlice';
 import { PracticeActivityType } from '../../../types/practiceActivity';
+import { Helmet } from "react-helmet";
 
 
 
@@ -556,6 +557,11 @@ const ListListenSpeak = (props: Props) => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Nghe Nói Phản Xạ | Vian English</title>
+      </Helmet>
+
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện nghe nói phản xạ", route: "listenspeak" }} type={{ title: "Khởi động", route: "" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         Thêm câu hỏi

@@ -8,6 +8,7 @@ import { AnswerQuizType } from '../../../../types/answerQuiz';
 import { changeBreadcrumb, addAnswerQuizSlide } from '../../../../features/Slide/answerQuiz/AnswerQuizSlide';
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { listAnswerQuiz } from '../../../../api/answerQuiz';
+import { Helmet } from "react-helmet";
 
 
 const FormAnswer = () => {
@@ -69,6 +70,10 @@ const FormAnswer = () => {
 
   return (
     <div>
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Ngữ Pháp | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>

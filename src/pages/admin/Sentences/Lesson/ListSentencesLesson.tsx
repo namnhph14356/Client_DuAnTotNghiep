@@ -26,6 +26,7 @@ import { editPracticeActivitylice } from "../../../../features/Slide/practiceAct
 import { PracticeActivityType } from "../../../../types/practiceActivity";
 import { getListSentencesSlice, removeSentencesSlice } from "../../../../features/Slide/sentences/sentencesSlice";
 import { SentenceType } from "../../../../types/sentence";
+import { Helmet } from "react-helmet";
 
 type Props = {};
 
@@ -294,6 +295,10 @@ const ListSentencesLesson = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Cấu Trúc Và Câu | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={"Danh sách bài học"} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkSentences()}>
         {/* <Link to={`/manageDay/${dayId}/vocabulary/addLesson`}> */}
