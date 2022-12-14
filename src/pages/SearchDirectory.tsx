@@ -35,7 +35,7 @@ const SearchDirectory = (props: Props) => {
     }, [word])
     
   return (
-    <div className='w-8/12 m-auto mt-8'>
+    <div className='w-8/12 m-auto mt-8 min-h-[300px]'>
         <div className='w-8/12 m-auto'>
          <Search className='search-directory' style={{width:"", height:"40px"}} placeholder="Tra từ" onSearch={onSearch} enterButton />
          </div>
