@@ -96,7 +96,7 @@ const AdminLayout = () => {
         >
           <Menu.Item key="/admin/dashboard" icon={<BankOutlined />} ><NavLink to='/admin/dashboard'>Dashboard</NavLink></Menu.Item>
           <Menu.Item key="/admin/day" icon={<HighlightOutlined />}><NavLink to='/admin/day'>Quản lí ngày học</NavLink></Menu.Item>
-          <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Liên hệ</NavLink></Menu.Item>
+          <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Quản lí liên hệ</NavLink></Menu.Item>
           <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lí người dùng</NavLink></Menu.Item>
           <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lí lớp học</NavLink></Menu.Item>
         </Menu>

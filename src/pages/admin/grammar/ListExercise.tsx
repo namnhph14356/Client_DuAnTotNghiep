@@ -18,6 +18,7 @@ import { AnswerQuizType } from '../../../types/answerQuiz';
 import { editPracticeActivitylice } from '../../../features/Slide/practiceActivity/PracticeActivitySlice';
 import { GrammarType } from '../../../types/grammar';
 import { PracticeActivityType } from '../../../types/practiceActivity';
+import { Helmet } from "react-helmet";
 
 interface DataType {
   key: React.Key;
@@ -485,6 +486,10 @@ const ListExercise = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Ngữ Pháp | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         {/* <Link to={`/manageDay/${dayId}/grammar/question/add`}> */}

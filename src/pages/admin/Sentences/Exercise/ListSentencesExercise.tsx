@@ -18,6 +18,7 @@ import { changeBreadcrumb } from '../../../../features/Slide/sentences/sentences
 import AdminPageHeader from '../../../../components/AdminPageHeader';
 import { SentenceType } from '../../../../types/sentence';
 import { PracticeActivityType } from '../../../../types/practiceActivity';
+import { Helmet } from "react-helmet";
 
 
 interface DataType {
@@ -534,6 +535,10 @@ const ListSentencesExercise = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Cấu Trúc Và Câu | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={"Danh sách bài tập"} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         {/* <Link to={`/manageDay/${dayId}/listenspeak/question/add`}> */}

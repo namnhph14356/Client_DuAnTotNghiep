@@ -18,6 +18,7 @@ import { changeBreadcrumb, editQuizSlide, getListQuizSlide, removeQuizSlide } fr
 import { getCategoryList } from '../../../../../features/Slide/category/CategorySlide';
 import AdminPageHeader from '../../../../../components/AdminPageHeader';
 import { ListenWriteType } from '../../../../../types/listenWrite';
+import { Helmet } from "react-helmet";
 
 
 interface DataType {
@@ -462,6 +463,11 @@ const ListListenWrite = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Hội Thoại | Vian English</title>
+      </Helmet>
+
       <AdminPageHeader breadcrumb={"Danh sách bài tập"} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <Button type='primary' className='mb-8' onClick={() => checkQuestion()}>
         Thêm câu hỏi
