@@ -314,8 +314,8 @@ const Home = () => {
     
       {/*form by course  */}
       <section className="form__information">
-        <h2 className="title__form">NHẬP THÔNG TIN ĐỂ ĐĂNG KÝ</h2>
-        <form action="">
+        <h2 className="title__form">LIÊN HỆ VỚI CHÚNG TÔI</h2>
+        <form action="" onSubmit={handleSubmit(onSubmit)}>
           <div className="box__form">
             <div className="list__form">
               <div className="item__box__form">
