@@ -256,7 +256,7 @@ const AdminDashboard = () => {
               <FaRegMoneyBillAlt />
             </div>
             <Typography.Title className="mt-2 text-xl" level={4}>
-              Tổng doanh thu
+              Tổng doanh thu năm {year}
             </Typography.Title>
             <Typography.Title level={4} className="m-0 ">
               {money(totalPrice)}
