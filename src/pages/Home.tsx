@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import BannerPage from "../components/BannerPage";
 import Message from "../components/Message";
+import { Helmet } from "react-helmet";
 import * as yup from "yup";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -67,6 +68,10 @@ const Home = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Vian English</title>
+      </Helmet>
       <BannerPage />
 
 

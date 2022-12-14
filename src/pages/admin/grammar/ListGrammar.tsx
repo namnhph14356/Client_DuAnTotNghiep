@@ -26,6 +26,8 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { PracticeActivityType } from "../../../types/practiceActivity";
 import { editPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { GrammarType } from "../../../types/grammar";
+import { Helmet } from "react-helmet";
+
 type Props = {};
 
 interface DataType {
@@ -275,6 +277,10 @@ const ListGrammar = (props: Props) => {
 
   return (
     <div className="h-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Ngữ Pháp | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={"Danh sách bài học ngữ pháp"} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
       <Button type="primary" className="my-6" onClick={() => checkQuestion()}>
         {/* <Link to={`/manageDay/${dayId}/grammar/addLesson`}> */}

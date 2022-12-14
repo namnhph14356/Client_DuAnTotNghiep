@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../app/hooks'
 import { RootState } from '../../app/store'
 import { currentUserSlice, getUserByIdSlice } from '../../features/Slide/auth/authSlide'
 import { UserType } from '../../types/user'
+import { Helmet } from "react-helmet";
 
 const InformationUser = () => {
 
@@ -18,6 +19,10 @@ const InformationUser = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>{auth.username} | Vian English</title>
+      </Helmet>
       <div className="header__info__user">
         <ul className='breadcrumbs__user'>
           <div>

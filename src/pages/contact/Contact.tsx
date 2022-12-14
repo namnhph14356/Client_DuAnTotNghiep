@@ -1,11 +1,10 @@
 import React from "react";
 import { Button, Checkbox, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import "./contact.css";
-
 import Footer from "../../components/Footer";
+import { Helmet } from "react-helmet";
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
 import { useDispatch, useSelector } from "react-redux";
 import { addContactSlide } from "../../features/Slide/contact/ContactSlide";
 import toas from 'toastr';
@@ -53,6 +52,11 @@ const Contact = () => {
   return (
     <>
       <div className="w-10/12 m-auto">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Liên Hệ | Vian English</title>
+        </Helmet>
+
         <div className="p-3">
           <h2 className="text-[24px] mt-[30px]">
             Liên hệ với chúng tôi

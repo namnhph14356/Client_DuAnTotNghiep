@@ -14,6 +14,7 @@ import { RootState } from "../../../app/store";
 import { addWeekSlice, getListWeekSlice, getWeekBiggestSlice } from "../../../features/Slide/week/WeekSlice";
 import { addMonthSlice, getMonthBiggestSlice } from "../../../features/Slide/month/MonthSlice";
 import { WeekType } from "../../../types/week";
+import { Helmet } from "react-helmet";
 
 interface DataType {
   key: React.Key;
@@ -323,6 +324,10 @@ const ListDay = (props: Props) => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Quản Lí Ngày Học | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Button type="primary" className="my-6" onClick={() => handlerAddDay()}>
         Thêm ngày
