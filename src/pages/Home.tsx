@@ -2,9 +2,27 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import BannerPage from "../components/BannerPage";
 import Message from "../components/Message";
+import * as yup from "yup";
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 import "./../css/home.css";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ContactType } from "../types/contact";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { message } from "antd";
+import { addContactSlide } from "../features/Slide/contact/ContactSlide";
+import { useAppDispatch } from "../app/hooks";
 
+const phoneRegex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
+const schema = yup.object({
+  email: yup.string().email("Vui lòng nhập đúng định dạng email").required("Không được để trống"),
+  message: yup.string().required("Không được để trống").min(5, "Nhập ít nhất 5 ký tự"),
+  name: yup.string().required("Không được để trống").min(5, "Nhập ít nhất 5 ký tự"),
+  phone: yup.string().required("Không được để trống").matches(phoneRegex, 'Số điện thoại không hợp lệ'),
+}).required();
 const Home = () => {
   const navigate = useNavigate();
   const startLearning = () => {
@@ -18,6 +36,35 @@ const Home = () => {
       navigate("/learning");
     }
   };
+  const dispath = useAppDispatch();
+  const {
+    register,
+    resetField,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ContactType>({ resolver: yupResolver(schema) });
+
+  const onSubmit: SubmitHandler<ContactType> = async (values: ContactType) => {
+    dispath(addContactSlide(
+      {
+        surname: values.surname,
+        name: values.name,
+        address: values.address,
+        birthday: values.birthday,
+        email: values.email,
+        phone: values.phone,
+        message: values.message,
+        status: 0,
+        sendAds: values.sendAds || 0
+      }
+    ))
+    toast.success("Cảm ơn bạn đã gửi thông tin, chúng tôi sẽ liên hệ với bạn sớm nhất có thể", {
+      position: toast.POSITION.TOP_CENTER
+    });
+    reset()
+  }
+
   return (
     <div>
       <BannerPage />
@@ -37,11 +84,11 @@ const Home = () => {
               <h3 className="heading-with-icon">
                 <i className="icon-heart2" />{" "}
                 <span className="text-white text-lg">
-                Tạo sự chủ động
+                  Tạo sự chủ động
                 </span>
               </h3>
               <p>
-              Học trực tuyến đồng nghĩa với việc phải tự học, tự khai thác thông tin kiến thức. Với những trẻ yêu thích tiếng Anh, sự say mê tìm tòi sẽ kích thích bé sáng tạo và chủ động tiếp nhận các kiến thức.
+                Học trực tuyến đồng nghĩa với việc phải tự học, tự khai thác thông tin kiến thức. Với những trẻ yêu thích tiếng Anh, sự say mê tìm tòi sẽ kích thích bé sáng tạo và chủ động tiếp nhận các kiến thức.
               </p>
             </div>
             <div className=" probootstrap-animate ">
@@ -50,8 +97,8 @@ const Home = () => {
                 <span className="text-white text-lg">Bài tập, đề kiểm tra, tài liệu chọn lọc</span>
               </h3>
               <p>
-              Các bài tập của khóa tiếng Anh 360 trực tuyến luôn được chọn lọc kỹ trước khi ra mắt đảm bảo theo trình độ
-               và nhu cầu mong muốn của người học. Bên cạnh đó là hệ thống ngân hàng bài kiểm
+                Các bài tập của khóa tiếng Anh 360 trực tuyến luôn được chọn lọc kỹ trước khi ra mắt đảm bảo theo trình độ
+                và nhu cầu mong muốn của người học. Bên cạnh đó là hệ thống ngân hàng bài kiểm
                 tra, bài thi đa dạng, cho phép các em trau dồi kiến thức liên tục.
               </p>
             </div>
@@ -74,9 +121,9 @@ const Home = () => {
                 <span className="text-white text-lg">Có thể theo dõi quá trình học</span>
               </h3>
               <p>
-              Với khóa học 360 của chúng tôi, phụ huynh, học sinh có thể đăng nhập vào tài khoản để theo dõi quá trình học tập
-               của con thông qua việc giao bài tập, tự động chấm điểm và đọc báo 
-               cáo kết quả bài làm mà có sự điều chỉnh, động viên, tác động phù hợp.
+                Với khóa học 360 của chúng tôi, phụ huynh, học sinh có thể đăng nhập vào tài khoản để theo dõi quá trình học tập
+                của con thông qua việc giao bài tập, tự động chấm điểm và đọc báo
+                cáo kết quả bài làm mà có sự điều chỉnh, động viên, tác động phù hợp.
               </p>
             </div>
             <div className=" probootstrap-animate">
@@ -97,7 +144,7 @@ const Home = () => {
                 Với vô vàn bài tập, bài học cùng những các dạng bài khác nhau, hiệu ứng đa dạng giúp học sinh có được sự thích thú, lôi cuốn.
               </p>
             </div>
-            
+
             <div className="clearfix visible-sm-block" />
           </div>
         </div>
@@ -182,24 +229,26 @@ const Home = () => {
           </div>
         </section>
       </div>
-    
+
       {/*form by course  */}
       <section className="form__information">
-        <h2 className="title__form">NHẬP THÔNG TIN ĐỂ ĐĂNG KÝ</h2>
-        <form action="">
+        <h2 className="title__form">Liên hệ với chúng tôi</h2>
+        <form action="" onSubmit={handleSubmit(onSubmit)}>
           <div className="box__form">
             <div className="list__form">
               <div className="item__box__form">
                 <label htmlFor="">
                   <i className="fa-solid fa-user"></i>Họ và tên
                 </label>
-                <input type="text" name="" id="" />
+                <input type="text" {...register('name')} id="" />
+                <p className='text-red-500 text-sm'>{errors.name?.message}</p>
               </div>
               <div className="item__box__form">
                 <label htmlFor="">
                   <i className="fa-solid fa-envelope"></i> Email
                 </label>
-                <input type="email" name="" id="" />
+                <input type="email" {...register('email')} id="" />
+                <p className='text-red-500 text-sm'>{errors.email?.message}</p>
               </div>
             </div>
             <div className="list__form">
@@ -207,31 +256,22 @@ const Home = () => {
                 <label htmlFor="">
                   <i className="fa-solid fa-phone"></i> Số điện thoại
                 </label>
-                <input type="text" name="" id="" />
+                <input type="text" {...register('phone')} id="" />
+                <p className='text-red-500 text-sm'>{errors.phone?.message}</p>
               </div>
-              <div className="list__check__box">
-                <div className="item__Check__box">
-                  <label htmlFor=""> Gói trọn đời</label>
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="item__Check__box">
-                  <label htmlFor=""> Gói 1 năm</label>
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="item__Check__box">
-                  <label htmlFor=""> Gói 6 tháng</label>
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="item__Check__box">
-                  <label htmlFor=""> Gói 3 tháng</label>
-                  <input type="checkbox" name="" id="" />
-                </div>
+              <div className="item__box__form">
+                <label htmlFor="">
+                  <i className="fa-solid fa-message"></i> Lời nhắn
+                </label>
+                <input type="text" {...register('message')} id="" />
+                <p className='text-red-500 text-sm'>{errors.message?.message}</p>
               </div>
             </div>
           </div>
           <div className="box__btn__form">
-            <button>ĐĂNG KÝ NGAY</button>
+            <button type="submit">LIÊN HỆ NGAY</button>
           </div>
+          <ToastContainer />
         </form>
       </section>
     </div>

@@ -91,7 +91,7 @@ const ListContact = () => {
       status: item.status,
       sendAds: item.sendAds,
       id: item._id,
-      createdAt: moment(item.createdAt).format("MM/Do/YYYY"),
+      createdAt: moment(item.createdAt).format("DD/MM/YYYY"),
     }
   })
 
