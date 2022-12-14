@@ -77,7 +77,7 @@
     
 }
 .header__edit__infomation {
-
+  @apply my-4
 }
 .form__edit__user ,.list__private__edit , .content__change__email ,.content__change__password{
     @apply shadow border px-3 py-5
