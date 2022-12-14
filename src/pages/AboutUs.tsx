@@ -17,7 +17,7 @@ const AboutUs = (props: Props) => {
         <div className="learn__right">
           <h3 className="text-xl font-bold text-[#17a2b8]">TÌM HIỂU VỀ CHÚNG TÔI </h3>
           <h1 className="text-3xl font-bold text-[#00394f] font-mono">
-            Học tiếng Anh một cách tiếng anh tốt nhất
+            Học tiếng Anh một cách tốt nhất
           </h1>
 
           <span>
