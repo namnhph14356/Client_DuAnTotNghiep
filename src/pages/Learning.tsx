@@ -5,6 +5,7 @@ import "../css/learning.css";
 import { Progress, Button, Modal, Collapse } from "antd";
 import { Fragment, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { Helmet } from "react-helmet";
 import {
   ArrowPathIcon,
   CheckIcon,
@@ -61,7 +62,6 @@ const Learning = () => {
     (item) => item.learningProgress.value
   );
   const user = useSelector((item: RootState) => item.auth.value) as UserType;
-  console.log("ok", user);
 
   const [userHistory, setUserHistory] = useState<any>();
   const [monthSelect, setMonthSelect] = useState<MonthType | null>();
@@ -141,7 +141,7 @@ const Learning = () => {
     setIsModalOpen(false);
   };
   //---ModelCollapse---
-  const onChange = (key: string | string[]) => {};
+  const onChange = (key: string | string[]) => { };
 
   const findSmallestOrder = (data, id) => {
     const temp = data?.filter((item: WeekType) => item.month === id);
@@ -269,6 +269,10 @@ const Learning = () => {
 
   return (
     <div className="learning__page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Lớp Học Tiếng Anh Giao Tiếp Online Vian English</title>
+      </Helmet>
       <div className="box__learning">
         <div>
           <button className="box__learning__title">
@@ -538,9 +542,8 @@ const Learning = () => {
             </div>
 
             <div
-              className={`${
-                learningProgressSelect !== undefined ? "" : "!hidden"
-              } statistical__learning__time`}
+              className={`${learningProgressSelect !== undefined ? "" : "!hidden"
+                } statistical__learning__time`}
             >
               <div className="statistical__topic__learning">
                 <div className="statistical__topic__learning__title">
@@ -556,47 +559,42 @@ const Learning = () => {
                   {learningProgressSelect ? (
                     <ul>
                       <li
-                        className={`${
-                          learningProgressSelect.listeningSpeakingScore >= 8
+                        className={`${learningProgressSelect.listeningSpeakingScore >= 8
                             ? "text-green-500"
                             : "text-red-500"
-                        }`}
+                          }`}
                       >
                         {learningProgressSelect.listeningSpeakingScore}
                       </li>
                       <li
-                        className={`${
-                          learningProgressSelect.vocabularyScore >= 8
+                        className={`${learningProgressSelect.vocabularyScore >= 8
                             ? "text-green-500"
                             : "text-red-500"
-                        }`}
+                          }`}
                       >
                         {learningProgressSelect.vocabularyScore}
                       </li>
                       <li
-                        className={`${
-                          learningProgressSelect.structureSentencesScore >= 8
+                        className={`${learningProgressSelect.structureSentencesScore >= 8
                             ? "text-green-500"
                             : "text-red-500"
-                        }`}
+                          }`}
                       >
                         {learningProgressSelect.structureSentencesScore}
                       </li>
                       <li
-                        className={`${
-                          learningProgressSelect.conversationScore >= 8
+                        className={`${learningProgressSelect.conversationScore >= 8
                             ? "text-green-500"
                             : "text-red-500"
-                        }`}
+                          }`}
                       >
                         {learningProgressSelect.conversationScore}
                       </li>
                       <li
-                        className={`${
-                          learningProgressSelect.grammarScore >= 8
+                        className={`${learningProgressSelect.grammarScore >= 8
                             ? "text-green-500"
                             : "text-red-500"
-                        }`}
+                          }`}
                       >
                         {learningProgressSelect.grammarScore}
                       </li>
@@ -674,6 +672,9 @@ const Learning = () => {
                 )}
               </div>
             </div>
+            {learningProgressSelect === undefined &&
+              <div className="text-red-500 my-4">Bạn phải hoàn thành bài tập ngày trước đó để mở khóa ngày tiếp theo</div>
+            }
           </div>
 
           {/* <div className="total__learning">

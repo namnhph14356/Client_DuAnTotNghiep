@@ -32,6 +32,8 @@ import {
 } from "../../../features/Slide/class/classSlice";
 import { FilterConfirmProps } from "antd/lib/table/interface";
 import AdminPageHeader from "../../../components/AdminPageHeader";
+import { Helmet } from "react-helmet";
+
 const { Option } = Select;
 
 interface ExpandedDataType {
@@ -340,6 +342,10 @@ const ClassList = () => {
 
   return (
     <div>
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Quản Lí Lớp Học | Vian English</title>
+      </Helmet>
       {isShowModal && (
         <div >
           <Modal

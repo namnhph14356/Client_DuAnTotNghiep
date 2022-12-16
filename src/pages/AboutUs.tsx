@@ -1,10 +1,15 @@
 import React from "react";
 import { CheckSquareOutlined } from "@ant-design/icons";
+import { Helmet } from "react-helmet";
 type Props = {};
 
 const AboutUs = (props: Props) => {
   return (
     <div className="m-auto w-10/12">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Giới Thiệu | Vian English</title>
+      </Helmet>
       <div className="container__learn flex justify-center gap-6 m-h-[400px] mt-12">
         <div className="learn__left ">
           <img
@@ -57,8 +62,8 @@ const AboutUs = (props: Props) => {
             <div>
               <h1>Tạo sự chủ động</h1>
               <span>
-              Học trực tuyến đồng nghĩa với việc phải tự học, tự khai thác thông tin kiến thức. 
-              Với những trẻ yêu thích tiếng Anh, sự say mê tìm tòi sẽ kích thích bé sáng tạo và chủ động tiếp nhận các kiến thức.
+                Học trực tuyến đồng nghĩa với việc phải tự học, tự khai thác thông tin kiến thức.
+                Với những trẻ yêu thích tiếng Anh, sự say mê tìm tòi sẽ kích thích bé sáng tạo và chủ động tiếp nhận các kiến thức.
               </span>
             </div>
           </div>
@@ -70,8 +75,8 @@ const AboutUs = (props: Props) => {
             <div>
               <h1>Bài tập, đề kiểm tra, tài liệu chọn lọc</h1>
               <span>
-              Các bài tập của khóa tiếng Anh 360 trực tuyến luôn được chọn lọc kỹ trước khi ra mắt đảm bảo theo trình độ và nhu cầu mong muốn của người học.
-               Bên cạnh đó là hệ thống ngân hàng bài kiểm tra, bài thi đa dạng, cho phép các em trau dồi kiến thức liên tục.
+                Các bài tập của khóa tiếng Anh 360 trực tuyến luôn được chọn lọc kỹ trước khi ra mắt đảm bảo theo trình độ và nhu cầu mong muốn của người học.
+                Bên cạnh đó là hệ thống ngân hàng bài kiểm tra, bài thi đa dạng, cho phép các em trau dồi kiến thức liên tục.
               </span>
             </div>
           </div>
@@ -87,8 +92,8 @@ const AboutUs = (props: Props) => {
             <div>
               <h1>Chi phí phù hợp</h1>
               <span>
-              Chỉ với 360.000 đ bạn đã có thể đăng ký được khóa học Online của 360 VianEnglish gồm rất nhiều bài học đa dạng cho bạn thỏa
-               sức lựa chọn mà không sợ chán. Đặc biệt là các bài thi sau mỗi tuần giúp bạn có thể kiểm tra lại kiến thức.
+                Chỉ với 360.000 đ bạn đã có thể đăng ký được khóa học Online của 360 VianEnglish gồm rất nhiều bài học đa dạng cho bạn thỏa
+                sức lựa chọn mà không sợ chán. Đặc biệt là các bài thi sau mỗi tuần giúp bạn có thể kiểm tra lại kiến thức.
               </span>
             </div>
           </div>
@@ -100,8 +105,8 @@ const AboutUs = (props: Props) => {
             <div>
               <h1>Có thể theo dõi quá trình học</h1>
               <span>
-              Với khóa học 360 của chúng tôi, phụ huynh, học sinh có thể đăng nhập vào tài khoản để theo dõi quá trình học tập của c
-              on thông qua việc giao bài tập, tự động chấm điểm và đọc báo cáo kết quả bài làm mà có sự điều chỉnh, động viên, tác động phù hợp.
+                Với khóa học 360 của chúng tôi, phụ huynh, học sinh có thể đăng nhập vào tài khoản để theo dõi quá trình học tập của c
+                on thông qua việc giao bài tập, tự động chấm điểm và đọc báo cáo kết quả bài làm mà có sự điều chỉnh, động viên, tác động phù hợp.
               </span>
             </div>
           </div>
