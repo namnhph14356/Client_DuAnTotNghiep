@@ -67,9 +67,9 @@ const Contact = () => {
               trang này
             </span>
             <p className="text-[16px] py-3">
-              Bạn cũng có thể truy cập khu vực Chăm sóc khách hàng để tìm câu
+              Bạn cũng có thể truy cập khu vực chăm sóc khách hàng để tìm câu
               trả lời cho những câu hỏi thường gặp nhất về các dịch vụ của
-              Voguie.
+              Vian English.
             </p>
           </div>
           <Form onFinish={onFinish} className="mt-[23px]">

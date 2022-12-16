@@ -128,7 +128,7 @@ const SignUp = (props: Props) => {
                 </div>
               </div>
               <div>
-                <button className="bg-blue-500 text-white rounded text-lg font-semibold py-4 w-full hover:cursor-pointer hover:bg-blue-600">ĐĂNG KÍ</button>
+                <button className="bg-blue-500 text-white rounded text-lg font-semibold py-4 w-full hover:cursor-pointer hover:bg-blue-600">ĐĂNG KÝ</button>
               </div>
               <div className="mt-6 text-right">
                 <span>Bạn đã có tài khoản?<Link to={'/signin'}> Đăng nhập</Link></span>
