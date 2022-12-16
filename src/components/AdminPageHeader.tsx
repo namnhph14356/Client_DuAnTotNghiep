@@ -44,7 +44,7 @@ const AdminPageHeader = ({ breadcrumb, day, activity, class1, type }: AdminPageH
 
           {day &&
             <Breadcrumb.Item href={`/admin/day`} >
-              <span>Quản lí ngày học</span>
+              <span>Quản lý ngày học</span>
             </Breadcrumb.Item>
           }
           {detailDay &&

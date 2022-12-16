@@ -45,8 +45,8 @@ const LessonVocabulary = () => {
                     <button className='text-xl' onClick={() =>
                       speak({
                         text: item.words,
-                        rate: 0.5,
-                        pitch: 0.7,
+                        rate: 1,
+                        pitch: 1,
                         voice: voices[2],
                       })
                     }>

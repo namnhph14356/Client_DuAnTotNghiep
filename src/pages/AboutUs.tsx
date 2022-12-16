@@ -17,11 +17,11 @@ const AboutUs = (props: Props) => {
         <div className="learn__right">
           <h3 className="text-xl font-bold text-[#17a2b8]">TÌM HIỂU VỀ CHÚNG TÔI </h3>
           <h1 className="text-3xl font-bold text-[#00394f] font-mono">
-            Học tiếng Anh một cách tốt nhất
+            Học tiếng anh một cách tốt nhất
           </h1>
 
           <span>
-            Trong khi bạn đang nghĩ mình nên học tiếng Anh ở đâu hay mình nên đăng ký khóa học nào thì bạn cũng muốn tìm hiểu xem khóa học
+            Trong khi bạn đang nghĩ mình nên học tiếng anh ở đâu hay mình nên đăng ký khóa học nào thì bạn cũng muốn tìm hiểu xem khóa học
             đó có hiệu quả hay không và chi phí của khóa học đó thế nào. Hãy đến với chúng tôi Vian English.
           </span>
 

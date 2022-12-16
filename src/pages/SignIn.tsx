@@ -169,7 +169,7 @@ const SignIn = (props: Props) => {
                 <Link to={'/forgotPassword'} className="text-black hover:text-blue-500">Quên mật khẩu ?</Link>
               </div>
               <div className=" text-right">
-                <span>Bạn chưa có tài khoản?<Link to={'/signup'}> Đăng kí</Link></span>
+                <span>Bạn chưa có tài khoản?<Link to={'/signup'}> Đăng ký</Link></span>
               </div>
             </form>
           </div>
