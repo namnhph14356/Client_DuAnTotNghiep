@@ -6,7 +6,7 @@ import {
   UserOutlined,
   FolderFilled,
   TeamOutlined,
-  BellOutlined,
+  CommentOutlined,
   BankOutlined,
   ContactsOutlined,
   HighlightOutlined,
@@ -99,6 +99,7 @@ const AdminLayout = () => {
           <Menu.Item key="/admin/contact" icon={<ContactsOutlined />}><NavLink to='/admin/contact'>Liên hệ</NavLink></Menu.Item>
           <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lý người dùng</NavLink></Menu.Item>
           <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lý lớp học</NavLink></Menu.Item>
+          <Menu.Item key="/admin/comment" icon={<CommentOutlined />} ><NavLink to='/admin/comment'>Quản lý bình luận</NavLink></Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout" >

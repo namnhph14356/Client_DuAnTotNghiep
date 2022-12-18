@@ -1,3 +1,5 @@
+import { CommentType } from "./comment";
+
 export type ReplyCommentType = {
     _id?: number,
     author: string;
@@ -7,7 +9,7 @@ export type ReplyCommentType = {
     createdAt: string;
     rating: number;
     userId: string;
-    commentId: string;
+    commentId: string | CommentType;
     postId:string,
     dayId:string,
     like: [
