@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addContact, editContact, getContactById, listContact, removeContact } from "../../../api/contact";
 import { ContactType } from "../../../types/contact";
 
+export interface ContactSlice {
+    value: ContactType[],
+}
 
 export const getContactList: any = createAsyncThunk(
     "contact/getContact",
@@ -57,8 +60,8 @@ const contactSlide = createSlice({
         builer.addCase(addContactSlide.fulfilled, (state: any, action: any) => {
             state.value.push(action.payload)
         })
-        builer.addCase(editdContactSlide.fulfilled, (state: any, action) => {
-            state.value = state.value.map((item: { _id: any; }) => item._id === action.payload._id ? action.payload : item)
+        builer.addCase(editdContactSlide.fulfilled, (state: ContactSlice, action) => {
+            state.value = state.value.map((item: ContactType) => item._id === action.payload._id ? action.payload : item)
         })
 
         builer.addCase(removeContacts.fulfilled, (state: any, action: any) => {
