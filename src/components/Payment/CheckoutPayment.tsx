@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { RootState } from "../../app/store";
 import { currentUserSlice } from "../../features/Slide/auth/authSlide";
 import { UserType } from "../../types/user";
@@ -9,6 +9,10 @@ type Props = {};
 
 const CheckoutPayment = (props: Props) => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
+
+  const backLearning = () => {
+    window.location.href = '/learning';
+  }
   return (
     <div>
       <header className="bg-indigo-600 py-2 px-20 flex">
@@ -25,18 +29,18 @@ const CheckoutPayment = (props: Props) => {
           />
         </NavLink>
 
-        <div className="w-[20%] text-2xl leading-[3.5rem]">
-          <h1 className="text-white">
+        <div className="w-[20%] text-2xl my-auto ">
+          <div className="text-white ">
             HOTLINE: <span className="text-[#ff9933]">0332072735</span>
-          </h1>
+          </div>
         </div>
       </header>
-      <div className="my-8 w-8/12 m-auto">
-      <NavLink to={"/learning"} className="px-4 py-2 bg-red-500 rounded text-white font-bold hover:text-red-500 hover:bg-white hover:border-2">Quay về</NavLink>
+      <div className="mt-8 w-8/12 m-auto">
+        <button onClick={() => backLearning()} className="px-4 py-2 bg-red-500 rounded border text-white font-bold hover:text-red-500 hover:bg-white hover:border-red-500">Quay về</button>
       </div>
-     
-        <Outlet/>
-   
+
+      <Outlet />
+
 
       <footer className="w-8/12 mt-16 m-auto pb-8">
         <h1 className="text-2xl text-[#167AC6]">Hướng dẫn thanh toán</h1>

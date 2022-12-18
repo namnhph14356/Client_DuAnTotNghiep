@@ -1,11 +1,10 @@
 import { AddLearningProgressType, LearningProgressType } from "../types/learningProgress";
 import instance from "./instance";
 
-// export const listLearningProgress = () => {
-//     const url = `/learningProgress`
-//     return instance.get(url)
-// }
-
+export const listLearningProgress = () => {
+    const url = `/learningProgress`
+    return instance.get(url)
+}
 
 export const listLearningProgressByUser= (userId: string | undefined) => {
     const url = `/learningProgress/${userId}`
