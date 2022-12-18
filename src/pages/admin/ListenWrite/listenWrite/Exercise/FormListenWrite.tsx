@@ -9,6 +9,7 @@ import { QuizType } from '../../../../../types/quiz';
 import { detailQuiz } from '../../../../../api/quiz';
 import { changeBreadcrumb } from '../../../../../features/Slide/quiz/QuizSlide';
 import AdminPageHeader from '../../../../../components/AdminPageHeader';
+import { Helmet } from "react-helmet";
 
 type Props = {}
 
@@ -100,6 +101,10 @@ const FormListenWrite = () => {
 
   return (
     <div className="h-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Hội Thoại | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6 ">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>

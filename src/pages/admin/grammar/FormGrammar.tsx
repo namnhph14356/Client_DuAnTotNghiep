@@ -11,6 +11,7 @@ import { PracticeActivityType } from "../../../types/practiceActivity";
 import { editPracticeActivitylice } from "../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { getListGrammarSlice } from "../../../features/Slide/grammar/grammarSlice";
 import { QuizType } from "../../../types/quiz";
+import { Helmet } from "react-helmet";
 
 type Props = {};
 
@@ -104,6 +105,10 @@ const FormGrammar = (props: Props) => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Ngữ Pháp | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện ngữ pháp", route: "grammar" }} type={{ title: "Bài học", route: "listLesson" }} />
       <div>
         <Form
@@ -142,7 +147,7 @@ const FormGrammar = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item >
             <Button
               className="inline-block mr-2"
               type="primary"

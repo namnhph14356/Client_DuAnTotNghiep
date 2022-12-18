@@ -431,7 +431,7 @@ const QuestionAnswer = () => {
                 <TextArea rows={4} value={value} />
               </Form.Item>
               <Form.Item>
-                <Button loading={submitting} htmlType="submit" type="primary">
+                <Button loading={submitting} htmlType="submit" type="primary" style={{background:"#40A9FF", border:"#40A9FF"}}>
                   Bình luận
                 </Button>
               </Form.Item>

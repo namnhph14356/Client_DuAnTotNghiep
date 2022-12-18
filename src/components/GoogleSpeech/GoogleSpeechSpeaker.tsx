@@ -7,7 +7,7 @@ import { changeSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeec
 // import {} from './recorderWorkletProcessor'
 
 type Props = {}
-const socket = io("http://localhost:8000", { transports: ['websocket'] });
+const socket = io("https://serverduantotnghiep-production-53a7.up.railway.app", { transports: ['websocket'] });
 
 const GoogleSpeechSpeaker = (props: Props) => {
     const transcript = useAppSelector(item => item.googleSpeech.transcript)

@@ -29,6 +29,7 @@ import vocabulary from "../features/Slide/vocabulary/vocabulary";
 import sentencesSlice from "../features/Slide/sentences/sentencesSlice";
 import grammarSlice from "../features/Slide/grammar/grammarSlice";
 import answerListenWrite from "../features/Slide/answerListenWrite/answerListenWrite";
+import PaymentSlice from "../features/Slide/payment/PaymentSlice";
 
 const rootReducer = combineReducers({
     count: CountSlide,
@@ -58,7 +59,8 @@ const rootReducer = combineReducers({
     googleSpeech: GoogleSpeechSlice,
     vocabulary: vocabulary,
     sentences: sentencesSlice,
-    grammar: grammarSlice
+    grammar: grammarSlice,
+    payment: PaymentSlice
 });
 
 export default rootReducer;

@@ -12,6 +12,7 @@ import AdminPageHeader from '../../../components/AdminPageHeader';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { Helmet } from "react-helmet";
 
 interface TypeRole {
   id?: number,
@@ -168,12 +169,11 @@ const ListUser = () => {
       }
     },
     {
-      title: 'Hành động',
+      title: 'Hoạt động',
       key: 'action',
       render: (recore: any) => (
         <Space size="middle">
           <NavLink type="primary" to={'/admin/user/edit/' + recore.id}><Button type="primary" style={{ background: "#198754" }}  >Sửa</Button></NavLink>
-          <Button type="primary" danger onClick={() => onRemoveUser(recore.id)}>Xóa</Button>
         </Space>
       )
     }
@@ -209,6 +209,10 @@ const ListUser = () => {
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Quản Lí Người Dùng | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} />
       <Row>
         <Col xs={8} sm={8} md={8} lg={8} xl={8} className="pr-2 py-2">

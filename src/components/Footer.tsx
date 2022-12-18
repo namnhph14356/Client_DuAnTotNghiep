@@ -1,23 +1,23 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import '../css/footer.css'
 const navigation = {
   VianEnglish: [
-    { name: 'Trang chủ', href: '#' },
-    { name: 'Các Kỳ Thi', href: '/learning' },
-    { name: 'Học Tiếng anh', href: '/learning' },
+    { name: 'Trang chủ', href: '/' },
+    { name: 'Giới thiệu', href: '/aboutUs' },
+    { name: 'Liên hệ', href: '/contact' },
+    { name: 'Tra từ mới', href: '/directory' },
   ],
   support: [
-    { name: 'Trợ giúp', href: '#' },
-    { name: 'Tư vấn', href: '#' },
-    { name: 'Câu hỏi thường gặp ', href: '#' },
-    { name: 'Hướng dẫn đăng ký học', href: '#' },
+    { name: 'Trợ giúp', href: '/contact' },
+    { name: 'Tư vấn', href: '/contact' },
+    { name: 'Câu hỏi thường gặp ', href: '/aboutUs' },
   ],
   company: [
-    { name: 'Lớp học tiếng Anh giao tiếp 360', href: '#' },
-    { name: '30 ngày làm quen với giao tiếp tiếng Anh', href: '#' },
+    { name: 'Lớp học tiếng Anh giao tiếp 360', href: '/learning' },
+    { name: '30 ngày làm quen với giao tiếp tiếng Anh', href: '/learning' },
   ],
   social: [
     {
@@ -76,10 +76,10 @@ const Footer = () => {
             </Link>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (
-                <a key={item.name} href={item.href} className="text-white hover:text-orange-500">
+                <NavLink key={item.name} to={item.href} className="text-white hover:text-orange-500">
                   <span className="sr-only">{item.name}</span>
                   <item.icon className="h-6 w-6" aria-hidden="true" />
-                </a>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -90,9 +90,9 @@ const Footer = () => {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.VianEnglish.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className="text-base text-white hover:text-orange-500">
+                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
                         {item.name}
-                      </a>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
@@ -102,9 +102,9 @@ const Footer = () => {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.support.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className="text-base text-white hover:text-orange-500">
+                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
                         {item.name}
-                      </a>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
@@ -116,9 +116,9 @@ const Footer = () => {
                 <ul role="list" className="mt-4 space-y-4">
                   {navigation.company.map((item) => (
                     <li key={item.name}>
-                      <a href={item.href} className="text-base text-white hover:text-orange-500">
+                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
                         {item.name}
-                      </a>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>

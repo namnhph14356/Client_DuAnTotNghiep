@@ -17,6 +17,7 @@ import { ListenWriteType } from '../../../../../types/listenWrite'
 import { PracticeActivityType } from '../../../../../types/practiceActivity'
 import { QuizType } from '../../../../../types/quiz'
 import { uploadImage, uploadVideo } from '../../../../../utils/upload'
+import { Helmet } from "react-helmet";
 
 interface TypeArrAnswer {
   id: number,
@@ -46,6 +47,9 @@ const FormListenReadEdit = () => {
   let detailListen: any = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === prative._id)
 
   const convertText = (text: String) => {
+    if (!text) {
+      return ""
+    }
     if (text.charAt(0) === " ") {
       return text.charAt(1).toUpperCase() + text.slice(2).toLowerCase();
     }
@@ -79,7 +83,8 @@ const FormListenReadEdit = () => {
           idListenWrite: payload._id,
           answer: e.text,
           order: e.order,
-          confidence: e.id
+          confidence: e.id,
+          stt:e.stt
         }))
       })
     }
@@ -152,7 +157,7 @@ const FormListenReadEdit = () => {
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
-      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
     }
 
     arrAnswer.map((e) => {
@@ -165,7 +170,7 @@ const FormListenReadEdit = () => {
       } else {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
-        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
       }
     })
 
@@ -203,7 +208,7 @@ const FormListenReadEdit = () => {
   }
 
   useEffect(() => {
-    dispatch(changeBreadcrumb("Sửa cấu trúc"))
+    dispatch(changeBreadcrumb("Sửa hội thoại"))
     setListConversation(detailListen[0]?.conversation)
     setAudio(detailListen[0]?.audio)
     form.setFieldsValue({ ...detailListen[0], nameList: detailListen[0].conversation.response });
@@ -215,6 +220,10 @@ const FormListenReadEdit = () => {
 
   return (
     <div className=''>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Hội Thoại | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Nghe và đọc", route: "listListenRead" }} />
       <Form
         layout="vertical"
@@ -270,8 +279,8 @@ const FormListenReadEdit = () => {
                     <div key={index + 1} className="py-3 even:bg-slate-100">
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 "  >
                         <div className='col-span-2 flex justify-between gap-4 my-auto ' >
-                          <Form.Item style={{ marginBottom: "5px" }} label="Tên nhân vật" name={[`nameList`, `name-${index + 1}`]} initialValue={breadcrumb === "Sửa cấu trúc" ? item.name : ""} rules={[{ required: true, message: "Không để Trống!" }]}>
-                            <Input defaultValue={breadcrumb === "Sửa cấu trúc" ? item.name : ""} placeholder='Tên nhân vật' className='w-full px-2 py-1 border' />
+                          <Form.Item style={{ marginBottom: "5px" }} label="Tên nhân vật" name={[`nameList`, `name-${index + 1}`]} initialValue={breadcrumb === "Sửa hội thoại" ? item.name : ""} rules={[{ required: true, message: "Không để Trống!" }]}>
+                            <Input defaultValue={breadcrumb === "Sửa hội thoại" ? item.name : ""} placeholder='Tên nhân vật' className='w-full px-2 py-1 border' />
                           </Form.Item>
                         </div>
                         <div className='col-span-10 my-auto' >
@@ -282,9 +291,9 @@ const FormListenReadEdit = () => {
                       </div>
 
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4"  >
-                        <div className='col-span-8  gap-4 my-auto'>
-                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]}   >
-                            <ul className='flex-auto space-x-8 col-span-10 w-full'>
+                        <div className='col-span-12  gap-4 my-auto'>
+                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]} style={{ marginBottom: "0" }}  >
+                            <ul className='flex-auto space-x-8 col-span-10 w-full mb-0'>
                               {item.alternatives[0].transcript &&
                                 detailAnswer(convertText(item.alternatives[0].beforeQuestion)).map((item2: TypeArrAnswer, index2: number) => (
                                   <button key={item.id} type="button" onClick={(e) => changeAnswer(e, item.alternatives[0].confidence, index + 1, !item2.checkAnswer, index2 + 1)}><li className='border px-3 py-1 my-auto mb-4 rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item2.text}</li></button>
@@ -323,10 +332,10 @@ const FormListenReadEdit = () => {
             type="primary"
             htmlType="submit"
           >
-            {breadcrumb === "Sửa cấu trúc" ? "Sửa" : "Thêm"}
+            {breadcrumb === "Sửa hội thoại" ? "Sửa" : "Thêm"}
           </Button>
 
-          {breadcrumb === "Sửa cấu trúc" &&
+          {breadcrumb === "Sửa hội thoại" &&
             <Button
               className="inline-block mr-2"
               type="primary"

@@ -28,6 +28,7 @@ import axios from 'axios';
 import { editPracticeActivitylice } from '../../../../features/Slide/practiceActivity/PracticeActivitySlice';
 import { PracticeActivityType } from '../../../../types/practiceActivity';
 import { AnswerQuizType } from '../../../../types/answerQuiz';
+import { Helmet } from "react-helmet";
 
 type Props = {}
 
@@ -329,6 +330,11 @@ const AddSentencesExercise = (props: Props) => {
 
   return (
     <div className='h-screen'>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Cấu Trúc Và Câu | Vian English</title>
+      </Helmet>
+
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinishFailed={onFinishFailed} onFinish={selected === "selectAuto" ? onFinish : () => { }} onChange={onChange}>
@@ -420,7 +426,7 @@ const AddSentencesExercise = (props: Props) => {
                   }
                 </Form.Item>
                 <Form.Item
-                  label="Upload ảnh"
+                  label="Tải ảnh lên"
                   tooltip="Hình ảnh"
                 >
                   {id ?
@@ -429,7 +435,7 @@ const AddSentencesExercise = (props: Props) => {
                   }
                 </Form.Item>
 
-                <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh" >
                   <img id="img-preview" style={{ width: "100px" }} />
                 </Form.Item>
               </div>

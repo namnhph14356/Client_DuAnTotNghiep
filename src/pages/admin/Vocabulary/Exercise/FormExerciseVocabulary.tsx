@@ -15,6 +15,7 @@ import useQuiz from '../../../../features/Slide/quiz/use_quiz';
 import { string } from 'yup/lib/locale';
 import { PracticeActivityType } from '../../../../types/practiceActivity';
 import { uploadImage } from '../../../../utils/upload';
+import { Helmet } from "react-helmet";
 
 type Props = {}
 
@@ -153,6 +154,10 @@ const FormExerciseVocabulary = (props: Props) => {
 
   return (
     <div>
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Từ Vựng | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài tập", route: "listExercise" }} />
       <div className="pb-6">
         <Form layout="vertical" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} >
@@ -207,11 +212,11 @@ const FormExerciseVocabulary = (props: Props) => {
           </Form.Item>
 
           <div>
-            <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+            <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh" >
               <img id="img-preview" style={{ width: "100px" }} />
             </Form.Item>
             <Form.Item
-              label="Upload ảnh"
+              label="Tải ảnh lên"
               tooltip="Ảnh dành cho Quiz"
             >
               <Input type="file" accept='.png,.jpg' className="form-control" onChange={handlePreview} />

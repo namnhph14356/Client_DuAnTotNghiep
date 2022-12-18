@@ -14,7 +14,7 @@ const UserLayout = () => {
     dispatch(getUserByIdSlice())
   }, [])
   return (
-    <div className='container'>
+    <div className='container_user'>
       <div className='info__user'>
         <Outlet />
       </div>

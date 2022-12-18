@@ -121,13 +121,13 @@ const ExeListenAndRead = () => {
             </div>
 
             <div className='mx-4 pb-8'>
-              <div className='mb-4 float-right'>
+              {/* <div className='mb-4 float-right'>
                 <div className='border px-3 rounded bg-gray-200 font-medium cursor-pointer hover:border-slate-400' onClick={() => setCheckMeaning(!checkMeaning)}>
                   {
                     checkMeaning ? 'Ẩn tiếng việt' : 'Hiện tiếng việt'
                   }
                 </div>
-              </div>
+              </div> */}
               <div>
               <div className="content">
                 {

@@ -54,7 +54,7 @@ type DataIndex = keyof ExpandedDataType;
 const AdminClassList = (props) => {
   const dispatch = useDispatch();
   const { listClass } = useSelector((state: any) => state.class);
-  
+
   const auth = useAppSelector((item: RootState) => item.auth.value) as UserType;
   const [idUpdate, setIdUpdate] = useState("");
   const [objectUpdate, setObjectUpdate] = useState({});
@@ -214,7 +214,11 @@ const AdminClassList = (props) => {
       title: "Link google meet",
       dataIndex: "linkGoogleMeet",
       key: "linkGoogleMeet",
-      render: (row, item) => <a target="_blank" href={item.linkGoogleMeet}></a>,
+      render: (row, item) => (
+        <a target="_blank" href={item.linkGoogleMeet} rel="noreferrer">
+          {item.linkGoogleMeet}
+        </a>
+      ),
     },
     {
       title: "Số học sinh",
@@ -292,7 +296,7 @@ const AdminClassList = (props) => {
         if (res) {
           message.success("Cập nhật lớp học thành công");
           dispatch(getListClass());
-          setIdUpdate('');
+          setIdUpdate("");
         } else {
           message.error("Cập nhật lớp học thất bại");
         }
@@ -342,7 +346,7 @@ const AdminClassList = (props) => {
     let myClass: any = [];
     listClass?.map(async (e: any) => {
       e.teacherOfClass?.map((item) => {
-        if (item.userId === auth._id) {
+        if (item?.userId?._id === auth?._id) {
           // return e
           myClass.push(e);
         }
@@ -358,7 +362,7 @@ const AdminClassList = (props) => {
 
   useEffect(() => {
     getClassList();
-  }, [listClass])
+  }, [listClass]);
 
   let totalStudent = 0;
   if (teacherClass && teacherClass.length > 0) {
@@ -401,7 +405,10 @@ const AdminClassList = (props) => {
                 labelAlign="left"
                 name="linkGoogleMeet"
                 rules={[
-                  { required: true, message: "Please input your link google meet of Class!" },
+                  {
+                    required: true,
+                    message: "Please input your link google meet of Class!",
+                  },
                 ]}
               >
                 <Input />
@@ -419,8 +426,8 @@ const AdminClassList = (props) => {
               </Form.Item>
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
+                <Button type="primary" htmlType="submit" style={{background:"#40A9FF", border:"#40A9FF"}}>
+                  Thêm mới
                 </Button>
               </Form.Item>
             </Form>
@@ -477,10 +484,10 @@ const AdminClassList = (props) => {
           </Button>
         </div>
         <Table
+          pagination={{ pageSize: 5, total: teacherClass.length }}
           bordered
           dataSource={teacherClass}
           columns={columns}
-          footer={() => `Hiển thị 10 trên tổng ${teacherClass.length}`}
         />
       </div>
     </div>

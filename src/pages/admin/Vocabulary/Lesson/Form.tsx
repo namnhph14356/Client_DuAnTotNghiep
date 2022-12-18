@@ -36,6 +36,7 @@ import { getListVocabularySlice } from "../../../../features/Slide/vocabulary/vo
 import { PracticeActivityType } from "../../../../types/practiceActivity";
 import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { VocabulatyType } from "../../../../types/vocabularyType";
+import { Helmet } from "react-helmet";
 
 type Props = {};
 
@@ -134,7 +135,7 @@ const FormVocabulary = (props: Props) => {
       navigate(`/manageDay/${dayId}/vocabulary/listLesson`);
     } else {
       console.log("value.image", value.image);
-      
+
       const check = checkActivity(vocabularies);
       if (check === true) {
         message.warning("Đã đạt giới hạn đáp án !")
@@ -185,10 +186,15 @@ const FormVocabulary = (props: Props) => {
     }
     dispatch(getListVocabularySlice())
   }, []);
-    console.log(id);
+  console.log(id);
 
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Từ Vựng | Vian English</title>
+      </Helmet>
+
       <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện từ vựng", route: "vocabulary" }} type={{ title: "Bài học", route: "listLesson" }} />
       <div>
         <Form
@@ -240,13 +246,13 @@ const FormVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item name="image" valuePropName="src" label="ImagePreview"
-           >
+          <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh"
+          >
             <img id="img-preview" style={{ width: "100px" }} />
           </Form.Item>
 
           <Form.Item
-            label="Upload image"
+            label="Tải ảnh lên"
             tooltip="Image for Quiz"
             name="imageUpload"
             rules={[{ required: id ? false : true, message: "Không để Trống!" }]}
@@ -283,7 +289,7 @@ const FormVocabulary = (props: Props) => {
             />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item>
             <Button
               className="inline-block mr-2"
               type="primary"

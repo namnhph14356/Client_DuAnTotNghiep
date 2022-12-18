@@ -5,13 +5,16 @@ import { getUserList } from '../../features/Slide/user/userSlide';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getListHistorySlide } from '../../features/Slide/history/History';
 import { HistoryType } from '../../types/history';
-import moment from 'moment';
+import moment, { months } from 'moment';
 import { getListDaySlice } from '../../features/Slide/day/DaySlice';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { BsCalendar2Day, BsClockHistory } from 'react-icons/bs'
+import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { getListWeekSlice } from '../../features/Slide/week/WeekSlice';
-import { Line, Pie } from '@ant-design/plots';
+import { Line, Pie, Column } from '@ant-design/plots';
 import { getListUser } from '../../api/user';
+import { getPaymentSlice } from '../../features/Slide/payment/PaymentSlice';
+import { Helmet } from "react-helmet";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -24,9 +27,17 @@ const AdminDashboard = () => {
   const dispatch = useAppDispatch()
   const day = useAppSelector<any>(data => data.day.value);
   const week = useAppSelector<any>(data => data.week.value);
+  const payment = useAppSelector<any>(data => data.payment.value)
   const weekId = "6346cc2341f714cfb4355943"
   const mapDay = day.filter((item: any) => item.week._id === weekId)
   const [dateToFormat, setdateToFormat] = useState("")
+
+  // lấy năm
+  const d = new Date()
+  const year = d.getFullYear()
+  const totalPrice = payment.reduce((total: any, current: any) => (total = total + Number(current.amount)), 0)
+
+  // lấy 7 ngày gần nhất
   const past7Days = [...Array.from(Array(7).keys())].map(index => {
     const date = new Date();
     date.setDate(date.getDate() - (index + 1));
@@ -76,6 +87,11 @@ const AdminDashboard = () => {
         type: 'marker-active',
       },
     ],
+    meta: {
+      value: {
+        alias: 'Số lượng làm bài',
+      },
+    },
   };
   let totalStudent;
   let totalTeacher;
@@ -101,7 +117,6 @@ const AdminDashboard = () => {
       value: totalAdmin?.length
     }
   ]
-  console.log(dataPie);
 
   const configPie = {
     appendPadding: 10,
@@ -118,17 +133,69 @@ const AdminDashboard = () => {
       },
     ],
   };
+  // const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+  const get12Month = [...Array.from(Array(12).keys())].map(index => {
+    const date = new Date();
+    date.setMonth(date.getMonth() - (index));
+
+    return date;
+  });
+  const Month12 = get12Month.map((item) => moment(item).format("MM/YYYY"))
+  Month12.reverse()
+
+  const setDataColum = Month12.map((item) => {
+    return {
+      month: item,
+      price: payment.filter((pay) => { return moment(pay.createdAt).format("MM/YYYY") === item })
+        .reduce((total, current) => (total = total + Number(current.amount)), 0)
+    }
+  })
+
+  const money = (currency: number) => currency?.toLocaleString("it-IT", { style: "currency", currency: "VND" });
+  const configColum = {
+    setDataColum,
+    xField: 'month',
+    yField: 'price',
+    columnWidthRatio: 0.8,
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      month: {
+        alias: 'Tháng',
+      },
+      price: {
+        alias: 'Doanh thu',
+      },
+    },
+    tooltip: {
+      showTitle: false,
+      formatter: (item) => {
+        return {
+          name: `${item.month}`,
+          value: `${money(item.price)}`,
+        };
+      },
+    },
+  };
 
   useEffect(() => {
     dispatch(getUserList("Quản Lý User"))
     dispatch(getListHistorySlide())
     dispatch(getListDaySlice())
     dispatch(getListWeekSlice())
-
+    dispatch(getPaymentSlice())
   }, [])
   return (
     <div className=''>
-      {/* <h1 className='p-1 text-2xl'>Dashboard</h1> */}
+       <Helmet>
+        <meta charSet="utf-8" />
+        <title>Dashboard | Vian English</title>
+      </Helmet>
       <Row className='justify-between' >
         <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
@@ -190,13 +257,13 @@ const AdminDashboard = () => {
         <Col xs={6} sm={6} md={6} lg={6} xl={6} className="p-1">
           <Card hoverable style={{ width: "100%" }}>
             <div className='text-xl py-2 text-orange-500'>
-              <BsCalendar2Day />
+              <FaRegMoneyBillAlt />
             </div>
             <Typography.Title className="mt-2 text-xl" level={4}>
-              Số tuần đang có
+              Tổng doanh thu năm {year}
             </Typography.Title>
             <Typography.Title level={4} className="m-0 ">
-              {week.length}
+              {money(totalPrice)}
             </Typography.Title>
             <div className="flexBox-dash">
               <svg
@@ -239,23 +306,42 @@ const AdminDashboard = () => {
         </Col>
       </Row>
       <Row className='justify-between'>
-        <List className='w-[700px] mr-10'>
-          <Card hoverable>
-            <Typography.Title level={5} className="text-center">
-              Số lượt làm bài trong 7 ngày gần nhất
-            </Typography.Title>
-            <Line width={100} data={setDataChart} {...config} />
-          </Card>
-        </List>
-        <List className='w-[500px]'>
-          <Card hoverable>
-            <Typography.Title level={5} className="text-center">
-              Số lượng người dùng
-            </Typography.Title>
-            <Pie data={dataPie} width={100} {...configPie} />
-          </Card>
-        </List>
+        <Col xs={16} sm={16} md={16} lg={16} xl={16} className="p-1">
+          <List >
+            <Card hoverable>
+              <Typography.Title level={5} className="text-center">
+                Số lượt làm bài trong 7 ngày gần nhất
+              </Typography.Title>
+              <Line width={100} data={setDataChart} {...config} />
+            </Card>
+          </List>
+        </Col>
+
+        <Col xs={8} sm={8} md={8} lg={8} xl={8} className="p-1">
+          <List >
+            <Card hoverable>
+              <Typography.Title level={5} className="text-center">
+                Số lượng người dùng
+              </Typography.Title>
+              <Pie data={dataPie} width={100} {...configPie} />
+            </Card>
+          </List>
+        </Col>
+
+
+
       </Row>
+      <div className='mt-5'>
+        <List >
+
+          <Card hoverable>
+            <Typography.Title level={5} className="text-center">
+              Thống kê doanh thu năm {year}
+            </Typography.Title>
+            <Column data={setDataColum} {...configColum} />
+          </Card>
+        </List>
+      </div>
     </div >
   );
 }

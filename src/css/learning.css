@@ -8,7 +8,7 @@
   border:  1px solid #eee;
 }
 .box__learning__title{
-  @apply mt-2 bg-indigo-600 py-1 px-4 text-white uppercase font-semibold ;
+  @apply  bg-indigo-600 pt-1 px-4  text-white uppercase font-semibold ;
 }
 .content__learning{
   @apply px-8

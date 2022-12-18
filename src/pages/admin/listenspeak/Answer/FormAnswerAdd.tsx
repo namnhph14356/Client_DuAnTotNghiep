@@ -180,13 +180,13 @@ const FormAnswerListenSpeak = (props: Props) => {
                 filterQuizAnswer?.type === 'selectImage' ?
                   <div>
                     <Form.Item
-                      label="Upload ảnh"
+                      label="Tải ảnh lên"
                       tooltip="Ảnh dành cho Quiz"
                     >
                       <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
                     </Form.Item>
   
-                    <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                    <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh" >
                       <img id="img-preview" style={{ width: "100px" }} />
                     </Form.Item>
                   </div>

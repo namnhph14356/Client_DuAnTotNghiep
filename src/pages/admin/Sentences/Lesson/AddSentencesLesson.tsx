@@ -31,6 +31,8 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { PracticeActivityType } from "../../../../types/practiceActivity";
 import { editPracticeActivitylice } from "../../../../features/Slide/practiceActivity/PracticeActivitySlice";
 import { getListSentencesSlice } from "../../../../features/Slide/sentences/sentencesSlice";
+import { Helmet } from "react-helmet";
+
 type Props = {};
 
 const FormSentencesLesson = (props: Props) => {
@@ -45,7 +47,7 @@ const FormSentencesLesson = (props: Props) => {
 
   let activity: any = practiceActivity.find((e: PracticeActivityType) => e.day === dayId && e.type === "sentences")
   let sentencesByDay = senten.filter((e: SentenceType) => e.practiceActivity._id === activity._id)
-  
+
   var titlePage: string = "";
   if (id) {
     titlePage = "Sửa bài học";
@@ -134,6 +136,10 @@ const FormSentencesLesson = (props: Props) => {
   };
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Cấu Trúc Và Câu | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={titlePage} day={dayId} activity={{ title: "Luyện cấu trúc & câu", route: "sentences" }} type={{ title: "Bài học", route: "listLesson" }} />
 
       <div>
@@ -288,7 +294,7 @@ const FormSentencesLesson = (props: Props) => {
             <JoditEditor value={sentences} config={config} />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item>
             <Button
               className="inline-block mr-2"
               type="primary"

@@ -20,3 +20,7 @@ export  const addNewPayemnt = (data:any) => {
   const url = '/payment';
   return instance.post(url, data)
 }
+export  const getPayment = () => {
+    const url = '/payment';
+    return instance.get(url)
+  }

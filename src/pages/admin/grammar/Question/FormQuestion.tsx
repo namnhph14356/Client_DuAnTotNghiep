@@ -217,13 +217,13 @@ const FormQuestion = () => {
             selected === 'selectImage' ?
               <div>
                 <Form.Item
-                  label="Upload ảnh"
+                  label="Tải ảnh lên"
                   tooltip="Ảnh dành cho Quiz"
                 >
                   <Input type="file" accept='.png,.jpg' className="form-control" onChange={onChangeImage} />
                 </Form.Item>
 
-                <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh" >
                   <img id="img-preview" style={{ width: "100px" }} />
                 </Form.Item>
               </div>
@@ -236,7 +236,7 @@ const FormQuestion = () => {
             <Input value={prative?._id} />
           </Form.Item>
 
-          <Form.Item className='float-right'>
+          <Form.Item >
             <Button className='inline-block mr-2' type="primary" htmlType="submit" >
               {id ? "Sửa" : "Thêm"}
             </Button>

@@ -17,6 +17,7 @@ import { ListenWriteType } from '../../../../../types/listenWrite'
 import { PracticeActivityType } from '../../../../../types/practiceActivity'
 import { QuizType } from '../../../../../types/quiz'
 import { uploadImage, uploadVideo } from '../../../../../utils/upload'
+import { Helmet } from "react-helmet";
 
 interface TypeArrAnswer {
   id: number,
@@ -39,7 +40,6 @@ const FormListenRead = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const type = "conversation"
-  console.log("listenWrite", listenWrite);
 
   const prative: any = practiceActivity.find((item: PracticeActivityType) => item.type === type && item.day === dayId)
   let detailListen: any = listenWrite.filter((e: ListenWriteType) => e.practiceActivity === prative._id)
@@ -145,8 +145,6 @@ const FormListenRead = () => {
     }
 
     const newValue = await convertValue(value)
-    console.log("newValue", newValue);
-    console.log("arrAnswer", arrAnswer.sort((a, b) => a.id - b.id));
 
     const { payload } = await dispatch(addListen({
       practiceActivity: prative._id,
@@ -161,7 +159,8 @@ const FormListenRead = () => {
           idListenWrite: payload._id,
           answer: e.text,
           order: e.order,
-          confidence: e.id
+          confidence: e.id,
+          stt: e.stt
         }))
       })
     }
@@ -192,16 +191,14 @@ const FormListenRead = () => {
 
           if (item.alternatives[0].confidence === element.id) {
             let text = convertText(item.alternatives[0].transcript).split(" ");
-            console.log("text", text);
-            
+
             for (const key in text) {
               if (Number(key) === element.order - 1) {
                 text[key] = "___"
               }
             }
 
-            console.log("aass", text.join(" "));
-            
+
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], transcript: text.join(" "), beforeQuestion: before }] });
           } else {
             item = Object.assign({ ...item, name: arrName[index], alternatives: [{ ...item.alternatives[0], beforeQuestion: before }] });
@@ -222,7 +219,7 @@ const FormListenRead = () => {
     if (arrAnswer.length === 0) {
       value.target.style.background = "#16A34A"
       value.target.style.color = "white"
-      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+      setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
     }
 
     arrAnswer.map((e) => {
@@ -236,7 +233,7 @@ const FormListenRead = () => {
         value.target.style.background = "#16A34A"
         value.target.style.color = "white"
         console.log("chua tonf tai");
-        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order }])
+        setArrAnswer([...arrAnswer, { id: confidence, text: value.target.innerHTML, order: order, stt: index }])
       }
     })
 
@@ -279,12 +276,16 @@ const FormListenRead = () => {
     dispatch(getListPracticeActivitylice())
     dispatch(getListListenWrite())
     checkStatusActivity()
-    dispatch(changeBreadcrumb("Thêm cấu trúc"))
+    dispatch(changeBreadcrumb("Thêm hội thoại"))
 
   }, [dayId])
 
   return (
     <div className=''>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Luyện Hội Thoại | Vian English</title>
+      </Helmet>
       <AdminPageHeader breadcrumb={breadcrumb} day={dayId} activity={{ title: "Luyện hội thoại", route: "conversation" }} type={{ title: "Nghe và đọc", route: "listListenRead" }} />
       <Form
         layout="vertical"
@@ -351,9 +352,9 @@ const FormListenRead = () => {
                       </div>
 
                       <div className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4"  >
-                        <div className='col-span-8  gap-4 my-auto'>
-                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]}   >
-                            <ul className='flex-auto space-x-8 col-span-10 w-full'>
+                        <div className='col-span-12  gap-4 my-auto'>
+                          <Form.Item label="Đáp án" name={[`answerList`, `answer-${index + 1}`]} style={{ marginBottom: "0" }}  >
+                            <ul className='flex-auto space-x-8 col-span-10 w-full mb-0'>
                               {item.alternatives[0].transcript &&
                                 detailAnswer(convertText(item.alternatives[0].transcript)).map((item2: TypeArrAnswer, index2: number) => (
                                   <button key={item.id} type="button" onClick={(e) => changeAnswer(e, item.alternatives[0].confidence, index + 1, !item2.checkAnswer, index2 + 1)}><li className='border px-3 py-1 my-auto mb-4 rounded cursor-pointer border-green-600 hover:bg-green-600 hover:text-white'>{item2.text}</li></button>
