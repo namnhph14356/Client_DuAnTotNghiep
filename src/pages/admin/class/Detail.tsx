@@ -88,7 +88,7 @@ const DetailClassAdmin = (props) => {
   ];
 
   return (
-    <div className="p-2 h-screen">
+    <div className="p-2 ">
       <AdminPageHeader breadcrumb={"Chi tiết lớp học"} class1={{ title: "Quản lí lớp học", route: "class" }} />
 
       <div className="d-flex align-items-center justify-between">
@@ -99,19 +99,8 @@ const DetailClassAdmin = (props) => {
           Mã lớp: {classDeatail?.linkJoinClass}
         </Typography.Title>
       </div>
-      
-      <div className="py-2 ">
-        <Button type="primary"  >
-          Thêm mới giảng viên
-        </Button>
-      </div>
+      <div className="text-lg">Link học trực tuyến: <span><a href={classDeatail?.linkGoogleMeet} target="_blank" rel="noreferrer">{classDeatail?.linkGoogleMeet}</a></span> </div>
       <Table bordered dataSource={classDeatail?.teacherOfClass} columns={columns} />
-
-      <div className="py-2 ">
-        <Button type="primary"  >
-          Thêm mới học sinh
-        </Button>
-      </div>
       <Table bordered dataSource={classDeatail?.userOfClass} columns={columns} />
     </div>
   );

@@ -426,8 +426,8 @@ const AdminClassList = (props) => {
               </Form.Item>
 
               <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
+                <Button type="primary" htmlType="submit" style={{background:"#40A9FF", border:"#40A9FF"}}>
+                  Thêm mới
                 </Button>
               </Form.Item>
             </Form>

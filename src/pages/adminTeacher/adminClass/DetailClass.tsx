@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getClassByIdSlide } from "../../../features/Slide/class/classSlice";
 import { Table, Typography } from "antd";
@@ -67,6 +67,7 @@ const DetailClass = (props) => {
           <div className="font-medium text-base"> Tên lớp: {classDeatail?.nameClass}</div>
           <div className="font-medium text-base">Mã lớp: {classDeatail?.linkJoinClass}</div>
         </div>
+        <div>Link học trực tuyến: <span><a href={classDeatail?.linkGoogleMeet} target="_blank" rel="noreferrer">{classDeatail?.linkGoogleMeet}</a></span> </div>
       </div>
       <Table bordered dataSource={classDeatail?.userOfClass} columns={columns} />
     </div>

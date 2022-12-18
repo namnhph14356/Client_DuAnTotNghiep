@@ -147,7 +147,7 @@ const FormGrammar = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item >
             <Button
               className="inline-block mr-2"
               type="primary"

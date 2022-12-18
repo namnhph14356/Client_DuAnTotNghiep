@@ -246,13 +246,13 @@ const FormVocabulary = (props: Props) => {
             <Input />
           </Form.Item>
 
-          <Form.Item name="image" valuePropName="src" label="ImagePreview"
+          <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh"
           >
             <img id="img-preview" style={{ width: "100px" }} />
           </Form.Item>
 
           <Form.Item
-            label="Upload image"
+            label="Tải ảnh lên"
             tooltip="Image for Quiz"
             name="imageUpload"
             rules={[{ required: id ? false : true, message: "Không để Trống!" }]}
@@ -289,7 +289,7 @@ const FormVocabulary = (props: Props) => {
             />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item>
             <Button
               className="inline-block mr-2"
               type="primary"

@@ -426,7 +426,7 @@ const AddSentencesExercise = (props: Props) => {
                   }
                 </Form.Item>
                 <Form.Item
-                  label="Upload ảnh"
+                  label="Tải ảnh lên"
                   tooltip="Hình ảnh"
                 >
                   {id ?
@@ -435,7 +435,7 @@ const AddSentencesExercise = (props: Props) => {
                   }
                 </Form.Item>
 
-                <Form.Item name="image" valuePropName="src" label="ImagePreview" >
+                <Form.Item name="image" valuePropName="src" label="Xem trước hình ảnh" >
                   <img id="img-preview" style={{ width: "100px" }} />
                 </Form.Item>
               </div>
