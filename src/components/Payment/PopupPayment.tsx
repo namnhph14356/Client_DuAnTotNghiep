@@ -17,7 +17,7 @@ const PopupPayment = ({closeModal}: IModalProps) => {
           X
         </h4>
       </div>
-      <div className="my-4">
+      <div className="my-4 text-center">
         <p className='text__modal'>Chọn hình thức thanh toán</p>
         <div className='my-6 flex justify-center gap-3'>
             <img className='rounded' src={"https://inkythuatso.com/uploads/images/2021/12/vnpay-logo-inkythuatso-01-13-16-26-42.jpg"} alt="" width="40px" height={"40px"} />

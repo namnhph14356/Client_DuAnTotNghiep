@@ -83,7 +83,7 @@ const DetailLearning = () => {
         <div className="video__learning">
           <img src="https://i.pinimg.com/564x/46/1e/a8/461ea8504beb717ac0364e55c712d16e.jpg" alt="" />
           <div>
-            Video hướng dẫn lớp học tiếng Anh giao tiếp 360
+            {/* Video hướng dẫn lớp học tiếng Anh giao tiếp 360 */}
           </div>
         </div>
         <div className="deatil__main__learning">

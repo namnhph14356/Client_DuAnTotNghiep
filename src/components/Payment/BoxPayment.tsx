@@ -28,7 +28,6 @@ const BoxPayment = (props: Props) => {
     getCurrentUser()
   },[])
 
-  console.log("current",currentUser);
   
   return (
     <div className="box__buy__source">
