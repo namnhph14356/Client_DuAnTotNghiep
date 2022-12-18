@@ -294,7 +294,7 @@ const FormSentencesLesson = (props: Props) => {
             <JoditEditor value={sentences} config={config} />
           </Form.Item>
 
-          <Form.Item className="float-right">
+          <Form.Item>
             <Button
               className="inline-block mr-2"
               type="primary"

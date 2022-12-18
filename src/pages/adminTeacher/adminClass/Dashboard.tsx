@@ -24,7 +24,7 @@ const Dashboard = (props) => {
     let myClass: any = []
     listClass?.map(async (e: any) => {
       e.teacherOfClass?.map((item) => {
-        if (item.userId === auth._id) {
+        if (item.userId?._id === auth._id) {
           // return e
           myClass.push(e)
         }
