@@ -130,6 +130,7 @@ import MyClassUser from "./components/user/MyClassUser";
 import FormAnswerListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/Answer/FormAnswer";
 import FormAnswerEditListenWrite from "./pages/admin/ListenWrite/listenWrite/Exercise/Answer/FormAnswerEdit";
 import FormListenReadEdit from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenReadEdit";
+import ListComment from "./pages/admin/comment/ListComment";
 
 
 function App() {
@@ -291,6 +292,11 @@ function App() {
             <Route index element={<ClassList />} />
             <Route path='edit/:id' element={<EditUser />} />
             <Route path="detail/:id" element={<DetailClassAdmin />} />
+          </Route>
+
+          <Route path="comment">
+            <Route index element={<ListComment />} />
+
           </Route>
 
         </Route>

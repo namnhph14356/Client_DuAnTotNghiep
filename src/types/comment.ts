@@ -1,6 +1,5 @@
 export type CommentType = {
-    comment: any;
-    _id?: number,
+    _id?: string,
     author: string;
     avatar: string;
     content: string;
@@ -22,25 +21,4 @@ export type CommentType = {
             status: string
         }
     ],
-    reply: [
-        {
-            userId: string,
-            userName: string,
-            content: string,
-            avata: string,
-            date: string,
-            like: [
-                {
-                    userId: string,
-                    status: string
-                }
-            ],
-            dislike: [
-                {
-                    userId: string,
-                    status: string
-                }
-            ],
-        }
-    ]
 }
