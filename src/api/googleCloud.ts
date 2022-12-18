@@ -23,7 +23,7 @@ export const getTranscriptAudio = (value: string) => {
     return instance.get(url);
 }
 
-export const getTextToAudio = (value: string) => {
+export const getTextToAudio = (value: any) => {
     const url = `/speaker`;
     return instance.post(url,value);
 }
