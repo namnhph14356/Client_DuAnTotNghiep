@@ -1,7 +1,6 @@
-import { message } from 'antd'
+import {  message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 import { editAuth } from '../../../api/user'
 import { addNewPayemnt, vnpay_return } from '../../../api/vnpay'
 import { RootState } from '../../../app/store'
@@ -19,11 +18,17 @@ const VnpayReturn = (props: Props) => {
   const dispatch = useDispatch()
   const url = window.location.href;
   const url_split = url.split("?")
-  
+  const dateFormat = (str:any) => {
+    var year = str.substring(0, 4);
+var month = str.substring(4, 6);
+var day = str.substring(6, 8);
+
+    return year + '-' + month + '-' + day;
+  }
   useEffect(() => {
     const getData = async () => {
         const {data} = await vnpay_return(url_split[1]); 
-  
+      
         setBankCode(data)
 
         if(data){
@@ -39,7 +44,6 @@ const VnpayReturn = (props: Props) => {
             _id: auth._id,
             pay: pay_status
           }
-          console.log(payment);
           await addNewPayemnt(payment);       
           await editAuth(user)
         }else{
@@ -48,7 +52,8 @@ const VnpayReturn = (props: Props) => {
     }
     getData();
   },[])
-
+  console.log('bank', bankcode);
+  
   return (
     <div className=''>
          <div className="w-8/12 m-auto mt-16 border-l-[5px] pl-4 border-[#ff9933]">
@@ -70,9 +75,9 @@ const VnpayReturn = (props: Props) => {
                 <li className='text-lg font-bold '>{auth.username}</li>
                 <li className='text-lg font-bold '>{(+bankcode?.vnp_Amount) / 100} <span className='text-[#ff9933]'>vnđ</span></li>
                 <li className='text-lg font-bold '>{bankcode?.vnp_BankCode}</li>
-                <li className='text-lg font-bold '>{bankcode?.vnp_OrderInfo}</li>
-                <li className='text-lg font-bold '>{bankcode?.vnp_TxnRef}</li>
-                <li className='text-lg font-bold '>{bankcode?.vnp_PayDate}</li>
+                <li className='text-lg font-bold '>{bankcode?.vnp_OrderInfo ? (bankcode.vnp_OrderInfo).replace('+',' ') : ""}</li>
+                <li className='text-lg font-bold '>{bankcode?.vnp_TxnRef ? <b className='text-red-500 font-bold'>{bankcode?.vnp_TxnRef}</b> : ''}</li>
+                <li className='text-lg font-bold '>{bankcode?.vnp_PayDate ?  dateFormat(bankcode?.vnp_PayDate ):''}</li>
                 <li className='text-lg font-bold '>{bankcode?.vnp_ResponseCode == "00" ? <span className='text-[#167AC6]'>Thành công</span>: <span className='text-red-500'>Thất bại</span> }</li>
               </ul>
           </div>
