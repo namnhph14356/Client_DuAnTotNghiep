@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const contactApi = createApi({
     reducerPath: "contactApi",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://serverduantotnghiep-production-53a7.up.railway.app/api" }),
     tagTypes: ["Contact"],
     endpoints: (builder) => ({
         getAllContact: builder.query({

@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom'
 import AdminPageHeader from '../../../components/AdminPageHeader'
 import { getContactList, removeContacts } from '../../../features/Slide/contact/ContactSlide'
 import { Helmet } from "react-helmet";
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { ContactType } from '../../../types/contact'
 import { useGetAllContactQuery, useRemoveContactMutation } from '../../../services/contact'
 
