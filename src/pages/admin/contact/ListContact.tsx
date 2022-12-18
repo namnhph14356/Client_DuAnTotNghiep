@@ -6,10 +6,13 @@ import { NavLink } from 'react-router-dom'
 import AdminPageHeader from '../../../components/AdminPageHeader'
 import { getContactList, removeContacts } from '../../../features/Slide/contact/ContactSlide'
 import { Helmet } from "react-helmet";
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 
 const ListContact = () => {
-  const contact = useSelector<any, any>(data => data.contact.value);
-  const dispath = useDispatch();
+  const contact = useAppSelector<any>(data => data.contact.value);
+  const dispath = useAppDispatch();
+  console.log(contact);
+  
 
   const onRemoveContact = (id: any) => {
     Modal.confirm({
@@ -23,7 +26,6 @@ const ListContact = () => {
   useEffect(() => {
     dispath(getContactList())
   }, []);
-  console.log(contact);
 
 
   // title 
