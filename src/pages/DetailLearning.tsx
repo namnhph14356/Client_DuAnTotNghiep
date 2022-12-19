@@ -8,7 +8,7 @@ import ChooseClass from '../components/AdverDeatil/ChooseClass';
 import '../css/detailLearning.css'
 import { getListPracticeActivitySliceByDay } from '../features/Slide/practiceActivity/PracticeActivitySlice';
 import { LearningProgressType } from '../types/learningProgress';
-import { PracticeActivityType } from '../types/practiceActivity'
+import { PracticeActivityType } from '../types/practiceActivity';
 
 type PracticeActivityArr = {
   id: number,
@@ -81,10 +81,11 @@ const DetailLearning = () => {
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
         <div className="video__learning">
-          <img src="https://i.pinimg.com/564x/46/1e/a8/461ea8504beb717ac0364e55c712d16e.jpg" alt="" />
-          <div>
-            Video hướng dẫn lớp học tiếng Anh giao tiếp 360
-          </div>
+          <iframe width={430} height={315}
+            src="https://www.youtube.com/embed/clcc91rkShI"
+            title="YouTube video player"
+            frameBorder={0}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
         </div>
         <div className="deatil__main__learning">
           <h3 className="title__detail__main">
