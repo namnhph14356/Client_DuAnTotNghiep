@@ -10,9 +10,7 @@ type Props = {};
 const CheckoutPayment = (props: Props) => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
 
-  const backLearning = () => {
-    window.location.href = '/learning';
-  }
+ 
   return (
     <div>
       <header className="bg-indigo-600 py-2 px-20 flex">
@@ -36,7 +34,7 @@ const CheckoutPayment = (props: Props) => {
         </div>
       </header>
       <div className="mt-8 w-8/12 m-auto">
-        <button onClick={() => backLearning()} className="px-4 py-2 bg-red-500 rounded border text-white font-bold hover:text-red-500 hover:bg-white hover:border-red-500">Quay về</button>
+        <NavLink to='/learning' className="px-4 py-2 bg-red-500 rounded border text-white font-bold hover:text-red-500 hover:bg-white hover:border-red-500">Quay về</NavLink>
       </div>
 
       <Outlet />
