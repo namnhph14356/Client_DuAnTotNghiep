@@ -10,6 +10,7 @@ import toas from 'toastr';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import AdminPageHeader from '../../../components/AdminPageHeader';
 import { editdContactSlide, getContactList, getContactsById } from '../../../features/Slide/contact/ContactSlide';
+import { useGetContactQuery, useUpdateContactMutation } from '../../../services/contact';
 
 const layout = {
     labelCol: { span: 2 },
@@ -23,39 +24,21 @@ const EditContact = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [form] = Form.useForm();
-
+    const [editContact] = useUpdateContactMutation()
+    const { data: getContact, isLoading, error } = useGetContactQuery(id as any)
 
     useEffect(() => {
+        form.setFieldsValue(getContact)
+    }, [getContact])
 
-        const getContact = async (id: any) => {
-            const { payload } = await dispath(getContactsById(id));
-            form.setFieldsValue(payload)
-            setOrderId(payload)
-        }
-        getContact(id);
-        dispath(getContactList())
+    console.log(getContact);
+    
 
-    }, [])
-
-
-
-    const onFinish = async (values: any) => {
+    const onFinish = (values: any) => {
+        console.log(values);
         try {
-            await dispath(editdContactSlide(
-                {
-                    _id: id,
-                    surname: values.surname,
-                    name: values.name,
-                    address: values.address,
-                    birthday: values.birthday,
-                    email: values.email,
-                    phone: values.phone,
-                    message: values.message,
-                    status: values.status,
-                }
-            ))
+            editContact(values)
             message.success("Sửa thông tin liên hệ thành công");
-
             navigate('/admin/contact')
 
         } catch (error: any) {
@@ -69,6 +52,10 @@ const EditContact = () => {
         <div>
             <AdminPageHeader breadcrumb={"Sửa thông tin liên hệ"} />
             <Form {...layout} name="nest-messages" form={form} onFinish={onFinish} >
+
+                <Form.Item name={'_id'} label="id" hidden={true}>
+                    <Input />
+                </Form.Item>
                 <Form.Item name={'surname'} label="Họ">
                     <Input disabled />
                 </Form.Item>

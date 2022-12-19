@@ -1,4 +1,4 @@
-import { Button, Modal, Space, Table, Tag, Tooltip } from 'antd'
+import { Button, message, Modal, Space, Table, Tag, Tooltip } from 'antd'
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,26 +6,24 @@ import { NavLink } from 'react-router-dom'
 import AdminPageHeader from '../../../components/AdminPageHeader'
 import { getContactList, removeContacts } from '../../../features/Slide/contact/ContactSlide'
 import { Helmet } from "react-helmet";
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { ContactType } from '../../../types/contact'
+import { useGetAllContactQuery, useRemoveContactMutation } from '../../../services/contact'
 
 const ListContact = () => {
-  const contact = useAppSelector<any>(data => data.contact.value);
-  const dispath = useAppDispatch();
-  console.log(contact);
-  
+  const { data: contacts = [] as ContactType[], isLoading, error } = useGetAllContactQuery(undefined)
+  const [removeContact] = useRemoveContactMutation()
+
 
   const onRemoveContact = (id: any) => {
     Modal.confirm({
-      title: "You want to delete this Contact ?",
+      title: "Bạn có muốn xóa người liên hệ này ?",
       onOk: () => {
-        dispath(removeContacts(id))
+        removeContact(id)
+        message.success("Xóa liên hệ thành công")
       }
     })
 
   }
-  useEffect(() => {
-    dispath(getContactList())
-  }, []);
 
 
   // title 
@@ -81,7 +79,7 @@ const ListContact = () => {
   ]
 
   // data
-  const dataSourd = contact?.map((item: any, index: any) => {
+  const dataSourd = contacts?.map((item: any, index: any) => {
     return {
       key: index + 1,
       stt: index + 1,

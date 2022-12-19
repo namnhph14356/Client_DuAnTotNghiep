@@ -11,7 +11,7 @@ import ContactSlide from "../features/Slide/contact/ContactSlide";
 import UserListenWriteSlice from "../features/Slide/userListenWrite/UserListenWriteSlice";
 import CommentSlice from "../features/Slide/comment/CommentSlice";
 import TimeLimitCountdownSlice from "../features/Slide/timeLimitCountdown/timeLimitCountdown";
-import ClassSlide from "../features/Slide/class/classSlice";  
+import ClassSlide from "../features/Slide/class/classSlice";
 import ReplycommentSlide from "../features/Slide/comment/ReplySilce"
 import userSlide from "../features/Slide/user/userSlide";
 import authSlide from "../features/Slide/auth/authSlide";
@@ -30,6 +30,7 @@ import sentencesSlice from "../features/Slide/sentences/sentencesSlice";
 import grammarSlice from "../features/Slide/grammar/grammarSlice";
 import answerListenWrite from "../features/Slide/answerListenWrite/answerListenWrite";
 import PaymentSlice from "../features/Slide/payment/PaymentSlice";
+import { contactApi } from "../services/contact";
 
 const rootReducer = combineReducers({
     count: CountSlide,
@@ -60,7 +61,8 @@ const rootReducer = combineReducers({
     vocabulary: vocabulary,
     sentences: sentencesSlice,
     grammar: grammarSlice,
-    payment: PaymentSlice
+    payment: PaymentSlice,
+    [contactApi.reducerPath]: contactApi.reducer
 });
 
 export default rootReducer;
