@@ -1,31 +1,4 @@
-<<<<<<< HEAD
-import React, { useEffect } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import '../css/learning.css'
-import { Progress, Button, Modal, Collapse } from 'antd';
-import { Fragment, useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { ArrowPathIcon, CheckIcon, ChevronDownIcon, ChevronUpDownIcon, DocumentTextIcon, EllipsisHorizontalIcon, HomeIcon, LockClosedIcon, ShieldCheckIcon, UserPlusIcon } from '@heroicons/react/20/solid'
-import { getListMonthSlice } from '../features/Slide/month/MonthSlice'
-import { getListWeekSlice, getListWeekSliceByMonth } from '../features/Slide/week/WeekSlice'
-import { getListDaySlice, getListDaySliceByWeek } from '../features/Slide/day/DaySlice'
-import { MonthType } from '../types/month'
-import { WeekType } from '../types/week'
-import { DayType } from '../types/day'
-import { LearningProgressType } from '../types/learningProgress'
-import { addLearningProgressSlice, editLearningProgressSlice, getLearningProgressByUserSlice } from '../features/Slide/learningProgress/LearningProgress'
-import { useSelector } from 'react-redux'
-import { RootState } from '../app/store'
-import { UserType } from '../types/user'
-import { detailHistory, listHistoryByUser } from '../api/history'
-import { HistoryType } from '../types/history'
-import BoxPayment from '../components/Payment/BoxPayment'
-import { PracticeActivityType } from '../types/practiceActivity'
-import { getListPracticeActivitylice } from '../features/Slide/practiceActivity/PracticeActivitySlice';
-import { currentUserSlice } from '../features/Slide/auth/authSlide';
-import { checkAccents } from '../utils/checkAccents';
-=======
+
 import React, { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -74,31 +47,19 @@ import { PracticeActivityType } from "../types/practiceActivity";
 import { getListPracticeActivitylice } from "../features/Slide/practiceActivity/PracticeActivitySlice";
 import { currentUserSlice } from "../features/Slide/auth/authSlide";
 import PopupPayment from "../components/Payment/PopupPayment";
->>>>>>> feature
+import { checkAccents } from '../utils/checkAccents';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Learning = () => {
-<<<<<<< HEAD
-  const flag ="á"
-  const flag2 = checkAccents(flag)
-  console.log("flag2", flag2);
-  
 
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
-  let months = useAppSelector<MonthType[]>(item => item.month.value)
-  let weeks = useAppSelector<WeekType[]>(item => item.week.value)
-  let days = useAppSelector<DayType[]>(item => item.day.value)
-=======
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
   let weeks = useAppSelector<WeekType[]>((item) => item.week.value);
   let days = useAppSelector<DayType[]>((item) => item.day.value);
->>>>>>> feature
   let activity = useAppSelector((item) => item.practiceActivity.value);
   let learningProgress = useAppSelector<LearningProgressType[]>(
     (item) => item.learningProgress.value

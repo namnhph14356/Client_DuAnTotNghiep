@@ -5,16 +5,14 @@ import '../../css/conversation.css'
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux'
+import {  useParams } from 'react-router-dom';
 import { getListenWriteByActivitySlice, getListenWriteById, getListListenWrite } from '../../features/Slide/listenWrite/ListenWriteSlice';
 import '../../css/writeAndListen.css'
-import { getListQuestionListenWriteById } from '../../api/questionListenWrite';
-import { listAnswerListenWriteById } from '../../api/answerListenWrite';
 import { ListenWriteType, QuestionAnswerListenWriteType } from '../../types/listenWrite';
-import { Collapse, message, Modal } from 'antd';
+import { message, Modal } from 'antd';
 import Loading from '../../components/Loading';
 import { addHistory } from '../../api/history';
 import { RootState } from '../../app/store';

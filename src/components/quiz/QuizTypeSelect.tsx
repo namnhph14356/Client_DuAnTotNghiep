@@ -1,47 +1,34 @@
 /* eslint-disable jsx-a11y/alt-text */
 
-import React, { useEffect, useRef, useState, useMemo, useCallback, useContext } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { Progress, Button, Modal, Collapse } from 'antd';
+import { Progress, Collapse } from 'antd';
 import Countdown, { CountdownApi } from 'react-countdown';
-import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getListQuizSlide } from '../../features/Slide/quiz/QuizSlide';
 import { getListAnswerQuizSlide } from '../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { detailCategory } from '../../api/category';
-import { useParams, NavLink } from 'react-router-dom';
-import { detailQuiz, listQuiz } from '../../api/quiz';
-import reactStringReplace from 'react-string-replace'
-import { motion, AnimatePresence } from "framer-motion"
-import { DebounceInput } from 'react-debounce-input';
+import { useParams } from 'react-router-dom';
+import { detailQuiz } from '../../api/quiz';
 import '../../css/quiz.css'
-
 import moment from 'moment';
-
 import { addUserQuiz } from '../../api/userQuiz';
-import { addHistory, detailHistory, detailHistoryByUserActivity } from '../../api/history';
-import { HistoryType } from '../../types/history';
-
+import { addHistory } from '../../api/history';
 import Menu from '../../components/Menu';
 import QuizType2 from './QuizType2';
 import QuizType1 from './QuizType1';
-import { detailDay } from '../../api/day';
 import { detailPracticeActivity } from '../../api/practiceActivity';
 import QuizType3 from './QuizType3';
-import QuizType5 from './QuizType5';
 import GoogleSpeechSpeaker from '../GoogleSpeech/GoogleSpeechSpeaker';
 import { RootState } from '../../app/store';
 import { UserType } from '../../types/user';
-import { addLearningProgress, detailLearningProgressByUser, editLearningProgress } from '../../api/learningProgress';
-import { SemicolonPreference } from 'typescript';
+import { detailLearningProgressByUser } from '../../api/learningProgress';
 import { addLearningProgressSlice, editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress';
 import { resetSpeechValue } from '../../features/Slide/googleSpeech/GoogleSpeechSlice';
 import { shuffleArray } from '../../utils/shuffleArray';
 import Loading from '../Loading';
 import { DayType } from '../../types/day';
-
-
+import GoogleSpeechAudio from '../GoogleSpeech/GoogleSpeechAudio';
 
 let flag1: string = ""
 let flag2: number = 0
@@ -379,7 +366,7 @@ const QuizTypeSelect = () => {
                   </div>
 
                   <div className={`${done ? "hidden" : "flex"} justify-between items-center`}>
-                    <div className="flex items-center gap-2">
+                    <div className="basis-11/12 flex items-center gap-2">
                       <h3 className="m-0">
                         {quizList
                           ? quizList[quizIndex]?.quiz?.type !== 3
@@ -387,14 +374,15 @@ const QuizTypeSelect = () => {
                             : ""
                           : ""
                         }
-
                       </h3>
-                      <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
+
+                      {/* <button className='' onClick={() => speak({ text: quizList[quizIndex]?.quiz?.question, voice: voices[2] })}>
                         <span><i className="fa-solid fa-volume-high"></i></span>
-                      </button>
+                      </button> */}
+                      <GoogleSpeechAudio value={quizList[quizIndex]?.quiz?.question} gender={false} />
                     </div>
 
-                    <div className=''  >
+                    <div className='basis-1/12'  >
                       <GoogleSpeechSpeaker />
                     </div>
                   </div>

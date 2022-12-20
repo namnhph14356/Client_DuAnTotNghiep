@@ -1,10 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import '../css/oral.css'
-import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
-import NavOral from '../components/NavOral'
-import HeaderOral from '../HeaderOral'
+import {  useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { SentenceType } from '../types/sentence'
 import { useSpeechSynthesis } from 'react-speech-kit';
@@ -15,6 +11,7 @@ import { XOutline, CheckOutline } from "heroicons-react"
 import { detailDay } from '../api/day'
 import { DayType } from '../types/day'
 import { listSentencesByIdDay } from '../api/sentences'
+import { audioSpeak } from '../utils/audio'
 
 const OralPage = () => {
 
@@ -25,7 +22,6 @@ const OralPage = () => {
     const [day, setDay] = useState<DayType>()
     const [sentencesIndex, setSentencesIndex] = useState<number>(0)
     const [history, setHistory] = useState<any>([])
-    console.log("history", history)
     const [dataSentences, setDataSentSentences] = useState<SentenceType[]>([])
     const [sentencesSplit, setSentencesSplit] = useState<string[]>([])
     const transcriptSplit = transcript.split(" ")
@@ -70,8 +66,8 @@ const OralPage = () => {
                             <tr className='row__table__exem__oral' >
                                 <th className='w-24'>
                                     <div className="flex flex-col  justify-center items-center">
-                                        <span>Đề</span>
-                                        <button onClick={() => speak({ text: dataSentences && dataSentences[sentencesIndex]?.words, voice: voices[2] })}>
+                                        <span>Đề</span> 
+                                        <button onClick={() => audioSpeak(dataSentences && dataSentences[sentencesIndex]?.words,true)}>
                                             <i className="fa-solid fa-volume-high"></i>
                                         </button>
                                     </div>
@@ -81,7 +77,7 @@ const OralPage = () => {
                                         <div className="flex gap-1">
                                             {dataSentences.length !== 0
                                                 ? dataSentences[sentencesIndex]?.words.split(" ")?.map((item: string, index: number) => {
-                                                    return <button className='' onClick={() => speak({ text: item, voice: voices[2] })}>
+                                                    return <button className='' onClick={() => speak({ text: item, rate: 0.7 , voice: voices[2] })}>
                                                         <span className='text-xl font-semibold hover:text-[#8EC300]'>{item}</span>
                                                     </button>
                                                 })
@@ -170,7 +166,7 @@ const OralPage = () => {
                         return <li>
                             <div className="question__list__result">
                                 <p>
-                                    <i className="fa-solid fa-volume-high" onClick={() => speak({ text: item.words, pitch: 2, voice: voices[2] })}></i>  {item.words}
+                                    <i className="fa-solid fa-volume-high" onClick={() =>  audioSpeak(item.words,true)}></i>  {item.words}
                                 </p>
                             </div>
                             <div className='transe__answered__list'>
