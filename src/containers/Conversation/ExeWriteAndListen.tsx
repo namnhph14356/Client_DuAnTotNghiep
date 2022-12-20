@@ -436,12 +436,12 @@ const ExeWriteAndListen = () => {
                     return (
                       <div key={index + 1} className="hover:cursor-pointer grid grid-cols-12 gap-8 w-full px-4 py-3 even:bg-slate-100"  >
                         <div className='col-span-2 flex justify-between gap-4 my-auto'>
-                          <strong className='my-auto'>Long: </strong>
+                          <strong className='my-auto'>{item.name}: </strong>
                           {
                             checkPause ?
-                              <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg"></i></span>
+                              <span id='iconAudio' key={index + 1} onClick={onPause}><i className="fa-sharp fa-solid fa-circle-pause text-green-500 text-lg my-auto"></i></span>
                               :
-                              <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg"></i></span>
+                              <span id='iconAudio' key={index + 1} onClick={() => onStartAudio(item, index)}><i className="fa-solid fa-circle-play text-green-500 text-lg my-auto"></i></span>
                           }
                         </div>
                         <div className='col-span-10 my-auto'>
