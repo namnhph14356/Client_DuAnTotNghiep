@@ -15,6 +15,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { message } from "antd";
 import { addContactSlide } from "../features/Slide/contact/ContactSlide";
 import { useAppDispatch } from "../app/hooks";
+import { useAddContactMutation } from "../services/contact";
 
 const phoneRegex = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
 
@@ -37,7 +38,6 @@ const Home = () => {
       navigate("/learning");
     }
   };
-  const dispath = useAppDispatch();
   const {
     register,
     resetField,
@@ -45,9 +45,10 @@ const Home = () => {
     reset,
     formState: { errors },
   } = useForm<ContactType>({ resolver: yupResolver(schema) });
+  const [addContact] = useAddContactMutation()
 
-  const onSubmit: SubmitHandler<ContactType> = async (values: ContactType) => {
-    dispath(addContactSlide(
+  const onSubmit: SubmitHandler<ContactType> = (values: ContactType) => {
+    addContact(
       {
         surname: values.surname,
         name: values.name,
@@ -59,7 +60,7 @@ const Home = () => {
         status: 0,
         sendAds: values.sendAds || 0
       }
-    ))
+    )
     toast.success("Cảm ơn bạn đã gửi thông tin, chúng tôi sẽ liên hệ với bạn sớm nhất có thể", {
       position: toast.POSITION.TOP_CENTER
     });
@@ -237,7 +238,7 @@ const Home = () => {
         </div>
       </section>
       {/* END: section */}
-    
+
       {/*form by course  */}
       <section className="form__information">
         <h2 className="title__form">LIÊN HỆ VỚI CHÚNG TÔI</h2>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link, NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getClassByIdSlide } from "../../../features/Slide/class/classSlice";
-import { Table, Typography } from "antd";
+import { Button, Table, Typography } from "antd";
 import moment from "moment";
 
 const DetailClass = (props) => {
@@ -55,6 +55,18 @@ const DetailClass = (props) => {
       key: "createdAt",
       render: (row, item) =>
         `${moment(item?.timeJoinClass).format("DD/MM/YYYY")}`,
+    },
+    {
+      title: "Hành động",
+      dataIndex: "index",
+      key: "index",
+      render: (row, item) => <Button
+        style={{ background: "#616160" }}
+      >
+        <Link to={`/manageteacher/class/progress/${item?.userId?._id}`}>
+          <span className="text-white">Xem tiến độ</span>
+        </Link>
+      </Button>
     },
   ];
   return (

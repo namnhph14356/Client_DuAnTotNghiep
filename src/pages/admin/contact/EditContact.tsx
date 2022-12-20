@@ -1,13 +1,16 @@
 
 /* eslint-disable jsx-a11y/alt-text */
-import { Button, DatePicker, Form, Input, Select } from 'antd';
+import { Button, DatePicker, Form, Input, message, Select } from 'antd';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import toas from 'toastr';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import AdminPageHeader from '../../../components/AdminPageHeader';
 import { editdContactSlide, getContactList, getContactsById } from '../../../features/Slide/contact/ContactSlide';
+import { useGetContactQuery, useUpdateContactMutation } from '../../../services/contact';
 
 const layout = {
     labelCol: { span: 2 },
@@ -16,64 +19,43 @@ const layout = {
 const { TextArea } = Input;
 
 const EditContact = () => {
-    const contact = useSelector<any, any>(data => data.contact.value);
     const [orderId, setOrderId] = useState<any>({});
-    const dispath = useDispatch();
+    const dispath = useAppDispatch();
     const navigate = useNavigate();
     const { id } = useParams();
     const [form] = Form.useForm();
-    console.log(orderId);
-    
+    const [editContact] = useUpdateContactMutation()
+    const { data: getContact, isLoading, error } = useGetContactQuery(id as any)
 
     useEffect(() => {
+        form.setFieldsValue(getContact)
+    }, [getContact])
 
-        if (id) {
-            const getContact = async (id: any) => {
-                const { payload } = await dispath(getContactsById(id));
-                form.setFieldsValue(payload)
-                setOrderId(payload)
-                // onreset(payload)
-            }
-            getContact(id);
-        }
-        dispath(getContactList())
+    console.log(getContact);
+    
 
-    }, [])
-
-
-
-    const onFinish = async (values: any) => {
+    const onFinish = (values: any) => {
+        console.log(values);
         try {
-            await dispath(editdContactSlide(
-                {
-                    _id: id,
-                    surname: orderId.surname,
-                    name: orderId.name,
-                    address: orderId.address,
-                    birthday: orderId.birthday,
-                    email: orderId.email,
-                    phone: orderId.phone,
-                    message: orderId.message,
-                    status: values.status,
-                    sendAds: values.sendAds
-                }
-            ))
-
-            toas.success("Edit successfully");
-
+            editContact(values)
+            message.success("Sửa thông tin liên hệ thành công");
             navigate('/admin/contact')
 
         } catch (error: any) {
-            toas.error(error);
-            
+            message.error(error);
+
         }
 
     };
 
     return (
         <div>
-            <></>
+            <AdminPageHeader breadcrumb={"Sửa thông tin liên hệ"} />
             <Form {...layout} name="nest-messages" form={form} onFinish={onFinish} >
+
+                <Form.Item name={'_id'} label="id" hidden={true}>
+                    <Input />
+                </Form.Item>
                 <Form.Item name={'surname'} label="Họ">
                     <Input disabled />
                 </Form.Item>
@@ -91,7 +73,7 @@ const EditContact = () => {
                 </Form.Item>
                 <div className='hidden'>
                     <Form.Item name={'birthday'} label="Ngày sinh">
-                        <Input  />
+                        <Input />
                     </Form.Item>
                 </div>
                 <Form.Item name={'message'} label="Lời nhắn">
@@ -105,16 +87,10 @@ const EditContact = () => {
                         <Select.Option value={3}>Hẹn liên hệ sau</Select.Option>
                     </Select>
                 </Form.Item>
-                <Form.Item name={'sendAds'} label="Gửi quảng cáo">
-                    <Select>
-                        <Select.Option value={0}>Không cho phép</Select.Option>
-                        <Select.Option value={1}>Cho phép</Select.Option>
-                    </Select>
-                </Form.Item>
 
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 2 }}>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        Sửa
                     </Button>
                 </Form.Item>
             </Form>

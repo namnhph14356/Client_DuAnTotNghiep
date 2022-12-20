@@ -113,10 +113,10 @@
 }
 
 .nav__list{
-    @apply mt-6 border-b-2
+    @apply mt-6 
 }
 .item__list__user{
-    @apply grid grid-cols-12 gap-3
+    @apply grid grid-cols-12 gap-3 my-4
 }
 .img__user__item{
     @apply col-span-3
@@ -125,7 +125,7 @@
     @apply col-span-9
 }
 .img__user__item img{
-    @apply rounded-full
+    @apply rounded-full w-10/12
 }
 .info__user__item h3{
     @apply mb-0 text-blue-600

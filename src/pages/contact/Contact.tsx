@@ -9,20 +9,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { addContactSlide } from "../../features/Slide/contact/ContactSlide";
 import toas from 'toastr';
 import { useNavigate } from "react-router-dom";
+import { useAddContactMutation } from "../../services/contact";
 
 
 type Props = {};
 const { TextArea } = Input;
 
 const Contact = () => {
-  // const contact = useSelector<any, any>(data => data.contact.value);
-  const dispath = useDispatch();
   const navigate = useNavigate();
+  const [addContact] = useAddContactMutation()
 
 
-  const onFinish = async (values: any) => {
+  const onFinish = (values: any) => {
     try {
-      dispath(addContactSlide(
+      addContact(
         {
           surname: values.contact.surname,
           name: values.contact.name,
@@ -34,7 +34,7 @@ const Contact = () => {
           status: 0,
           sendAds: values.contact.sendAds || 0
         }
-      ))
+      )
 
       toast.success("Cảm ơn bạn đã gửi thông tin, chúng tôi sẽ liên hệ với bạn sớm nhất có thể", {
         position: toast.POSITION.TOP_CENTER
