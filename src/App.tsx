@@ -153,28 +153,29 @@ function App() {
       <Routes>
         <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
-          <Route path="learning" element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>}>
+          <Route path="learning">
+            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
             <Route path="oral">
-              <Route path=":dayId" element={<ExamLayout />}>
+              <Route path=":dayId" element={<PrivateRouteLearning><ExamLayout /></PrivateRouteLearning>}>
                 <Route index element={<OralPage />} />
                 <Route path="exam" element={<OralSeven />} />
               </Route>
             </Route>
             <Route path="oralWeekVocabulary" >
-              <Route path=":weekId/:dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<PrivateRouteLearning><LayoutOral /></PrivateRouteLearning>}>
                 <Route index element={<OralVocabulary />} />
                 <Route path="exam" element={<ExemVocabulary />} />
               </Route>
             </Route>
             <Route path="oralWeekSaying" >
-              <Route path=":weekId/:dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<PrivateRouteLearning><LayoutOral /></PrivateRouteLearning>}>
                 <Route index element={<OralSaying />} />
                 <Route path="exam" element={<ExemSaying />} />
               </Route>
             </Route>
             <Route path=":dayId/detailLearning">
-              <Route index element={<DetailLearning />} />
-              <Route path=":id" element={<DetailLearningLayout />}>
+              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning>} />
+              <Route path=":id" element={<PrivateRouteLearning><DetailLearningLayout /></PrivateRouteLearning>}>
                 <Route path="listenSpeak" element={<SpeakingPage />}>
                   <Route path="startUp" element={<StartUp />} />
                   <Route path="quiz2" element={<QuizPage />} />
