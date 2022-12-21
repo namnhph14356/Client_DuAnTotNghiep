@@ -37,7 +37,7 @@ export const PrivateRouteLearning = (props: PrivateRouteProps) => {
   
   if (!isUser) {
     message.error("Bạn cần đăng nhập để tiếp tục !")
-    return <Navigate to="signin" />
+    return <Navigate to="/signin" />
   }
 
   return props.children

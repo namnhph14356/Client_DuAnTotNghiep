@@ -151,10 +151,9 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="/" element={<PrivateRouteHomePage><PrivateRouteLearning><WebsiteLayout /></PrivateRouteLearning></PrivateRouteHomePage>}>
+        <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
-          <Route path="learning">
-            <Route index element={<Learning />} />
+          <Route path="learning" element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>}>
             <Route path="oral">
               <Route path=":dayId" element={<ExamLayout />}>
                 <Route index element={<OralPage />} />
