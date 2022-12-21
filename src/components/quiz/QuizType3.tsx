@@ -1,6 +1,6 @@
 import {  useEffect } from 'react'
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { audioSpeak } from '../../utils/audio';
 
 type QuizType3Props = {
   data: any,
@@ -11,7 +11,6 @@ type QuizType3Props = {
 }
 
 const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: QuizType3Props) => {
-  const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
   const transcript = useAppSelector(item => item.googleSpeech.transcript)
   const onHandleSpeakSelect = () => {
     for (let i = 0, a = transcript.split(' '); i < a.length; i++) {
@@ -57,7 +56,7 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
               </button>
             </div>
           }
-          return <div onClick={() => speak({ text: item.answer,rate: 0.5, voice: voices[1] })}>
+          return <div onClick={() => audioSpeak(item.answer, false)}>
             <div key={index + 1}
               className={`border-2 ${item._id == select?.id
                 ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"

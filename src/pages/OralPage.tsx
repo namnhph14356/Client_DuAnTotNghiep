@@ -3,7 +3,6 @@ import '../css/oral.css'
 import {  useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { SentenceType } from '../types/sentence'
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import GoogleSpeechOral from '../components/GoogleSpeech/GoogleSpeechOral'
 import { changeSpeechValue, resetSpeechValue } from '../features/Slide/googleSpeech/GoogleSpeechSlice'
@@ -17,7 +16,6 @@ const OralPage = () => {
 
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
     const dispatch = useAppDispatch()
-    const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const { dayId, id } = useParams();
     const [day, setDay] = useState<DayType>()
     const [sentencesIndex, setSentencesIndex] = useState<number>(0)
@@ -77,7 +75,7 @@ const OralPage = () => {
                                         <div className="flex gap-1">
                                             {dataSentences.length !== 0
                                                 ? dataSentences[sentencesIndex]?.words.split(" ")?.map((item: string, index: number) => {
-                                                    return <button className='' onClick={() => speak({ text: item, rate: 0.7 , voice: voices[2] })}>
+                                                    return <button className='' onClick={() =>  audioSpeak(item,true)}>
                                                         <span className='text-xl font-semibold hover:text-[#8EC300]'>{item}</span>
                                                     </button>
                                                 })
