@@ -1,7 +1,7 @@
 import { message, Modal } from 'antd';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
 import { AppDispatch, RootState } from '../app/store';
 import { currentUserSlice } from '../features/Slide/auth/authSlide';
@@ -33,9 +33,10 @@ export const PrivateRouteHomePage = (props: PrivateRouteProps) => {
 
 export const PrivateRouteLearning = (props: PrivateRouteProps) => {
   const isUser = localStorage.getItem("tokenUser") ? JSON.parse(String(localStorage.getItem("tokenUser"))) : "";
+  let location = useLocation()
   if (!isUser) {
     message.error("Bạn cần đăng nhập để tiếp tục !")
-    return <Navigate to="/signin" />
+    return <Navigate to="/signin" state={{ from: location }} replace />
   }
 
   return props.children

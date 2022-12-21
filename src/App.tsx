@@ -151,32 +151,31 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage> }>
+        <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
           <Route path="learning">
-            <Route index  element={ <PrivateRouteLearning><Learning /></PrivateRouteLearning>}/>
-
+            <Route index element={<PrivateRouteLearning><Learning /></PrivateRouteLearning>} />
             <Route path="oral">
-              <Route path=":dayId" element={<ExamLayout />}>
+              <Route path=":dayId" element={<PrivateRouteLearning><ExamLayout /></PrivateRouteLearning>}>
                 <Route index element={<OralPage />} />
                 <Route path="exam" element={<OralSeven />} />
               </Route>
             </Route>
             <Route path="oralWeekVocabulary" >
-              <Route path=":weekId/:dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<PrivateRouteLearning><LayoutOral /></PrivateRouteLearning>}>
                 <Route index element={<OralVocabulary />} />
                 <Route path="exam" element={<ExemVocabulary />} />
               </Route>
             </Route>
             <Route path="oralWeekSaying" >
-              <Route path=":weekId/:dayId" element={<LayoutOral />}>
+              <Route path=":weekId/:dayId" element={<PrivateRouteLearning><LayoutOral /></PrivateRouteLearning>}>
                 <Route index element={<OralSaying />} />
                 <Route path="exam" element={<ExemSaying />} />
               </Route>
             </Route>
             <Route path=":dayId/detailLearning">
-              <Route index element={<DetailLearning />} />
-              <Route path=":id" element={<DetailLearningLayout />}>
+              <Route index element={<PrivateRouteLearning><DetailLearning /></PrivateRouteLearning>} />
+              <Route path=":id" element={<PrivateRouteLearning><DetailLearningLayout /></PrivateRouteLearning>}>
                 <Route path="listenSpeak" element={<SpeakingPage />}>
                   <Route path="startUp" element={<StartUp />} />
                   <Route path="quiz2" element={<QuizPage />} />
@@ -280,7 +279,7 @@ function App() {
             <Route index element={<ListContact />} />
             <Route path="edit/:id" element={<EditContact />} />
           </Route>
-          
+
           <Route path="user">
             <Route index element={<ListUser />} />
             <Route path='edit/:id' element={<EditUser />} />
@@ -365,7 +364,7 @@ function App() {
             <Route path="listExercise" element={<ListListenWrite />} />
             <Route path="addExercise" element={<FormListenWrite />} />
             <Route path=":id/editExercise" element={<FormListenWrite />} />
-            
+
             <Route path="add" element={<FormListenWrite />} />
             <Route path="answer">
               <Route path=":id/add" element={<FormAnswerListenWrite />} />
@@ -373,7 +372,7 @@ function App() {
             </Route>
 
             <Route path="addListenRead" element={<FormListenRead />} />
-            
+
             <Route path=":id/editListenRead" element={<FormListenReadEdit />} />
           </Route>
 
@@ -418,10 +417,10 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
         <Route path="/newPassword/:email" element={<NewPassword />}></Route>
         <Route path="/welcome" element={<Welcome />}></Route>
-        <Route path="/payment" element={<CheckoutPayment/>}>
-            <Route path="qrCode" element={<CheckoutQr />}/>
-            <Route path="vnpay" element={<FormCreateVnPay />} />
-            <Route path="vnpay_return" element={<VnpayReturn />}/>
+        <Route path="/payment" element={<CheckoutPayment />}>
+          <Route path="qrCode" element={<CheckoutQr />} />
+          <Route path="vnpay" element={<FormCreateVnPay />} />
+          <Route path="vnpay_return" element={<VnpayReturn />} />
         </Route>
       </Routes>
     </div>
