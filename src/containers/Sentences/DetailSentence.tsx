@@ -5,6 +5,7 @@ import { SentenceType } from '../../types/sentence'
 import parse from "html-react-parser";
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { detailSentences, listSentences } from '../../api/sentences';
+import { audioSpeak } from '../../utils/audio';
 
 const DetailSentence = () => {
   const { dayId, id, idDetailSentence } = useParams();
@@ -51,8 +52,8 @@ const DetailSentence = () => {
         </div>
         <div className="content__detail__main">
           <div className="topic__sentence">
-            <h3 className="title__topic__sentence">
-              <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: sentence?.words, rate: 1, pitch: 1, voice: voices[1] })}></i> {sentence?.words}
+            <h3 className="title__topic__sentence"> 
+              <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => audioSpeak(sentence?.words, false)}></i> {sentence?.words}
             </h3>
             <p className='phonetic__vn__sentence'>
               {sentence?.phoneticTranscription}

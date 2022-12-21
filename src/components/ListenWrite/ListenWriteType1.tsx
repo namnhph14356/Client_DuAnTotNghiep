@@ -7,6 +7,7 @@ import { useSpeechSynthesis } from 'react-speech-kit';
 import reactStringReplace from 'react-string-replace';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import '../../css/writeAndListen.css'
+import { audioSpeak } from '../../utils/audio';
 
 type QuizType5Props = {
   question: any,
@@ -19,17 +20,10 @@ type QuizType5Props = {
 
 const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, onHanldeSetSelect }: QuizType5Props) => {
 
-  const transcript = useAppSelector(item => item.googleSpeech.transcript)
-  const dispatch = useAppDispatch()
-  const [show, setShow] = useState<boolean>(false)
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
-  // const { speechValue, onHandleUpdateSpeech, transcript, onHandleUpdateTranscript } = useContext(SpeechContext)
-
   const [convertValues, setConvertValues] = useState<any>([])
   const { register, handleSubmit, reset } = useForm();
-
   const onSubmit = (value: any) => {
-
     let convertValue: any = [];
     for (let key in value) {
       const keyQuestion = key.split("-")[1];
@@ -123,8 +117,8 @@ const ListenWriteType1 = ({ question, answerList, check, select, questionIndex, 
   return (
     <div className="block">
       <div className=" flex  items-center justify-start mb-8 font-bold gap-4">
-        <div>Click để nghe: </div>
-        <button className='text-xl' onClick={() => speak({ text: question.questionAfter, voice: voices[2] })}>
+        <div>Click để nghe: </div>  
+        <button className='text-xl' onClick={() => audioSpeak(question.questionAfter,false)}>
           <span><i className="fa-solid fa-volume-high outline-none"></i></span>
         </button>
       </div>

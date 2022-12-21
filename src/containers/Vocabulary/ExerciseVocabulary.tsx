@@ -1,5 +1,5 @@
 import { message, Modal } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { addHistory, detailHistory } from '../../api/history'
 import { detailLearningProgressByUser } from '../../api/learningProgress'
@@ -15,13 +15,11 @@ import { HistoryType } from '../../types/history'
 import { QuizType } from '../../types/quiz'
 import { SentenceResult } from '../../types/sentence'
 import { UserType } from '../../types/user'
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { LearningProgressType } from '../../types/learningProgress'
 import { useParams } from 'react-router-dom'
 import QuizType5 from '../../components/quiz/QuizType5'
 import Loading from '../../components/Loading'
 
-let flag1: string = ""
 let flag2: number = 0
 
 const ExerciseVocabulary = () => {
@@ -30,11 +28,8 @@ const ExerciseVocabulary = () => {
   const [select, setSelect] = useState<any>(null)
   const [check, setCheck] = useState(false)
   const [done, setDone] = useState(false)
-
   const audioCorrect = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284317/duolingo_correct_sound_effect_6597352924678955563_gafjie.mp3")
   const audioWrong = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284427/duolingo_wrong_answer_sound_effect_8056506950931993212_th5bf7.mp3")
-
-  const { speak, voices } = useSpeechSynthesis();
   const [quizList, setQuizList] = useState<any>()
   const [numQuizList, setNumQuizList] = useState(0)
   const [learningProgress, setLearningProgress] = useState<LearningProgressType>()

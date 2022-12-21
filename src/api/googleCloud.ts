@@ -23,6 +23,11 @@ export const getTranscriptAudio = (value: string) => {
     return instance.get(url);
 }
 
+export const getTextToAudio = (value: any) => {
+    const url = `/speaker`;
+    return instance.post(url,value);
+}
+
 export const getAudioDetail = (data: string) => {
     const url = `https://storage.googleapis.com/vian_english/${data}`;
     return instance.get(url);
