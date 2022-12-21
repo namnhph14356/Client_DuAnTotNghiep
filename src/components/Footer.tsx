@@ -64,7 +64,7 @@ const navigation = {
 const Footer = () => {
   return (
     <footer className="bg-[#4F46E5] text-white mt-16" aria-labelledby="footer-heading">
-      <div className="mx-auto w-10/12 py-16 ">
+      <div className="mx-auto w-10/12 pt-16 ">
         <div className="xl:grid xl:grid-cols-4 ">
           <div className="space-y-16 xl:col-span-1">
             <Link to='/'>
@@ -127,9 +127,9 @@ const Footer = () => {
           </div>
 
         </div>
-        {/* <div className="mt-12 border-t border-gray-200 pt-8">
+        <div className="mt-12 border-t border-gray-200 pt-4 pb-1">
           <p className="text-base text-white xl:text-center">&copy; Copyright 2022 VianEnglish.com</p>
-        </div> */}
+        </div>
       </div>
     </footer>
   )
