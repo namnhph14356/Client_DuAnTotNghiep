@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import {  useEffect } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
@@ -13,7 +13,6 @@ type QuizType3Props = {
 const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: QuizType3Props) => {
   const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
   const transcript = useAppSelector(item => item.googleSpeech.transcript)
-  const dispatch = useAppDispatch()
   const onHandleSpeakSelect = () => {
     for (let i = 0, a = transcript.split(' '); i < a.length; i++) {
       data.forEach((item: any) => {
@@ -35,7 +34,6 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
             className={`border-2 border-[#CCCCCC] item__btn__choose `}
             onClick={() => {
               onHanldeSetSelect(quizCompound.filter((item2, index) => item2.id !== item.id), check)
-
             }}
           >
             <button>
@@ -44,7 +42,6 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
           </div>
         })}
       </div>
-
 
       <div className="btn__choose__result">
         {data.map((item, index) => {
@@ -60,7 +57,7 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
               </button>
             </div>
           }
-          return <div onClick={() => speak({ text: item.answer,rate: 1.2, pitch: 2, voice: voices[1] })}>
+          return <div onClick={() => speak({ text: item.answer,rate: 0.5, voice: voices[1] })}>
             <div key={index + 1}
               className={`border-2 ${item._id == select?.id
                 ? " border-[#5DADE2] bg-[#D6EAF8] text-[#2E86C1]"
@@ -75,7 +72,6 @@ const QuizType3 = ({ data, check, select, quizCompound, onHanldeSetSelect }: Qui
               }
               onClick={() => {
                 if (check !== true) {
-
                   onHanldeSetSelect([...quizCompound, { id: item._id, isCorrect: item.isCorrect, answer: item.answer, type: 3 }], check)
                 }
               }}

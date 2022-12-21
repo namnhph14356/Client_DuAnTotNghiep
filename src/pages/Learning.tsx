@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -46,12 +47,14 @@ import { PracticeActivityType } from "../types/practiceActivity";
 import { getListPracticeActivitylice } from "../features/Slide/practiceActivity/PracticeActivitySlice";
 import { currentUserSlice } from "../features/Slide/auth/authSlide";
 import PopupPayment from "../components/Payment/PopupPayment";
+import { checkAccents } from '../utils/checkAccents';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const Learning = () => {
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   let months = useAppSelector<MonthType[]>((item) => item.month.value);
