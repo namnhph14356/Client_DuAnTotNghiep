@@ -33,6 +33,8 @@ export const PrivateRouteHomePage = (props: PrivateRouteProps) => {
 
 export const PrivateRouteLearning = (props: PrivateRouteProps) => {
   const isUser = localStorage.getItem("tokenUser") ? JSON.parse(String(localStorage.getItem("tokenUser"))) : "";
+  console.log(isUser);
+  
   if (!isUser) {
     message.error("Bạn cần đăng nhập để tiếp tục !")
     return <Navigate to="/signin" />

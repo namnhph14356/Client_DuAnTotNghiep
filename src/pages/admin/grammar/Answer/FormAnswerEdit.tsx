@@ -28,15 +28,15 @@ const FormAnswerEdit = () => {
   const onFinish = async (value) => {
     const key = 'updatable';
     message.loading({ content: 'Loading...', key });
-      if (id) {
-        dispatch(editAnswerQuizSlide(value));
-        message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
-        navigate(`/manageDay/${dayId}/grammar/listExercise`);
-      } else {
-        dispatch(addAnswerQuizSlide(value));
-        message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
-        navigate(`/manageDay/${dayId}/grammar/listExercise`);
-      }
+    if (id) {
+      dispatch(editAnswerQuizSlide(value));
+      message.success({ content: 'Sửa Thành Công!', key, duration: 2 });
+      navigate(`/manageDay/${dayId}/grammar/listExercise`);
+    } else {
+      dispatch(addAnswerQuizSlide(value));
+      message.success({ content: 'Thêm Thành Công!', key, duration: 2 });
+      navigate(`/manageDay/${dayId}/grammar/listExercise`);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -106,21 +106,21 @@ const FormAnswerEdit = () => {
             tooltip="Trạng Thái Đáp Án"
             rules={[{ required: true, message: 'Không để Trống!' }]}
           >
-            {answerQuiz?.isCorrect === 0
+            {answerQuiz?.isCorrect === false
               ? <Select>
-                <Option key={1} value={0}>
+                <Option key={1} value={false}>
                   Sai
                 </Option>
-                <Option key={2} value={1}>
+                <Option key={2} value={true}>
                   Đúng
                 </Option>
               </Select>
 
               : <Select>
-                <Option key={1} value={1}>
+                <Option key={1} value={true}>
                   Đúng
                 </Option>
-                <Option key={2} value={0}>
+                <Option key={2} value={false}>
                   Sai
                 </Option>
               </Select>
