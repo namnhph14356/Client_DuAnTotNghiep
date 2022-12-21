@@ -137,7 +137,7 @@ const SignIn = (props: Props) => {
               <div className="flex justify-between gap-6">
                 <div className="bg-blue-500 text-white rounded py-2 w-full hover:cursor-pointer hover:bg-blue-600">
                   <FacebookLogin
-                    appId="557397382768020"
+                    appId="600943045125319"
                     textButton=""
                     fields="name,email,picture"
                     onClick={componentClicked}
