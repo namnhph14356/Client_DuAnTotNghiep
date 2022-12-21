@@ -235,7 +235,7 @@ const ListDay = (props: Props) => {
       key: "updatedAt",
     },
     {
-      title: "Actions",
+      title: "Hành động",
       key: "action",
       render: (text, record) => (
         <Space align="center" size="middle">
