@@ -53,7 +53,7 @@ const AboutUs = (props: Props) => {
         </div>
       </div>
 
-      <div className="container__category mt-8 flex gap-4">
+      <div className="container__category mt-8 lg:grid lg:grid-cols-2 lg:gap-4">
         <div className="flex flex-col gap-4">
           <div className="category__child flex gap-6 rounded bg-[#f8f9fa] p-4">
             <CheckSquareOutlined
@@ -84,7 +84,7 @@ const AboutUs = (props: Props) => {
 
 
         {/* ---------------------- */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-4 lg:mt-0">
           <div className="category__child flex gap-6 rounded bg-[#f8f9fa] p-4">
             <CheckSquareOutlined
               style={{ fontSize: "36px", color: "#00394f" }}

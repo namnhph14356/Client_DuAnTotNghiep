@@ -74,7 +74,7 @@ const OralPage = () => {
                                 </th>
                                 <td>
                                     <div className='title__exam__oral__table'>
-                                        <div className="flex gap-1">
+                                        <div className="flex flex-wrap gap-1">
                                             {dataSentences.length !== 0
                                                 ? dataSentences[sentencesIndex]?.words.split(" ")?.map((item: string, index: number) => {
                                                     return <button className='' onClick={() => speak({ text: item, rate: 0.7 , voice: voices[2] })}>

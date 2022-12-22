@@ -1,8 +1,8 @@
 .learning__page{
-  @apply w-10/12 m-auto bg-white sm:rounded-lg my-8 grid grid-cols-12
+  @apply w-10/12 m-auto bg-white sm:rounded-lg my-8 grid grid-cols-12 xl:gap-8
 }
 .box__learning{
-  @apply col-span-9 mr-[20px]  shadow-md p-3
+  @apply col-span-12 xl:col-span-9   shadow-md p-3 mb-8
 }
 .box__learning{
   border:  1px solid #eee;
@@ -11,7 +11,7 @@
   @apply  bg-indigo-600 pt-1 px-4  text-white uppercase font-semibold ;
 }
 .content__learning{
-  @apply px-8
+  @apply px-2 sm:px-4 md:px-8
 }
 .desc__content__learning{
   @apply text-orange-500 mt-4 py-2
@@ -20,7 +20,7 @@
 .learning__time{
 }
 .box__learning__time{
-  @apply flex justify-between 
+  @apply md:flex md:justify-between 
 }
 .box__learning__time{
   border-bottom: 1px solid #ccc;
@@ -33,7 +33,7 @@
   @apply my-1
 }
 .statistical__learning__time{
-  @apply flex justify-between mt-3
+  @apply md:flex md:justify-between mt-3
 }
 .statistical__topic__learning{
  @apply flex
@@ -48,16 +48,16 @@
   @apply  mt-[30px]
 }
 .btn__start__statistical{
-  @apply bg-indigo-600 px-8 font-semibold py-1 text-white mr-3
+  @apply bg-indigo-600 px-4 md:px-8 font-semibold py-1 text-white mr-3
 }
 .btn__exam__statistical{
-  @apply bg-indigo-600 px-8 font-semibold py-1 text-white
+  @apply bg-indigo-600 px-4 md:px-8 font-semibold py-1 text-white
 }
 .btn__exam__week{
   @apply bg-red-600 px-8 font-semibold py-1 text-white
 }
 .box__buy__source{
-  @apply col-span-3 p-2 text-center max-h-[200px] pt-[20px]
+  @apply col-span-12 xl:col-span-3 p-2 text-center max-h-[200px] pt-[20px]
 }
 .box__buy__source{
  border: 1px solid #ccc;

@@ -284,7 +284,7 @@ p{
 /* form  */
 
 .form__information{
-    @apply w-8/12 m-auto shadow-lg mb-[100px] mt-16
+    @apply w-10/12 lg:w-8/12 m-auto shadow-lg mb-[100px] mt-16
 
 
 }
@@ -301,7 +301,7 @@ p{
 }
 
 .list__form{
-    @apply grid grid-cols-2 gap-[50px] mt-[50px]
+    @apply sm:grid sm:grid-cols-2 gap-8 lg:gap-[50px] mt-[50px]
 }
 
 .item__box__form input{
@@ -409,4 +409,16 @@ p{
   background-color: #1890ff;
   border-color: #1890ff;
   color: #fff;
+}
+
+/* about Us */
+
+.learn__left{
+  display: block;
+}
+
+@media (max-width: 1280px) {
+  .learn__left {
+    display: none;
+  }
 }

@@ -79,7 +79,7 @@ const Home = () => {
       <div>
 
         {/* START: section */}
-        <section className="w-10/12 m-auto probootstrap-section probootstrap-section-extra grid grid-cols-2">
+        <section className="w-10/12 m-auto  md:grid md:grid-cols-2">
           <div className="container-fluid probootstrap-absolute mt-[50px]">
             <div className="row">
               <div
@@ -117,10 +117,10 @@ const Home = () => {
         </section>
 
         {/* START: section */}
-        <section className="grid grid-cols-2 mt-16 gap-16 w-10/12 m-auto">
+        <section className="md:grid md:grid-cols-2 mt-16 gap-16 w-10/12 m-auto">
           <div className="my-auto">
-            <div className=" row my-auto">
-              <div className="col-lg-5 col-md-5 section-heading probootstrap-animate float-right ">
+            <div className="my-auto">
+              <div className="col-lg-5 col-md-5 ">
                 <h2 className="text-3xl font-bold ">Lợi Ích Khi Học Tiếng Anh</h2>
 
                 <blockquote className="probootstrap-quote">
@@ -136,20 +136,18 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="container-fluid probootstrap-absolute">
-            <div className="row">
+          <div className="">
               <div
-                className="col-md-7 col-md-push-6 probootstrap-animate truncate rounded-lg"
+                className="col-md-7 col-md-push-6  truncate rounded-lg"
                 data-animate-effect="fadeInRight"
               >
                 <img
                   src="http://unicoach.wgl-demo.net/wp-content/uploads/2020/10/courses_14-970x570.jpg"
                   alt="Free Bootstrap Template by uicookies.com"
                   width={"100%"}
-                  className="img-responsive  img-learning2"
+                  className="img-learning2"
                 />
               </div>
-            </div>
           </div>
         </section>
         {/* END: section */}
@@ -167,7 +165,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className=" grid grid-cols-3 gap-4 pt-8 pb-8">
+          <div className="sm:grid sm:grid-cols-2 md:grid md:grid-cols-3 gap-4 pt-8 pb-8">
             <div className=" probootstrap-animate">
               <h3 className="heading-with-icon">
                 <i className="icon-heart2" />{" "}

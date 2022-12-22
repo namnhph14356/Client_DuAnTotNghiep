@@ -81,7 +81,8 @@ const DetailLearning = () => {
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
         <div className="video__learning">
-          <iframe width={430} height={315}
+          <iframe 
+            className='w-full h-full xl:h-5/6'
             src="https://www.youtube.com/embed/clcc91rkShI"
             title="YouTube video player"
             frameBorder={0}

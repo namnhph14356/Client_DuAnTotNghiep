@@ -365,7 +365,7 @@ const QuizTypeSelect = () => {
                     <MemoCountdown time={quizList ? quizList[quizIndex].quiz.timeLimit : 40000} reset={onReset} />
                   </div>
 
-                  <div className={`${done ? "hidden" : "flex"} justify-between items-center`}>
+                  <div className={`${done ? "hidden" : "flex"} justify-between gap-4 items-center`}>
                     <div className="basis-11/12 flex items-center gap-2">
                       <h3 className="m-0">
                         {quizList

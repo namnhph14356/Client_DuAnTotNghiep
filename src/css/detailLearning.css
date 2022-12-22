@@ -1,20 +1,20 @@
 .detail__learning__page{
-  @apply w-10/12 m-auto grid grid-cols-12 gap-8 my-8
+  @apply w-10/12 m-auto xl:grid xl:grid-cols-12 xl:gap-8 my-8
 }
 .content__detail__learning{
-  @apply col-span-9 grid grid-cols-2 gap-4 shadow px-8 py-4
+  @apply col-span-9 lg:grid lg:grid-cols-2 lg:gap-4 shadow px-8 py-4
 }
 .setting__detail__learning{
-  @apply col-span-3 
+  @apply col-span-3 mt-8 xl:mt-0
 }
 .content__detail__learning{
   border: 1px solid #eee;
 }
 .video__learning{
-  @apply w-full h-auto
+  @apply w-full h-[300px] lg:h-auto
 }
 .deatil__main__learning{
-
+  @apply py-8  lg:py-0
 }
 .list__main__learning{
   @apply divide-y
@@ -47,4 +47,14 @@
 }
 .icon__item__list i{
   @apply text-indigo-600 text-2xl mr-3 mt-2
+}
+
+
+.menuAdverDeatil{
+  display: block;
+}
+@media (max-width: 1280px) {
+  .menuAdverDeatil{
+    display: none;
+  }
 }

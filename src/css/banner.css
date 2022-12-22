@@ -55,3 +55,35 @@
 .swiper-pagination-bullet-active {
   background: #fff;
 }
+
+@media (max-width: 768px) {
+  .slide {
+    height: 400px;
+   
+  }
+  .content-slide {
+    width: 20rem;
+  }
+
+  .content-slide h3 {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #444;
+    color: #fff;
+    margin: 0;
+  }
+  
+  .content-slide p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #777;
+    color: #eee;
+    padding: 1rem 0;
+  }
+  
+  .slide .content-slide .btn {
+    padding: 5px 15px;
+    font-size: 14px;
+  }
+}

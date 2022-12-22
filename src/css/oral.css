@@ -1,11 +1,11 @@
 .oralPage{
-    @apply  mx-12 grid grid-cols-12 gap-5  mt-4 
+    @apply  mx-12 xl:grid xl:grid-cols-12 xl:gap-5  mt-4 
 }
 .main__oral__page{
-    @apply  col-span-9 shadow border px-5 py-3
+    @apply  col-span-9 shadow border px-5 py-3 mb-8 xl:mb-0
 }
 .nav__oral__page{
-    @apply  col-span-3
+    @apply  col-span-3 w-[300px] xl:w-auto
 }
 .header__oral__page p{
     @apply bg-indigo-600 mb-0 w-32 text-center text-white px-3 py-0
