@@ -476,9 +476,9 @@ const QuizTypeSelect = () => {
                           <div className="">
                             <div className="bg-[#D6EAF8] border-[#5DADE2] px-[15px]  rounded-md">
                               <p className=" py-[10px] text-[#2E86C1] font-bold">Chúc Mừng Bạn đã hoàn thành !</p>
-                              <button onClick={showModal} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
+                              {/* <button onClick={showModal} className="text-white w-full py-[10px] rounded-md bg-[#5DADE2] mb-[20px] font-bold">
                                 Xem Kết Quả
-                              </button>
+                              </button> */}
                             </div>
                           </div>
                         </section>
