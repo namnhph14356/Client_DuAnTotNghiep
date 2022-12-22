@@ -192,7 +192,7 @@ const ExerciseVocabulary = () => {
           <div className='font-bold'>Câu số {questionIndex + 1} / {quizList.length}</div>
           <div className='content__speaking'>
             {finish &&
-              <div className='text-center font-bold mt-5'>
+              <div className='text-center font-bold pt-5'>
                 Kết quả của bạn: <span className={`px-2 py-1  text-white rounded ml-2 ${point >= 8 ? 'bg-green-500' : 'bg-red-500'}`}>{point} / 10</span>
               </div>
             }
