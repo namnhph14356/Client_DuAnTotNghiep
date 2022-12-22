@@ -1,6 +1,5 @@
-import {  useEffect, useState } from 'react'
-import { useSpeechSynthesis } from 'react-speech-kit';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useEffect, useState } from 'react'
+import { useAppSelector } from '../../app/hooks';
 import { QuizType } from '../../types/quiz';
 import { audioSpeak } from '../../utils/audio';
 

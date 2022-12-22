@@ -287,7 +287,9 @@ const Learning = () => {
             360 ngày làm quen với giao tiếp tiếng Anh
           </div>
           <div className="learning__time">
+
             <div className="box__learning__time">
+
               <div className="learning__btn__time">
                 <div className="item__btn__time">
                   <Menu as="div" className="relative inline-block text-left ">
@@ -462,6 +464,7 @@ const Learning = () => {
                   </Menu>
                 </div>
               </div>
+
               <div className="learning__page__time">
                 <div className=" sm:flex sm:flex-1 sm:items-center sm:justify-between">
                   <div>
@@ -544,10 +547,7 @@ const Learning = () => {
               </div>
             </div>
 
-            <div
-              className={`${learningProgressSelect !== undefined ? "" : "!hidden"
-                } statistical__learning__time`}
-            >
+            <div className={`${learningProgressSelect !== undefined ? "" : "!hidden"} statistical__learning__time`}>
               <div className="statistical__topic__learning">
                 <div className="statistical__topic__learning__title">
                   <ul>
@@ -563,40 +563,40 @@ const Learning = () => {
                     <ul>
                       <li
                         className={`${learningProgressSelect.listeningSpeakingScore >= 8
-                            ? "text-green-500"
-                            : "text-red-500"
+                          ? "text-green-500"
+                          : "text-red-500"
                           }`}
                       >
                         {learningProgressSelect.listeningSpeakingScore}
                       </li>
                       <li
                         className={`${learningProgressSelect.vocabularyScore >= 8
-                            ? "text-green-500"
-                            : "text-red-500"
+                          ? "text-green-500"
+                          : "text-red-500"
                           }`}
                       >
                         {learningProgressSelect.vocabularyScore}
                       </li>
                       <li
                         className={`${learningProgressSelect.structureSentencesScore >= 8
-                            ? "text-green-500"
-                            : "text-red-500"
+                          ? "text-green-500"
+                          : "text-red-500"
                           }`}
                       >
                         {learningProgressSelect.structureSentencesScore}
                       </li>
                       <li
                         className={`${learningProgressSelect.conversationScore >= 8
-                            ? "text-green-500"
-                            : "text-red-500"
+                          ? "text-green-500"
+                          : "text-red-500"
                           }`}
                       >
                         {learningProgressSelect.conversationScore}
                       </li>
                       <li
                         className={`${learningProgressSelect.grammarScore >= 8
-                            ? "text-green-500"
-                            : "text-red-500"
+                          ? "text-green-500"
+                          : "text-red-500"
                           }`}
                       >
                         {learningProgressSelect.grammarScore}
