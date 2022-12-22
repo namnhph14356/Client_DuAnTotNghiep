@@ -1,5 +1,4 @@
-
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import "../css/learning.css";
@@ -72,6 +71,7 @@ const Learning = () => {
   const [daySelect, setDaySelect] = useState<DayType | null>();
   const [listDay, setListDay] = useState<DayType[]>([]);
   const [listWeek, setListWeek] = useState<WeekType[]>([]);
+  const [lastDay, setLastDay] = useState<DayType>();
   const [isModal, setIsModal] = useState(false);
 
   const handlonClick = () => {
@@ -202,7 +202,6 @@ const Learning = () => {
 
   useEffect(() => {
     getListDay();
-
     if (months.length > 0 && weeks.length > 0 && days.length > 0) {
       const flag = months?.reduce(function (prev, current) {
         return prev.order < current.order ? prev : current;
@@ -235,8 +234,7 @@ const Learning = () => {
       );
 
       if (learningProgress.length !== 0) {
-        const lastLearningProgress: any =
-          learningProgress[learningProgress.length - 1];
+        const lastLearningProgress: any = learningProgress[learningProgress.length - 1];
         const lastDay: any = days.find(
           (item: DayType) =>
             item._id === lastLearningProgress.day ||
@@ -245,8 +243,26 @@ const Learning = () => {
         const nextDay: any = days.find(
           (item: DayType) => item.order === lastDay?.order + 1
         );
-
-        if (
+        const lastDayWeek = days.filter((e: any) => e.week._id === lastLearningProgress.day.week)
+        if (lastLearningProgress.day._id === lastDayWeek[lastDayWeek.length - 1]._id) {
+          if (
+            lastLearningProgress.conversationScore >= 8 &&
+            lastLearningProgress.listeningSpeakingScore >= 8 &&
+            lastLearningProgress.structureSentencesScore >= 8 &&
+            lastLearningProgress.vocabularyScore >= 8 &&
+            lastLearningProgress.grammarScore >= 8 &&
+            lastLearningProgress.oralWeekVocabularyScore >= 8 &&
+            lastLearningProgress.structureSentencesScore >= 8 &&
+            lastLearningProgress.isPass === false
+          ) {
+            dispatch(
+              editLearningProgressSlice({ ...lastLearningProgress, isPass: true })
+            );
+            dispatch(
+              addLearningProgressSlice({ day: nextDay?._id, user: user._id })
+            );
+          }
+        } else if (
           lastLearningProgress.conversationScore >= 8 &&
           lastLearningProgress.listeningSpeakingScore >= 8 &&
           lastLearningProgress.structureSentencesScore >= 8 &&
@@ -264,6 +280,21 @@ const Learning = () => {
       }
     }
   };
+
+  const lastDayInWeek = (day: DayType, week: WeekType) => {
+    const lastDay = days.filter((e: any) => e.week._id === week._id)
+    if (day._id === lastDay[lastDay.length - 1]._id) {
+      setLastDay(lastDay[lastDay.length - 1])
+    } else {
+      setLastDay(undefined)
+    }
+  }
+
+  useMemo(() => {
+    if (daySelect && weekSelect) {
+      lastDayInWeek(daySelect, weekSelect)
+    }
+  }, [daySelect, weekSelect])
 
   const checkDay7 = (weekId: string) => {
     const listDays = days.filter((item: DayType) => item.week?._id === weekId);
@@ -556,6 +587,13 @@ const Learning = () => {
                     <li>Cấu trúc và câu: </li>
                     <li>Hội thoại:</li>
                     <li>Ngữ pháp: </li>
+                    {
+                      lastDay &&
+                      <div>
+                        <li>Thi tuần (Từ Vựng):</li>
+                        <li>Thi tuần (Câu): </li>
+                      </div>
+                    }
                   </ul>
                 </div>
                 <div className="statistical__topic__learning__point">
@@ -601,6 +639,29 @@ const Learning = () => {
                       >
                         {learningProgressSelect.grammarScore}
                       </li>
+
+                      {
+                        lastDay &&
+                        <div>
+                          <li
+                            className={`${learningProgressSelect.oralWeekVocabularyScore && learningProgressSelect?.oralWeekVocabularyScore >= 8
+                              ? "text-green-500"
+                              : "text-red-500"
+                              }`}
+                          >
+                            {learningProgressSelect?.oralWeekVocabularyScore}
+                          </li>
+
+                          <li
+                            className={`${learningProgressSelect.oralWeekSentencesScore && learningProgressSelect?.oralWeekSentencesScore >= 8
+                              ? "text-green-500"
+                              : "text-red-500"
+                              }`}
+                          >
+                            {learningProgressSelect?.oralWeekSentencesScore}
+                          </li>
+                        </div>
+                      }
                     </ul>
                   ) : (
                     <ul>
