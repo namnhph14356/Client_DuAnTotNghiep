@@ -21,7 +21,6 @@ const DetailLearning = () => {
   const { dayId } = useParams();
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
-  console.log("practiceActivity", practiceActivity);
   
   const practiceLearning = practiceActivity && practiceActivity
   // practiceLearning?.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
@@ -99,7 +98,7 @@ const DetailLearning = () => {
                   <div className="item__list__learning">
                     {practiceArr.map((item2: PracticeActivityArr, index: number) => {
                       if (item2.id === item.order) {
-                        return <div className="info__item__list">
+                        return <div className="info__item__list" key={index + 1}>
                           <div key={index + 1} className="">
                             {item2.icon}
                           </div>
