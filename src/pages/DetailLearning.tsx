@@ -21,7 +21,6 @@ const DetailLearning = () => {
   const { dayId } = useParams();
   const dispatch = useAppDispatch()
   let practiceActivity = useAppSelector<PracticeActivityType[]>(item => item.practiceActivity.valueByDay)
-  console.log("practiceActivity", practiceActivity);
   
   const practiceLearning = practiceActivity && practiceActivity
   // practiceLearning?.sort((a: PracticeActivityType, b: PracticeActivityType) => a.order - b.order)
@@ -81,7 +80,8 @@ const DetailLearning = () => {
     <div className='detail__learning__page'>
       <div className="content__detail__learning">
         <div className="video__learning">
-          <iframe width={430} height={315}
+          <iframe 
+            className='w-full h-full xl:h-5/6'
             src="https://www.youtube.com/embed/clcc91rkShI"
             title="YouTube video player"
             frameBorder={0}
@@ -98,7 +98,7 @@ const DetailLearning = () => {
                   <div className="item__list__learning">
                     {practiceArr.map((item2: PracticeActivityArr, index: number) => {
                       if (item2.id === item.order) {
-                        return <div className="info__item__list">
+                        return <div className="info__item__list" key={index + 1}>
                           <div key={index + 1} className="">
                             {item2.icon}
                           </div>

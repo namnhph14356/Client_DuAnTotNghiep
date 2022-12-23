@@ -64,9 +64,9 @@ const navigation = {
 const Footer = () => {
   return (
     <footer className="bg-[#4F46E5] text-white mt-16" aria-labelledby="footer-heading">
-      <div className="mx-auto w-10/12 py-16 ">
-        <div className="xl:grid xl:grid-cols-4 ">
-          <div className="space-y-16 xl:col-span-1">
+      <div className="mx-auto w-10/12 pt-16 ">
+        <div className="lg:grid lg:grid-cols-4 ">
+          <div className="space-y-4 lg:space-y-16 lg:col-span-1">
             <Link to='/'>
               <img
                 src="https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png"
@@ -83,53 +83,50 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <div className="mt-12 grid grid-cols-3  xl:col-span-3 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 col-span-2 md:gap-8">
-              <div>
-                <h3 className="text-base font-medium text-orange-500">Giới thiệu về VianEnglish</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.VianEnglish.map((item) => (
-                    <li key={item.name}>
-                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
-                        {item.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="mt-12 md:mt-0">
-                <h3 className="text-base font-medium text-orange-500">Hỗ trợ chung</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.support.map((item) => (
-                    <li key={item.name}>
-                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
-                        {item.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+
+          <div className="mt-12 grid sm:grid-cols-2 md:grid-cols-3 gap-4  lg:col-span-3 lg:mt-0">
+            <div>
+              <h3 className="text-base font-medium text-orange-500">Giới thiệu về VianEnglish</h3>
+              <ul role="list" className="mt-4 space-y-4">
+                {navigation.VianEnglish.map((item) => (
+                  <li key={item.name}>
+                    <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
+                      {item.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="">
+              <h3 className="text-base font-medium text-orange-500">Hỗ trợ chung</h3>
+              <ul role="list" className="mt-4 space-y-4">
+                {navigation.support.map((item) => (
+                  <li key={item.name}>
+                    <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
+                      {item.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
-              <div>
-                <h3 className="text-base font-medium text-orange-500">Lớp học tiếng anh giao tiếp 360</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {navigation.company.map((item) => (
-                    <li key={item.name}>
-                      <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
-                        {item.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <h3 className="text-base font-medium text-orange-500">Lớp học tiếng anh giao tiếp 360</h3>
+              <ul role="list" className="mt-4 space-y-4">
+                {navigation.company.map((item) => (
+                  <li key={item.name}>
+                    <NavLink to={item.href} className="text-base text-white hover:text-orange-500">
+                      {item.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
         </div>
-        {/* <div className="mt-12 border-t border-gray-200 pt-8">
+        <div className="mt-12 border-t border-gray-200 pt-4 pb-1">
           <p className="text-base text-white xl:text-center">&copy; Copyright 2022 VianEnglish.com</p>
-        </div> */}
+        </div>
       </div>
     </footer>
   )

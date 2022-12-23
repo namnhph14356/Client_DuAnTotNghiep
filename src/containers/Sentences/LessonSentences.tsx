@@ -1,35 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink, useLocation, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 import { listSentencesByIdActivity } from '../../api/sentences'
 import Loading from '../../components/Loading'
-import { SentenceType } from '../../types/sentence'
-import { useSpeechSynthesis } from 'react-speech-kit';
-
-
-const arraySentences = [
-  {
-    _id: 1,
-    title: 'I had a nightmare last night and I lost sleep 1',
-    order: 1
-  },
-  {
-    _id: 2,
-    title: 'hello bay be',
-    order: 2
-  },
-  {
-    _id: 4,
-    title: 'oh my goood',
-    order: 3
-  }
-]
-
+import { audioSpeak } from '../../utils/audio'
 
 const LessonSentences = () => {
   const { dayId, id } = useParams();
   const [dataSent, setDataSent] = useState<any>([])
-  const { speak, voices } = useSpeechSynthesis();
-
   const getSents = async () => {
     if (id) {
       const { data } = await listSentencesByIdActivity(String(id))
@@ -48,8 +25,8 @@ const LessonSentences = () => {
             dataSent.map((item, index: number) => (
               <div className="item__list_sentences " key={index + 1}>
                 <div className="item__content__list">
-                  <h3 className="title__item__content__list">
-                    <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => speak({ text: item.words,pitch: 2, voice: voices[2] })}></i> {item.words}
+                  <h3 className="title__item__content__list"> 
+                    <i className="fa-solid fa-volume-high cursor-pointer" onClick={() => audioSpeak(item.words,true)}></i> {item.words}
                   </h3>
                   <div className="phonetic__content">
                     {item.phoneticTranscription}

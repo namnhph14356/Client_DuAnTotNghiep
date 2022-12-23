@@ -468,9 +468,9 @@ const ListListenSpeak = (props: Props) => {
         title: 'Hình ảnh', dataIndex: 'image', key: 'image',
         render: (record) => (
           <div className="">
-            {record ?
-              <Image width={60} height={60} src={record} />
-              : ""}
+            <Image width={60} height={60}
+              src={record ? record : 'https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg'}
+            />
           </div>
         )
       },

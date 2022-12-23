@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    // baseURL: 'http://localhost:8000/api',
+    baseURL: 'https://serverduantotnghiep-production-53a7.up.railway.app/api',
     // headers: {
     //     "Content-Type": "application/json",
     // },

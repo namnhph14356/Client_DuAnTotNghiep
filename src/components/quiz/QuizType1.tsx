@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { audioSpeak } from '../../utils/audio';
+import GoogleSpeechAudio from '../GoogleSpeech/GoogleSpeechAudio';
 
 type QuizType1Props = {
     data: any,
@@ -10,10 +12,7 @@ type QuizType1Props = {
 }
 
 const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) => {
-    const { cancel, speak, speaking, supported, voices, pause, resume } = useSpeechSynthesis();
     const transcript = useAppSelector(item => item.googleSpeech.transcript)
-    const dispatch = useAppDispatch()
-
     const onHandleSpeakSelect = () => {
         if (data.answer.replace(',', '').replace('.', '').toLowerCase().trim() === transcript.toLowerCase().trim()) {
             onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect }, check)
@@ -41,13 +40,14 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
                 if (check !== true) {
                     onHanldeSetSelect({ id: data._id, isCorrect: data.isCorrect }, check)
                 }
+                audioSpeak(data.answer,true)
             }}
         >
             <div className="ml-3 flex h-5 items-center"
 
             >
                 <input type="radio" checked={select?.id === data._id}
-                    onClick={() => {}}
+                    onClick={() => { }}
                     className={`${check === true
                         ? data._id == select?.id
                             ? data?.isCorrect === true
@@ -59,12 +59,15 @@ const QuizType1 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
 
             </div>
             <div className="ml-3 flex h-5 items-center"
-                onClick={() => speak({ text: data.answer, rate: 1.2, pitch: 2, voice: voices[2] })}
+                
             >
                 <i className="fa-solid fa-volume-high mr-3"></i>
 
             </div>
-            <div className="min-w-0 flex-1 text-sm" onClick={() => speak({ text: data.answer, rate: 1.2, pitch: 2, voice: voices[2] })}>
+            {/* <div className="ml-3 flex h-5 items-center">
+                <GoogleSpeechAudio value={data.answer} gender={false} />
+            </div> */}
+            <div className="min-w-0 flex-1 text-sm" >
                 <label htmlFor="comments" className="font-medium text-gray-700">
                     {data.answer}
                 </label>

@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useRef, useState } from 'react'
-import { useSpeechSynthesis } from 'react-speech-kit';
+import React, { useEffect,  useState } from 'react'
 import { Progress, Modal, message } from 'antd';
-import Countdown, { CountdownApi } from 'react-countdown';
+import Countdown from 'react-countdown';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { getListQuizSlide } from '../../features/Slide/quiz/QuizSlide';
 import { getListAnswerQuizSlide } from '../../features/Slide/answerQuiz/AnswerQuizSlide';
-import { useParams, NavLink } from 'react-router-dom';
-import { detailQuiz, listQuiz } from '../../api/quiz';
+import { useParams } from 'react-router-dom';
+import { detailQuiz } from '../../api/quiz';
 import '../../css/quiz.css'
 import moment from 'moment';
 import { addUserQuiz } from '../../api/userQuiz';
@@ -24,7 +23,6 @@ import { LearningProgressType } from '../../types/learningProgress';
 import { editLearningProgressSlice } from '../../features/Slide/learningProgress/LearningProgress';
 import { QuizType } from '../../types/quiz';
 import { AnswerQuizType } from '../../types/answerQuiz';
-import { PracticeActivityType } from '../../types/practiceActivity';
 import { SentenceResult } from '../../types/sentence';
 import Loading from '../../components/Loading';
 
@@ -111,11 +109,8 @@ const ExerciseSentences = () => {
   const [select, setSelect] = useState<any>(null)
   const [check, setCheck] = useState(false)
   const [done, setDone] = useState(false)
-
   const audioCorrect = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284317/duolingo_correct_sound_effect_6597352924678955563_gafjie.mp3")
   const audioWrong = new Audio("https://res.cloudinary.com/chanh-thon/video/upload/v1669284427/duolingo_wrong_answer_sound_effect_8056506950931993212_th5bf7.mp3")
-
-  const { speak, voices } = useSpeechSynthesis();
   const [quizList, setQuizList] = useState<any>()
   const [numQuizList, setNumQuizList] = useState(0)
   const [learningProgress, setLearningProgress] = useState<LearningProgressType>()
@@ -313,7 +308,7 @@ const ExerciseSentences = () => {
               </div>
 
               {finish &&
-                <div className='text-center font-bold mt-5'>
+                <div className='text-center font-bold pt-5'>
                   Kết quả của bạn: <span className={`px-2 py-1 text-white rounded ml-2 ${point >= 8 ? 'bg-green-500' : 'bg-red-500'}`}>{point} / 10</span>
                 </div>
               }

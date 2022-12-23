@@ -1,5 +1,5 @@
-import React from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit';
+import { audioSpeak } from '../../utils/audio';
 
 type QuizType1Props = {
     data: any,
@@ -44,7 +44,7 @@ const QuizType4 = ({ data, check, select, onHanldeSetSelect }: QuizType1Props) =
 
             </div>
             <div className="flex items-center h-5 ml-3"
-                onClick={() => speak({ text: data.answer, voice: voices[2] })}
+                onClick={() =>  audioSpeak(data.answer,false)}
             >
                 <i className="mr-3 fa-solid fa-volume-high"></i>
 

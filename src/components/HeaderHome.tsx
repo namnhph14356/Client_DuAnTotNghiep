@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useRoutes } from 'react-router-dom'
 import { Dropdown, Menu, message, Modal } from "antd";
@@ -5,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../features/Slide/auth/authSlide';
 import { RootState } from '../app/store';
 import { UserType } from '../types/user';
-import { Avatar } from './Avatar';
+import '../css/header.css';
+
 const navigation = [
   { name: 'Học thử', to: '/learning' },
   { name: 'Giới thiệu', to: 'aboutUs' },
@@ -61,6 +63,16 @@ const HeaderComponent = () => {
     </Menu>
   );
 
+  const checkMenu = () => {
+    let navbar: any = document.querySelector('.navbarHeader')
+    navbar.classList.remove('active');
+  }
+
+  const checkOpenMenu = () => {
+    let navbar: any = document.querySelector('.navbarHeader')
+    navbar.classList.add('active');
+  }
+
   return (
     <div className="relative">
       <header className="bg-indigo-600">
@@ -68,9 +80,31 @@ const HeaderComponent = () => {
           <div className="flex w-full items-center justify-between border-b border-indigo-500 py-3 lg:border-none">
             <div className="flex items-center">
               <NavLink to={'/'} className="text-white font-bold text-3xl hover:text-indigo-50 font-mono">
-                <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} width={90} alt="" />
+                <img src={'https://res.cloudinary.com/chanh-thon/image/upload/v1667831318/upload_preset/LogoHeader-removebg-preview_q6pbxp.png'} className="w-[70px] lg:w-[90px]" alt="" />
               </NavLink>
-              <div className=" ml-10 space-x-8 lg:block">
+              <div className="navbarHeader px-4">
+                <div className='head flex justify-between w-full'>
+                  <div>
+                    <NavLink className="text-lg text-center font-semibold text-white space-x-1" to="/">
+                      <span className="my-auto">
+                        <img src="https://res.cloudinary.com/chanh-thon/image/upload/v1669194029/Layer_2_qkue5t.png" width={20} />
+                      </span>
+                      <span className="text-white">Vian English</span>
+                    </NavLink>
+                  </div>
+
+                  <div id="close-navbar" onClick={() => checkMenu()} className="fas fa-times my-auto"></div>
+                </div>
+                <div className='menuContent'>
+                  {navigation.map((link) => (
+                    <NavLink key={link.name} to={link.to} className="text-base font-medium text-white hover:text-orange-500">
+                      {link.name}
+                    </NavLink>
+                  ))}
+                </div>
+              </div>
+
+              <div className='ml-10 space-x-8 menu'>
                 {navigation.map((link) => (
                   <NavLink key={link.name} to={link.to} className="text-base font-medium text-white hover:text-orange-500">
                     {link.name}
@@ -78,37 +112,33 @@ const HeaderComponent = () => {
                 ))}
               </div>
             </div>
-            {
-              auth && auth.username ?
-                <Dropdown overlay={menu} trigger={["click"]}>
-                  <img
-                    src={auth.img}
-                    className="text-sm w-10 h-10 text-white rounded-full cursor-pointer"
-                    alt=""
-                  />
-                </Dropdown>
-                :
-                <div className=" ml-10 space-x-4">
-                  <NavLink to={'/signin'}
-                    className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-opacity-75"
-                  >
-                    Đăng nhập
-                  </NavLink>
-                  <NavLink to={'/signup'}
+            <div className='flex justify-between gap-4 my-auto'>
+              {
+                auth && auth.username ?
+                  <Dropdown overlay={menu} trigger={["click"]}>
+                    <img
+                      src={auth.img}
+                      className="text-sm w-8 h-8 md:w-10 md:h-10 text-white rounded-full cursor-pointer"
+                      alt=""
+                    />
+                  </Dropdown>
+                  :
+                  <div className=" ml-10 space-x-4">
+                    <NavLink to={'/signin'}
+                      className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-opacity-75"
+                    >
+                      Đăng nhập
+                    </NavLink>
+                    <NavLink to={'/signup'}
 
-                    className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
-                  >
-                    Đăng ký
-                  </NavLink>
-                </div>
-            }
-          </div>
-          <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
-            {navigation.map((item) => (
-              <NavLink key={item.name} to={item.to} className="text-base font-medium text-white hover:text-indigo-50">
-                {item.name}
-              </NavLink>
-            ))}
+                      className="inline-block rounded-md border border-transparent bg-white py-[6px] px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
+                    >
+                      Đăng ký
+                    </NavLink>
+                  </div>
+              }
+              <div id="menu-btn" className="fas fa-bars my-auto text-white text-2xl  md:hidden" onClick={checkOpenMenu}></div>
+            </div>
           </div>
         </nav>
       </header>

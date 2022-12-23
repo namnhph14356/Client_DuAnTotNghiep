@@ -9,6 +9,8 @@ export type LearningProgressType = {
     structureSentencesScore: number,
     conversationScore: number,
     grammarScore: number,
+    oralWeekVocabularyScore?: number,
+    oralWeekSentencesScore?: number,
     oralScore: number,
     isPass: boolean,
     createdAt?: string,
