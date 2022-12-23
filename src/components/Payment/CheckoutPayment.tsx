@@ -10,6 +10,9 @@ type Props = {};
 const CheckoutPayment = (props: Props) => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
 
+  // const clickTo = () => {
+  //   window.location.replace("/learning");
+  // }
  
   return (
     <div>
@@ -34,7 +37,9 @@ const CheckoutPayment = (props: Props) => {
         </div>
       </header>
       <div className="mt-8 w-8/12 m-auto">
-        <NavLink to='/learning' className="px-4 py-2 bg-red-500 rounded border text-white font-bold hover:text-red-500 hover:bg-white hover:border-red-500">Quay về</NavLink>
+      {/* to='/learning' */}
+      {/* onClick={()=>clickTo()} */}
+        <NavLink to='/learning' className="px-4 py-2 bg-red-500 rounded border text-white font-bold hover:text-red-500 hover:bg-white hover:border-red-500" >Quay về</NavLink>
       </div>
 
       <Outlet />
