@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editAuth } from '../../../api/user'
 import { addNewPayemnt, vnpay_return } from '../../../api/vnpay'
-import { RootState } from '../../../app/store'
-import { editAuthSilce } from '../../../features/Slide/auth/authSlide'
+import { useAppDispatch } from '../../../app/hooks'
+import { RootState } from '../../../app/store'  
+import { currentUserSlice, editAuthSilce } from '../../../features/Slide/auth/authSlide'
 import { UserType } from '../../../types/user'
 
 type Props = {}
@@ -15,7 +16,7 @@ const VnpayReturn = (props: Props) => {
   
   const [bankcode, setBankCode] = useState<any>()
   const pay_status = 1;
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const url = window.location.href;
   const url_split = url.split("?")
   const dateFormat = (str:any) => {
@@ -42,10 +43,18 @@ var day = str.substring(6, 8);
 
           const user:any = {
             _id: auth._id,
-            pay: pay_status
+            pay: 1
           }
-          await addNewPayemnt(payment);       
-          await editAuth(user)
+       
+          if(data?.vnp_ResponseCode == "00"){     
+             const {payload} =  await dispatch(editAuthSilce(user));             
+             localStorage.setItem("tokenUser", JSON.stringify(payload.token))
+              if(payload){
+                 dispatch(currentUserSlice());
+              }
+          }
+              // await addNewPayemnt(payment);  
+        
         }else{
           message.error("Lỗi")
         }

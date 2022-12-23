@@ -1,10 +1,12 @@
 import { message } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { create_url, redirect_url } from "../../../api/vnpay";
+import { useAppDispatch } from "../../../app/hooks";
 import { RootState } from "../../../app/store";
+import { currentUserSlice } from "../../../features/Slide/auth/authSlide";
 import { UserType } from "../../../types/user";
 type Props = {};
 type FormVnpay = {
@@ -16,13 +18,15 @@ type FormVnpay = {
 const FormCreateVnPay = (props: Props) => {
   const [bank, setBank] = useState("");
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
-  console.log(auth);
-  
+  const dispatch = useAppDispatch();
   const handleChange = (event) => {
     setBank(event.target.value);
   };
 
-
+  useEffect(() => {
+      dispatch(currentUserSlice());
+  },[])
+  console.log(auth);
   const {
     register,
     handleSubmit,
