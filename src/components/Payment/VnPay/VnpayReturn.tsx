@@ -12,7 +12,6 @@ type Props = {}
 
 const VnpayReturn = (props: Props) => {
   const auth = useSelector((item: RootState) => item.auth.value) as UserType;
-  console.log("abc",auth);
   
   const [bankcode, setBankCode] = useState<any>()
   const pay_status = 1;
@@ -53,7 +52,7 @@ var day = str.substring(6, 8);
                  dispatch(currentUserSlice());
               }
           }
-              // await addNewPayemnt(payment);  
+              await addNewPayemnt(payment);  
         
         }else{
           message.error("Lỗi")
