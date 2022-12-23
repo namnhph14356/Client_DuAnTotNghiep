@@ -447,7 +447,7 @@ const ListListenWrite = () => {
           <span className="text-white">Thêm đáp án</span>
         </Button>
       </Space>
-      <Table rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
+      <Table bordered rowSelection={rowSelection} columns={columns2} dataSource={data} pagination={false} />
     </div>
 
   }
