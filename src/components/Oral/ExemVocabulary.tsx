@@ -64,7 +64,7 @@ const ExemVocabulary = () => {
     if (exitsHistory) {
       setHistory(history.map((item: any) => item.id === sentencesIndex ? { ...item, value: { question: listQuestion[sentencesIndex].meaning, answer: value } } : item))
     } else {
-      if (listQuestion[sentencesIndex].words.toLocaleLowerCase() === value.toLocaleLowerCase()) {
+      if (listQuestion[sentencesIndex].words.toLocaleLowerCase().replaceAll(" ", "") === value.toLocaleLowerCase().replaceAll(" ", "")) {
         setHistory([...history, { id: sentencesIndex, answerCorrect: true, value: { question: listQuestion[sentencesIndex].meaning, answer: value } }])
       } else {
         setHistory([...history, { id: sentencesIndex, answerCorrect: false, value: { question: listQuestion[sentencesIndex].meaning, answer: value } }])
