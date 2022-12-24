@@ -226,12 +226,8 @@ const Learning = () => {
       const { payload: learningProgress } = await dispatch(
         getLearningProgressByUserSlice(user._id)
       );
-      setLearningProgressSelect(
-        learningProgress.find(
-          (item: any) =>
-            item.day === listDay[0]?._id || item.day._id === listDay[0]?._id
-        )
-      );
+      const learningUser = learningProgress.find((item: any) => item.day === listDay[0]?._id || item.day._id === listDay[0]?._id) || null
+      setLearningProgressSelect(learningUser);
 
       if (learningProgress.length !== 0) {
         const lastLearningProgress: any = learningProgress[learningProgress.length - 1];
@@ -597,73 +593,7 @@ const Learning = () => {
                   </ul>
                 </div>
                 <div className="statistical__topic__learning__point">
-                  {learningProgressSelect ? (
-                    <ul>
-                      <li
-                        className={`${learningProgressSelect.listeningSpeakingScore >= 8
-                          ? "text-green-500"
-                          : "text-red-500"
-                          }`}
-                      >
-                        {learningProgressSelect.listeningSpeakingScore}
-                      </li>
-                      <li
-                        className={`${learningProgressSelect.vocabularyScore >= 8
-                          ? "text-green-500"
-                          : "text-red-500"
-                          }`}
-                      >
-                        {learningProgressSelect.vocabularyScore}
-                      </li>
-                      <li
-                        className={`${learningProgressSelect.structureSentencesScore >= 8
-                          ? "text-green-500"
-                          : "text-red-500"
-                          }`}
-                      >
-                        {learningProgressSelect.structureSentencesScore}
-                      </li>
-                      <li
-                        className={`${learningProgressSelect.conversationScore >= 8
-                          ? "text-green-500"
-                          : "text-red-500"
-                          }`}
-                      >
-                        {learningProgressSelect.conversationScore}
-                      </li>
-                      <li
-                        className={`${learningProgressSelect.grammarScore >= 8
-                          ? "text-green-500"
-                          : "text-red-500"
-                          }`}
-                      >
-                        {learningProgressSelect.grammarScore}
-                      </li>
-
-                      {
-                        lastDay &&
-                        <div>
-                          <li
-                            className={`${learningProgressSelect.oralWeekVocabularyScore && learningProgressSelect?.oralWeekVocabularyScore >= 8
-                              ? "text-green-500"
-                              : "text-red-500"
-                              }`}
-                          >
-                            {learningProgressSelect?.oralWeekVocabularyScore}
-                          </li>
-
-                          <li
-                            className={`${learningProgressSelect.oralWeekSentencesScore && learningProgressSelect?.oralWeekSentencesScore >= 8
-                              ? "text-green-500"
-                              : "text-red-500"
-                              }`}
-                          >
-                            {learningProgressSelect?.oralWeekSentencesScore}
-                          </li>
-                        </div>
-                      }
-                    </ul>
-                  ) : (
+                  {learningProgressSelect === null || learningProgressSelect === undefined ?
                     <ul>
                       <li>0</li>
                       <li>0</li>
@@ -671,7 +601,73 @@ const Learning = () => {
                       <li>0</li>
                       <li>0</li>
                     </ul>
-                  )}
+                    : (
+                      <ul>
+                        <li
+                          className={`${learningProgressSelect.listeningSpeakingScore >= 8
+                            ? "text-green-500"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {learningProgressSelect.listeningSpeakingScore}
+                        </li>
+                        <li
+                          className={`${learningProgressSelect.vocabularyScore >= 8
+                            ? "text-green-500"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {learningProgressSelect.vocabularyScore}
+                        </li>
+                        <li
+                          className={`${learningProgressSelect.structureSentencesScore >= 8
+                            ? "text-green-500"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {learningProgressSelect.structureSentencesScore}
+                        </li>
+                        <li
+                          className={`${learningProgressSelect.conversationScore >= 8
+                            ? "text-green-500"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {learningProgressSelect.conversationScore}
+                        </li>
+                        <li
+                          className={`${learningProgressSelect.grammarScore >= 8
+                            ? "text-green-500"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {learningProgressSelect.grammarScore}
+                        </li>
+
+                        {
+                          lastDay &&
+                          <div>
+                            <li
+                              className={`${learningProgressSelect.oralWeekVocabularyScore && learningProgressSelect?.oralWeekVocabularyScore >= 8
+                                ? "text-green-500"
+                                : "text-red-500"
+                                }`}
+                            >
+                              {learningProgressSelect?.oralWeekVocabularyScore}
+                            </li>
+
+                            <li
+                              className={`${learningProgressSelect.oralWeekSentencesScore && learningProgressSelect?.oralWeekSentencesScore >= 8
+                                ? "text-green-500"
+                                : "text-red-500"
+                                }`}
+                            >
+                              {learningProgressSelect?.oralWeekSentencesScore}
+                            </li>
+                          </div>
+                        }
+                      </ul>
+                    )}
                 </div>
               </div>
 
