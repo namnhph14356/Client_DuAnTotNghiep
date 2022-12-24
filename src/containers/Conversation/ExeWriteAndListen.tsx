@@ -333,7 +333,7 @@ const ExeWriteAndListen = () => {
 
   return (
     <div className='conversation__page'>
-      {listQuiz.length > 0 ?
+      {answerQuiz.length > 0 && questionQuiz.length > 0 && conversation ?
         <div className="main__conversation">
           <form className="content__conversation" onSubmit={handleSubmit(onSubmit2)} >
             <div className='mx-4 '>

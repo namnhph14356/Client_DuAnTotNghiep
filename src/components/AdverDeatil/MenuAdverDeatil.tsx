@@ -85,7 +85,7 @@ const MenuAdverDeatil = () => {
           </li>
         })}
         <li className='bg-indigo-600 px-2 py-1'><NavLink to={`/learning/oral/${dayId}`} className='text-white'>Thi Oral</NavLink></li>
-        <li className='bg-indigo-600 px-2 py-1'><NavLink to={`/learning/${dayId}/detailLearning`} className='text-white'>Danh sách ngày học</NavLink></li>
+        <li className='bg-indigo-600 px-2 py-1'><NavLink to={`/learning`} className='text-white'>Danh sách ngày học</NavLink></li>
       </ul>
     </div>
   )
