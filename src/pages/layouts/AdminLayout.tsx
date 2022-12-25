@@ -100,6 +100,7 @@ const AdminLayout = () => {
           <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lý người dùng</NavLink></Menu.Item>
           <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lý lớp học</NavLink></Menu.Item>
           <Menu.Item key="/admin/comment" icon={<CommentOutlined />} ><NavLink to='/admin/comment'>Quản lý bình luận</NavLink></Menu.Item>
+          <Menu.Item key="/admin/payment" icon={<CommentOutlined />} ><NavLink to='/admin/payment'>Quản lý thống kê</NavLink></Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout" >

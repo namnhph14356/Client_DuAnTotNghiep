@@ -37,7 +37,7 @@ var day = str.substring(6, 8);
             amount: (+data?.vnp_Amount) / 100,
             bank: data?.vnp_BankCode,
             content: data?.vnp_OrderInfo,
-            code: data?.vnp_TxnRef == "00" ? 1 : 0
+            code: data?.vnp_ResponseCode,
           }
 
           const user:any = {
