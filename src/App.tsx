@@ -132,6 +132,7 @@ import FormAnswerEditListenWrite from "./pages/admin/ListenWrite/listenWrite/Exe
 import FormListenReadEdit from "./pages/admin/ListenWrite/listenWrite/ListenRead/FormListenReadEdit";
 import ListComment from "./pages/admin/comment/ListComment";
 import ProgressUser from "./pages/adminTeacher/adminClass/ProgressUser";
+import ListPayment from "./pages/admin/Payment/ListPayment";
 
 
 function App() {
@@ -297,6 +298,10 @@ function App() {
 
           <Route path="comment">
             <Route index element={<ListComment />} />
+
+          </Route>
+          <Route path="payment">
+            <Route index element={<ListPayment />} />
 
           </Route>
 
