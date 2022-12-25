@@ -11,7 +11,8 @@ import {
   ContactsOutlined,
   HighlightOutlined,
   MenuUnfoldOutlined,
-  MenuFoldOutlined
+  MenuFoldOutlined,
+  DollarCircleOutlined
 } from "@ant-design/icons";
 import "../../css/admin.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -100,6 +101,7 @@ const AdminLayout = () => {
           <Menu.Item key="/admin/user" icon={<UserOutlined />}><NavLink to='/admin/user'>Quản lý người dùng</NavLink></Menu.Item>
           <Menu.Item key="/admin/class" icon={<TeamOutlined />} ><NavLink to='/admin/class'>Quản lý lớp học</NavLink></Menu.Item>
           <Menu.Item key="/admin/comment" icon={<CommentOutlined />} ><NavLink to='/admin/comment'>Quản lý bình luận</NavLink></Menu.Item>
+          <Menu.Item key="/admin/payment" icon={<DollarCircleOutlined />} ><NavLink to='/admin/payment'>Quản lý hóa đơn</NavLink></Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout" >
