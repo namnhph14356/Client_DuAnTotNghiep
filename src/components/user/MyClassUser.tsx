@@ -132,17 +132,23 @@ const MyClassUser = () => {
       render: (row, item) => `${item?.teacherOfClass[0].userId.username}`,
     },
     {
-      title: "Ngày vào lớp",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (row, item) =>
-        `${moment(item?.timeJoinClass).format("DD/MM/YYYY")}`,
+      title: "Email",
+      dataIndex: "emailTeacher",
+      key: "emailTeacher",
+      render: (row, item) => `${item?.teacherOfClass[0].userId.email}`,
     },
+    // {
+    //   title: "Ngày vào lớp",
+    //   dataIndex: "createdAt",
+    //   key: "createdAt",
+    //   render: (row, item) =>
+    //     `${moment(item?.timeJoinClass).format("DD/MM/YYYY")}`,
+    // },
     {
       title: "Link học trực tuyến",
-      dataIndex: "linkJoinClass",
-      key: "linkJoinClass",
-      render: (row, item) => <NavLink to={``}>${item?.linkJoinClass}</NavLink>
+      dataIndex: "linkGoogleMeet",
+      key: "linkGoogleMeet",
+      render: (row, item) => <a href={item?.linkGoogleMeet} target="_blank" rel="noreferrer">{item?.linkGoogleMeet}</a>
     }
   ];
   return (

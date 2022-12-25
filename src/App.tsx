@@ -142,14 +142,14 @@ function App() {
     location.pathname.includes("manageteacher") || location.pathname.includes("manageDay");
   return (
     <div>
-      {!check && (
+      {/* {!check && (
         <div className="message">
           <div className="message-wrapper"></div>
           <div className="icon-hove-wrapper">
             <Message />
           </div>
         </div>
-      )}
+      )} */}
       <Routes>
         <Route path="/" element={<PrivateRouteHomePage><WebsiteLayout /></PrivateRouteHomePage>}>
           <Route index element={<Home />} />
