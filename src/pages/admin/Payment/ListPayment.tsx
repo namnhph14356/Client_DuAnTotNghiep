@@ -75,6 +75,8 @@ const ListPayment = () => {
       key: index + 1,
       _id: item._id,
       userId: userId?.username,
+      email: userId?.email,
+      phone:userId?.phone,
       code:item.code,
       amount:item.amount,
       bank: item.bank,
@@ -167,9 +169,14 @@ const ListPayment = () => {
     //   ...getColumnSearchProps('nameClass'),
     },
     {
-      title: "Mã hóa đơn",
-      dataIndex: "code",
-      key: "code",
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
       title: "Số tiền",
